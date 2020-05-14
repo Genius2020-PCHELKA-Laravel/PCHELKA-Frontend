@@ -1,25 +1,65 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import {  createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+import HomeScreen from './src/screens/HomeScreen';
+import splashscreen from './src/screens/splashscreen';
+import loginphone from './src/screens/loginphone';
+import verify from './src/screens/verify';
+import location from './src/screens/location';
+import Frequency from './src/screens/Frequency';
+import freecleaning from './src/screens/freecleaning';
+import LogIn from './src/screens/LogIn';
+import {Provider as AuthProvider} from './src/screens/context/Authcontext';
+import { exp } from 'react-native-reanimated';
+import Internetscreen from './src/screens/Internetscreen';
+import setting from './src/screens/setting';
+  import appointment from './src/screens/appointment';
+import support from './src/screens/support';
+import HomeScreenLogIn from './src/screens/HomeScreenLogIn';
+import DateAndTime from './src/screens/DateAndTime';
+import  CleaningDetails from './src/screens/CleaningDetails';
+import Addressdetails from './src/screens/Addressdetails';
+import Payment from './src/screens/Payment';
+  const navigator = createSwitchNavigator({
+        internet: Internetscreen ,
+        
+          Home: createStackNavigator({
+            Homepage:HomeScreen,
+            loginph:loginphone,
+            ver:verify,
+            locationscreen:location ,
+            frequency: Frequency,
+            cleanindetailsscreen:CleaningDetails,
+            datetimescreen:DateAndTime,
+            Paymentscreen :Payment,
+            Addressdetailsscreen:Addressdetails
+           
+          }),
+          h:createStackNavigator({
+            
+          Home1:createDrawerNavigator({
+            LogIn:HomeScreenLogIn,
+           Settingscreen: setting,
+           Appointmentscreen:appointment,
+           Freecleaningscreen:freecleaning,
+           Supportscreen:support
+          }),
+          locationscreen:location,
+          frequency: Frequency,
+          cleanindetailsscreen:CleaningDetails,
+          datetimescreen:DateAndTime,
+          Addressdetailsscreen:Addressdetails,
+          Paymentscreen :Payment,
+
+        })
+        },
   );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-//New Line
-//New Line Ffrom Clonned
-//Another New Line Ffrom Clonned
-//New Line From Ali
-//New Line From Hala
-//Test Ali
+
+const App= createAppContainer(navigator);
+export default ()=>{
+return (
+<AuthProvider><App /></AuthProvider>);}
+  
