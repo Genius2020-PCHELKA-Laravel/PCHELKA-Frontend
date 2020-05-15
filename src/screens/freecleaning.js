@@ -14,7 +14,7 @@ const freecleaning = ({ navigation }) => {
         <FontAwesome5 name="bars" size={24} color="#161924" />
       </TouchableOpacity>
       <View>
-         <Text style={styles.Text}> Account Setting </Text>
+         <Text style={styles.Text}> free cleacning screen</Text>
       </View>
     </SafeAreaView>
   </View>);

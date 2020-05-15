@@ -9,7 +9,7 @@ const DateAndTime= ({ navigation }) => {
   return (
   <View> 
     <Text style={styles.text}>DateAndTime screen </Text>
-    <Button title="Next" onPress={()=>{navigation.navigate('Addressdetailsscreen')}}/>
+    <Button title="Next" onPress={()=>{navigation.navigate('Addresses')}}/>
  
   </View>);
 };

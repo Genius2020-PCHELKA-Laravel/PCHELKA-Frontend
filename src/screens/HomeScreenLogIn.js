@@ -16,12 +16,12 @@ const HomeScreenLogIn = ({ navigation }) => {
          
       
         <TouchableOpacity
-        style={{alignItems:"center",margin:16,paddingTop:20}} 
+        style={{alignItems:"center",margin:16,paddingTop:1}} 
          onPress={()=> navigation.navigate('locationscreen')}>
          <AntDesign name="login" size={24} color="black"/>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{alignItems:"flex-end",margin:16,paddingTop:20,paddingLeft:300}} 
+          <TouchableOpacity style={{alignItems:"flex-end",margin:16,paddingTop:1,paddingLeft:270}} 
            onPress={navigation.openDrawer }>
             <FontAwesome5 name="bars" size={24} color="#161924" />
           </TouchableOpacity>
@@ -42,11 +42,8 @@ const HomeScreenLogIn = ({ navigation }) => {
     </ScrollView>
     </View>);
 };
-HomeScreenLogIn.dnavigationOptions=()=>{
-    return{
-    Header:null
-    }
-}
+
+
 
 const styles = StyleSheet.create({
   text: {

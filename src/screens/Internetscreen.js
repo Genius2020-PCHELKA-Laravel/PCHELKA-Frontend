@@ -26,12 +26,13 @@ const Internetscreen = ({ navigation }) => {
       Alert.alert('connection', 
       state.isConnected?'is connected':'is not connected',
        [{ text: 'OK', onPress: () => {
-         if(state.isConnected && token=='') 
-         {navigation.navigate('Homepage');}
-         else{
-           if(state.isConnected && token!='')
-         navigation.navigate('Home1');}
+     //  if(state.isConnected && token=='') 
+     //  {navigation.navigate('Homepage');}
+      //  else{
+    //      if(state.isConnected && token!='')
+         navigation.navigate('Home1');
         }
+       // }
        }]);
       
     });

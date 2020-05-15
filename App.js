@@ -22,6 +22,7 @@ import DateAndTime from './src/screens/DateAndTime';
 import  CleaningDetails from './src/screens/CleaningDetails';
 import Addressdetails from './src/screens/Addressdetails';
 import Payment from './src/screens/Payment';
+import Slidebar from './src/components/SlideBar';
   const navigator = createSwitchNavigator({
         internet: Internetscreen ,
         
@@ -33,8 +34,8 @@ import Payment from './src/screens/Payment';
             frequency: Frequency,
             cleanindetailsscreen:CleaningDetails,
             datetimescreen:DateAndTime,
-            Paymentscreen :Payment,
-            Addressdetailsscreen:Addressdetails
+            Payment :Payment,
+            Addresses:Addressdetails
            
           }),
           h:createStackNavigator({
@@ -45,13 +46,14 @@ import Payment from './src/screens/Payment';
            Appointmentscreen:appointment,
            Freecleaningscreen:freecleaning,
            Supportscreen:support
-          }),
+          },{contentComponent:props=><Slidebar {...props}/> }
+          ),
           locationscreen:location,
           frequency: Frequency,
           cleanindetailsscreen:CleaningDetails,
           datetimescreen:DateAndTime,
-          Addressdetailsscreen:Addressdetails,
-          Paymentscreen :Payment,
+          Addresses:Addressdetails,
+          Payment:Payment,
 
         })
         },

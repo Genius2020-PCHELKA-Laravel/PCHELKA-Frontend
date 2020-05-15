@@ -17,7 +17,7 @@ const location = () =>{
 const [location, setLocation] = useState(null);
 const [errorMsg, setErrorMsg] = useState(null);
 
-useEffect(() => {
+/*useEffect(() => {
   (async () => {
     let { status } = await Location.requestPermissionsAsync();
     if (status !== 'granted') {
@@ -33,7 +33,7 @@ let text = 'Waiting..';
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-  }
+  }*/
     return (<View>
 
       

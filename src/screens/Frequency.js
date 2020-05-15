@@ -57,7 +57,7 @@ const Frequency = ({ navigation }) => {
   }}
   onPress={() => {navigation.navigate('cleanindetailsscreen')}} />
         
-              <Text>Footer</Text>
+              <Text>Total $:</Text>
             
           </FooterTab>
         </Footer>

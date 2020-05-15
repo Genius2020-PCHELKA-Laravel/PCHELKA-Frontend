@@ -1,10 +1,18 @@
 import React from 'react';
-import { Text, StyleSheet, View, Button,SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, Button,SafeAreaView,AsyncStorage, TouchableOpacity } from 'react-native';
 
 import {FontAwesome5} from '@expo/vector-icons';
 
 const setting = ({ navigation }) => {
-    
+  getData = async () => {
+    try {
+      const value = await AsyncStorage.removeItem('token')
+      
+      
+    } catch(e) {
+      // error reading value
+    }
+  }
   
   return (
     <View style={styles.container}>
@@ -13,10 +21,19 @@ const setting = ({ navigation }) => {
        onPress={navigation.openDrawer }>
         <FontAwesome5 name="bars" size={24} color="#161924" />
       </TouchableOpacity>
+
+
       <View>
          <Text style={styles.Text}> Account Setting </Text>
+         <TouchableOpacity >
+           <Text>LOGOUT</Text>
+         </TouchableOpacity>
       </View>
     </SafeAreaView>
+
+
+
+    
   </View>);
 };
 

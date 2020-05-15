@@ -8,8 +8,9 @@ const Addressdetails= ({ navigation }) => {
   
   return (
   <View> 
-    <Text style={styles.text}>Addressdetails screen </Text>
-    <Button title="Next" onPress={()=>{navigation.navigate('Paymentscreen')}}/>
+    <Text style={styles.text}>Address details screen </Text>
+    <Text style={styles.text}>Your saved Address </Text>
+    <Button title="ADD NEW" onPress={()=>{navigation.navigate('Payment')}}/>
  
   </View>);
 };
