@@ -1,16 +1,31 @@
-import React from 'react';
-import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
-import { CheckBox } from 'react-native-elements'
-
+import React ,{useEffect}from 'react';
+import {  StyleSheet,  View, TouchableOpacity } from 'react-native';
+import {Container,Footer, FooterTab,Button,Text,} from 'native-base';
+import { CheckBox,Icon } from 'react-native-elements'
+import Radio1 from './Radio1';
 
 const Frequency = ({ navigation }) => {
-    
-  
+ 
   return (
-  <View> 
-    <Text style={styles.text}>frequency </Text>
+  <View style={{flex:1}}> 
     
-  <Button title="Next" onPress={()=>{navigation.navigate('cleanindetailsscreen')}}/>
+    <Radio1  />
+  
+  <Footer>
+          <FooterTab>
+          <Icon
+             raised
+            name='heartbeat'
+            type='font-awesome'
+            color='#f50'
+  style={{marginBottom:40
+  }}
+  onPress={() => {navigation.navigate('cleanindetailsscreen')}} />
+        
+              <Text>Footer</Text>
+            
+          </FooterTab>
+        </Footer>
   </View>);
 };
 
