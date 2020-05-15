@@ -23,6 +23,8 @@ import  CleaningDetails from './src/screens/CleaningDetails';
 import Addressdetails from './src/screens/Addressdetails';
 import Payment from './src/screens/Payment';
 import Slidebar from './src/components/SlideBar';
+
+import { Modal } from 'react-native-paper';
   const navigator = createSwitchNavigator({
         internet: Internetscreen ,
         
@@ -35,8 +37,8 @@ import Slidebar from './src/components/SlideBar';
             cleanindetailsscreen:CleaningDetails,
             datetimescreen:DateAndTime,
             Payment :Payment,
-            Addresses:Addressdetails
-           
+            Addresses:Addressdetails,
+          
           }),
           h:createStackNavigator({
             

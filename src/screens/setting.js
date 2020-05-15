@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, Button,SafeAreaView,AsyncStorage, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, Button,SafeAreaView,AsyncStorage, ImageBackground,Image,TouchableOpacity } from 'react-native';
 
 import {FontAwesome5} from '@expo/vector-icons';
 
@@ -21,10 +21,14 @@ const setting = ({ navigation }) => {
        onPress={navigation.openDrawer }>
         <FontAwesome5 name="bars" size={24} color="#161924" />
       </TouchableOpacity>
-
-
+      
+      <ImageBackground source={require('../../assets/back.jpg') } 
+    style={{width:undefined,padding:16,paddingTop:48}}>
+        <Image source={require('../../assets/profile.png') } styles={styles.profile}/>  
+        <Text style={styles.text}>hala ibrahim</Text>
+    </ImageBackground>
       <View>
-         <Text style={styles.Text}> Account Setting </Text>
+       
          <TouchableOpacity >
            <Text>LOGOUT</Text>
          </TouchableOpacity>
