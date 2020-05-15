@@ -83,7 +83,7 @@ const Payment= ({ navigation }) => {
   }}
   onPress={() => {navigation.navigate('')}} />
         
-              <Text>Total $:</Text>
+              <Text>Total</Text>
             
           </FooterTab>
         </Footer>
