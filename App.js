@@ -61,12 +61,8 @@ import { Modal } from 'react-native-paper';
         },
   );
 
-//////////////////////
-/////comments from maher
+
 const App= createAppContainer(navigator);
 export default ()=>{
 return (
 <AuthProvider><App /></AuthProvider>);}
-  
-  //////
-//dfdfdfdf

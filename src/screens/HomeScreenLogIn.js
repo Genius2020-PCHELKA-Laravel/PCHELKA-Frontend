@@ -3,8 +3,12 @@ import { Text,StyleSheet, View, Button,ScrollView, SafeAreaView,Image,TouchableO
 import { Header } from 'react-native-elements';
 import {AntDesign,FontAwesome5} from '@expo/vector-icons';
 import Servicesdetails from '../components/Servicesdetails';
-const HomeScreenLogIn = ({ navigation }) => {
-  
+import i18n  from '../locales/i18n';
+import { withNamespaces } from 'react-i18next';
+const HomeScreenLogIn = ({ navigation,t }) => {
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  }
   return (<View> 
    
   
@@ -21,6 +25,18 @@ const HomeScreenLogIn = ({ navigation }) => {
          <AntDesign name="login" size={24} color="black"/>
           </TouchableOpacity>
 
+
+          <TouchableOpacity style={{alignItems:"flex-end",margin:16,paddingTop:1,paddingLeft:270}} 
+           onPress={() => changeLanguage('en')}>
+            <Text>EN</Text>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity style={{alignItems:"flex-end",margin:16,paddingTop:1,paddingLeft:270}} 
+           onPress={() => changeLanguage('ru')}>
+            <Text>RU</Text>
+          </TouchableOpacity>          
+
           <TouchableOpacity style={{alignItems:"flex-end",margin:16,paddingTop:1,paddingLeft:270}} 
            onPress={navigation.openDrawer }>
             <FontAwesome5 name="bars" size={24} color="#161924" />
@@ -29,7 +45,7 @@ const HomeScreenLogIn = ({ navigation }) => {
           </View>
     <TouchableOpacity onPress={()=> navigation.navigate('frequency')}>
     <Image  style={styles.image} source={require('../../assets/homecleaning.jpg')}/>
-      <Text style={styles.text}>Book Now</Text>
+      <Text style={styles.text}>{t('Welcome')}</Text>
       </TouchableOpacity>
     
     </View >
@@ -67,4 +83,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HomeScreenLogIn;
+export default withNamespaces()(HomeScreenLogIn);
