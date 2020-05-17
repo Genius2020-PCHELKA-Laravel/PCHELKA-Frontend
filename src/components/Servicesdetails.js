@@ -48,10 +48,10 @@ const servicesdetails = ({ navigation,title , imagesource,t}) => {
       padding:5,
       marginLeft:30,
       marginRight:30,
-      backgroundColor:'#FFD300',
+      backgroundColor:'#DAA520',
       borderRadius:10,
       borderWidth: 1,
-      borderColor: '#fff',
+      borderColor: '#DAA520',
       fontSize: 16,
       fontWeight:"500",
       fontFamily:'Comfortaa-Bold'    
