@@ -1,3 +1,9 @@
 {
-    "Welcome": "Welcome"
+      // HomeScreenLogin
+    "booknow": "Book Now",
+    "homescreentext": "What other services can we help you with?",
+    "fulltimemade":"Full Time Maid",
+    "laundary": "Laundary",
+    "disinfectionservices": "Disinfection Services",
+    "sofacleaning": "Sofa Cleaning"
   }

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image,Button, TouchableOpacity } from 'react-native';
-const servicesdetails = ({ navigation,title , imagesource}) => {
+import { withNamespaces } from 'react-i18next';
+
+const servicesdetails = ({ navigation,title , imagesource,t}) => {
     
     
     return (<View style={styles.container}>  
       <Image  style={styles.image} source={imagesource}/>
       <Text style={styles.text}> {title} </Text>
-      <Text style={styles.text}> Book Now </Text>
+      <Text style={styles.text}> {t('booknow')} </Text>
     
       </View>);
   };
@@ -24,4 +26,4 @@ const servicesdetails = ({ navigation,title , imagesource}) => {
     container:{marginLeft:4}
   });
   
-  export default servicesdetails;
+  export default withNamespaces()(servicesdetails);

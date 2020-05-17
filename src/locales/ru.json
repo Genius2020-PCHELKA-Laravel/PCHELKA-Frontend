@@ -1,3 +1,9 @@
 {
-    "Welcome": "Willkommen"
+  // HomeScreenLogin
+    "booknow": "Забронируйте сейчас",
+    "homescreentext": "С какими еще услугами мы можем вам помочь?",
+    "fulltimemade":"Полная занятость Горничная",
+    "laundary": "Прачечная",
+    "disinfectionservices": "Дезинфекционные услуги",
+    "sofacleaning": "Чистка диванов"
   }
