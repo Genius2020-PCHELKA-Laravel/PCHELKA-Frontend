@@ -1,37 +1,56 @@
-import React,{useEffect,useState} from 'react';
+import React,{ Component,useEffect,useState,useContext} from 'react';
+import { fingerprintIcon, deleteIcon, closeIcon } from '../../static';
 import { StyleSheet, Text, View ,AsyncStorage,FlatList,Image,TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input,Button  } from 'react-native-elements';
-import { Component } from 'react';
+
 import Timer from './Timer';
-import { fingerprintIcon, deleteIcon, closeIcon } from '../../static';
-import Pincode1 from './Pincode1';
+
+
+import {Context as Authcontext1} from '../screens/context/Authcontext';
 //import AsyncStorage from '@react-native-community/async-storage';
 const arrayOfNumbers = [
   { key: 1 }, { key: 2 },{ key: 3 }, { key: 4 }, { key: 5 },{ key: 6 },{ key: 7 },{ key: 8 }, { key: 9 }, { key: 10 },{ key: 0 }, { key: 12 }
 ];
 
 const empties = [ { key: 1, value: ' ' },{ key: 2, value: ' ' }, { key: 3, value: ' ' }, { key: 4, value: ' ' }];
+
 let counter = 0;
 
 
 
-const verify=({navigation}) => {
-  state = {
-    code: '',
-    digitDisabled: false,
-    clearDisabled: false
-   
-  };
+const verify=props => {
+  const[token,settoken]=useState('');
+  getData = async () => {
+    try {
+      settoken(await AsyncStorage.getItem('token'));
+
+      console.log(token);
+      
+    } catch(e) {
+      console.log("error in token");
+    }
+  }
+  useEffect(() => {
+    this.getData();});
   
+const [code,setcode]=useState('');
+const [digitDisabled,setdigitDisabled]=useState(false);
+const [clearDisabled,setclearDisabled]=useState(false);
+const [ vernumber,setvernumber]=useState('');
+const [allowClear,setallowClear]=useState(false);
+
+ 
   
- const[token,settoken]=useState('');
+ const {state,verifysms}=useContext(Authcontext1);
   
  
-   const data= fname = navigation.getParam('data');
- 
-   
   
+ 
+   const data= fname = props.navigation.getParam('data');
+ 
+   const otp= props.navigation.getParam('ver');
+  /*
    onsubmit=async()=>{
      try{
      // await AsyncStorage.removeItem('token') ;
@@ -39,26 +58,94 @@ const verify=({navigation}) => {
     await AsyncStorage.setItem('token','123')
   }
     catch(err){console.log(err);}
-   }
-   getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token')
-      
-      if(value !='') {
-        settoken(value)
-      }
-    } catch(e) {
-      // error reading value
-    }
-  }
- 
+   
+ */
 
  
+onEnterDigit = (num, index) => {
+    
+    
+  if (counter + 1 <= 4) {
+    counter++;
+    empties[counter - 1].value = num;
+   setclearDisabled(false);
+      
+   
+  }
+  if (counter === 4) {
+   setvernumber(this.joinElements());
+    console.log(vernumber);
+    
+     setdigitDisabled (true) ;
+  
+  }
+};
+
+joinElements = () => {
+  
+  let pincode = '';
+  empties.forEach(item => {
+    pincode += `${item.value}`;
+  });
+  var s="";
+  var i=4;
+  while(i>0){s+=pincode.substring(i-1,i);
+  i--;}
+  return s;
+};
+
+onRemoveDigit = () => {
+  if (counter - 1 >= 0) {
+    --counter;
+    empties[counter].value = ' ';
+   setdigitDisabled(false);
+   
+  } else {
+   setallowClear(true);
+    
+  }
+};
+renderItemCell = ({ item, index }) => {
+  const { withTouchId = false } = props;
+  if (index === 9) {
+    if(withTouchId) {
+      return (
+        <TouchableOpacity style={[styles.round, styles.centerAlignment]} onPress={() => props.onPressTouchId()} >
+          <Image source={fingerprintIcon.src} style={styles.icon} />
+        </TouchableOpacity>
+      );
+    }else{
+      return <View style={[styles.round]} />;
+    }
+    
+  } else if (index === 11) {
+    return (
+      <TouchableOpacity
+        style={[styles.round, styles.centerAlignment]}
+        onPress={this.onRemoveDigit}
+        disabled={clearDisabled}
+      >
+        <Image source={deleteIcon.src} style={styles.deleteIcon} />
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity
+        style={[styles.round, styles.centerAlignment]}
+        onPress={() => this.onEnterDigit(item.key)}
+        disabled={digitDisabled}
+      >
+        <Text style={styles.digit}>{item.key}</Text>
+      </TouchableOpacity>
+    );
+  }
+};
+
+const { spaceColor, closeButtonColor } = props;
  
    
   useEffect(()=>{
-    this.onsubmit();
-     this.getData();
+    
     
  
    })
@@ -67,11 +154,35 @@ const verify=({navigation}) => {
   <View style={styles.container}>
       <Text style={styles.Texts}>  verify phone number  </Text>
       <Text style={styles.Texts}> {JSON.stringify(data)}  </Text>
-    
- 
-        
-          <Timer />
-         <Pincode1/>
+      <Text style={styles.Texts}> {JSON.stringify(otp)}  </Text>
+  <Text style={styles.Texts}> </Text>
+      <Text style={styles.Texts}>   </Text>
+         <Timer />
+         <View style={styles.container}>
+         {state.errorMessage?<Text style={styles.Texts}> {state.errorMessage}  </Text>:null}
+      <View style={styles.enterView}>
+        {empties.map(item => (
+          <View key={item.key} style={styles.digitView}>
+            <Text style={styles.digit}>{item.value}</Text>
+            <View style={[styles.redSpace, { backgroundColor: spaceColor || '#FF0000'}]} />
+          </View>
+        ))}
+      </View>
+      <View style={[styles.textView, styles.centerAlignment]}>
+        <Text style={styles.instruction}>
+          {props.descriptionText || 'Please enter pincode for entry'}
+        </Text>
+       
+      </View>
+      <View style={styles.flatcontainer}>
+        <FlatList
+          style={styles.flatlist}
+          data={arrayOfNumbers}
+          renderItem={this.renderItemCell}
+          numColumns={3}
+        />
+      </View>
+    </View>
       
      
     
@@ -85,6 +196,19 @@ const verify=({navigation}) => {
  }
  iconRight
  title="confirm"
+ onPress={() => {
+  enteredotp=  vernumber.toString() ;
+  mobile=data;
+
+  
+ console.log(enteredotp);
+  verifysms(enteredotp,otp,mobile);
+if(token!='')
+ props.navigation.navigate('Home1');
+}
+ }
+
+
 
 />
     </View>);

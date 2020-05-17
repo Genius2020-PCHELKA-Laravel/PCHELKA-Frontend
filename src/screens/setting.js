@@ -1,9 +1,10 @@
-import React from 'react';
+import React ,{useContext}from 'react';
 import { Text, StyleSheet, View, Button,SafeAreaView,AsyncStorage, ImageBackground,Image,TouchableOpacity } from 'react-native';
-
+import {Context as Authcontext2} from '../screens/context/Authcontext';
 import {FontAwesome5} from '@expo/vector-icons';
 
 const setting = ({ navigation }) => {
+  const {signout} =useContext(Authcontext2);
   getData = async () => {
     try {
       const value = await AsyncStorage.removeItem('token')
@@ -29,7 +30,8 @@ const setting = ({ navigation }) => {
     </ImageBackground>
       <View>
        
-         <TouchableOpacity >
+         <TouchableOpacity onPress={()=>{signout;
+        navigation.navigate('Homepage');}}>
            <Text>LOGOUT</Text>
          </TouchableOpacity>
       </View>

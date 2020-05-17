@@ -1,6 +1,6 @@
 import React, { Component ,useState, useEffect }from 'react';
 import { View, Text,StyleSheet, Button, Alert,  Platform } from 'react-native';
-//import {NetInfo} from 'react-native-netinfo';
+import {AsyncStorage} from 'react-native';
 import {Permissions} from 'expo';
 
 import  NetInfo from '@react-native-community/netinfo';
@@ -10,13 +10,12 @@ const Internetscreen = ({ navigation }) => {
   const[token,settoken]=useState('');
   getData = async () => {
     try {
-      const value = await AsyncStorage.getItem('token')
-      console.log(value);
-      if(value !='') {
-        settoken(value)
-      }
+      settoken(await AsyncStorage.getItem('token'));
+
+      console.log(token);
+      
     } catch(e) {
-      // error reading value
+      console.log("error in token");
     }
   }
   useEffect(() => {
@@ -26,13 +25,13 @@ const Internetscreen = ({ navigation }) => {
       Alert.alert('connection', 
       state.isConnected?'is connected':'is not connected',
        [{ text: 'OK', onPress: () => {
-     //  if(state.isConnected && token=='') 
-     //  {navigation.navigate('Homepage');}
-      //  else{
-    //      if(state.isConnected && token!='')
+      if(state.isConnected && token=='') 
+      {navigation.navigate('Homepage');}
+        else{
+         if(state.isConnected && token!='')
          navigation.navigate('Home1');
         }
-       // }
+        }
        }]);
       
     });

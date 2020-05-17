@@ -1,18 +1,20 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input,Button  } from 'react-native-elements';
-
+import {Context as Authcontext} from '../screens/context/Authcontext';
 
 
 const  loginphone =({navigation}) => {
-
+const {state,signin}=useContext(Authcontext);
 
  
 
  const [numbern,setNumber]=useState(''); 
+ 
  const [RandomNumber,setRandomNumber]=useState(0); 
 
+ 
   return (
     
      <View style={styles.container}>
@@ -27,6 +29,7 @@ const  loginphone =({navigation}) => {
            value={numbern}
            onChangeText={setNumber}
            />
+          
             { numbern.length!=10 ? <Text> phone should be 10</Text> : null }
 <Button
   icon={
@@ -38,13 +41,25 @@ const  loginphone =({navigation}) => {
   }
   iconRight
   title="verify"
-  onPress={() => {navigation.navigate('ver',{data:numbern}) ,
-  RandomNumb = Math.floor(Math.random() * 10000) + 1 ;
-console.log(RandomNumb);}}
+  
+  onPress={() => {
+    otp = Math.floor(1000+Math.random() * 9000).toString() ;
+   
+    navigation.navigate('ver',{data:numbern,ver:otp}) ;
+ 
+
+  mobile=numbern;
+
+  console.log({mobile,otp})
+  signin({mobile,otp});
+}}
   
 />
 
+
 <Text style={styles.Texts}> {numbern}  </Text>
+{state.errorMessage?<Text style={styles.Texts}> {state.errorMessage}  </Text>:null}
+
      </View>
   );
 }

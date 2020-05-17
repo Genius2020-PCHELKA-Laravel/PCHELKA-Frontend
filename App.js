@@ -4,8 +4,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 
 import HomeScreen from './src/screens/HomeScreen';
-import splashscreen from './src/screens/splashscreen';
-import loginphone from './src/screens/loginphone';
+import {setNavigator} from './src/NavigationRef';
 import verify from './src/screens/verify';
 import location from './src/screens/location';
 import Frequency from './src/screens/Frequency';
@@ -24,7 +23,7 @@ import Addressdetails from './src/screens/Addressdetails';
 import Payment from './src/screens/Payment';
 import Slidebar from './src/components/SlideBar';
 
-import { Modal } from 'react-native-paper';
+import loginphone from './src/screens/loginphone';
   const navigator = createSwitchNavigator({
         internet: Internetscreen ,
         
@@ -38,7 +37,7 @@ import { Modal } from 'react-native-paper';
             datetimescreen:DateAndTime,
             Payment :Payment,
             Addresses:Addressdetails,
-          
+           
           }),
           h:createStackNavigator({
             
@@ -56,6 +55,7 @@ import { Modal } from 'react-native-paper';
           datetimescreen:DateAndTime,
           Addresses:Addressdetails,
           Payment:Payment,
+        
 
         })
         },
@@ -65,5 +65,5 @@ import { Modal } from 'react-native-paper';
 const App= createAppContainer(navigator);
 export default ()=>{
 return (
-<AuthProvider><App /></AuthProvider>);}
+<AuthProvider><App ref={(navigator)=>{setNavigator(navigator)}}/></AuthProvider>);}
   
