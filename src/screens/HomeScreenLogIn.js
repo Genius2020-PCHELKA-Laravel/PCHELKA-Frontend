@@ -7,7 +7,7 @@ import i18n  from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { AsyncStorage } from "react-native";
-import Spacer from '../components/Spaceer';
+import Spacer from '../components/Spacer';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Slider from '../components/Slider'
@@ -74,20 +74,25 @@ const HomeScreenLogIn = ({ navigation,t }) => {
     return <AppLoading />;
   } else {
   return (<> 
+        <Spacer></Spacer>
+        <Spacer></Spacer>
         <ScrollView>
           <Spacer>
             <View style={styles.topcontainer}>
               <TouchableOpacity  onPress={()=> navigation.navigate('locationscreen')}>
-                <AntDesign name="login" size={24} color="black"/>
+                 <Text style={styles.topButtonStyle}>
+                 {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
+                 </Text>
+                {/* <AntDesign name="login" size={24} color="black"/> */}
               </TouchableOpacity>
               {shouldShow ? 
                     <TouchableOpacity activeOpacity = { .5 } onPress={()=>changeLanguage('ru')}>
-                        <Text style={styles.ButtonStyle}>Russian</Text>
+                        <Text style={styles.topButtonStyle}>русский</Text>
                     </TouchableOpacity>
-              : 
-                <TouchableOpacity  activeOpacity = { .5 } onPress={()=>changeLanguage('en')}>
-                    <Text style={styles.ButtonStyle}>English</Text>
-                </TouchableOpacity> 
+                  : 
+                    <TouchableOpacity  activeOpacity = { .5 } onPress={()=>changeLanguage('en')}>
+                        <Text style={styles.topButtonStyle}>English</Text>
+                    </TouchableOpacity> 
               }
 
               
@@ -180,19 +185,16 @@ const styles = StyleSheet.create({
   bottomcontainer:{
     margin: 0
   },  
-  ButtonStyle: {
-    marginTop:5,
+  topButtonStyle: {
     padding:5,
-    marginLeft:30,
-    marginRight:30,
-    backgroundColor:'#DAA520',
+    //backgroundColor:'#DAA520',
     borderRadius:10,
     borderWidth: 1,
     borderColor: '#DAA520',
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 12,
     fontWeight:"500",
     fontFamily:'Comfortaa-Bold'    
   },  

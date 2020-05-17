@@ -41,14 +41,16 @@ import loginphone from './src/screens/loginphone';
           }),
           h:createStackNavigator({
             
-          Home1:createDrawerNavigator({
+          Home1:{
+            navigationOptions: { headerShown: false },
+            screen: createDrawerNavigator({
             LogIn:HomeScreenLogIn,
            Settingscreen: setting,
            Appointmentscreen:appointment,
            Freecleaningscreen:freecleaning,
            Supportscreen:support
           },{contentComponent:props=><Slidebar {...props}/> }
-          ),
+          )},
           locationscreen:location,
           frequency: Frequency,
           cleanindetailsscreen:CleaningDetails,
