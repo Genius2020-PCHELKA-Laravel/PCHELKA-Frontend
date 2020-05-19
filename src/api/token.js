@@ -18,3 +18,11 @@ export const setToken = async (token) => {
         return null;
     }
 };
+
+export const removeToken = async (token) => {
+    try {
+        await AsyncStorage.removeItem('@auth_token');
+    } catch (e) {
+        return null;
+    }
+};

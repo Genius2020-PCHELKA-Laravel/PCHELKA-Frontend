@@ -81,9 +81,9 @@ const HomeScreenLogIn = ({ navigation, t }) => {
       <ScrollView>
         <Spacer>
           <View style={styles.topcontainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('locationscreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.topButtonStyle}>
-                {t('logout')} <FontAwesome5 name="user" size={18} color="#161924" />
+                {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
               </Text>
               {/* <AntDesign name="login" size={24} color="black"/> */}
             </TouchableOpacity>
@@ -108,9 +108,9 @@ const HomeScreenLogIn = ({ navigation, t }) => {
                   containerStyle={{height: 40}}
                   onChangeItem={item => changeLanguage(item.value)}
               />  */}
-            <TouchableOpacity onPress={navigation.openDrawer}>
+            {/* <TouchableOpacity onPress={navigation.openDrawer}>
               <FontAwesome5 name="bars" size={24} color="#161924" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
           </View>
         </Spacer>

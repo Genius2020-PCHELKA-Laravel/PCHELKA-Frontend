@@ -8,15 +8,22 @@ import { getToken } from '../api/token';
 
 
 const InternetScreen = ({ navigation }) => {
-  const [stateToken, setStateToken] = useState('');
+  //const [stateToken, setStateToken] = useState('');
   const [connected, setconnected] = useState(true);
 
   getData = async () => {
     try {
       const token = await getToken();
-      setStateToken(token);
-      console.log(token);
-
+      console.log("Get Data: " + token);
+      NetInfo.fetch().then(state => {
+        setconnected(state.connected);
+        console.log("Internet token>>>>>>>>>>>>>" + typeof (token));
+        console.log("Internet token>>>>>>>>>>>>>" + token);
+        if (state.isConnected && typeof (token) == 'undefined') { navigation.navigate('HomeScreenLogIn'); }
+        else if (state.isConnected && typeof (token) != 'undefined') {
+          navigation.navigate('HomeScreen');
+        }
+      });
     } catch (e) {
       console.log("error in token");
     }
@@ -40,16 +47,9 @@ const InternetScreen = ({ navigation }) => {
   //   });
   // });
   useEffect(() => {
-    this.getData();
-    NetInfo.fetch().then(state => {
-      setconnected(state.connected);
-      if (state.isConnected && typeof (stateToken) == 'undefined') { navigation.navigate('HomeScreen'); }
-      else {
-        if (state.isConnected && typeof (stateToken) != 'undefined')
-          navigation.navigate('HomeScreenLogIn');
-      }
-    });
-  });
+    getData();
+
+  }, []);
   return (<View>
     {
       connected ? <Text>No Internet</Text> : <Text></Text>

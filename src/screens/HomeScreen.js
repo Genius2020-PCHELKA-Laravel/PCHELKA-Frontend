@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, StyleSheet, View, Button, ScrollView, SafeAreaView, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Header } from 'react-native-elements';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
@@ -11,13 +11,16 @@ import Spacer from '../components/Spacer';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Slider from '../components/Slider'
+import { Context as AuthContext } from './context/AuthContext';
 const HomeScreen = ({ navigation, t }) => {
+  const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
   const [shouldShow, setShouldShow] = useState(true);
   const [lang, setLang] = useState('en');
   //const [dropdownContents, setDropdownContents] = useState('');
+
   function useFonts(fontMap) {
     let [fontsLoaded, setFontsLoaded] = useState(false);
     (async () => {
@@ -79,12 +82,17 @@ const HomeScreen = ({ navigation, t }) => {
       <ScrollView>
         <Spacer>
           <View style={styles.topcontainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity onPress={() => { logout(); navigation.navigate('HomeScreenLogIn'); }}>
               <Text style={styles.topButtonStyle}>
-                {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
+                {t('logout')} <FontAwesome5 name="user" size={18} color="#161924" />
               </Text>
               {/* <AntDesign name="login" size={24} color="black"/> */}
             </TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.topButtonStyle}>
+                {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
+              </Text>
+            </TouchableOpacity> */}
             {shouldShow ?
               <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                 <Text style={styles.topButtonStyle}>русский</Text>
