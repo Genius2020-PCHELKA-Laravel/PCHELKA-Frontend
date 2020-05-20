@@ -19,9 +19,9 @@ const InternetScreen = ({ navigation }) => {
         setconnected(state.connected);
         console.log("Internet token>>>>>>>>>>>>>" + typeof (token));
         console.log("Internet token>>>>>>>>>>>>>" + token);
-        if (state.isConnected && typeof (token) == 'undefined') { navigation.navigate('HomeScreenLogIn'); }
+        if (state.isConnected && typeof (token) == 'undefined') { navigation.navigate('LoginFlow'); }
         else if (state.isConnected && typeof (token) != 'undefined') {
-          navigation.navigate('HomeScreen');
+          navigation.navigate('Dashboard');
         }
       });
     } catch (e) {
@@ -52,7 +52,7 @@ const InternetScreen = ({ navigation }) => {
   }, []);
   return (<View>
     {
-      connected ? <Text>No Internet</Text> : <Text></Text>
+      // connected ? <Text>No Internet</Text> : <Text></Text>
     }
   </View>);
 };

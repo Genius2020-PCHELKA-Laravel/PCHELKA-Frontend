@@ -16,7 +16,7 @@ import MapComponent from '../components/MapComponent';
 import GooglePlacesInput from '../components/GooglePlacesInput';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from './context/AuthContext';
-import { navigate } from '../NavigationRef';
+import { navigate } from '../navigationRef';
 
 const RegisterUserScreen = ({ navigation }) => {
     const { state, register } = useContext(AuthContext);
@@ -43,7 +43,17 @@ const RegisterUserScreen = ({ navigation }) => {
         }
         //Show Loader
         setLoading(true);
-        var result = await register({ fullName: fullName, email: email, dateOfBirth: "1997-01-01", gender: "Male", language: "Ar" });
+        var result = await register({
+            fullName: fullName, email: email, language: "Ar",
+            address: "sdsad",
+            lat: "-87.8",
+            lon: "-99.18",
+            details: "sdsad",
+            area: "sdsad",
+            street: "sadasd",
+            buildingNumber: "asdsa",
+            apartment: "sadsad"
+        });
         //setTimeout(function () {
         try {
             //Hide Loader

@@ -1,35 +1,61 @@
-import React from 'react';
-import { StyleSheet,ScrollView,ImageBackground,Image, Text, View } from 'react-native';
-import {DrawerNavigatorItems} from 'react-navigation-drawer';
-import  {Ionicons} from '@expo/vector-icons';
-export default SlideBar=props=>{
-    return(
-<ScrollView>
-    <ImageBackground source={require('../../assets/back.jpg') } 
-    style={{width:undefined,padding:16,paddingTop:48}}>
-        <Image source={require('../../assets/profile.png') } styles={styles.profile}/>  
-        <Text style={styles.text}>hala ibrahim</Text>
-    </ImageBackground>
-    <View>
-        <DrawerNavigatorItems {...props}/>
-    </View>
-</ScrollView>);
+import React, { useEffect, useContext, useState } from 'react';
+import { StyleSheet, ScrollView, ImageBackground, Image, Text, View } from 'react-native';
+import { DrawerNavigatorItems } from 'react-navigation-drawer';
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+
+import { Context as UserContext } from '../screens/context/UserContext';
+import { Avatar } from 'react-native-elements';
+
+export default SlideBar = props => {
+    //const { state, getUserDetails } = useContext(UserContext);
+    const { state, getUserDetails } = useContext(UserContext);
+    const [name, setName] = useState(null);
+
+    useEffect(() => {
+        console.log("11111111");
+        var fullName = getUserDetails();
+        console.log(name);
+        setName(fullName);
+        console.log("22222222");
+    }, []);
+    return (
+        <ScrollView style={styles.container}>
+            <View
+                style={{ padding: 16, paddingTop: 48 }}>
+                <Avatar
+                    xlarge
+                    rounded
+                    icon={{ name: 'user', type: 'font-awesome' }}
+                    onPress={() => console.log("Works!")}
+                    activeOpacity={0.7}
+                    containerStyle={{ flex: 5, marginRight: 60, backgroundColor: '#666' }}
+                />
+                {/* <Image source={require('../../assets/profile.png')} styles={styles.profile} /> */}
+                <Text style={styles.text}>{state.name}</Text>
+            </View>
+            <View>
+                <DrawerNavigatorItems {...props} />
+            </View>
+        </ScrollView>);
 }
 const styles = StyleSheet.create({
-    container:{
-        flex:1
+    container: {
+        flex: 1,
+        backgroundColor: '#ccc',
+        opacity: 0.5
     },
-    profile:{
-        width:80,
-        height:80,
-        borderRadius:50,
-        borderWidth:3,
-        borderColor:'#FFF',
+    profile: {
+        width: 80,
+        height: 80,
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: '#FFF',
     }
-  ,  text: {
-      fontSize: 30,
-      color:'#fff',
-      marginVertical:8,
-      fontWeight:"800"
+    , text: {
+        fontSize: 30,
+        color: '#fff',
+        marginVertical: 8,
+        fontWeight: "800"
     }
-  });
+});

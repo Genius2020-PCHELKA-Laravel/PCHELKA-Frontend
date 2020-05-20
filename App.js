@@ -4,13 +4,14 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import HomeScreen from './src/screens/HomeScreen';
-import { setNavigator } from './src/NavigationRef';
+import { setNavigator } from './src/navigationRef';
 import verify from './src/screens/verify';
 import location from './src/screens/location';
 import FrequencyScreen from './src/screens/FrequencyScreen';
 import freecleaning from './src/screens/freecleaning';
 import LogIn from './src/screens/LogIn';
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
+import { Provider as UserProvider } from './src/screens/context/UserContext';
 import { exp } from 'react-native-reanimated';
 import InternetScreen from './src/screens/InternetScreen';
 import SettingScreen from './src/screens/SettingScreen';
@@ -26,6 +27,7 @@ import RegisterUserScreen from './src/screens/RegisterUserScreen';
 import Payment from './src/screens/Payment';
 import Slidebar from './src/components/SlideBar';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LoginButton from './src/components/LoginButton';
 
 // const navigator = createSwitchNavigator({
 //   switch1: createStackNavigator({
@@ -48,24 +50,37 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-const MainFlow = createStackNavigator({
-  Internet: InternetScreen,
-  HomeScreen: { navigationOptions: { headerShown: false }, screen: HomeScreen },
-  HomeScreenLogIn: { navigationOptions: { headerShown: false }, screen: HomeScreenLogIn },
-  Login: LoginPhoneScreen,
-  Verify: VerifyScreen,
-  Register: { navigationOptions: { headerShown: false }, screen: RegisterUserScreen },
-  Frequency: { screen: FrequencyScreen },
 
 
-},
+
+
+const HomeStackNavigator = createStackNavigator(
   {
-    initialRouteName: 'Internet',
-    defaultNavigationOptions: {
-      headerShown: true
+    HomeNavigator: HomeScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        title: '',
+        headerLeft: () =>
+          <Icon
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="md-menu"
+            size={30}
+          />,
+        headerRight: () => (
+          <LoginButton />
+        )
+        ,
+        headerStyle: {
+          backgroundColor: '#FF9800',
+        },
+        headerTintColor: '#fff',
+      };
     }
-  });
-
+  }
+);
 const SettingStackNavigator = createStackNavigator(
   {
     SettingNavigator: SettingScreen
@@ -73,13 +88,18 @@ const SettingStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
+        title: 'Settings',
         headerLeft: () =>
           <Icon
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu"
             size={30}
-          />
+          />,
+        headerStyle: {
+          backgroundColor: '#FF9800',
+        },
+        headerTintColor: '#fff',
       };
     }
   }
@@ -92,32 +112,82 @@ const AppoitmentStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
+        title: 'Appoitment',
         headerLeft: () =>
           <Icon
             style={{ paddingLeft: 10 }}
             onPress={() => navigation.openDrawer()}
             name="md-menu"
             size={30}
-          />
+          />,
+
+        headerStyle: {
+          backgroundColor: '#FF9800',
+        },
+        headerTintColor: '#fff',
       };
     }
   }
 );
+
 const AppDrawerNavigator = createDrawerNavigator({
+  HomeDrawerNavigator: {
+    screen: HomeStackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Home',
+    },
+  },
   SettingDrawerNavigator: {
-    screen: SettingStackNavigator
+    screen: SettingStackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Account Settings',
+    },
   },
   AppointmentDrawerNavigator: {
-    screen: AppoitmentStackNavigator
+    screen: AppoitmentStackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Appitments',
+    },
   }
+},
+  {
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
+    initialRouteName: "HomeDrawerNavigator",
+    contentOptions: {
+      activeTintColor: "#e91e63"
+    },
+    drawerPosition: 'left',
+    contentComponent: props => <Slidebar {...props} />
+  }
+);
+
+const LoginFlow = createStackNavigator({
+  // Internet: { navigationOptions: { headerShown: false }, screen: InternetScreen },
+  // HomeScreen: { navigationOptions: { headerShown: false }, screen: HomeScreen },
+  HomeScreenLogIn: { navigationOptions: { headerShown: false }, screen: HomeScreenLogIn },
+  Login: LoginPhoneScreen,
+  Verify: VerifyScreen,
+  Register: { navigationOptions: { headerShown: false }, screen: RegisterUserScreen },
+  Frequency: { screen: FrequencyScreen },
+},
+  {
+    initialRouteName: 'HomeScreenLogIn',
+    defaultNavigationOptions: {
+      headerShown: true
+    }
+  });
+
+const MainFlow = createSwitchNavigator({
+  Dashboard: { screen: AppDrawerNavigator },
+  LoginFlow: { screen: LoginFlow },
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
+  Internet: { navigationOptions: { headerShown: false }, screen: InternetScreen },
   MainFlow: { screen: MainFlow },
-  Dashboard: { screen: AppDrawerNavigator },
-
 });
-
 // const navigator = createSwitchNavigator({
 //   internet: { navigationOptions: { headerShown: false }, screen: Internetscreen },
 
@@ -168,6 +238,6 @@ const AppSwitchNavigator = createSwitchNavigator({
 const App = createAppContainer(AppSwitchNavigator);
 export default () => {
   return (
-    <AuthProvider><App ref={(AppSwitchNavigator) => { setNavigator(AppSwitchNavigator) }} /></AuthProvider>);
+    <AuthProvider><UserProvider><App ref={(navigator) => { setNavigator(navigator) }} /></UserProvider></AuthProvider>);
 }
 
