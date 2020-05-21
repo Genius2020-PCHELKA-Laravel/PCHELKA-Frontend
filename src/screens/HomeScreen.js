@@ -10,170 +10,79 @@ import { AsyncStorage } from "react-native";
 import Spacer from '../components/Spacer';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-import Slider from '../components/Slider'
+import Slider from '../components/Slider';
+import FontBold from '../components/FontBold';
 import { Context as AuthContext } from './context/AuthContext';
 const HomeScreen = ({ navigation, t }) => {
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-  const [shouldShow, setShouldShow] = useState(true);
-  const [lang, setLang] = useState('en');
   //const [dropdownContents, setDropdownContents] = useState('');
-
-  function useFonts(fontMap) {
-    let [fontsLoaded, setFontsLoaded] = useState(false);
-    (async () => {
-      await Font.loadAsync(fontMap);
-      setFontsLoaded(true);
-    })();
-    return [fontsLoaded];
-  }
-  let [fontsLoaded] = useFonts({
-    'Comfortaa-Regular': require('../../assets/fonts/Comfortaa-Regular.ttf'),
-    'Comfortaa-Bold': require('../../assets/fonts/Comfortaa-Bold.ttf'),
-    'Comfortaa-Light': require('../../assets/fonts/Comfortaa-Light.ttf'),
-  });
-  const storeKey = 'myLanguage';
-  storeData = async (selectedLanguage) => {
-    try {
-      await AsyncStorage.setItem(storeKey, selectedLanguage);
-      setLang(value);
-      changeLanguage(value);
-    } catch (error) {
-      // Error saving data
-    }
-  }
-
-  retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem(storeKey);
-      if (value !== null) {
-        // We have data!!
-        changeLanguage(value);
-        setLang(value);
-        if (value == 'en') {
-          setShouldShow(true);
-        }
-        else {
-          setShouldShow(false);
-        }
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  }
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    storeData(lng);
-    shouldShow ? setShouldShow(false) : setShouldShow(true);
-  }
-
-
-  useEffect(() => {
-    retrieveData();
-  }, []);
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
-    return (<>
-      <Spacer></Spacer>
-      <Spacer></Spacer>
-      <ScrollView>
-        <Spacer>
-          <View style={styles.topcontainer}>
-            <TouchableOpacity onPress={() => { logout(); navigation.navigate('HomeScreenLogIn'); }}>
-              <Text style={styles.topButtonStyle}>
-                {t('logout')} <FontAwesome5 name="user" size={18} color="#161924" />
-              </Text>
-              {/* <AntDesign name="login" size={24} color="black"/> */}
-            </TouchableOpacity>
-            {/* <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.topButtonStyle}>
-                {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
-              </Text>
-            </TouchableOpacity> */}
-            {shouldShow ?
-              <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
-                <Text style={styles.topButtonStyle}>русский</Text>
-              </TouchableOpacity>
-              :
-              <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
-                <Text style={styles.topButtonStyle}>English</Text>
-              </TouchableOpacity>
-            }
-
-
-            {/* <DropDownPicker
-                  items={[
-                      {label: 'English', value: 'en', selected: true},
-                      {label: 'Russian', value: 'ru'},
-                  ]}
-                  defaultIndex= {0}
-                  zIndex={2000}
-                  containerStyle={{height: 40}}
-                  onChangeItem={item => changeLanguage(item.value)}
-              />  */}
-            <TouchableOpacity onPress={navigation.openDrawer}>
-              <FontAwesome5 name="bars" size={24} color="#161924" />
-            </TouchableOpacity>
-
-          </View>
-        </Spacer>
-        <Slider style={{ height: imageHeight, width: imageWidth }} />
-        <Spacer>
-          <View style={styles.middlecontainer1}>
-            <TouchableOpacity onPress={() => navigation.navigate('frequency')}>
-              <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
+  return (<>
+    <ScrollView>
+      <Slider style={{ height: imageHeight, width: imageWidth }} />
+      <Spacer>
+        <View style={styles.middlecontainer1}>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen')}>
+            <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
+            <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen')}>
               <Text style={styles.booknowButtonStyle}>
-                {t('booknow')}{' '}
+                <FontBold value={t('booknow')}>
+                </FontBold>{' '}
                 <FontAwesome5 name="chevron-right" size={15} color="#161924" />
               </Text>
-              <Text style={styles.cleaningservicetext}>{t('cleaningservicetext')}</Text>
-              <Text style={styles.cleaningservicedetailtext}>{t('cleaningservicedetailtext')}</Text>
             </TouchableOpacity>
-          </View>
-        </Spacer>
-        <Spacer>
-          <View style={styles.everthingtext}>
-            <Text style={styles.everthingtext}>{t('everthingtext')}</Text>
-          </View>
-          <View style={styles.middlecontainer3}>
-            <Text style={styles.homescreentext}>{t('homescreentext')}</Text>
-          </View>
-        </Spacer>
-        <Spacer>
-          <View style={styles.bottomcontainer}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('fulltimemade')} imagesource={require('../../assets/maid.jpg')} />
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('laundary')} imagesource={require('../../assets/maid.jpg')} />
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('disinfectionservices')} imagesource={require('../../assets/disinfection.jpg')} />
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('sofacleaning')} imagesource={require('../../assets/sofa.jpg')} />
-            </ScrollView>
-          </View>
-        </Spacer>
-      </ScrollView>
-    </>)
-  };
+            <Text style={styles.cleaningservicetext}>
+              <FontBold value={t('cleaningservicetext')} />
+            </Text>
+            <Text style={styles.cleaningservicedetailtext}>
+              <FontBold value={t('cleaningservicedetailtext')} />
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Spacer>
+      <Spacer>
+        <View style={styles.everthingtext}>
+          <Text style={styles.everthingtext}>
+            <FontBold value={t('everthingtext')} />
+          </Text>
+        </View>
+        <View style={styles.middlecontainer3}>
+          <Text style={styles.homescreentext}>
+            <FontBold value={t('homescreentext')} />
+          </Text>
+        </View>
+      </Spacer>
+      <Spacer>
+        <View style={styles.bottomcontainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('fulltimemade')} imagesource={require('../../assets/maid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('laundary')} imagesource={require('../../assets/maid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('disinfectionservices')} imagesource={require('../../assets/disinfection.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('sofacleaning')} imagesource={require('../../assets/sofa.jpg')} />
+          </ScrollView>
+        </View>
+      </Spacer>
+    </ScrollView>
+  </>)
 };
-
-
 
 const styles = StyleSheet.create({
   everthingtext: {
     fontSize: 10,
     color: 'gray',
-    fontFamily: 'Comfortaa-Bold'
+    // fontFamily: 'Comfortaa-Bold'
   },
   homescreentext: {
     fontSize: 30,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Regular'
+    // fontFamily: 'Comfortaa-Regular'
   },
   servicetext: {
     fontSize: 14,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Light'
+    // fontFamily: 'Comfortaa-Light'
   },
   topcontainer: {
     flexDirection: 'row-reverse',
@@ -205,7 +114,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 12,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Bold'
+    // fontFamily: 'Comfortaa-Bold'
   },
   booknowButtonStyle: {
     margin: 5,
@@ -222,20 +131,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Bold',
+    // fontFamily: 'Comfortaa-Bold',
     padding: 5
   },
   cleaningservicetext: {
     margin: 5,
     position: "absolute",
-    top: 20,
+    top: 15,
     left: 10,
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: "900",
-    fontFamily: 'Comfortaa-Bold',
+    // fontFamily: 'Comfortaa-Bold',
     padding: 5,
   },
   cleaningservicedetailtext: {
@@ -246,9 +155,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'left',
-    fontSize: 14,
-    fontFamily: 'Comfortaa-Regular',
+    fontSize: 21,
+    // fontFamily: 'Comfortaa-Regular',
     padding: 5,
+    color: 'yellow'
   }
 
 });

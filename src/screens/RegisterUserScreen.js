@@ -30,15 +30,15 @@ const RegisterUserScreen = ({ navigation }) => {
     const handleSubmitButton = async () => {
         setErrortext('');
         if (!fullName) {
-            alert('Please fill Name');
+            setErrortext('Please fill Name');
             return;
         }
         if (!email) {
-            alert('Please fill Email');
+            setErrortext('Please fill Email');
             return;
         }
         if (!userAddress) {
-            alert('Please fill Address');
+            setErrortext('Please fill Address');
             return;
         }
         //Show Loader
@@ -63,7 +63,7 @@ const RegisterUserScreen = ({ navigation }) => {
                 setLoading(false);
                 setIsRegistraionSuccess(true);
                 console.log('Registration Successful. Please Login to proceed');
-                navigation.navigate('Frequency');
+                navigation.navigate('HomeCleaningScreen');
 
             } else {
                 setErrortext('Registration Unsuccessful');
@@ -102,11 +102,13 @@ const RegisterUserScreen = ({ navigation }) => {
     // }
     return (
         <>
-            <Spacer></Spacer>
-            <Spacer></Spacer>
-            <View style={{ flex: 1, backgroundColor: '#307ecc' }}>
+            {/* <View style={{ flex: 1 }}>
                 <Loader loading={loading} />
-                <GooglePlacesInput />
+                {/* <GooglePlacesInput /> */}
+            {/* <ScrollView keyboardShouldPersistTaps="handled"> */}
+
+            <View style={styles.mainBody}>
+                <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">
                     <View style={{ alignItems: 'center' }}>
                         <Image
@@ -126,64 +128,68 @@ const RegisterUserScreen = ({ navigation }) => {
                             margin: 30,
                         }} ></MapComponent>
                     </View>
-                    <KeyboardAvoidingView enabled>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputStyle}
-                                onChangeText={fullName => setfullName(fullName)}
-                                underlineColorAndroid="#FFFFFF"
-                                placeholder="Enter Name"
-                                placeholderTextColor="#F6F6F7"
-                                autoCapitalize="sentences"
-                                returnKeyType="next"
-                                // onSubmitEditing={() =>
-                                //     this._emailinput && this._emailinput.focus()
-                                // }
-                                blurOnSubmit={false}
-                            />
-                        </View>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputStyle}
-                                onChangeText={email => setemail(email)}
-                                underlineColorAndroid="#F6F6F7"
-                                placeholder="Enter Email"
-                                placeholderTextColor="#F6F6F7"
-                                keyboardType="email-address"
-                                // ref={ref => {
-                                //     this._emailinput = ref;
-                                // }}
-                                returnKeyType="next"
-                                //onSubmitEditing={() => this._ageinput && this._ageinput.focus()}
-                                blurOnSubmit={false}
-                            />
-                        </View>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputStyle}
-                                onChangeText={UserAddress => setUserAddress(UserAddress)}
-                                underlineColorAndroid="#FFFFFF"
-                                placeholder="Enter Address"
-                                placeholderTextColor="#F6F6F7"
-                                autoCapitalize="sentences"
-                                // ref={ref => {
-                                //     this._addressinput = ref;
-                                // }}
-                                returnKeyType="next"
-                                // onSubmitEditing={Keyboard.dismiss}
-                                blurOnSubmit={false}
-                            />
-                        </View>
-                        {errortext != '' ? (
-                            <Text style={styles.errorTextStyle}> {errortext} </Text>
-                        ) : null}
-                        <TouchableOpacity
-                            style={styles.buttonStyle}
-                            activeOpacity={0.5}
-                            onPress={handleSubmitButton}>
-                            <Text style={styles.buttonTextStyle}>REGISTER</Text>
-                        </TouchableOpacity>
-                    </KeyboardAvoidingView>
+                    <View style={{ marginTop: 15 }}>
+                        <KeyboardAvoidingView enabled>
+                            <View style={styles.SectionStyle}>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    onChangeText={fullName => setfullName(fullName)}
+                                    placeholder="Enter Name"
+                                    placeholderTextColor="#aaa"
+                                    autoCapitalize="sentences"
+                                    // ref={ref => {
+                                    //     this._fullnameinput = ref;
+                                    // }}
+                                    returnKeyType="next"
+                                    // onSubmitEditing={() => this._emailinput && this._emailinput.focus()}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.SectionStyle}>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    onChangeText={email => setemail(email)}
+                                    // underlineColorAndroid="#F6F6F7"
+                                    placeholder="Enter Email"
+                                    placeholderTextColor="#aaa"
+                                    autoCapitalize="none"
+                                    keyboardType="email-address"
+                                    // ref={ref => {
+                                    //     this._emailinput = ref;
+                                    // }}
+                                    returnKeyType="next"
+                                    // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            <View style={styles.SectionStyle}>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    onChangeText={UserAddress => setUserAddress(UserAddress)}
+                                    // underlineColorAndroid="#FFFFFF"
+                                    placeholder="Enter Address"
+                                    placeholderTextColor="#aaa"
+                                    autoCapitalize="sentences"
+                                    // ref={ref => {
+                                    //     this._addressinput = ref;
+                                    // }}
+                                    returnKeyType="next"
+                                    // onSubmitEditing={Keyboard.dismiss}
+                                    blurOnSubmit={false}
+                                />
+                            </View>
+                            {
+                                errortext != '' ?
+                                    (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
+                            }
+                            <TouchableOpacity
+                                style={styles.buttonStyle}
+                                activeOpacity={0.5}
+                                onPress={handleSubmitButton}>
+                                <Text style={styles.buttonTextStyle}>REGISTER</Text>
+                            </TouchableOpacity>
+                        </KeyboardAvoidingView>
+                    </View>
                 </ScrollView>
             </View>
         </>
@@ -201,10 +207,10 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#7DE24E',
+        backgroundColor: '#DAA520',
         borderWidth: 0,
         color: '#FFFFFF',
-        borderColor: '#7DE24E',
+        borderColor: '#DAA520',
         height: 40,
         alignItems: 'center',
         borderRadius: 30,
@@ -220,7 +226,7 @@ const styles = StyleSheet.create({
     },
     inputStyle: {
         flex: 1,
-        color: 'white',
+        color: 'black',
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 1,
@@ -233,7 +239,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     successTextStyle: {
-        color: 'white',
+        color: 'green',
         textAlign: 'center',
         fontSize: 18,
         padding: 30,

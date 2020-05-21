@@ -7,11 +7,12 @@ import HomeScreen from './src/screens/HomeScreen';
 import { setNavigator } from './src/navigationRef';
 import verify from './src/screens/verify';
 import location from './src/screens/location';
-import FrequencyScreen from './src/screens/FrequencyScreen';
+import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
 import freecleaning from './src/screens/freecleaning';
 import LogIn from './src/screens/LogIn';
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
 import { Provider as UserProvider } from './src/screens/context/UserContext';
+import { Provider as HCProvider } from './src/screens/context/HCContext';
 import { exp } from 'react-native-reanimated';
 import InternetScreen from './src/screens/InternetScreen';
 import SettingScreen from './src/screens/SettingScreen';
@@ -27,8 +28,18 @@ import RegisterUserScreen from './src/screens/RegisterUserScreen';
 import Payment from './src/screens/Payment';
 import Slidebar from './src/components/SlideBar';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LogoutButton from './src/components/LogoutButton';
 import LoginButton from './src/components/LoginButton';
-
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#f1c40f',
+  },
+};
 // const navigator = createSwitchNavigator({
 //   switch1: createStackNavigator({
 //     Internet: InternetScreen,
@@ -70,7 +81,7 @@ const HomeStackNavigator = createStackNavigator(
             size={30}
           />,
         headerRight: () => (
-          <LoginButton />
+          <LogoutButton />
         )
         ,
         headerStyle: {
@@ -146,7 +157,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   AppointmentDrawerNavigator: {
     screen: AppoitmentStackNavigator,
     navigationOptions: {
-      drawerLabel: 'Appitments',
+      drawerLabel: 'Appoitments',
     },
   }
 },
@@ -163,15 +174,40 @@ const AppDrawerNavigator = createDrawerNavigator({
   }
 );
 
-const LoginFlow = createStackNavigator({
+const LoginFlow = createStackNavigator(
   // Internet: { navigationOptions: { headerShown: false }, screen: InternetScreen },
   // HomeScreen: { navigationOptions: { headerShown: false }, screen: HomeScreen },
-  HomeScreenLogIn: { navigationOptions: { headerShown: false }, screen: HomeScreenLogIn },
-  Login: LoginPhoneScreen,
-  Verify: VerifyScreen,
-  Register: { navigationOptions: { headerShown: false }, screen: RegisterUserScreen },
-  Frequency: { screen: FrequencyScreen },
-},
+  {
+    HomeScreenLogIn: {
+      screen: HomeScreenLogIn,
+      navigationOptions: {
+        title: '',
+        headerRight: () => (
+          <LoginButton />),
+        headerStyle: {
+          backgroundColor: '#FF9800',
+        },
+        headerTintColor: '#fff',
+      }
+    },
+    LoginPhone: LoginPhoneScreen,
+    Verify: VerifyScreen,
+    Register: { navigationOptions: { headerShown: false }, screen: RegisterUserScreen },
+    HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: 'Home Cleaning', } },
+  },
+  // {
+  //   defaultNavigationOptions: ({ navigation }) => {
+  //     return {
+  //       title: '',
+  //       headerRight: () => (
+  //         <LoginButton />),
+  //       headerStyle: {
+  //         backgroundColor: '#FF9800',
+  //       },
+  //       headerTintColor: '#fff',
+  //     };
+  //   }
+  // },
   {
     initialRouteName: 'HomeScreenLogIn',
     defaultNavigationOptions: {
@@ -238,6 +274,14 @@ const AppSwitchNavigator = createSwitchNavigator({
 const App = createAppContainer(AppSwitchNavigator);
 export default () => {
   return (
-    <AuthProvider><UserProvider><App ref={(navigator) => { setNavigator(navigator) }} /></UserProvider></AuthProvider>);
+    <PaperProvider theme={theme}>
+      <AuthProvider>
+        <UserProvider>
+          <HCProvider>
+            <App ref={(navigator) => { setNavigator(navigator) }} />
+          </HCProvider>
+        </UserProvider>
+      </AuthProvider>
+    </PaperProvider>);
 }
 

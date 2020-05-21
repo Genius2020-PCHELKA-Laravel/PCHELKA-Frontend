@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, StyleSheet, View, Button, ScrollView, SafeAreaView, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Header } from 'react-native-elements';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
@@ -10,164 +10,100 @@ import { AsyncStorage } from "react-native";
 import Spacer from '../components/Spacer';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-import Slider from '../components/Slider'
-
+import Slider from '../components/Slider';
+import FontBold from '../components/FontBold';
+import { Context as AuthContext } from './context/AuthContext';
+import { getToken } from '../api/token';
+import NetInfo from '@react-native-community/netinfo';
+import { navigate } from '../navigationRef';
 
 const HomeScreenLogIn = ({ navigation, t }) => {
+  const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-  const [shouldShow, setShouldShow] = useState(true);
-  const [lang, setLang] = useState('en');
+  // const [connected, setconnected] = useState(true);
+
+  // getData = async () => {
+  //   try {
+  //     const token = await getToken();
+  //     console.log("Get Data: " + token);
+  //     NetInfo.fetch().then(state => {
+  //       setconnected(state.connected);
+  //       if (state.isConnected && typeof (token) != 'undefined') {
+  //         navigate('Dashboard');
+  //       }
+  //     });
+  //   } catch (e) {
+  //     console.log("error in token" + e);
+  //   }
+  // }
+  // useEffect(() => {
+  //   getData();
+  // });
   //const [dropdownContents, setDropdownContents] = useState('');
-  function useFonts(fontMap) {
-    let [fontsLoaded, setFontsLoaded] = useState(false);
-    (async () => {
-      await Font.loadAsync(fontMap);
-      setFontsLoaded(true);
-    })();
-    return [fontsLoaded];
-  }
-  let [fontsLoaded] = useFonts({
-    'Comfortaa-Regular': require('../../assets/fonts/Comfortaa-Regular.ttf'),
-    'Comfortaa-Bold': require('../../assets/fonts/Comfortaa-Bold.ttf'),
-    'Comfortaa-Light': require('../../assets/fonts/Comfortaa-Light.ttf'),
-  });
-  const storeKey = 'myLanguage';
-  storeData = async (selectedLanguage) => {
-    try {
-      await AsyncStorage.setItem(storeKey, selectedLanguage);
-      setLang(value);
-      changeLanguage(value);
-    } catch (error) {
-      // Error saving data
-    }
-  }
-
-  retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem(storeKey);
-      if (value !== null) {
-        // We have data!!
-        changeLanguage(value);
-        setLang(value);
-        if (value == 'en') {
-          setShouldShow(true);
-        }
-        else {
-          setShouldShow(false);
-        }
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  }
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    storeData(lng);
-    shouldShow ? setShouldShow(false) : setShouldShow(true);
-  }
-
-
-  useEffect(() => {
-    retrieveData();
-  }, []);
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
-    return (<>
-      <Spacer></Spacer>
-      <Spacer></Spacer>
-      <ScrollView>
-        <Spacer>
-          <View style={styles.topcontainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.topButtonStyle}>
-                {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
-              </Text>
-              {/* <AntDesign name="login" size={24} color="black"/> */}
-            </TouchableOpacity>
-            {shouldShow ?
-              <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
-                <Text style={styles.topButtonStyle}>русский</Text>
-              </TouchableOpacity>
-              :
-              <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
-                <Text style={styles.topButtonStyle}>English</Text>
-              </TouchableOpacity>
-            }
-
-
-            {/* <DropDownPicker
-                  items={[
-                      {label: 'English', value: 'en', selected: true},
-                      {label: 'Russian', value: 'ru'},
-                  ]}
-                  defaultIndex= {0}
-                  zIndex={2000}
-                  containerStyle={{height: 40}}
-                  onChangeItem={item => changeLanguage(item.value)}
-              />  */}
-            {/* <TouchableOpacity onPress={navigation.openDrawer}>
-              <FontAwesome5 name="bars" size={24} color="#161924" />
-            </TouchableOpacity> */}
-
-          </View>
-        </Spacer>
-        <Slider style={{ height: imageHeight, width: imageWidth }} />
-        <Spacer>
-          <View style={styles.middlecontainer1}>
-            <TouchableOpacity onPress={() => navigation.navigate('frequency')}>
-              <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
-              <Text style={styles.booknowButtonStyle}>
-                {t('booknow')}{' '}
-                <FontAwesome5 name="chevron-right" size={15} color="#161924" />
-              </Text>
-              <Text style={styles.cleaningservicetext}>{t('cleaningservicetext')}</Text>
-              <Text style={styles.cleaningservicedetailtext}>{t('cleaningservicedetailtext')}</Text>
-            </TouchableOpacity>
-          </View>
-        </Spacer>
-        <Spacer>
-          <View style={styles.everthingtext}>
-            <Text style={styles.everthingtext}>{t('everthingtext')}</Text>
-          </View>
-          <View style={styles.middlecontainer3}>
-            <Text style={styles.homescreentext}>{t('homescreentext')}</Text>
-          </View>
-        </Spacer>
-        <Spacer>
-          <View style={styles.bottomcontainer}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('fulltimemade')} imagesource={require('../../assets/maid.jpg')} />
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('laundary')} imagesource={require('../../assets/maid.jpg')} />
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('disinfectionservices')} imagesource={require('../../assets/disinfection.jpg')} />
-              <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('sofacleaning')} imagesource={require('../../assets/sofa.jpg')} />
-            </ScrollView>
-          </View>
-        </Spacer>
-      </ScrollView>
-    </>)
-  };
+  return (<>
+    <ScrollView>
+      <Slider style={{ height: imageHeight, width: imageWidth }} />
+      <Spacer>
+        <View style={styles.middlecontainer1}>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen')}>
+            <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
+            <Text style={styles.booknowButtonStyle}>
+              <FontBold value={t('booknow')}>
+              </FontBold>{' '}
+              <FontAwesome5 name="chevron-right" size={15} color="#161924" />
+            </Text>
+            <Text style={styles.cleaningservicetext}>
+              <FontBold value={t('cleaningservicetext')} />
+            </Text>
+            <Text style={styles.cleaningservicedetailtext}>
+              <FontBold value={t('cleaningservicedetailtext')} />
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Spacer>
+      <Spacer>
+        <View style={styles.everthingtext}>
+          <Text style={styles.everthingtext}>
+            <FontBold value={t('everthingtext')} />
+          </Text>
+        </View>
+        <View style={styles.middlecontainer3}>
+          <Text style={styles.homescreentext}>
+            <FontBold value={t('homescreentext')} />
+          </Text>
+        </View>
+      </Spacer>
+      <Spacer>
+        <View style={styles.bottomcontainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('fulltimemade')} imagesource={require('../../assets/maid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('laundary')} imagesource={require('../../assets/maid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('disinfectionservices')} imagesource={require('../../assets/disinfection.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('sofacleaning')} imagesource={require('../../assets/sofa.jpg')} />
+          </ScrollView>
+        </View>
+      </Spacer>
+    </ScrollView>
+  </>)
 };
-
-
 
 const styles = StyleSheet.create({
   everthingtext: {
     fontSize: 10,
     color: 'gray',
-    fontFamily: 'Comfortaa-Bold'
+    // fontFamily: 'Comfortaa-Bold'
   },
   homescreentext: {
     fontSize: 30,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Regular'
+    // fontFamily: 'Comfortaa-Regular'
   },
   servicetext: {
     fontSize: 14,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Light'
+    // fontFamily: 'Comfortaa-Light'
   },
   topcontainer: {
     flexDirection: 'row-reverse',
@@ -199,7 +135,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 12,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Bold'
+    // fontFamily: 'Comfortaa-Bold'
   },
   booknowButtonStyle: {
     margin: 5,
@@ -216,20 +152,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     fontWeight: "500",
-    fontFamily: 'Comfortaa-Bold',
+    // fontFamily: 'Comfortaa-Bold',
     padding: 5
   },
   cleaningservicetext: {
     margin: 5,
     position: "absolute",
-    top: 20,
+    top: 15,
     left: 10,
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: "900",
-    fontFamily: 'Comfortaa-Bold',
+    // fontFamily: 'Comfortaa-Bold',
     padding: 5,
   },
   cleaningservicedetailtext: {
@@ -240,9 +176,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'left',
-    fontSize: 14,
-    fontFamily: 'Comfortaa-Regular',
+    fontSize: 21,
+    // fontFamily: 'Comfortaa-Regular',
     padding: 5,
+    color: 'yellow'
   }
 
 });

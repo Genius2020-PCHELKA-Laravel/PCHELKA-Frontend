@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
         margin: 10,
         height: 60,
         width: 60,
-        borderColor: 'green',
+        borderColor: '#f1c40f',
         borderRadius: 15,
         borderWidth: 2,
         fontSize: 26,
-        backgroundColor: 'red',
+        // backgroundColor: '#DAA520',
         textAlign: 'center',
     },
     phoneParts: {

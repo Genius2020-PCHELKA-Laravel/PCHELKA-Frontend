@@ -28,7 +28,7 @@ export default class FontRegular extends React.Component {
         if (!this.state.fontsLoaded) {
             return <AppLoading />;
         } else {
-            return <Text style={styles.regularfont}>{this.props.value}</Text>
+            return <Text style={this.props.mystyle}><Text style={styles.regularfont}>{this.props.value}</Text></Text>
         }
     }
 
@@ -36,6 +36,7 @@ export default class FontRegular extends React.Component {
 
 const styles = StyleSheet.create({
     regularfont: {
-        fontFamily: 'Comfortaa-Regular'
+        fontFamily: 'Comfortaa-Regular',
+
     }
 });

@@ -2,6 +2,7 @@ import createDataContext from './createDataContext';
 import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
+
 import { setToken, getToken, removeToken } from '../../api/token';
 const authreducer = (state, action) => {
     switch (action.type) {
@@ -14,6 +15,8 @@ const authreducer = (state, action) => {
         case 'register':
             //console.log(action.payload);
             return { ...state, responsestatus: action.payload.status };
+        case 'loader':
+            return { ...state, loading: action.payload };
         default:
             return state;
     }
@@ -76,18 +79,38 @@ const logout = (dispatch) => {
     };
 }
 
-
+const login = (dispatch) => {
+    return async () => {
+        try {
+            console.log("Login Screen:>>>>>>>>>>>>>> ");
+            // dispatch({ type: 'logout' });
+            navigate('LoginPhone');
+        } catch (err) {
+            console.log(err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
 
 const register = dispatch => {
     return async ({ fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment }) => {
+        await dispatch({ type: 'loader', payload: true });
+
         const senttoken = await getToken();
         console.log("Register Sent Token:>>>>>>>>>>>>>> " + senttoken);
         requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-
-        var response = await requestApi.post('/register', { fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment });
+        try {
+            var response = await requestApi.post('/register', { fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment });
+        } catch (error) {
+            //Hide Loader
+            await dispatch({ type: 'loader', payload: false });
+            console.error(error);
+        }
         // .then(res => {
         // Return something
         await dispatch({ type: 'register', payload: response.data });
+        if (response.data.data.satus == true)
+            await dispatch({ type: 'loader', payload: false });
         // return true;
         //   }).catch((error) => { });;
         //console.log(this.state);
@@ -103,6 +126,6 @@ const getservices=dispach=>{
     };
 }*/
 export const { Context, Provider } = createDataContext(authreducer,
-    { sendsms, logout, verifysms, register },
-    { token: null, errorMessage: '', responsestatus: null }
+    { sendsms, logout, verifysms, register, login },
+    { loading: false, token: null, errorMessage: '', responsestatus: null }
 );

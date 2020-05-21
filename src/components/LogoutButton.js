@@ -5,9 +5,10 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
+import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
-const LoginButton = ({ t }) => {
-    const { state, login } = useContext(AuthContext);
+const LogoutButton = ({ t }) => {
+    const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
     const storeKey = 'myLanguage';
@@ -48,6 +49,8 @@ const LoginButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
+            <Loader loading={state.loading} />
+
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
@@ -61,10 +64,10 @@ const LoginButton = ({ t }) => {
                     </Text>
                 </TouchableOpacity>
             }
-            <TouchableOpacity onPress={() => { login(); }}>
+            <TouchableOpacity onPress={() => { logout(); }}>
                 {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
-                <Text style={styles.loginButtonStyle}>
-                    {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
+                <Text style={styles.logoutButtonStyle}>
+                    {t('logout')} <FontAwesome5 name="user" size={18} color="#161924" />
                 </Text>
             </TouchableOpacity>
 
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
     },
-    loginButtonStyle: {
+    logoutButtonStyle: {
         padding: 10,
         backgroundColor: '#DAA520',
         borderRadius: 25,
@@ -104,4 +107,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNamespaces()(LoginButton);
+export default withNamespaces()(LogoutButton);

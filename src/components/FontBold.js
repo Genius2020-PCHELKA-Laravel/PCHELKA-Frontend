@@ -28,7 +28,7 @@ export default class FontBold extends React.Component {
         if (!this.state.fontsLoaded) {
             return <AppLoading />;
         } else {
-            return <Text style={this.props.mystyle}>{this.props.value}</Text>
+            return <Text style={this.props.mystyle}><Text style={styles.regularfont}>{this.props.value}</Text></Text>
         }
     }
 

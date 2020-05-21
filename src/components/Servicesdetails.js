@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image, Button, TouchableOpacity } from 'react-native';
 import { withNamespaces } from 'react-i18next';
+import FontBold from '../components/FontBold';
 
 const servicesdetails = ({ navigation, title, imagesource, t }) => {
 
@@ -9,8 +10,12 @@ const servicesdetails = ({ navigation, title, imagesource, t }) => {
     <View flexDirection="column">
       <Image flexDirection="row" style={styles.image} source={imagesource} />
       <View flexDirection="column" style={styles.text}>
-        <Text flexDirection="row" style={styles.servicetext}> {title} </Text>
-        <Text flexDirection="row" style={styles.ButtonStyle}> {t('booknow')} </Text>
+        <Text flexDirection="row" style={styles.servicetext}>
+          <FontBold value={title} />
+        </Text>
+        <Text flexDirection="row" style={styles.ButtonStyle}>
+          <FontBold value={t('booknow')} />
+        </Text>
       </View>
     </View>
   </View>);
