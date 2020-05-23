@@ -73,7 +73,7 @@ const logout = (dispatch) => {
             console.log("Token After logout>>>>>>>>>>>>>>>>" + await getToken() + "\n");
             navigate('HomeScreenLogIn');
         } catch (err) {
-            console.log(err);
+            console.log("Logout func: " + err);
             dispatch({ type: 'add_error', payload: err })
         }
     };

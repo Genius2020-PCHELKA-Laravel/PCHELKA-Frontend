@@ -9,44 +9,43 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
+// import { LiqpayCheckout } from 'react-native-liqpay';
+// import LiqpayComponent from '../LiqpayComponent';
 
 const Payment = ({ children }) => {
-    const [selectedMethod, setSelectedMethod] = useState(0);
-    // const { state, getprice0, getprice1, getprice2, getAddresses } = useContext(HCContext);
-    const _onChange = (form) => {
-
-        console.log(form);
-    };
+    const { dispatch, state } = useContext(HCContext);
+    const [method, setMethod] = useState(state.method);
 
     useEffect(() => {
-
-    }, []);
-    useEffect(() => {
-
-    }, [selectedMethod]);
+        dispatch({
+            type: 'set_method',
+            payload: method,
+        });
+    }, [method]);
     return (
         <ScrollView>
-            <Text>{selectedMethod}</Text>
+            <Text>{method}</Text>
             <RadioButton.Group
-                onValueChange={setSelectedMethod}
-                value={selectedMethod}
+                onValueChange={setMethod}
+                value={method}
             >
-                <Spacer>
-                    <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="0" />
-                        <FontBold value='Pay With Cache' mystyle={{ fontSize: 24 }}></FontBold>
-                    </View>
-                    <FontLight value='Pay with cache (+5 UAH)' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
-                </Spacer>
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
-                            <RadioButton value="1" status='checked' />
+                            <RadioButton value="0" status={state.method == '0' ? 'checked' : 'unchecked'} />
                             <FontBold value='Pay by credit/debit card' mystyle={{ fontSize: 24 }}></FontBold>
                         </View>
                         <FontLight value='insurance when you pay onine UAH 1000 Learn More' mystyle={{ color: 'green', fontSize: 11, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
+                <Spacer>
+                    <View style={{ flexDirection: 'row' }}>
+                        <RadioButton value="1" status={state.method == '1' ? 'checked' : 'unchecked'} />
+                        <FontBold value='Pay With Cache' mystyle={{ fontSize: 24 }}></FontBold>
+                    </View>
+                    <FontLight value='Pay with cache (+5 UAH)' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                </Spacer>
+
 
             </RadioButton.Group>
 

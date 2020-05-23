@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import { TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView, TouchableHighlight } from 'react-native';
 import { Container, Footer, FooterTab, Button, } from 'native-base';
 import { CheckBox, Icon } from 'react-native-elements'
 import { RadioButton, Text } from 'react-native-paper';
@@ -19,8 +19,17 @@ const HomeCleaningDetails = ({ children }) => {
     const [isEnabled, setIsEnabled] = state.materials == 0 ? useState(false) : useState(true);
     const [desc, setDesc] = useState(state.desc);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    let subtotal = state.subtotal;
-    let total = state.total;
+    let subtotal = (parseFloat(state.price) * parseFloat(hours) * parseFloat(cleaners)) + parseFloat(materials);
+    let total = (parseFloat(state.price) * parseFloat(hours) * parseFloat(cleaners)) + parseFloat(materials);
+    if (state.frequency == 'Bi-weekly') {
+        subtotal = subtotal * 2;
+        total = subtotal - (subtotal * 0.05);
+    }
+    else if (state.frequency == 'Weekly') {
+        subtotal = subtotal * 4;
+        total = subtotal - (subtotal * 0.1);
+    }
+    total = total - state.VAT;
     useEffect(() => {
         if (isEnabled == true) {
             setMaterials(1);
@@ -33,50 +42,28 @@ const HomeCleaningDetails = ({ children }) => {
     }, [isEnabled]);
 
     useEffect(() => {
-        console.log("hours>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hours);
         dispatch({
             type: 'set_hours',
             payload: hours,
         });
-        subtotal = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        total = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        if (state.frequency == 'Bi-weekly') {
-            subtotal = subtotal * 2;
-            total = subtotal - (subtotal * 0.05);
-        }
-        else if (state.frequency == 'Weekly') {
-            subtotal = subtotal * 4;
-            total = subtotal - (subtotal * 0.1);
-        }
-        total = total - state.VAT;
         dispatch({
             type: 'update_totals',
             payload: { subtotal, total },
         });
-        console.log("hours>>>>>>>>>>>>>>>>>>>>>>>>>>>" + state.hours);
     }, [hours]);
 
     useEffect(() => {
-        console.log("cleaners>>>>>>>>>>>>>>>>>>>>>>>>>>>" + cleaners);
+        console.log("cleaners++++++++++++++++" + cleaners);
         dispatch({
             type: 'set_cleaners',
             payload: cleaners,
         });
-        subtotal = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        total = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        if (state.frequency == 'Bi-weekly') {
-            subtotal = subtotal * 2;
-            total = subtotal - (subtotal * 0.05);
-        }
-        else if (state.frequency == 'Weekly') {
-            subtotal = subtotal * 4;
-            total = subtotal - (subtotal * 0.1);
-        }
-        total = total - state.VAT;
         dispatch({
             type: 'update_totals',
             payload: { subtotal, total },
         });
+        console.log("cleaners>>>>>>>>>>>>>>>>>>>>>>>>>>>" + state.cleaners);
+
     }, [cleaners]);
     useEffect(() => {
         console.log("materials>>>>>>>>>>>>>>>>>>>>>>>>>>>" + materials);
@@ -84,17 +71,6 @@ const HomeCleaningDetails = ({ children }) => {
             type: 'set_materials',
             payload: materials,
         });
-        subtotal = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        total = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        if (state.frequency == 'Bi-weekly') {
-            subtotal = subtotal * 2;
-            total = subtotal - (subtotal * 0.05);
-        }
-        else if (state.frequency == 'Weekly') {
-            subtotal = subtotal * 4;
-            total = subtotal - (subtotal * 0.1);
-        }
-        total = total - state.VAT;
         dispatch({
             type: 'update_totals',
             payload: { subtotal, total },
@@ -108,10 +84,9 @@ const HomeCleaningDetails = ({ children }) => {
         });
     }, [desc]);
     return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <FontBold mystyle={styles.qText} value='How many hours do you need your cleaner to stay?' />
-
-            <FontRegular mystyle={styles.aText} value={hours + ' Hours'} />
+            {/* <FontRegular mystyle={styles.aText} value={hours + ' Hours'} />
             <Slider
                 value={hours}
                 onValueChange={setHours}
@@ -121,11 +96,29 @@ const HomeCleaningDetails = ({ children }) => {
                 trackStyle={styles.track}
                 thumbStyle={styles.thumb}
                 minimumTrackTintColor='#f1c40f'
-            />
+            /> */}
+            <Spacer />
+            <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => setHours(2)}><Text style={hours == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(3)}><Text style={hours == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(4)}><Text style={hours == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(5)}><Text style={hours == 5 ? styles.thumbdown : styles.thumbup}>5</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(6)}><Text style={hours == 6 ? styles.thumbdown : styles.thumbup}>6</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(7)}><Text style={hours == 7 ? styles.thumbdown : styles.thumbup}>7</Text></TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => setHours(8)}><Text style={hours == 8 ? styles.thumbdown : styles.thumbup}>8</Text></TouchableOpacity> */}
+            </View>
+            <Spacer />
             <Spacer>
                 <FontBold mystyle={styles.qText} value='How many cleaners do you need?' />
             </Spacer>
-            <FontRegular mystyle={styles.aText} value={cleaners + ' Cleaners'} />
+            <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => setCleaners(1)}><Text style={cleaners == 1 ? styles.thumbdown : styles.thumbup}>1</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(2)}><Text style={cleaners == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(3)}><Text style={cleaners == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(4)}><Text style={cleaners == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
+            </View>
+            <Spacer />
+            {/* <FontRegular mystyle={styles.aText} value={cleaners + ' Cleaners'} />
             <Slider
                 value={cleaners}
                 onValueChange={setCleaners}
@@ -135,7 +128,7 @@ const HomeCleaningDetails = ({ children }) => {
                 trackStyle={styles.track}
                 thumbStyle={styles.thumb}
                 minimumTrackTintColor='#f1c40f'
-            />
+            /> */}
             <Spacer>
                 <FontBold mystyle={styles.qText} value='Do you require cleaning material?' />
             </Spacer>
@@ -192,6 +185,7 @@ const styles = StyleSheet.create({
     switch: {
         width: 30,
         height: 30,
+        transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }]
     },
     input: {
         margin: 10,
@@ -209,13 +203,29 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         backgroundColor: '#d0d0d0',
     },
-    thumb: {
-        width: 30,
-        height: 30,
-        borderRadius: 30 / 2,
+    thumbup: {
+        fontSize: 24,
+        padding: 7,
+        width: 48,
+        height: 48,
+        borderRadius: 48 / 2,
         backgroundColor: 'white',
         borderColor: '#f1c40f',
         borderWidth: 2,
+        textAlign: 'center',
+        marginRight: 4
+    },
+    thumbdown: {
+        fontSize: 24,
+        padding: 7,
+        width: 48,
+        height: 48,
+        borderRadius: 48 / 2,
+        backgroundColor: '#f1c40f',
+        borderColor: 'white',
+        borderWidth: 2,
+        textAlign: 'center',
+        marginRight: 4
     }
     // track: {
     //     height: 10,

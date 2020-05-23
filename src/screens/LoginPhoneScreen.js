@@ -3,29 +3,20 @@ import { TextInput, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { Context as AuthContext } from './context/AuthContext';
+import { Context as UserContext } from './context/UserContext';
 import FontBold from '../components/FontBold';
 import FontLight from '../components/FontLight';
 import FontRegular from '../components/FontRegular';
 import Spacer from '../components/Spacer';
 
+
 const LoginPhoneScreen = ({ navigation }) => {
-  const { state, sendsms } = useContext(AuthContext);
+  const { sendsms } = useContext(AuthContext);
+  const { state, dispatch } = useContext(UserContext);
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
-  const [RandomNumber, setRandomNumber] = useState(0);
 
-  // useEffect(() => {
-  //   if (mobile.length === 3) {
-  //     setMobile(mobile + ' ');
-  //   }
-  //   if (mobile.indexOf(' ') >= 0
-  //     && (mobile.length - mobile.split(' ').length - 1) % 2 === 0
-  //     && (mobile.length - mobile.split(' ').length - 1) !== 16
-  //   ) {
-  //     setMobile(mobile + ' ')
-  //   }
 
-  // }, [mobile]);
   useEffect(() => {
     setOtp(Math.floor(1000 + Math.random() * 9000).toString());
   }, []);
@@ -35,6 +26,11 @@ const LoginPhoneScreen = ({ navigation }) => {
       navigation.navigate('Verify', { mobile: mobile, otp: otp });
       console.log({ mobile, otp })
       sendsms({ mobile, otp });
+      dispatch({
+        type: 'update_mobile',
+        payload: mobile
+      });
+      console.log("Finish Enter Mobile Phone>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
   }, [mobile]);
 

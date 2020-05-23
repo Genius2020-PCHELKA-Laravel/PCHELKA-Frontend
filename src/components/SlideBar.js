@@ -10,14 +10,11 @@ import { Avatar } from 'react-native-elements';
 export default SlideBar = props => {
     //const { state, getUserDetails } = useContext(UserContext);
     const { state, getUserDetails } = useContext(UserContext);
-    const [name, setName] = useState(null);
+    const [fullName, setFullName] = useState('');
 
     useEffect(() => {
-        console.log("11111111");
-        var fullName = getUserDetails();
-        console.log(name);
-        setName(fullName);
-        console.log("22222222");
+        getUserDetails();
+        setFullName(state.fullName);
     }, []);
     return (
         <ScrollView style={styles.container}>
@@ -27,12 +24,13 @@ export default SlideBar = props => {
                     xlarge
                     rounded
                     icon={{ name: 'user', type: 'font-awesome' }}
+                    size={50}
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7}
                     containerStyle={{ flex: 5, marginRight: 60, backgroundColor: '#666' }}
                 />
                 {/* <Image source={require('../../assets/profile.png')} styles={styles.profile} /> */}
-                <Text style={styles.text}>{state.name}</Text>
+                <Text style={styles.text}>{fullName}</Text>
             </View>
             <View>
                 <DrawerNavigatorItems {...props} />

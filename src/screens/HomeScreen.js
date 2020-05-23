@@ -13,6 +13,8 @@ import { AppLoading } from 'expo';
 import Slider from '../components/Slider';
 import FontBold from '../components/FontBold';
 import { Context as AuthContext } from './context/AuthContext';
+import { navigate } from '../navigationRef';
+
 const HomeScreen = ({ navigation, t }) => {
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
@@ -24,9 +26,9 @@ const HomeScreen = ({ navigation, t }) => {
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
-          <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen')}>
+          <TouchableOpacity onPress={() => navigate('HomeCleaningScreen')}>
             <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
-            <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen')}>
+            <TouchableOpacity onPress={() => navigate('HomeCleaningScreen')}>
               <Text style={styles.booknowButtonStyle}>
                 <FontBold value={t('booknow')}>
                 </FontBold>{' '}

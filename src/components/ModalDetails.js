@@ -87,7 +87,7 @@ const ModalDetails = ({ children }) => {
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Date'></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='222'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.full_date}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
@@ -95,7 +95,7 @@ const ModalDetails = ({ children }) => {
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Time'></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='222'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.start}></FontBold>
                             </View>
                         </View>
                         <Spacer>
@@ -103,7 +103,7 @@ const ModalDetails = ({ children }) => {
                         </Spacer>
                         <Spacer />
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='Address'></FontRegular>
-                        <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Address Details'></FontBold>
+                        <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value=''></FontBold>
                         <Spacer>
                             <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
                         </Spacer>

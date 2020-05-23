@@ -52,10 +52,10 @@ const Frequency = ({ children }) => {
     }, [frequency]);
     return (
         <View style={{ flex: 1 }}>
-            <Text>{frequency}</Text>
+            {/* <Text>{frequency}</Text>
             <Text>Frequency:{state.frequency}</Text>
             <Text>Price:{state.price}</Text>
-            <Text>Total::{state.total}</Text>
+            <Text>Total::{state.total}</Text> */}
             <RadioButton.Group
                 onValueChange={setFrequency}
                 value={state.frequency}

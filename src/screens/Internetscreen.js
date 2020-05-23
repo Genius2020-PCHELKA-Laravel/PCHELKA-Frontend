@@ -25,7 +25,7 @@ const InternetScreen = ({ navigation }) => {
         }
       });
     } catch (e) {
-      console.log("error in token");
+      console.log("Internet>>>>>error in token");
     }
   }
   // useEffect(() => {

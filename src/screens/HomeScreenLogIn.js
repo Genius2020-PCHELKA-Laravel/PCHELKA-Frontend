@@ -22,32 +22,26 @@ const HomeScreenLogIn = ({ navigation, t }) => {
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-  // const [connected, setconnected] = useState(true);
+  const [testToken, setTestToken] = useState('');
 
-  // getData = async () => {
-  //   try {
-  //     const token = await getToken();
-  //     console.log("Get Data: " + token);
-  //     NetInfo.fetch().then(state => {
-  //       setconnected(state.connected);
-  //       if (state.isConnected && typeof (token) != 'undefined') {
-  //         navigate('Dashboard');
-  //       }
-  //     });
-  //   } catch (e) {
-  //     console.log("error in token" + e);
-  //   }
-  // }
-  // useEffect(() => {
-  //   getData();
-  // });
+  getData = async () => {
+    try {
+      setTestToken(await getToken());
+      console.log("Get Data: " + token);
+    } catch (e) {
+      console.log("error in token" + e);
+    }
+  }
+  useEffect(() => {
+    getData();
+  });
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
     <ScrollView>
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
-          <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen')}>
+          <TouchableOpacity onPress={() => typeof (testToken) == 'undefined' ? navigate('LoginPhone') : navigate('HomeCleaningScreen')}>
             <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
               <FontBold value={t('booknow')}>

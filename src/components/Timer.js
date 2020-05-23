@@ -5,7 +5,7 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 export default class Timer extends React.Component {
     constructor() {
         super();
-        this.state = { time: {}, seconds: 3 };
+        this.state = { time: {}, seconds: 5 };
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
@@ -59,7 +59,12 @@ export default class Timer extends React.Component {
             <View style={{ flexDirection: 'column' }}>
                 {
                     this.state.seconds === 0 ?
-                        <TouchableOpacity style={{ justifyContent: 'center', flexDirection: 'row', textAlign: 'center' }} onPress={() => { this.state = { time: {}, seconds: 3 }; this.timer = 0; this.startTimer(); }}>
+                        <TouchableOpacity style={{ justifyContent: 'center', flexDirection: 'row', textAlign: 'center' }}
+                            onPress={() => {
+                                this.state = { time: {}, seconds: 5 };
+                                this.timer = 0;
+                                this.startTimer();
+                            }}>
                             <FontAwesome5 name="sync-alt" size={50} color="#161924" />
                         </TouchableOpacity> : null
                 }

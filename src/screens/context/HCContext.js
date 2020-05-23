@@ -20,8 +20,18 @@ const HCreducer = (state, action) => {
             return { ...state, materials: action.payload };
         case 'set_desc':
             return { ...state, desc: action.payload };
-        case 'get_Addresses':
-            return { ...state };
+        case 'set_selectedday':
+            return { ...state, selectedday: action.payload };
+        case 'set_fulldate':
+            return { ...state, full_date: action.payload.full_date };
+        case 'set_start':
+            return { ...state, start: action.payload };
+        case 'set_selected_address':
+            return { ...state, selected_address: action.payload };
+        case 'update_addresses':
+            return { ...state, addresses: action.payload };
+        case 'set_method':
+            return { ...state, method: action.payload };
         case 'loader':
             return { ...state, loading: action.payload };
         default:
@@ -45,19 +55,25 @@ const getprice = (dispatch) => {
 
 const getAddresses = (dispatch) => {
     return async () => {
+        await dispatch({ type: 'loader', payload: true });
         try {
-            console.log(">>>>>>>>");
-            // const senttoken = await getToken();
-            //requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            //const response = await requestApi.post('/logout');
-            dispatch({ type: 'get_addresses' });
+            console.log("Addresses >>>>>>>>");
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            console.log("get Addresses:               " + senttoken);
+            const response = await requestApi.get('/userLocation');
+            console.log("status: " + response.data.status);
+            if (response.data.status == true)
+                await dispatch({ type: 'loader', payload: false });
+            dispatch({ type: 'update_addresses', payload: response.data.data });
         } catch (err) {
+            await dispatch({ type: 'loader', payload: false });
             console.log(err);
             dispatch({ type: 'add_error', payload: err })
         }
     };
 }
 export const { Context, Provider } = createDataContext(HCreducer,
-    { getprice },
-    { price: 100, subtotal: 0, VAT: 0, total: 0, errorMessage: '', loader: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '' }
+    { getAddresses, getprice },
+    { price: 100, subtotal: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', address: 0, method: '', addresses: '', selected_address: '' }
 );

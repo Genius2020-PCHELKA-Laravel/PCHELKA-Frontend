@@ -9,18 +9,50 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
+import Loader from '../Loader';
 
-const Frequency = ({ children }) => {
-    const [selectedAddress, setSelectedAddress] = useState(0);
-    const { state, getprice0, getprice1, getprice2, getAddresses } = useContext(HCContext);
+const AddressDetails = ({ children }) => {
+    const { dispatch, state, getAddresses } = useContext(HCContext);
+    const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     useEffect(() => {
-
+        console.log("GetAddresses");
+        getAddresses();
     }, []);
     useEffect(() => {
+        dispatch({
+            type: 'set_selected_address',
+            payload: selectedAddress,
+        });
 
     }, [selectedAddress]);
+    // useEffect(() => {
+    //     dispatch({
+    //         type: 'set_addresses',
+    //         payload: address,
+    //     });
+    // }, [addresses]);
+    // useEffect(() => {
+
+    // }, [address]);
+    const items = []
+
+    for (const add of state.addresses) {
+        items.push(
+            <Spacer key={add.id}>
+                <View>
+                    <View style={{ flexDirection: 'row', fontSize: 24 }}>
+                        <RadioButton value={add.id} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
+                        <FontBold value={add.address} mystyle={{ fontSize: 24 }}></FontBold>
+                    </View>
+                    <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                </View>
+            </Spacer>
+        );
+    }
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <Loader loading={state.loading} />
+
             <Text>{selectedAddress}</Text>
             <View style={styles.row}>
                 <View style={styles.item1}>
@@ -34,10 +66,11 @@ const Frequency = ({ children }) => {
                 onValueChange={setSelectedAddress}
                 value={selectedAddress}
             >
-                <Spacer>
+                {items}
+                {/* <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
-                            <RadioButton value="0" status='checked' />
+                            <RadioButton value="0" status={state.address == '0' ? 'checked' : 'unchecked'} />
                             <FontBold value='Address1' mystyle={{ fontSize: 24 }}></FontBold>
                         </View>
                         <FontLight value='Book cleaning for one time only' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
@@ -45,19 +78,19 @@ const Frequency = ({ children }) => {
                 </Spacer>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="1" />
+                        <RadioButton value="1" status={state.address == '1' ? 'checked' : 'unchecked'} />
                         <FontBold value='Address2' mystyle={{ fontSize: 24 }}></FontBold>
                     </View>
                     <FontLight value='Book a recurring cleaning with the same cleaner every two-weeks' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                 </Spacer>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="2" />
+                        <RadioButton value="2" status={state.address == '2' ? 'checked' : 'unchecked'} />
                         <FontBold value='Address3' mystyle={{ fontSize: 24 }}></FontBold>
 
                     </View>
                     <FontLight value='Book a recurring with the same cleaner every week' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
-                </Spacer>
+                </Spacer> */}
             </RadioButton.Group>
 
         </ScrollView>);
@@ -127,4 +160,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Frequency;
+export default AddressDetails;

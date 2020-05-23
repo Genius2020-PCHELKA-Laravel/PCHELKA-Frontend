@@ -1,7 +1,8 @@
+import React from 'react';
 import { LiqpayCheckout } from 'react-native-liqpay';
 import { Button, View } from 'react-native';
 
-class Checkout extends React.Component {
+class LiqpayComponent extends React.Component {
     state = {
         showCheckout: false,
     }
@@ -9,7 +10,6 @@ class Checkout extends React.Component {
     renderCheckout() {
         return (
             <LiqpayCheckout
-                signature="vGiwxr69UCO2eh0hm6jWcEFsgE8="
                 privateKey="sandbox_1VRjcTX9R2TJpwx1KQYMoMZ1amS8aUBf8v2Rlqnj"
                 params={{
                     public_key: 'sandbox_i10775795020',
@@ -42,4 +42,4 @@ class Checkout extends React.Component {
     }
 }
 
-export default Checkout;
+export default LiqpayComponent;

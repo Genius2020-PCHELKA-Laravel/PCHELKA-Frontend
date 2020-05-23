@@ -10,29 +10,53 @@ import Spacer from '../components/Spacer';
 import Timer from '../components/Timer';
 import OtpInputs from "react-native-otp-inputs";
 import Axios from '../api/axiosapi';
+import { Context as UserContext } from '../screens/context/UserContext';
+
 const VerifyScreen = ({ navigation }) => {
     const { mobile, otp } = navigation.state.params;
-    const { state, verifysms } = useContext(AuthContext);
+    const { verifysms } = useContext(AuthContext);
+    const { state, getUserDetails, checkFullName } = useContext(UserContext);
+    const [resendotp, setResendotp] = useState('');
 
+    //const [selectedmobile, setSelectedMobile] = useState(state.mobile);
+    useEffect(() => {
+        console.log("mobile in verify:    " + state.mobile);
+    }, []);
     return (<>
         <View style={styles.container}>
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value="Enter The Code That Was Sent To: "></FontBold>
             </Spacer>
             <Spacer>
-                <FontBold mystyle={styles.mobileText} value={mobile}></FontBold>
+                <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
                 <FontBold mystyle={styles.mobileText} value={otp}></FontBold>
             </Spacer>
             <OtpInputs
                 //handleChange={code => console.log(code)}
-                handleChange={(enteredotp) => { if (enteredotp === otp) { verifysms({ mobile: mobile, enteredotp: enteredotp, otp: otp }); navigation.navigate('Register'); } else console.log(enteredotp); }}
+                handleChange={(enteredotp) => {
+                    if (enteredotp === otp) {
+                        try {
+                            verifysms({ mobile: mobile, enteredotp: enteredotp, otp: otp });
+                            var res = checkFullName(mobile);
+                            console.log('??????????????????????????state.userDetails.fullName');
+                            console.log("??????????????????????????????????state.checkFullName" + state.checkFullName);
+                            console.log("??????????????????????????????????res" + res);
+
+                        } catch (err) {
+                            console.log("Error>>>>>>>>" + err)
+                        }
+
+                    } else
+                        console.log(enteredotp);
+                }
+                }
                 numberOfInputs={4}
                 inputStyles={styles.input}
             />
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value={'Resend Code in: '}></FontBold>
             </Spacer>
-            <Timer></Timer>
+            <Timer ></Timer>
         </View>
     </>
     );

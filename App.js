@@ -5,7 +5,6 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import HomeScreen from './src/screens/HomeScreen';
 import { setNavigator } from './src/navigationRef';
-import verify from './src/screens/verify';
 import location from './src/screens/location';
 import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
 import freecleaning from './src/screens/freecleaning';
@@ -31,6 +30,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LogoutButton from './src/components/LogoutButton';
 import LoginButton from './src/components/LoginButton';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -192,7 +192,7 @@ const LoginFlow = createStackNavigator(
     },
     LoginPhone: LoginPhoneScreen,
     Verify: VerifyScreen,
-    Register: { navigationOptions: { headerShown: false }, screen: RegisterUserScreen },
+    Register: RegisterUserScreen,
     HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: 'Home Cleaning', } },
   },
   // {
