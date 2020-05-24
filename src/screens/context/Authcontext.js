@@ -14,7 +14,7 @@ const authreducer = (state, action) => {
             return { token: 'undefined', errorMessage: '' };
         case 'register':
             //console.log(action.payload);
-            return { ...state, responsestatus: action.payload.status };
+            return { ...state, responsestatus: action.payload };
         case 'loader':
             return { ...state, loading: action.payload };
         default:
@@ -94,27 +94,29 @@ const login = (dispatch) => {
 
 const register = dispatch => {
     return async ({ fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment }) => {
-        await dispatch({ type: 'loader', payload: true });
-
-        const senttoken = await getToken();
-        console.log("Register Sent Token:>>>>>>>>>>>>>> " + senttoken);
-        requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+        console.log({ fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment });
         try {
-            var response = await requestApi.post('/register', { fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment });
+            await dispatch({ type: 'loader', payload: true });
+            const senttoken = await getToken();
+            console.log("Register Sent Token:>>>>>>>>>>>>>> " + senttoken);
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/register', { fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment });
+            console.log("response in context register Auth Context>>>>>>>>>>>>>>>>" + response.data.status);
+            dispatch({ type: 'register', payload: response.data.status });
+            if (response.data.status == true)
+                dispatch({ type: 'loader', payload: false });
+            return response.data.status;
         } catch (error) {
-            //Hide Loader
-            await dispatch({ type: 'loader', payload: false });
-            console.error(error);
+            dispatch({ type: 'loader', payload: false });
+            console.error("error in registration: " + error);
         }
         // .then(res => {
         // Return something
-        await dispatch({ type: 'register', payload: response.data });
-        if (response.data.data.satus == true)
-            await dispatch({ type: 'loader', payload: false });
+
         // return true;
         //   }).catch((error) => { });;
         //console.log(this.state);
-        return response.data;
+        // return response.data;
     };
 }
 

@@ -13,6 +13,7 @@ const Frequency = ({ children }) => {
     const { dispatch, state } = useContext(HCContext);
     const [frequency, setFrequency] = useState(state.frequency);
     let subtotal = state.subtotal;
+    let discount = state.discount;
     let total = state.total;
     // console.log(">>>>>>>>>><<<<<<<<<<<<<<<<<" + state.materials);
 
@@ -29,26 +30,33 @@ const Frequency = ({ children }) => {
             type: 'set_frequency',
             payload: frequency,
         });
-        console.log("FFFFFFFFFFF " + state.frequency)
-        subtotal = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
-        total = (parseFloat(state.price) * parseFloat(state.hours) * parseFloat(state.cleaners)) + parseFloat(state.materials);
+        console.log("FFFFFFFFFFF " + frequency)
+        subtotal = (state.price * state.hours * state.cleaners) + state.materials;
+        total = (state.price * state.hours * state.cleaners) + state.materials;
         // console.log("sub" + subtotal);
         // console.log("total" + total);
         if (frequency == 'Bi-weekly') {
-            subtotal = subtotal * 2;
-            total = subtotal - (subtotal * 0.05);
+            total = total * 2;
+            discount = total * 0.05;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
         }
         else if (frequency == 'Weekly') {
-            subtotal = subtotal * 4;
-            total = subtotal - (subtotal * 0.1);
+            total = total * 4;
+            discount = total * 0.1;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
         }
-        total = total - state.VAT;
+        subtotal = subtotal - state.VAT;
+        total = parseFloat(total).toFixed(2);
+        subtotal = parseFloat(subtotal).toFixed(2);
         // console.log("sub>>>>>" + subtotal);
         // console.log("total>>>>>>>>" + total);
         dispatch({
             type: 'update_totals',
-            payload: { subtotal, total },
+            payload: { subtotal, total, discount },
         });
+        console.log("Discount: " + discount)
     }, [frequency]);
     return (
         <View style={{ flex: 1 }}>
@@ -56,10 +64,11 @@ const Frequency = ({ children }) => {
             <Text>Frequency:{state.frequency}</Text>
             <Text>Price:{state.price}</Text>
             <Text>Total::{state.total}</Text> */}
-            <RadioButton.Group
+            {/* <RadioButton.Group
                 onValueChange={setFrequency}
                 value={state.frequency}
-            >
+            > */}
+            <TouchableOpacity onPress={() => { setFrequency('One-time') }}>
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
@@ -69,6 +78,8 @@ const Frequency = ({ children }) => {
                         <FontLight value='Book cleaning for one time only' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { setFrequency('Bi-weekly') }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value="Bi-weekly" status={state.frequency == 'Bi-weekly' ? 'checked' : 'unchecked'} />
@@ -77,6 +88,8 @@ const Frequency = ({ children }) => {
                     <FontLight value='Book a recurring cleaning with the same cleaner every two-weeks' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                     <FontLight mystyle={styles.DiscountStyle} value="5% off"></FontLight>
                 </Spacer>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { setFrequency('Weekly') }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value="Weekly" status={state.frequency == 'Weekly' ? 'checked' : 'unchecked'} />
@@ -86,7 +99,8 @@ const Frequency = ({ children }) => {
                     <FontLight value='Book a recurring with the same cleaner every week' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                     <FontLight mystyle={styles.DiscountStyle} value="10% off"></FontLight>
                 </Spacer>
-            </RadioButton.Group>
+            </TouchableOpacity>
+            {/* </RadioButton.Group> */}
 
 
             {/* <Footer>

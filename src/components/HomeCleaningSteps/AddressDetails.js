@@ -14,46 +14,46 @@ import Loader from '../Loader';
 const AddressDetails = ({ children }) => {
     const { dispatch, state, getAddresses } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
+    const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
     useEffect(() => {
         console.log("GetAddresses");
         getAddresses();
     }, []);
+    const items = []
+
+    for (const add of state.addresses) {
+        items.push(
+            <TouchableOpacity key={add.id} onPress={() => { setSelectedAddress(add.id); setSelectedAddressName(add.address); dispatch({ type: 'set_selected_address_name', payload: add.address, }); }}>
+                <Spacer >
+                    <View>
+                        <View style={{ flexDirection: 'row', fontSize: 24 }}>
+                            <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
+                            <FontBold value={add.address} mystyle={{ fontSize: 24 }}></FontBold>
+                        </View>
+                        <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    </View>
+
+                </Spacer>
+            </TouchableOpacity>
+        );
+    }
     useEffect(() => {
         dispatch({
             type: 'set_selected_address',
             payload: selectedAddress,
         });
-
     }, [selectedAddress]);
-    // useEffect(() => {
-    //     dispatch({
-    //         type: 'set_addresses',
-    //         payload: address,
-    //     });
-    // }, [addresses]);
-    // useEffect(() => {
 
-    // }, [address]);
-    const items = []
+    useEffect(() => {
 
-    for (const add of state.addresses) {
-        items.push(
-            <Spacer key={add.id}>
-                <View>
-                    <View style={{ flexDirection: 'row', fontSize: 24 }}>
-                        <RadioButton value={add.id} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
-                        <FontBold value={add.address} mystyle={{ fontSize: 24 }}></FontBold>
-                    </View>
-                    <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
-                </View>
-            </Spacer>
-        );
-    }
+    }, [selectedAddressName]);
+
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <Loader loading={state.loading} />
 
-            <Text>{selectedAddress}</Text>
+            {/* <Text>{selectedAddress}</Text>
+            <Text>{selectedAddressName}</Text> */}
             <View style={styles.row}>
                 <View style={styles.item1}>
                     <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Your saved Addresses'></FontBold>
@@ -62,12 +62,9 @@ const AddressDetails = ({ children }) => {
                     <FontLight mystyle={styles.textAddressStyle} value="Add new >"></FontLight>
                 </View>
             </View>
-            <RadioButton.Group
-                onValueChange={setSelectedAddress}
-                value={selectedAddress}
-            >
-                {items}
-                {/* <Spacer>
+
+            {items}
+            {/* <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
                             <RadioButton value="0" status={state.address == '0' ? 'checked' : 'unchecked'} />
@@ -91,7 +88,6 @@ const AddressDetails = ({ children }) => {
                     </View>
                     <FontLight value='Book a recurring with the same cleaner every week' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                 </Spacer> */}
-            </RadioButton.Group>
 
         </ScrollView>);
 };

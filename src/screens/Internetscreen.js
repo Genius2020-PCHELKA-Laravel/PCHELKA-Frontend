@@ -14,11 +14,11 @@ const InternetScreen = ({ navigation }) => {
   getData = async () => {
     try {
       const token = await getToken();
-      console.log("Get Data: " + token);
+      // console.log("Get Data: " + token);
       NetInfo.fetch().then(state => {
         setconnected(state.connected);
-        console.log("Internet token>>>>>>>>>>>>>" + typeof (token));
-        console.log("Internet token>>>>>>>>>>>>>" + token);
+        // console.log("Internet token>>>>>>>>>>>>>" + typeof (token));
+        // console.log("Internet token>>>>>>>>>>>>>" + token);
         if (state.isConnected && typeof (token) == 'undefined') { navigation.navigate('LoginFlow'); }
         else if (state.isConnected && typeof (token) != 'undefined') {
           navigation.navigate('Dashboard');

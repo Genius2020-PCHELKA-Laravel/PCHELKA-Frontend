@@ -103,7 +103,7 @@ const ModalDetails = ({ children }) => {
                         </Spacer>
                         <Spacer />
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='Address'></FontRegular>
-                        <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value=''></FontBold>
+                        <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.selected_address_name}></FontBold>
                         <Spacer>
                             <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
                         </Spacer>
@@ -126,6 +126,14 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Discount'></FontBold>
+                            </View>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.discount}></FontBold>
+                            </View>
+                        </View>
+                        <View style={styles.row}>
+                            <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Total'></FontBold>
                             </View>
                             <View style={styles.item}>
@@ -140,13 +148,22 @@ const ModalDetails = ({ children }) => {
                 onPress={() => {
                     setModalVisible(true);
                 }} style={styles.modalButtonStyle}>
-                <Text style={styles.total}>Total  </Text>
+                <Text style={styles.total}>Total
+                <Text style={styles.subtotal}>
+                        {state.frequency == 'One-time' ? "" : " UAH "}
+                    </Text>
+                    <Text style={styles.subtotal}>
+                        {state.frequency == 'One-time' ? "" : state.subtotal}
+                    </Text>
+                    {/* <Text style={styles.subtotal}>  UAH</Text>
+                    <Text style={styles.subtotal}> {state.total} </Text> */}
+                </Text>
                 <Text style={styles.modalText}>
-                    {state.total} UAH {' '}
+                    {state.subtotal} UAH {' '}
                     <FontAwesome5 name="chevron-up" size={15} color="#161924" />
                 </Text>
             </TouchableOpacity>
-        </View>
+        </View >
     );
 
 };
@@ -174,7 +191,7 @@ const styles = StyleSheet.create({
     modalButtonStyle: {
         position: 'absolute',
         left: 10,
-        bottom: 57,
+        bottom: 10,
         paddingHorizontal: 10,
         // backgroundColor: '#f1c40f',
         borderRadius: 20,
@@ -183,7 +200,12 @@ const styles = StyleSheet.create({
         // fontFamily: 'Comfortaa-Bold',
     },
     total: {
-        textAlign: 'center'
+        textAlign: 'left'
+    },
+    subtotal: {
+        textAlign: 'right',
+        textDecorationLine: 'line-through',
+        textDecorationStyle: 'solid'
     }
 });
 export default ModalDetails;

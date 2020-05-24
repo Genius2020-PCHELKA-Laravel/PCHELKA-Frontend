@@ -5,7 +5,7 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 export default class Timer extends React.Component {
     constructor() {
         super();
-        this.state = { time: {}, seconds: 5 };
+        this.state = { time: {}, seconds: 59 };
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
@@ -42,6 +42,8 @@ export default class Timer extends React.Component {
 
     countDown() {
         // Remove one second, set state so a re-render happens.
+        if (this.state.seconds <= 0)
+            this.state.seconds = 59;
         let seconds = this.state.seconds - 1;
         this.setState({
             time: this.secondsToTime(seconds),
@@ -56,19 +58,20 @@ export default class Timer extends React.Component {
 
     render() {
         return (
-            <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                 {
                     this.state.seconds === 0 ?
-                        <TouchableOpacity style={{ justifyContent: 'center', flexDirection: 'row', textAlign: 'center' }}
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             onPress={() => {
-                                this.state = { time: {}, seconds: 5 };
+                                this.props.onclick();
+                                this.state = { time: {}, seconds: 59 };
                                 this.timer = 0;
                                 this.startTimer();
                             }}>
-                            <FontAwesome5 name="sync-alt" size={50} color="#161924" />
+                            <FontAwesome5 name="sync-alt" size={25} color="#161924" />
                         </TouchableOpacity> : null
                 }
-                <Text style={{ fontSize: 24, alignItems: 'center', flexDirection: 'row' }}>
+                <Text style={{ marginTop: 10, textAlign: 'center', fontSize: 14, fontFamily: 'Comfortaa-Bold', alignItems: 'center', justifyContent: 'center' }}>
                     {this.state.time.s} seconds
                 </Text>
             </View>

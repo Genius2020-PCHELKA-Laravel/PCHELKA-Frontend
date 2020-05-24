@@ -9,12 +9,14 @@ import { Avatar } from 'react-native-elements';
 
 export default SlideBar = props => {
     //const { state, getUserDetails } = useContext(UserContext);
-    const { state, getUserDetails } = useContext(UserContext);
+    const { dispatch, state, getUserDetails } = useContext(UserContext);
     const [fullName, setFullName] = useState('');
 
     useEffect(() => {
-        getUserDetails();
-        setFullName(state.fullName);
+        getUserDetails().then((response) => {
+            setFullName(response.fullName);
+            console.log("SET Full Name IN Drawer:" + response.fullName);
+        }).catch((error) => { });
     }, []);
     return (
         <ScrollView style={styles.container}>

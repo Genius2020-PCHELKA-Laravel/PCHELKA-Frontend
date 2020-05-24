@@ -45,7 +45,7 @@ const RegisterUserScreen = ({ navigation }) => {
         setLoading(true);
         var result = await register({
             fullName: fullName, email: email, language: "Ar",
-            address: "sdsad",
+            address: userAddress,
             lat: "-87.8",
             lon: "-99.18",
             details: "sdsad",
@@ -59,13 +59,14 @@ const RegisterUserScreen = ({ navigation }) => {
             //Hide Loader
             console.log(result);
             // If server response message same as Data Matched
-            if (result.status == true) {
+            if (result == true) {
                 setLoading(false);
                 setIsRegistraionSuccess(true);
                 console.log('Registration Successful. Please Login to proceed');
                 navigation.navigate('HomeCleaningScreen');
 
             } else {
+                setLoading(false);
                 setErrortext('Registration Unsuccessful');
             }
         } catch (error) {
@@ -110,7 +111,7 @@ const RegisterUserScreen = ({ navigation }) => {
             <View style={styles.mainBody}>
                 <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">
-                    <View style={{ alignItems: 'center' }}>
+                    {/* <View style={{ alignItems: 'center' }}>
                         <Image
                             source={require('../../assets/back.jpg')}
                             style={{
@@ -127,7 +128,7 @@ const RegisterUserScreen = ({ navigation }) => {
                             resizeMode: 'contain',
                             margin: 30,
                         }} ></MapComponent>
-                    </View>
+                    </View> */}
                     <View style={{ marginTop: 15 }}>
                         <KeyboardAvoidingView enabled>
                             <View style={styles.SectionStyle}>

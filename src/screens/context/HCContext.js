@@ -9,7 +9,7 @@ const HCreducer = (state, action) => {
         case 'add_error':
             return { ...state, errorMessage: action.payload };
         case 'update_totals':
-            return { ...state, subtotal: action.payload.subtotal, total: action.payload.total };
+            return { ...state, discount: action.payload.discount, subtotal: action.payload.subtotal, total: action.payload.total };
         case 'set_frequency':
             return { ...state, frequency: action.payload };
         case 'set_hours':
@@ -28,6 +28,8 @@ const HCreducer = (state, action) => {
             return { ...state, start: action.payload };
         case 'set_selected_address':
             return { ...state, selected_address: action.payload };
+        case 'set_selected_address_name':
+            return { ...state, selected_address_name: action.payload };
         case 'update_addresses':
             return { ...state, addresses: action.payload };
         case 'set_method':
@@ -60,7 +62,7 @@ const getAddresses = (dispatch) => {
             console.log("Addresses >>>>>>>>");
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            console.log("get Addresses:               " + senttoken);
+            // console.log("get Addresses:               " + senttoken);
             const response = await requestApi.get('/userLocation');
             console.log("status: " + response.data.status);
             if (response.data.status == true)
@@ -75,5 +77,5 @@ const getAddresses = (dispatch) => {
 }
 export const { Context, Provider } = createDataContext(HCreducer,
     { getAddresses, getprice },
-    { price: 100, subtotal: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', address: 0, method: '', addresses: '', selected_address: '' }
+    { price: 100, subtotal: 0, discount: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', selected_address_name: '', method: '', addresses: '', selected_address: '' }
 );

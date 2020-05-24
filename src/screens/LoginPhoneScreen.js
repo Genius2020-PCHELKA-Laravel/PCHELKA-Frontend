@@ -17,19 +17,21 @@ const LoginPhoneScreen = ({ navigation }) => {
   const [otp, setOtp] = useState('');
 
 
+  // useEffect(() => {
+  // }, []);
   useEffect(() => {
     setOtp(Math.floor(1000 + Math.random() * 9000).toString());
-  }, []);
-  useEffect(() => {
-    if (mobile.length == 12) {
+    if (mobile.length == 9) {
       //setOtp(Math.floor(1000 + Math.random() * 9000).toString());
-      navigation.navigate('Verify', { mobile: mobile, otp: otp });
-      console.log({ mobile, otp })
-      sendsms({ mobile, otp });
+      console.log("OTP  " + otp);
+      console.log("Mobile  " + mobile);
+      sendsms({ mobile: "963" + mobile, otp });
+      navigation.navigate('Verify', { mobile: "963" + mobile, otp: otp });
       dispatch({
         type: 'update_mobile',
-        payload: mobile
+        payload: "+963 " + mobile
       });
+      console.log({ mobile, otp })
       console.log("Finish Enter Mobile Phone>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
   }, [mobile]);
@@ -37,23 +39,23 @@ const LoginPhoneScreen = ({ navigation }) => {
   return (<>
     <View style={styles.container}>
       <Spacer>
-        <FontBold mystyle={styles.mobileText} value="your mobile number"></FontBold>
+        <FontBold mystyle={styles.mobileText} value="Your mobile number"></FontBold>
       </Spacer>
       <View style={styles.phoneParts}>
-        {/* <TextInput
+        <TextInput
           keyboardType='phone-pad'
           placeholder='+963'
           placeholderTextColor={"#aaaaaa"}
           style={styles.input}
           editable={false}
         //leftIcon={<Icon name='phone' size={24} color='black' />}
-        /> */}
+        />
         <TextInput
           keyboardType='phone-pad'
-          placeholder='963123456789'
+          placeholder='123456789'
           placeholderTextColor={"#aaaaaa"}
           style={styles.input}
-          maxLength={12}
+          maxLength={9}
           //leftIcon={<Icon name='phone' size={24} color='black' />}
           value={mobile}
           onChangeText={setMobile} />
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
   mobileText: { marginTop: 0, fontSize: 30, fontFamily: 'Comfortaa-Bold' },
   Textss: { fontSize: 12, paddingRight: 280 },
   input: {
-    fontSize: 32,
+    fontSize: 24,
     paddingBottom: 20,
     padding: 20,
     paddingHorizontal: 10,

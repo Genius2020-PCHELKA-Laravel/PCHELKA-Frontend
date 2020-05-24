@@ -34,7 +34,7 @@ const HomeScreenLogIn = ({ navigation, t }) => {
   }
   useEffect(() => {
     getData();
-  });
+  }, []);
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
     <ScrollView>

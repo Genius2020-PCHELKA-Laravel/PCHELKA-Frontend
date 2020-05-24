@@ -14,34 +14,37 @@ import { Context as UserContext } from '../screens/context/UserContext';
 
 const VerifyScreen = ({ navigation }) => {
     const { mobile, otp } = navigation.state.params;
-    const { verifysms } = useContext(AuthContext);
+    const { verifysms, sendsms } = useContext(AuthContext);
     const { state, getUserDetails, checkFullName } = useContext(UserContext);
-    const [resendotp, setResendotp] = useState('');
-
+    const [resendotp, setResendotp] = useState(otp);
+    const resend = () => {
+        setResendotp(Math.floor(1000 + Math.random() * 9000).toString());
+    }
     //const [selectedmobile, setSelectedMobile] = useState(state.mobile);
     useEffect(() => {
+        console.log("resend otp:    " + resendotp);
         console.log("mobile in verify:    " + state.mobile);
-    }, []);
+        sendsms({ mobile: mobile, otp: resendotp });
+        console.log('SENDED Mobile, OTP >>>>>>' + "Mobile " + mobile + " otp:" + resendotp);
+    }, [resendotp]);
     return (<>
         <View style={styles.container}>
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value="Enter The Code That Was Sent To: "></FontBold>
-            </Spacer>
-            <Spacer>
                 <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
-                <FontBold mystyle={styles.mobileText} value={otp}></FontBold>
+                <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
+                <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold>
             </Spacer>
-            <OtpInputs
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <OtpInputs style={styles.inputsection}
                 //handleChange={code => console.log(code)}
                 handleChange={(enteredotp) => {
-                    if (enteredotp === otp) {
+                    if (enteredotp === resendotp) {
                         try {
-                            verifysms({ mobile: mobile, enteredotp: enteredotp, otp: otp });
+                            verifysms({ mobile: mobile, enteredotp: enteredotp, otp: resendotp });
                             var res = checkFullName(mobile);
-                            console.log('??????????????????????????state.userDetails.fullName');
-                            console.log("??????????????????????????????????state.checkFullName" + state.checkFullName);
-                            console.log("??????????????????????????????????res" + res);
-
                         } catch (err) {
                             console.log("Error>>>>>>>>" + err)
                         }
@@ -53,10 +56,8 @@ const VerifyScreen = ({ navigation }) => {
                 numberOfInputs={4}
                 inputStyles={styles.input}
             />
-            <Spacer>
-                <FontBold mystyle={styles.mobileText} value={'Resend Code in: '}></FontBold>
-            </Spacer>
-            <Timer ></Timer>
+            <FontBold mystyle={styles.resendText} value={'Resend Code in: '}></FontBold>
+            <Timer onclick={resend}></Timer>
         </View>
     </>
     );
@@ -66,13 +67,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
-    mobileText: { marginTop: 0, fontSize: 30, fontFamily: 'Comfortaa-Bold' },
-    Textss: { fontSize: 12, paddingRight: 280 },
+    inputsection: { flexDirection: 'row', justifyContent: 'center' },
+    mobileText: { marginTop: 10, marginLeft: 10, fontSize: 24, fontFamily: 'Comfortaa-Bold' },
+    resendText: { justifyContent: 'center', marginTop: 10, marginLeft: 10, fontSize: 14, fontFamily: 'Comfortaa-Bold' },
     input: {
-        margin: 10,
+        marginLeft: 10,
         height: 60,
         width: 60,
         borderColor: '#f1c40f',

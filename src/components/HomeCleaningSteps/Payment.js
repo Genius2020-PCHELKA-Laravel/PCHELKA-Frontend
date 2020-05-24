@@ -24,11 +24,7 @@ const Payment = ({ children }) => {
     }, [method]);
     return (
         <ScrollView>
-            <Text>{method}</Text>
-            <RadioButton.Group
-                onValueChange={setMethod}
-                value={method}
-            >
+            <TouchableOpacity onPress={() => { setMethod(0) }}>
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
@@ -38,6 +34,8 @@ const Payment = ({ children }) => {
                         <FontLight value='insurance when you pay onine UAH 1000 Learn More' mystyle={{ color: 'green', fontSize: 11, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { setMethod(1) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value="1" status={state.method == '1' ? 'checked' : 'unchecked'} />
@@ -45,10 +43,7 @@ const Payment = ({ children }) => {
                     </View>
                     <FontLight value='Pay with cache (+5 UAH)' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                 </Spacer>
-
-
-            </RadioButton.Group>
-
+            </TouchableOpacity>
         </ScrollView>);
 };
 

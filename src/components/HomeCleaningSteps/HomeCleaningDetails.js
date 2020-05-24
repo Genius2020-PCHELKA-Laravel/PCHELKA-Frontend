@@ -19,17 +19,12 @@ const HomeCleaningDetails = ({ children }) => {
     const [isEnabled, setIsEnabled] = state.materials == 0 ? useState(false) : useState(true);
     const [desc, setDesc] = useState(state.desc);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    let subtotal = (parseFloat(state.price) * parseFloat(hours) * parseFloat(cleaners)) + parseFloat(materials);
-    let total = (parseFloat(state.price) * parseFloat(hours) * parseFloat(cleaners)) + parseFloat(materials);
-    if (state.frequency == 'Bi-weekly') {
-        subtotal = subtotal * 2;
-        total = subtotal - (subtotal * 0.05);
-    }
-    else if (state.frequency == 'Weekly') {
-        subtotal = subtotal * 4;
-        total = subtotal - (subtotal * 0.1);
-    }
-    total = total - state.VAT;
+    let subtotal = state.subtotal;
+    let discount = state.discount;
+    let total = state.total;
+    useEffect(() => {
+        console.log("Frequency in Home Cleaning Details: " + state.frequency);
+    }, []);
     useEffect(() => {
         if (isEnabled == true) {
             setMaterials(1);
@@ -42,42 +37,95 @@ const HomeCleaningDetails = ({ children }) => {
     }, [isEnabled]);
 
     useEffect(() => {
+        console.log("HHHHHHHHHH " + hours)
+        subtotal = (state.price * hours * cleaners) + materials;
+        total = (state.price * hours * cleaners) + materials;
+        if (state.frequency == 'Bi-weekly') {
+            total = total * 2;
+            discount = total * 0.05;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
+        }
+        else if (state.frequency == 'Weekly') {
+            total = total * 4;
+            discount = total * 0.1;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
+        }
+        subtotal = subtotal - state.VAT;
+        total = parseFloat(total).toFixed(2);
+        subtotal = parseFloat(subtotal).toFixed(2);
         dispatch({
             type: 'set_hours',
             payload: hours,
         });
         dispatch({
             type: 'update_totals',
-            payload: { subtotal, total },
+            payload: { subtotal, total, discount },
         });
+        console.log("Discount: " + discount)
     }, [hours]);
 
     useEffect(() => {
-        console.log("cleaners++++++++++++++++" + cleaners);
+        console.log("CCCCCCCCC " + cleaners)
+        subtotal = (state.price * hours * cleaners) + materials;
+        total = (state.price * hours * cleaners) + materials;
+        if (state.frequency == 'Bi-weekly') {
+            total = total * 2;
+            discount = total * 0.05;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
+        }
+        else if (state.frequency == 'Weekly') {
+            total = total * 4;
+            discount = total * 0.1;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
+        }
+        subtotal = subtotal - state.VAT;
+        total = parseFloat(total).toFixed(2);
+        subtotal = parseFloat(subtotal).toFixed(2);
         dispatch({
             type: 'set_cleaners',
             payload: cleaners,
         });
         dispatch({
             type: 'update_totals',
-            payload: { subtotal, total },
+            payload: { subtotal, total, discount },
         });
-        console.log("cleaners>>>>>>>>>>>>>>>>>>>>>>>>>>>" + state.cleaners);
-
+        console.log("Discount: " + discount)
     }, [cleaners]);
     useEffect(() => {
-        console.log("materials>>>>>>>>>>>>>>>>>>>>>>>>>>>" + materials);
+        console.log("MMMMMMMM " + materials)
+        // console.log(state.materials)
+        subtotal = (state.price * hours * cleaners) + materials;
+        total = (state.price * hours * cleaners) + materials;
+        if (state.frequency == 'Bi-weekly') {
+            total = total * 2;
+            discount = total * 0.05;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
+        }
+        else if (state.frequency == 'Weekly') {
+            total = total * 4;
+            discount = total * 0.1;
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = total - discount;
+        }
+        subtotal = subtotal - state.VAT;
+        total = parseFloat(total).toFixed(2);
+        subtotal = parseFloat(subtotal).toFixed(2);
         dispatch({
             type: 'set_materials',
             payload: materials,
         });
         dispatch({
             type: 'update_totals',
-            payload: { subtotal, total },
+            payload: { subtotal, total, discount },
         });
+        console.log("Discount: " + discount)
     }, [materials]);
     useEffect(() => {
-        console.log("desc>>>>>>>>>>>>>>>>>>>>>>>>>>>" + desc);
         dispatch({
             type: 'set_desc',
             payload: desc,
