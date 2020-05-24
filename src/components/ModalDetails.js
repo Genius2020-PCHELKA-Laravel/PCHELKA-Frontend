@@ -153,7 +153,7 @@ const ModalDetails = ({ children }) => {
                         {state.frequency == 'One-time' ? "" : " UAH "}
                     </Text>
                     <Text style={styles.subtotal}>
-                        {state.frequency == 'One-time' ? "" : state.subtotal}
+                        {state.frequency == 'One-time' ? "" : state.total}
                     </Text>
                     {/* <Text style={styles.subtotal}>  UAH</Text>
                     <Text style={styles.subtotal}> {state.total} </Text> */}
