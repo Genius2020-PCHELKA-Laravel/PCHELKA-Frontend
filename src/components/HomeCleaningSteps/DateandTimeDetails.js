@@ -101,7 +101,7 @@ const DateandTimeDetails = ({ children }) => {
 
         const newDate = new Date(date.getTime() + selectedDay * 1000 * 60 * 60 * 24);
 
-        let full_date = newDate.getDate().toString() + '-' + newDate.getMonth().toString() + '-' + newDate.getFullYear();
+        let full_date = newDate.getFullYear().toString() + '-' + newDate.getMonth().toString() + '-' + newDate.getDate();
         dispatch({
             type: 'set_fulldate',
             payload: { full_date },
@@ -143,28 +143,28 @@ const DateandTimeDetails = ({ children }) => {
             </Spacer>
             <Spacer />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={() => setStart('08:00')}><Text style={start == '08:00' ? styles.timethumbdown : styles.timethumbup}>08:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('08:30')}><Text style={start == '08:30' ? styles.timethumbdown : styles.timethumbup}>08:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('09:00')}><Text style={start == '09:00' ? styles.timethumbdown : styles.timethumbup}>09:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('09:30')}><Text style={start == '09:30' ? styles.timethumbdown : styles.timethumbup}>09:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('10:00')}><Text style={start == '10:00' ? styles.timethumbdown : styles.timethumbup}>10:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('10:30')}><Text style={start == '10:30' ? styles.timethumbdown : styles.timethumbup}>10:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('11:00')}><Text style={start == '11:00' ? styles.timethumbdown : styles.timethumbup}>11:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('11:30')}><Text style={start == '11:30' ? styles.timethumbdown : styles.timethumbup}>11:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('12:00')}><Text style={start == '12:00' ? styles.timethumbdown : styles.timethumbup}>12:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('12:30')}><Text style={start == '12:30' ? styles.timethumbdown : styles.timethumbup}>12:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('13:00')}><Text style={start == '13:00' ? styles.timethumbdown : styles.timethumbup}>13:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('13:30')}><Text style={start == '13:30' ? styles.timethumbdown : styles.timethumbup}>13:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('14:00')}><Text style={start == '14:00' ? styles.timethumbdown : styles.timethumbup}>14:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('14:30')}><Text style={start == '14:30' ? styles.timethumbdown : styles.timethumbup}>14:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('15:00')}><Text style={start == '15:00' ? styles.timethumbdown : styles.timethumbup}>15:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('15:30')}><Text style={start == '15:30' ? styles.timethumbdown : styles.timethumbup}>15:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('16:00')}><Text style={start == '16:00' ? styles.timethumbdown : styles.timethumbup}>16:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('16:30')}><Text style={start == '16:30' ? styles.timethumbdown : styles.timethumbup}>16:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('17:00')}><Text style={start == '17:00' ? styles.timethumbdown : styles.timethumbup}>17:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('17:30')}><Text style={start == '17:30' ? styles.timethumbdown : styles.timethumbup}>17:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('18:00')}><Text style={start == '18:00' ? styles.timethumbdown : styles.timethumbup}>18:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setStart('18:30')}><Text style={start == '18:30' ? styles.timethumbdown : styles.timethumbup}>18:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('08:00:00')}><Text style={start == '08:00:00' ? styles.timethumbdown : styles.timethumbup}>08:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('08:30:00')}><Text style={start == '08:30:00' ? styles.timethumbdown : styles.timethumbup}>08:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('09:00:00')}><Text style={start == '09:00:00' ? styles.timethumbdown : styles.timethumbup}>09:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('09:30:00')}><Text style={start == '09:30:00' ? styles.timethumbdown : styles.timethumbup}>09:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('10:00:00')}><Text style={start == '10:00:00' ? styles.timethumbdown : styles.timethumbup}>10:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('10:30:00')}><Text style={start == '10:30:00' ? styles.timethumbdown : styles.timethumbup}>10:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('11:00:00')}><Text style={start == '11:00:00' ? styles.timethumbdown : styles.timethumbup}>11:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('11:30:00')}><Text style={start == '11:30:00' ? styles.timethumbdown : styles.timethumbup}>11:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('12:00:00')}><Text style={start == '12:00:00' ? styles.timethumbdown : styles.timethumbup}>12:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('12:30:00')}><Text style={start == '12:30:00' ? styles.timethumbdown : styles.timethumbup}>12:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('13:00:00')}><Text style={start == '13:00:00' ? styles.timethumbdown : styles.timethumbup}>13:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('13:30:00')}><Text style={start == '13:30:00' ? styles.timethumbdown : styles.timethumbup}>13:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('14:00:00')}><Text style={start == '14:00:00' ? styles.timethumbdown : styles.timethumbup}>14:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('14:30:00')}><Text style={start == '14:30:00' ? styles.timethumbdown : styles.timethumbup}>14:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('15:00:00')}><Text style={start == '15:00:00' ? styles.timethumbdown : styles.timethumbup}>15:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('15:30:00')}><Text style={start == '15:30:00' ? styles.timethumbdown : styles.timethumbup}>15:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('16:00:00')}><Text style={start == '16:00:00' ? styles.timethumbdown : styles.timethumbup}>16:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('16:30:00')}><Text style={start == '16:30:00' ? styles.timethumbdown : styles.timethumbup}>16:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('17:00:00')}><Text style={start == '17:00:00' ? styles.timethumbdown : styles.timethumbup}>17:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('17:30:00')}><Text style={start == '17:30:00' ? styles.timethumbdown : styles.timethumbup}>17:30</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('18:00:00')}><Text style={start == '18:00:00' ? styles.timethumbdown : styles.timethumbup}>18:00</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setStart('18:30:00')}><Text style={start == '18:30:00' ? styles.timethumbdown : styles.timethumbup}>18:30</Text></TouchableOpacity>
             </ScrollView>
             <Spacer />
             {/* <Slider

@@ -5,10 +5,13 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
+import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
+import { Avatar } from 'react-native-elements';
+import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
-const LoginButton = ({ t }) => {
-    const { state, login } = useContext(AuthContext);
+const SettingsButton = ({ t }) => {
+    const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
     const changeLanguage = (lng) => {
@@ -38,10 +41,12 @@ const LoginButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
+            <Loader loading={state.loading} />
+
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
-                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
+                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
                 :
@@ -51,12 +56,14 @@ const LoginButton = ({ t }) => {
                     </Text>
                 </TouchableOpacity>
             }
-            <TouchableOpacity onPress={() => { login(); }}>
-                {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
-                <Text style={styles.loginButtonStyle}>
-                    {t('login')} <FontAwesome5 name="user" size={20} color="white" />
-                </Text>
-            </TouchableOpacity>
+            <Avatar
+                size="small"
+                rounded
+                icon={{ name: 'user', type: 'font-awesome' }}
+                onPress={() => navigate('SettingNavigator')}
+                activeOpacity={0.7}
+                containerStyle={styles.avatar}
+            />
 
         </View >
     )
@@ -65,21 +72,11 @@ const LoginButton = ({ t }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'center',
+
     },
-    loginButtonStyle: {
-        padding: 10,
-        backgroundColor: '#FF9800',
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: '#FF9800',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 12,
-        fontWeight: "500",
-        right: 15,
-        color: 'white'
-    },
+
     languageButtonStyle: {
         padding: 10,
         backgroundColor: '#FF9800',
@@ -92,8 +89,15 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "500",
         right: 30,
-        color: 'white'
+        color: 'white',
+        top: 10
+    },
+    avatar: {
+        backgroundColor: '#FF9800',
+        flex: 1,
+        right: 20,
+        top: 15
     },
 });
 
-export default withNamespaces()(LoginButton);
+export default withNamespaces()(SettingsButton);

@@ -3,6 +3,7 @@ import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 import { setToken, getToken, removeToken } from '../../api/token';
+import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage } from '../../api/userDetails';
 const UserReducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
@@ -21,20 +22,22 @@ const UserReducer = (state, action) => {
 
 const getUserDetails = dispatch => {
     return async () => {
+        const senttoken = await getToken();
+        // console.log("Sent Token details:>>>>>>>>>>>>>> " + senttoken);
         try {
-            const senttoken = await getToken();
-            // console.log("Sent Token details:>>>>>>>>>>>>>> " + senttoken);
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            const response = await requestApi.post('/details');
-            // console.log("Token Before details>>>>>>>>>>>>>>" + senttoken);
-            // dispatch({ type: 'get_user_details', payload: response.data.data.fullName });
-            await dispatch({ type: 'get_user_details', payload: response.data.data });
-            console.log(response.data.data);
-            // console.log("Token After details>>>>>>>>>>>>>>>>" + await getToken() + "\n");
+            var response = await requestApi.post('/details');
+            await setUserDetailsStorage(response.data.data);
+            dispatch({ type: 'get_user_details', payload: response.data.data });
+            console.log("User Context getUserDetails" + response.data.data.fullName);
             return response.data.data;
-        } catch (error) {
-            console.log("Details           " + error);
+        } catch (err) {
+            console.log("Error in UserContext: " + err)
         }
+        // console.log("Token Before details>>>>>>>>>>>>>>" + senttoken);
+        // dispatch({ type: 'get_user_details', payload: response.data.data.fullName });
+        // console.log("Token After details>>>>>>>>>>>>>>>>" + await getToken() + "\n");
+
     }
 }
 const checkFullName = dispatch => {

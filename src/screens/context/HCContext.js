@@ -75,7 +75,53 @@ const getAddresses = (dispatch) => {
         }
     };
 }
+const HCBooking = dispatch => {
+    return async ({
+        serviceType,
+        duoDate,
+        duoTime,
+        subTotal,
+        discount,
+        totalAmount,
+        locationId,
+        providerId,
+        scheduleId,
+        paymentWays,
+        frequency,
+        answers,
+
+    }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/booking', {
+                serviceType,
+                duoDate,
+                duoTime,
+                subTotal,
+                discount,
+                totalAmount,
+                locationId,
+                providerId,
+                scheduleId,
+                paymentWays,
+                frequency,
+                answers,
+            }).then((response) => {
+                console.log("HCBooking::HCCContext" + response.data);
+                if (response.data.status == true)
+                    console.log("Booked");
+                else
+                    console.log(response.data.error);
+            }).catch((error) => {
+                console.log("Error::NotBooked::HCBooking: " + error)
+            });
+        } catch (err) {
+            console.log("Error: HC Booking          " + err)
+        }
+    }
+}
 export const { Context, Provider } = createDataContext(HCreducer,
-    { getAddresses, getprice },
+    { getAddresses, getprice, HCBooking },
     { price: 100, subtotal: 0, discount: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', selected_address_name: '', method: '', addresses: '', selected_address: '' }
 );

@@ -16,7 +16,7 @@ const Loader = props => {
             }}>
             <View style={styles.modalBackground}>
                 <View style={styles.activityIndicatorWrapper}>
-                    <ActivityIndicator animating={loading} />
+                    <ActivityIndicator color='#FF9800' animating={loading} />
                 </View>
             </View>
         </Modal>
@@ -41,4 +41,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
+
 });

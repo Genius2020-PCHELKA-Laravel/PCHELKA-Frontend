@@ -1,4 +1,5 @@
 {
+  //Home Screen
   "logout": "logout",
   "login": "login",
   "booknow": "Book Now",
@@ -9,5 +10,11 @@
   "fulltimemade": "Full Time Maid",
   "laundary": "Laundary",
   "disinfectionservices": "Disinfection Services",
-  "sofacleaning": "Sofa Cleaning"
+  "sofacleaning": "Sofa Cleaning",
+  //Settings Screen
+  "accountsettings": "ACCOUNT SETTINGS",
+  "editpersonaldetails": "Edit personal details",
+  "manageaddresses": "Manage addresses",
+  "managecreditcards": "Manage credit cards",
+  "appsettings": "APP SETTINGS"
 }

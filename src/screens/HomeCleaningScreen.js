@@ -16,7 +16,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
   // };
-  const { state, getprice0, getprice1, getprice2 } = useContext(HCContext);
+  const { state, HCBooking } = useContext(HCContext);
 
   defaultScrollViewProps = {
     keyboardShouldPersistTaps: 'handled',
@@ -39,7 +39,31 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   };
 
   onSubmitSteps = () => {
-    console.log('called on submit step.');
+    HCBooking({
+      serviceType: "HomeCleaning",
+      duoDate: state.full_date,
+      duoTime: state.start,
+      subTotal: state.subtotal,
+      discount: state.discount,
+      totalAmount: state.total,
+      locationId: "1",
+      providerId: "1",
+      scheduleId: "1",
+      paymentWays: state.method,
+      frequency: state.frequency,
+      answers: [
+        {
+          questionId: 4,
+          answerId: state.materials,
+          answerValue: null
+        },
+        {
+          questionId: 3,
+          answerId: null,
+          answerValue: state.desc
+        }
+      ]
+    });
   };
   // FFFDD0...Cream EEDC82 ffe5b4 fedc56 ceb180 f8e473 ffbf00 fce205 ffc30b
   return (
@@ -50,7 +74,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           activeLabelColor='#f1c40f'
           completedProgressBarColor='#f1c40f'
           completedStepIconColor='#f1c40f'
-          labelFontFamily=''>
+          labelFontFamily='' backgroundColor='#ffffff'>
           <ProgressStep
             label="Frequency"
             onNext={onFrequencyStepComplete}
@@ -115,7 +139,10 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   );
 };
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
+  },
   nextButtonStyle: {
     top: 20,
     right: -65,

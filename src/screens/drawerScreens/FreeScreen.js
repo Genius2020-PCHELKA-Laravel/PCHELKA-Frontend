@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Button, SafeAreaView, AsyncStorage, ImageBackgr
 import { Context as Authcontext2 } from '../context/AuthContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-const SettingScreen = ({ navigation }) => {
+const FreeScreen = ({ navigation }) => {
   const { logout } = useContext(Authcontext2);
   getData = async () => {
     try {
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SettingScreen;
+export default FreeScreen;

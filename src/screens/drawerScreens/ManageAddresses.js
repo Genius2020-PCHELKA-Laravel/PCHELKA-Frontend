@@ -3,15 +3,15 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Container, Footer, FooterTab, Button, } from 'native-base';
 import { CheckBox, Icon } from 'react-native-elements'
 import { RadioButton, Text } from 'react-native-paper';
-import Spacer from '../Spacer';
-import FontBold from '../FontBold';
-import FontLight from '../FontLight';
-import FontRegular from '../FontRegular';
-import { Context as HCContext } from '../../screens/context/HCContext';
+import Spacer from '../../components/Spacer';
+import FontBold from '../../components/FontBold';
+import FontLight from '../../components/FontLight';
+import FontRegular from '../../components/FontRegular';
+import { Context as HCContext } from '../context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
-import Loader from '../Loader';
+import Loader from '../../components/Loader';
 
-const AddressDetails = ({ children }) => {
+const ManageAddresses = ({ children }) => {
     const { dispatch, state, getAddresses } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
@@ -85,6 +85,7 @@ const AddressDetails = ({ children }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff',
     },
     containerrow: {
         flex: 1,
@@ -172,4 +173,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddressDetails;
+export default ManageAddresses;

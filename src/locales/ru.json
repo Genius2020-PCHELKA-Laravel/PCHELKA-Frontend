@@ -9,5 +9,11 @@
   "fulltimemade": "Полная занятость Горничная",
   "laundary": "Прачечная",
   "disinfectionservices": "Дезинфекционные услуги",
-  "sofacleaning": "Чистка диванов"
+  "sofacleaning": "Чистка диванов",
+  //Settings Screen
+  "accountsettings": "НАСТРОЙКИ УЧЕТНОЙ ЗАПИСИ",
+  "editpersonaldetails": "Изменить личные данные",
+  "manageaddresses": "Управление адресами",
+  "managecreditcards": "Управление кредитными картами",
+  "appsettings": "Настройки приложения"
 }

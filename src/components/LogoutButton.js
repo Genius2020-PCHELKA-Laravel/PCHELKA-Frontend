@@ -7,45 +7,35 @@ import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
 import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
+import { getLang, storeLang } from '../api/userLanguage';
 const LogoutButton = ({ t }) => {
     const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
-    const storeKey = 'myLanguage';
-    storeData = async (selectedLanguage) => {
-        try {
-            await AsyncStorage.setItem(storeKey, selectedLanguage);
-            setLang(value);
-            changeLanguage(value);
-        } catch (error) {
-            // Error saving data
-        }
-    }
-    retrieveData = async () => {
-        try {
-            const value = await AsyncStorage.getItem(storeKey);
-            if (value !== null) {
-                // We have data!!
-                changeLanguage(value);
-                setLang(value);
-                if (value == 'en') {
-                    setShouldShow(true);
-                }
-                else {
-                    setShouldShow(false);
-                }
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
-    }
     const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-        storeData(lng);
-        shouldShow ? setShouldShow(false) : setShouldShow(true);
+        try {
+            console.log("Toggle language to:  " + lng);
+            setLang(lng);
+            storeLang(lng);
+            i18n.changeLanguage(lng);
+            shouldShow ? setShouldShow(false) : setShouldShow(true);
+        } catch (e) { "Error:: " + e }
     }
     useEffect(() => {
-        retrieveData();
+        getLang().then((response) => {
+            console.log("SettingScreen selected Lang in Use Effect:  " + response);
+            setLang(response);
+            i18n.changeLanguage(response);
+            shouldShow ? setShouldShow(false) : setShouldShow(true);
+            if (response == 'en') {
+                setShouldShow(true);
+            }
+            else {
+                setShouldShow(false);
+            }
+        }).catch((err) => {
+            console.log("Settings Screen Can not get lang");
+        });
     }, []);
     return (
         <View style={styles.container}>
@@ -78,6 +68,9 @@ const LogoutButton = ({ t }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'center',
+
     },
     logoutButtonStyle: {
         padding: 10,
@@ -90,7 +83,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: "500",
-        right: 15,
         color: 'white'
     },
     languageButtonStyle: {
@@ -104,7 +96,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
-        right: 30,
+        right: 15,
         color: 'white'
     },
 });
