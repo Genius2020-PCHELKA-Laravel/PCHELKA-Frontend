@@ -3,9 +3,12 @@ import { StyleSheet, ScrollView, ImageBackground, Image, Text, View } from 'reac
 import { DrawerNavigatorItems } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
-
+import Spacer from '../components/Spacer';
 import { Context as UserContext } from '../screens/context/UserContext';
 import { Avatar } from 'react-native-elements';
+import FontBold from '../components/FontBold';
+import FontRegular from '../components/FontRegular';
+import FontLight from '../components/FontLight';
 
 export default SlideBar = props => {
     //const { state, getUserDetails } = useContext(UserContext);
@@ -20,42 +23,84 @@ export default SlideBar = props => {
     }, []);
     return (
         <ScrollView style={styles.container}>
-            <View
-                style={{ padding: 16, paddingTop: 48 }}>
-                <Avatar
-                    xlarge
-                    rounded
-                    icon={{ name: 'user', type: 'font-awesome' }}
-                    size={50}
-                    onPress={() => console.log("Works!")}
-                    activeOpacity={0.7}
-                    containerStyle={{ flex: 5, marginRight: 60, backgroundColor: '#666' }}
-                />
-                {/* <Image source={require('../../assets/profile.png')} styles={styles.profile} /> */}
-                <Text style={styles.text}>{fullName}</Text>
-            </View>
-            <View>
-                <DrawerNavigatorItems {...props} />
+            <View style={styles.sideMenuContainer}>
+                <Spacer />
+                <View style={styles.profileHeader}>
+                    <View style={styles.profileHeaderPicCircle}>
+                        <FontLight mystyle={{ fontSize: 25, color: '#FF9800' }} value={fullName.charAt(0)} />
+                    </View>
+                    <FontLight mystyle={styles.profileHeaderText} value={fullName} />
+                </View>
+                <View style={styles.profileHeaderLine} />
+                <View>
+                    <DrawerNavigatorItems
+                        activeBackgroundColor="#ffd699"
+                        activeTintColor="#ffc166"
+                        activeLabelStyle={{}}
+                        inactiveBackgroundColor=""
+                        inactiveTintColor=""
+                        iconContainerStyle=""
+                        iconContainerStyle={{ position: 'absolute', right: 25 }}
+                        itemStyle={{
+                            // alignItems: 'center',
+                            // color: 'blue',
+                            // fontSize: 20,
+                            // borderColor: 'white',
+                            // borderWidth: 1,
+                            // padding: 0,
+                            // marginVertical: 2,
+                            // marginHorizontal: 2,
+                        }}
+                        itemsContainerStyle={{
+                            backgroundColor: 'white',
+                        }}
+                        {...props} />
+                </View>
             </View>
         </ScrollView>);
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ccc',
-        opacity: 0.5
+        backgroundColor: 'white',
     },
-    profile: {
-        width: 80,
-        height: 80,
-        borderRadius: 50,
-        borderWidth: 3,
-        borderColor: '#FFF',
-    }
-    , text: {
-        fontSize: 30,
-        color: '#fff',
-        marginVertical: 8,
-        fontWeight: "800"
-    }
+
+    sideMenuContainer: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#FF9800',
+        paddingTop: 40,
+        color: 'white',
+    },
+    profileHeader: {
+        flexDirection: 'row',
+        backgroundColor: '#FF9800',
+        padding: 15,
+        textAlign: 'center',
+    },
+    profileHeaderPicCircle: {
+        width: 60,
+        height: 60,
+        borderRadius: 60 / 2,
+        color: 'white',
+        backgroundColor: '#ffffff',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    profileHeaderText: {
+        color: '#ffffff',
+        alignSelf: 'center',
+        paddingHorizontal: 10,
+        fontWeight: 'bold',
+        fontSize: 20
+    },
+    profileHeaderLine: {
+        height: 3,
+        marginHorizontal: 20,
+        backgroundColor: '#ffffff',
+        marginTop: 15,
+        marginBottom: 15,
+    },
+
 });

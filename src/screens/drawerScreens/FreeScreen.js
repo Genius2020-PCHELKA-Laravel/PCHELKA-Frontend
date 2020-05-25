@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import { Context as Authcontext2 } from './context/AuthContext';
+import { Context as Authcontext2 } from '../context/AuthContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const SettingScreen = ({ navigation }) => {
@@ -18,7 +18,7 @@ const SettingScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
 
-      <Text>Settings</Text>
+      <Text>Free</Text>
 
 
 

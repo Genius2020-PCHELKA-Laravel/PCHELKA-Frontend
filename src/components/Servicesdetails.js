@@ -42,21 +42,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     margin: 2,
-    borderColor: '#2a4944',
+    borderColor: '#ffd699',
     borderWidth: 1,
-    backgroundColor: '#F8De78'
+    backgroundColor: '#ffd699'
   },
   ButtonStyle: {
     marginTop: 10,
     padding: 5,
     marginLeft: 30,
     marginRight: 30,
-    backgroundColor: '#DAA520',
+    backgroundColor: '#FF9800',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#DAA520',
+    borderColor: '#FF9800',
     fontSize: 16,
     fontWeight: "500",
+    color: 'white',
+    color: 'white'
   },
 });
 

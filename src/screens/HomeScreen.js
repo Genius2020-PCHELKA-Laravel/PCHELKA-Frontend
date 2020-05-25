@@ -22,7 +22,7 @@ const HomeScreen = ({ navigation, t }) => {
   const imageWidth = dimensions.width;
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation, t }) => {
               <Text style={styles.booknowButtonStyle}>
                 <FontBold value={t('booknow')}>
                 </FontBold>{' '}
-                <FontAwesome5 name="chevron-right" size={15} color="#161924" />
+                <FontAwesome5 name="chevron-right" size={15} color="white" />
               </Text>
             </TouchableOpacity>
             <Text style={styles.cleaningservicetext}>
@@ -71,6 +71,9 @@ const HomeScreen = ({ navigation, t }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white'
+  },
   everthingtext: {
     fontSize: 10,
     color: 'gray',
@@ -124,17 +127,18 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 10,
     height: 35,
-    backgroundColor: '#DAA520',
+    backgroundColor: '#FF9800',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#DAA520',
+    borderColor: '#FF9800',
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: "500",
     // fontFamily: 'Comfortaa-Bold',
-    padding: 5
+    padding: 5,
+    color: 'white'
   },
   cleaningservicetext: {
     margin: 5,

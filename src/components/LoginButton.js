@@ -51,20 +51,20 @@ const LoginButton = ({ t }) => {
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
-                        <FontAwesome5 name="flag" size={16} color="#161924" />
+                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
                     </Text>
                 </TouchableOpacity>
                 :
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
                     <Text style={styles.languageButtonStyle}>English{' '}
-                        <FontAwesome5 name="flag" size={16} color="#161924" />
+                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
                     </Text>
                 </TouchableOpacity>
             }
             <TouchableOpacity onPress={() => { login(); }}>
                 {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
                 <Text style={styles.loginButtonStyle}>
-                    {t('login')} <FontAwesome5 name="user" size={18} color="#161924" />
+                    {t('login')} <FontAwesome5 name="user" size={20} color="white" />
                 </Text>
             </TouchableOpacity>
 
@@ -78,29 +78,31 @@ const styles = StyleSheet.create({
     },
     loginButtonStyle: {
         padding: 10,
-        backgroundColor: '#DAA520',
+        backgroundColor: '#FF9800',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#DAA520',
+        borderColor: '#FF9800',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
-        right: 15
+        right: 15,
+        color: 'white'
     },
     languageButtonStyle: {
         padding: 10,
-        //backgroundColor:'#DAA520',
+        backgroundColor: '#FF9800',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#DAA520',
+        borderColor: '#FF9800',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
-        right: 30
+        right: 30,
+        color: 'white'
     },
 });
 
