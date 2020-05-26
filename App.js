@@ -19,6 +19,8 @@ import { exp } from 'react-native-reanimated';
 import InternetScreen from './src/screens/InternetScreen';
 import SettingScreen from './src/screens/drawerScreens/SettingScreen';
 import AppoitmentScreen from './src/screens/drawerScreens/AppoitmentScreen';
+import UpcomingScreen from './src/screens/drawerScreens/UpcomingScreen';
+import PastScreen from './src/screens/drawerScreens/PastScreen';
 import FreeScreen from './src/screens/drawerScreens/FreeScreen';
 import SupportScreen from './src/screens/drawerScreens/SupportScreen';
 import HomeScreenLogIn from './src/screens/HomeScreenLogIn';
@@ -40,7 +42,11 @@ import EditPersonalDetailsScreen from './src/screens/drawerScreens/EditPersonalD
 import ManageAddresses from './src/screens/drawerScreens/ManageAddresses';
 import ManageCreditCards from './src/screens/drawerScreens/ManageCreditCards';
 const SCREEN_WIDTH = Dimensions.get('window').width;
-import { navigate } from './src/navigationRef'
+import { navigate } from './src/navigationRef';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { withNamespaces } from 'react-i18next';
+import i18n from './src/locales/i18n';
+
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -78,7 +84,7 @@ const VerifyStack = createStackNavigator(
     LoginPhoneScreen: {
       screen: LoginPhoneScreen,
       navigationOptions: {
-        title: 'Login',
+        title: i18n.t('login'),
         headerLeft: ({ navigation }) => (
           <Icon
             style={{ left: 15, color: '#FF9800' }}
@@ -160,7 +166,7 @@ const HomeStackNavigator = createStackNavigator(
         };
       },
     },
-    HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: 'Home Cleaning', } },
+    HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: i18n.t('homecleaning'), } },
 
   });
 const SettingStackNavigator = createStackNavigator(
@@ -169,7 +175,7 @@ const SettingStackNavigator = createStackNavigator(
       screen: SettingScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value='Settings' />,
+          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('settings')} />,
           headerLeft: () =>
             <Icon
               style={{ left: 15, color: '#FF9800' }}
@@ -187,7 +193,7 @@ const SettingStackNavigator = createStackNavigator(
     EditPersonalDetailsScreen: {
       screen: EditPersonalDetailsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Edit Personal Details',
+        title: i18n.t('editpersonaldetails'),
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#FF9800',
@@ -209,7 +215,7 @@ const SettingStackNavigator = createStackNavigator(
     ManageCreditCards: {
       screen: ManageCreditCards,
       navigationOptions: ({ navigation }) => ({
-        title: 'Manage Addresses',
+        title: i18n.t('managecreditcards'),
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#FF9800',
@@ -220,15 +226,52 @@ const SettingStackNavigator = createStackNavigator(
   });
 
 
+const TabNavigator = createMaterialTopTabNavigator({
+  Upcoming: {
+    screen: UpcomingScreen,
+    navigationOptions: {
+      tabBarLabel: 'Upcoming',
+      tabBarIcon: ({ tintColor }) => (
+        <MaterialCommunityIcons name='update' color={tintColor} size={24} />
+      )
+    }
+  },
+  Past: {
+    screen: PastScreen,
+    navigationOptions: {
+      tabBarLabel: 'Past',
+      tabBarIcon: ({ tintColor }) => (
+        <FontAwesome5 name='history' color={tintColor} size={18} />
+      )
+    }
+  }
+},
+  {
+    initialRouteName: 'Upcoming',
+    tabBarPosition: "top",
+    tabBarOptions: {
+      activeTintColor: "#FF9800",
+      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: "#fff"
+      },
+      indicatorStyle: {
+        height: 2,
+        backgroundColor: '#FF9800',
+      },
+      showIcon: true
+    },
+  }
+);
 
 const AppoitmentStackNavigator = createStackNavigator(
   {
-    AppoitmentNavigator: AppoitmentScreen
+    AppoitmentNavigator: TabNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: 'Appoitment',
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('appoitments')} />,
         headerLeft: () =>
           <Icon
             style={{ left: 15, color: '#FF9800' }}
@@ -252,7 +295,8 @@ const FreeStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: 'Free Cleaning',
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('freecleaning')} />,
+
         headerLeft: () =>
           <Icon
             style={{ left: 15, color: '#FF9800' }}
@@ -276,7 +320,7 @@ const SupportStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: 'Support',
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('support')} />,
         headerLeft: () =>
           <Icon
             style={{ left: 15, color: '#FF9800' }}
@@ -297,35 +341,35 @@ const AppDrawerNavigator = createDrawerNavigator({
   HomeDrawerNavigator: {
     screen: HomeStackNavigator,
     navigationOptions: {
-      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value='Home' />,
+      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('home')} />,
       drawerIcon: <FontAwesome5 name="home" size={25} color="#fff" />
     },
   },
   SettingDrawerNavigator: {
     screen: SettingStackNavigator,
     navigationOptions: {
-      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value='Account Settings' />,
+      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('draweraccountsettings')} />,
       drawerIcon: <MaterialCommunityIcons name="account-settings" size={30} color="#fff" />
     },
   },
   AppointmentDrawerNavigator: {
     screen: AppoitmentStackNavigator,
     navigationOptions: {
-      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value='Appoitments' />,
+      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('appoitments')} />,
       drawerIcon: <Fontisto name="date" size={25} color="#fff" />
     },
   },
   FreeDrawerNavigator: {
     screen: FreeStackNavigator,
     navigationOptions: {
-      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value='Free Cleaning' />,
+      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('freecleaning')} />,
       drawerIcon: <MaterialCommunityIcons name="ticket-percent" size={25} color="#fff" />
     },
   },
   SupportDrawerNavigator: {
     screen: SupportStackNavigator,
     navigationOptions: {
-      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value='Support' />,
+      drawerLabel: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('support')} />,
       drawerIcon: <AntDesign name="message1" size={25} color="#fff" />
     },
   }
@@ -409,7 +453,7 @@ const AppSwitchNavigator = createSwitchNavigator({
 
 
 const App = createAppContainer(AppSwitchNavigator);
-export default () => {
+export default withNamespaces()(({ t }) => {
   return (
     <PaperProvider theme={theme}>
       <AuthProvider>
@@ -421,4 +465,4 @@ export default () => {
       </AuthProvider>
     </PaperProvider>);
 }
-
+)

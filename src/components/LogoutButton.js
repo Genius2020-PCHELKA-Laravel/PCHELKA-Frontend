@@ -8,6 +8,7 @@ import FontBold from './FontBold';
 import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { getLang, storeLang } from '../api/userLanguage';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 const LogoutButton = ({ t }) => {
     const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);

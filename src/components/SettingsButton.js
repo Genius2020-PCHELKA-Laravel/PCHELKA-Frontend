@@ -5,6 +5,7 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
+import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { Avatar } from 'react-native-elements';
 import { navigate } from '../navigationRef';
@@ -13,6 +14,7 @@ const SettingsButton = ({ t }) => {
     const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
+    const [loading, setLoading] = useState('en');
     const changeLanguage = (lng) => {
         try {
             console.log("Toggle language to:  " + lng);
@@ -40,6 +42,7 @@ const SettingsButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
+            {/* <Loader loading={loading} /> */}
 
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
@@ -50,7 +53,7 @@ const SettingsButton = ({ t }) => {
                 :
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
                     <Text style={styles.languageButtonStyle}>English{' '}
-                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
+                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
             }

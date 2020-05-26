@@ -7,6 +7,7 @@ import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { getLang, storeLang } from '../api/userLanguage';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 const LoginButton = ({ t }) => {
     const { state, login } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
@@ -19,6 +20,7 @@ const LoginButton = ({ t }) => {
             i18n.changeLanguage(lng);
             shouldShow ? setShouldShow(false) : setShouldShow(true);
         } catch (e) { "Error:: " + e }
+        RNRestart.Restart();
     }
     useEffect(() => {
         getLang().then((response) => {

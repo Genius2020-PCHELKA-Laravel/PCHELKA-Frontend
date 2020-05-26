@@ -16,5 +16,13 @@
   "editpersonaldetails": "Edit personal details",
   "manageaddresses": "Manage addresses",
   "managecreditcards": "Manage credit cards",
-  "appsettings": "APP SETTINGS"
+  "appsettings": "APP SETTINGS",
+  //App.js
+  "home": "Home",
+  "draweraccountsettings": "Account Settings",
+  "homecleaning": "Home Cleaning",
+  "settings": "Settings",
+  "appoitments": "Appoitments",
+  "freecleaning": "Free Cleaning",
+  "support": "Support"
 }

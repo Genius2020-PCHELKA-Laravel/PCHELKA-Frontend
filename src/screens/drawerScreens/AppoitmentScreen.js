@@ -1,20 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const AppoitmentScreen = ({ navigation }) => {
-
-
   return (
-
-    <View style={styles.container}>
-
-      <Text style={styles.Text}> Appointement   </Text>
-
-    </View>);
-
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#f1c40f" }}>
+    </SafeAreaView>
+  );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {

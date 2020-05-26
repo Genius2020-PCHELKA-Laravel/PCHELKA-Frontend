@@ -15,5 +15,13 @@
   "editpersonaldetails": "Изменить личные данные",
   "manageaddresses": "Управление адресами",
   "managecreditcards": "Управление кредитными картами",
-  "appsettings": "Настройки приложения"
+  "appsettings": "Настройки приложения",
+  //App.js
+  "home": "дом",
+  "draweraccountsettings": "Настройки учетной записи",
+  "homecleaning": "Уборка дома",
+  "settings": "настройки",
+  "appoitments": "Назначения",
+  "freecleaning": "Бесплатная уборка",
+  "support": "Служба поддержки"
 }

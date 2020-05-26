@@ -1,8 +1,8 @@
 import i18n from "i18next";
 import { reactI18nextModule } from "react-i18next";
-
 import translationEN from './en.json';
 import translationRU from './ru.json';
+
 
 // the translations
 const resources = {
@@ -26,5 +26,10 @@ i18n
       escapeValue: false // react already safes from xss
     }
   });
-
+// i18n.on('languageChanged', function (lng) {
+//   // E.g. set the moment locale with the current language
+//   moment.locale(lng);
+//   // then re-render your app
+//   //   app.render();
+// });
 export default i18n;
