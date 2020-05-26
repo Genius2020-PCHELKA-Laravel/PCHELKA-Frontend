@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 
 import { setToken, getToken, removeToken } from '../../api/token';
+const initialstate = { loading: false, token: null, errorMessage: '', responsestatus: null };
 const authreducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
@@ -17,8 +18,10 @@ const authreducer = (state, action) => {
             return { ...state, responsestatus: action.payload };
         case 'loader':
             return { ...state, loading: action.payload };
+        case "RESET":
+            return initialState;
         default:
-            return state;
+            throw new Error(`Not supported action ${action.type}`);
     }
 };
 const sendsms = dispatch => {
@@ -30,7 +33,7 @@ const sendsms = dispatch => {
         }
         catch (err) {
             console.log(err);
-            dispatch({ type: 'add_error', payload: 'something went wrong with sign up' })
+            await dispatch({ type: 'add_error', payload: 'something went wrong with sign up' })
         }
 
     };
@@ -46,7 +49,7 @@ const verifysms = dispatch => {
             console.log('after verify sms>>>>>>>>>>');
             console.log(v);
             //await AsyncStorage.setItem('token', response.data.data.token);
-            setToken(v);
+            await setToken(v);
             console.log(getToken());
             //dispatch({ type: 'sendsms', payload: response.data.data.token });
             //  navigate('LogIn');
@@ -69,7 +72,7 @@ const logout = (dispatch) => {
             console.log(response.data);
             console.log("Token Before logout>>>>>>>>>>>>>>" + senttoken);
             await removeToken();
-            dispatch({ type: 'logout' });
+            await dispatch({ type: 'logout' });
             console.log("Token After logout>>>>>>>>>>>>>>>>" + await getToken() + "\n");
             navigate('HomeScreenLogIn');
         } catch (err) {
@@ -84,7 +87,7 @@ const login = (dispatch) => {
         try {
             console.log("Login Screen:>>>>>>>>>>>>>> ");
             // dispatch({ type: 'logout' });
-            navigate('LoginPhone');
+            navigate('LoginPhoneScreen', { redirect: 'Dashboard' });
         } catch (err) {
             console.log(err);
             dispatch({ type: 'add_error', payload: err })
@@ -102,12 +105,12 @@ const register = dispatch => {
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             const response = await requestApi.post('/register', { fullName, email, language, address, lat, lon, details, area, street, buildingNumber, apartment });
             console.log("response in context register Auth Context>>>>>>>>>>>>>>>>" + response.data.status);
-            dispatch({ type: 'register', payload: response.data.status });
+            await dispatch({ type: 'register', payload: response.data.status });
             if (response.data.status == true)
-                dispatch({ type: 'loader', payload: false });
+                await dispatch({ type: 'loader', payload: false });
             return response.data.status;
         } catch (error) {
-            dispatch({ type: 'loader', payload: false });
+            await dispatch({ type: 'loader', payload: false });
             console.error("error in registration: " + error);
         }
         // .then(res => {
@@ -119,7 +122,32 @@ const register = dispatch => {
         // return response.data;
     };
 }
+const update = dispatch => {
+    return async ({ fullName, email, dateOfBirth, gender }) => {
+        console.log({ fullName, email, dateOfBirth, gender });
+        try {
+            await dispatch({ type: 'loader', payload: true });
+            const senttoken = await getToken();
+            console.log("Register Sent Token:>>>>>>>>>>>>>> " + senttoken);
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/register', { fullName, email, dateOfBirth, gender });
+            console.log("response in context update Auth Context>>>>>>>>>>>>>>>>" + response.data.status);
+            if (response.data.status == true)
+                await dispatch({ type: 'loader', payload: false });
+            return response.data.status;
+        } catch (error) {
+            await dispatch({ type: 'loader', payload: false });
+            console.error("error in registration: " + error);
+        }
+        // .then(res => {
+        // Return something
 
+        // return true;
+        //   }).catch((error) => { });;
+        //console.log(this.state);
+        // return response.data;
+    };
+}
 /*
 const getservices=dispach=>{
     return async()=>{

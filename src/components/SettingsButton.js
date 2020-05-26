@@ -5,7 +5,6 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
-import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { Avatar } from 'react-native-elements';
 import { navigate } from '../navigationRef';
@@ -41,7 +40,6 @@ const SettingsButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            <Loader loading={state.loading} />
 
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>

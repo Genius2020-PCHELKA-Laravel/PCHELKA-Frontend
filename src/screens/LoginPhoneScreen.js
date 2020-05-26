@@ -11,6 +11,7 @@ import Spacer from '../components/Spacer';
 
 
 const LoginPhoneScreen = ({ navigation }) => {
+  console.log(navigation.getParam('redirect'))
   const { sendsms } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);
   const [mobile, setMobile] = useState('');
@@ -26,7 +27,7 @@ const LoginPhoneScreen = ({ navigation }) => {
       console.log("OTP  " + otp);
       console.log("Mobile  " + mobile);
       sendsms({ mobile: "963" + mobile, otp });
-      navigation.navigate('Verify', { mobile: "963" + mobile, otp: otp });
+      navigation.navigate('VerifyScreen', { mobile: "963" + mobile, otp: otp, redirect: navigation.getParam('redirect') });
       dispatch({
         type: 'update_mobile',
         payload: "+963 " + mobile

@@ -40,7 +40,7 @@ import EditPersonalDetailsScreen from './src/screens/drawerScreens/EditPersonalD
 import ManageAddresses from './src/screens/drawerScreens/ManageAddresses';
 import ManageCreditCards from './src/screens/drawerScreens/ManageCreditCards';
 const SCREEN_WIDTH = Dimensions.get('window').width;
-
+import { navigate } from './src/navigationRef'
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -71,6 +71,66 @@ const theme = {
 
 
 
+const VerifyStack = createStackNavigator(
+  // Internet: { navigationOptions: { headerShown: false }, screen: InternetScreen },
+  // HomeScreen: { navigationOptions: { headerShown: false }, screen: HomeScreen },
+  {
+    LoginPhoneScreen: {
+      screen: LoginPhoneScreen,
+      navigationOptions: {
+        title: 'Login',
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#FF9800' }}
+            onPress={() => navigate('HomeScreenLogIn')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      }
+    },
+    VerifyScreen: { screen: VerifyScreen },
+  },
+  {
+    initialRouteName: 'LoginPhoneScreen',
+    defaultNavigationOptions: {
+      headerShown: true
+    }
+  });
+
+const RegisterFlow = createSwitchNavigator({
+  VerifyFlow: { screen: VerifyStack },
+  RegisterUserScreen: { screen: RegisterUserScreen },
+});
+
+
+
+
+const HomeLoginStackNavigator = createStackNavigator(
+  // Internet: { navigationOptions: { headerShown: false }, screen: InternetScreen },
+  // HomeScreen: { navigationOptions: { headerShown: false }, screen: HomeScreen },
+  {
+    HomeScreenLogIn: {
+      screen: HomeScreenLogIn,
+      navigationOptions: {
+        title: '',
+        headerRight: () => (
+          <LoginButton />),
+        headerStyle: {
+          // backgroundColor: '#FF9800',
+        },
+        // headerTintColor: '#fff',
+      }
+    },
+    RegisterFlow: { screen: RegisterFlow, navigationOptions: { headerShown: false } },
+  },
+  {
+    initialRouteName: 'HomeScreenLogIn',
+    defaultNavigationOptions: {
+      headerShown: true
+    }
+  });
+
 
 
 
@@ -100,6 +160,8 @@ const HomeStackNavigator = createStackNavigator(
         };
       },
     },
+    HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: 'Home Cleaning', } },
+
   });
 const SettingStackNavigator = createStackNavigator(
   {
@@ -272,7 +334,7 @@ const AppDrawerNavigator = createDrawerNavigator({
 
   {
     navigationOptions: {
-      gesturesEnabled: false,
+      gestureEnabled: true,
       mode: 'modal',
     },
     initialRouteName: "HomeDrawerNavigator",
@@ -287,51 +349,12 @@ const AppDrawerNavigator = createDrawerNavigator({
   }
 );
 
-const LoginFlow = createStackNavigator(
-  // Internet: { navigationOptions: { headerShown: false }, screen: InternetScreen },
-  // HomeScreen: { navigationOptions: { headerShown: false }, screen: HomeScreen },
-  {
-    HomeScreenLogIn: {
-      screen: HomeScreenLogIn,
-      navigationOptions: {
-        title: '',
-        headerRight: () => (
-          <LoginButton />),
-        headerStyle: {
-          // backgroundColor: '#FF9800',
-        },
-        // headerTintColor: '#fff',
-      }
-    },
-    LoginPhone: LoginPhoneScreen,
-    Verify: VerifyScreen,
-    Register: RegisterUserScreen,
-    HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: 'Home Cleaning', } },
-  },
-  // {
-  //   defaultNavigationOptions: ({ navigation }) => {
-  //     return {
-  //       title: '',
-  //       headerRight: () => (
-  //         <LoginButton />),
-  //       headerStyle: {
-  //         backgroundColor: '#FF9800',
-  //       },
-  //       headerTintColor: '#fff',
-  //     };
-  //   }
-  // },
-  {
-    initialRouteName: 'HomeScreenLogIn',
-    defaultNavigationOptions: {
-      headerShown: true
-    }
-  });
+
 
 
 const MainFlow = createSwitchNavigator({
+  LoginFlow: { screen: HomeLoginStackNavigator },
   Dashboard: { screen: AppDrawerNavigator },
-  LoginFlow: { screen: LoginFlow },
 });
 
 const AppSwitchNavigator = createSwitchNavigator({

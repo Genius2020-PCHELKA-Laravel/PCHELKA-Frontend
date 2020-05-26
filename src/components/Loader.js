@@ -2,10 +2,13 @@ import React from 'react';
 
 //Import all required component
 import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 
 const Loader = props => {
     const { loading, ...attributes } = props;
-
+    componentWillUnmount = () => {
+        return;
+    }
     return (
         <Modal
             transparent={true}

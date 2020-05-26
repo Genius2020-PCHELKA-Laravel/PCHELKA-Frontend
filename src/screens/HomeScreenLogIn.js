@@ -41,12 +41,12 @@ const HomeScreenLogIn = ({ navigation, t }) => {
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
-          <TouchableOpacity onPress={() => typeof (testToken) == 'undefined' ? navigate('LoginPhone') : navigate('HomeCleaningScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginPhoneScreen', { redirect: "HomeCleaningScreen" })}>
             <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
               <FontBold value={t('booknow')}>
               </FontBold>{' '}
-              <FontAwesome5 name="chevron-right" size={15} color="#161924" />
+              <FontAwesome5 name="chevron-right" size={15} color="white" />
             </Text>
             <Text style={styles.cleaningservicetext}>
               <FontBold value={t('cleaningservicetext')} />
@@ -147,7 +147,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     // fontFamily: 'Comfortaa-Bold',
-    padding: 5
+    padding: 5,
+    color: 'white'
   },
   cleaningservicetext: {
     margin: 5,

@@ -12,6 +12,7 @@ const LogoutButton = ({ t }) => {
     const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
+    const [isloading, setIsLoading] = useState(false);
     const changeLanguage = (lng) => {
         try {
             console.log("Toggle language to:  " + lng);
@@ -39,7 +40,7 @@ const LogoutButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            <Loader loading={state.loading} />
+            <Loader loading={isloading} />
 
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
@@ -54,7 +55,7 @@ const LogoutButton = ({ t }) => {
                     </Text>
                 </TouchableOpacity>
             }
-            <TouchableOpacity onPress={() => { logout(); }}>
+            <TouchableOpacity onPress={() => { setIsLoading(true); logout().then(() => setIsLoading(false)).catch(() => setIsLoading(false)); }}>
                 {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
                 <Text style={styles.logoutButtonStyle}>
                     {t('logout')} <FontAwesome5 name="user" size={20} color="white" />

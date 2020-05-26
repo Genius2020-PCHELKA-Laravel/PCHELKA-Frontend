@@ -20,21 +20,32 @@ const HomeScreen = ({ navigation, t }) => {
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
+  const [testToken, setTestToken] = useState('');
+
+  getData = async () => {
+    try {
+      setTestToken(await getToken());
+      console.log("Get Data: " + token);
+    } catch (e) {
+      console.log("error in token" + e);
+    }
+  }
+  useEffect(() => {
+    getData();
+  }, []);
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
     <ScrollView style={styles.container}>
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
-          <TouchableOpacity onPress={() => navigate('HomeCleaningScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen', { redirect: "Dashboard" })}>
             <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
-            <TouchableOpacity onPress={() => navigate('HomeCleaningScreen')}>
-              <Text style={styles.booknowButtonStyle}>
-                <FontBold value={t('booknow')}>
-                </FontBold>{' '}
-                <FontAwesome5 name="chevron-right" size={15} color="white" />
-              </Text>
-            </TouchableOpacity>
+            <Text style={styles.booknowButtonStyle}>
+              <FontBold value={t('booknow')}>
+              </FontBold>{' '}
+              <FontAwesome5 name="chevron-right" size={15} color="white" />
+            </Text>
             <Text style={styles.cleaningservicetext}>
               <FontBold value={t('cleaningservicetext')} />
             </Text>

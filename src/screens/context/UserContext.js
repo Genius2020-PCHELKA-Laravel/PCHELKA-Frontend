@@ -28,7 +28,7 @@ const getUserDetails = dispatch => {
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.post('/details');
             await setUserDetailsStorage(response.data.data);
-            dispatch({ type: 'get_user_details', payload: response.data.data });
+            await dispatch({ type: 'get_user_details', payload: response.data.data });
             console.log("User Context getUserDetails" + response.data.data.fullName);
             return response.data.data;
         } catch (err) {
@@ -41,24 +41,20 @@ const getUserDetails = dispatch => {
     }
 }
 const checkFullName = dispatch => {
-    return async (mobile) => {
-        try {
-            const senttoken = await getToken();
-            // requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            console.log("Mobile in context" + mobile);
-            const response = await requestApi.post('/checkFullName', { mobile }).then((response) => {
-                // console.log(response.data);
-                dispatch({ type: 'check_full_name', payload: response.data.data });
-                if (response.data.data == false)
-                    navigate('Register');
-                else
-                    navigate('HomeCleaningScreen');
-            }).catch((error) => {
-                console.log("User Context: catched: " + error)
-            });
-        } catch (err) {
-            console.log("check full name           " + err)
-        }
+    return async (mobile, redirect) => {
+        const senttoken = await getToken();
+        // requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+        console.log("Mobile in context" + mobile);
+        const response = await requestApi.post('/checkFullName', { mobile }).then((response) => {
+            console.log(response.data);
+            dispatch({ type: 'check_full_name', payload: response.data.data });
+            if (response.data.data == false)
+                navigate('RegisterUserScreen', { redirect: redirect });
+            else
+                navigate(redirect);
+        }).catch((error) => {
+            console.log("User Context: catched: " + error)
+        });
     }
 }
 export const { Context, Provider } = createDataContext(UserReducer,

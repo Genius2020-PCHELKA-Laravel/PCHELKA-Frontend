@@ -70,7 +70,7 @@ const getAddresses = (dispatch) => {
             dispatch({ type: 'update_addresses', payload: response.data.data });
         } catch (err) {
             await dispatch({ type: 'loader', payload: false });
-            console.log(err);
+            console.log("ERROR::HCCContext:: " + err);
             dispatch({ type: 'add_error', payload: err })
         }
     };

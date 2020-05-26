@@ -18,8 +18,7 @@ import Spacer from '../components/Spacer';
 import { Context as AuthContext } from './context/AuthContext';
 import { navigate } from '../navigationRef';
 
-const RegisterUserScreen = ({ navigation }) => {
-    const { redirect } = navigation.state.params;
+const EditUserScreen = ({ navigation }) => {
     const { state, register } = useContext(AuthContext);
     let [fullName, setfullName] = useState('');
     let [email, setemail] = useState('');
@@ -64,7 +63,7 @@ const RegisterUserScreen = ({ navigation }) => {
                 setLoading(false);
                 setIsRegistraionSuccess(true);
                 console.log('Registration Successful. Please Login to proceed');
-                navigation.navigate(redirect);
+                navigation.navigate('HomeCleaningScreen');
 
             } else {
                 setLoading(false);
@@ -197,7 +196,7 @@ const RegisterUserScreen = ({ navigation }) => {
         </>
     );
 };
-export default RegisterUserScreen;
+export default EditUserScreen;
 
 const styles = StyleSheet.create({
     SectionStyle: {
