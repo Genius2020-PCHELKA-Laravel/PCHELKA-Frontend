@@ -9,8 +9,9 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
+import { withNamespaces } from 'react-i18next';
 
-const HomeCleaningDetails = ({ children }) => {
+const HomeCleaningDetails = ({ children, t }) => {
     const { dispatch, state } = useContext(HCContext);
     const [hours, setHours] = useState(state.hours);
     const [cleaners, setCleaners] = useState(state.cleaners);
@@ -133,7 +134,7 @@ const HomeCleaningDetails = ({ children }) => {
     }, [desc]);
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            <FontBold mystyle={styles.qText} value='How many hours do you need your cleaner to stay?' />
+            <FontBold mystyle={styles.qText} value={t('cleaningq1')} />
             {/* <FontRegular mystyle={styles.aText} value={hours + ' Hours'} />
             <Slider
                 value={hours}
@@ -157,7 +158,7 @@ const HomeCleaningDetails = ({ children }) => {
             </View>
             <Spacer />
             <Spacer>
-                <FontBold mystyle={styles.qText} value='How many cleaners do you need?' />
+                <FontBold mystyle={styles.qText} value={t('cleaningq2')} />
             </Spacer>
             <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => setCleaners(1)}><Text style={cleaners == 1 ? styles.thumbdown : styles.thumbup}>1</Text></TouchableOpacity>
@@ -178,7 +179,7 @@ const HomeCleaningDetails = ({ children }) => {
                 minimumTrackTintColor='#f1c40f'
             /> */}
             <Spacer>
-                <FontBold mystyle={styles.qText} value='Do you require cleaning material?' />
+                <FontBold mystyle={styles.qText} value={t('cleaningq3')} />
             </Spacer>
             <View style={styles.row}>
                 <View style={styles.item}>
@@ -199,13 +200,13 @@ const HomeCleaningDetails = ({ children }) => {
 
             </View>
             <Spacer>
-                <FontBold mystyle={styles.qText} value='Do you have any specific cleaning instruction?' />
+                <FontBold mystyle={styles.qText} value={t('cleaningq4')} />
             </Spacer>
             <TextInput
                 value={desc}
                 onChangeText={setDesc}
                 style={styles.input}
-                placeholder='Example: Key under the mat, ironing, window cleaning, etc.'
+                placeholder={t('cleaningdes')}
                 multiline={true}
                 numberOfLines={2}
             />
@@ -298,4 +299,4 @@ const styles = StyleSheet.create({
     // }
 });
 
-export default HomeCleaningDetails;
+export default withNamespaces()(HomeCleaningDetails);

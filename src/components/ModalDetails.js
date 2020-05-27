@@ -14,8 +14,9 @@ import Spacer from './Spacer';
 import FontBold from './FontBold';
 import FontLight from './FontLight';
 import FontRegular from './FontRegular';
+import { withNamespaces } from 'react-i18next';
 
-const ModalDetails = ({ children }) => {
+const ModalDetails = ({ children, t }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const { state, getprice0, getprice1, getprice2 } = useContext(HCContext);
 
@@ -39,16 +40,16 @@ const ModalDetails = ({ children }) => {
                         </View>
                     </TouchableOpacity>
                     <ScrollView style={styles.container}>
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='SERVICE TYPE'></FontRegular>
+                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('servicetype')}></FontRegular>
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 21 }} value='Home Cleaning'></FontBold>
+                        <FontBold mystyle={{ color: 'black', fontSize: 21 }} value={t('homecleaning')}></FontBold>
                         <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
                         <Spacer />
 
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='Details'></FontRegular>
+                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('details')}></FontRegular>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Frequency'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('frequency')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.frequency}></FontBold>
@@ -56,7 +57,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Duration'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('duration')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.hours}></FontBold>
@@ -64,7 +65,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={'Number of Cleaners'}></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('numberofcleaners')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.cleaners}></FontBold>
@@ -72,7 +73,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Material'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('Materials')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.materials}></FontBold>
@@ -81,10 +82,10 @@ const ModalDetails = ({ children }) => {
                         <Spacer>
                             <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
                         </Spacer>
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='Date & Time'></FontRegular>
+                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('dateandtime')}></FontRegular>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Date'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('date')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.full_date}></FontBold>
@@ -92,7 +93,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Time'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('time')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.start}></FontBold>
@@ -102,15 +103,15 @@ const ModalDetails = ({ children }) => {
                             <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
                         </Spacer>
                         <Spacer />
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='Address'></FontRegular>
+                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('address')}></FontRegular>
                         <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.selected_address_name}></FontBold>
                         <Spacer>
                             <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
                         </Spacer>
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value='Price'></FontRegular>
+                        <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('price')}></FontRegular>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Subtotal'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('subtotal')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.subtotal}></FontBold>
@@ -118,7 +119,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='VAT'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('vat')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.VAT}></FontBold>
@@ -126,7 +127,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Discount'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('discount')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.discount}></FontBold>
@@ -134,7 +135,7 @@ const ModalDetails = ({ children }) => {
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Total'></FontBold>
+                                <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('total')}></FontBold>
                             </View>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.total}></FontBold>
@@ -148,8 +149,8 @@ const ModalDetails = ({ children }) => {
                 onPress={() => {
                     setModalVisible(true);
                 }} style={styles.modalButtonStyle}>
-                <Text style={styles.total}>Total
-                <Text style={styles.subtotal}>
+                <Text style={styles.total}>{t('total')}
+                    <Text style={styles.subtotal}>
                         {state.frequency == 'One-time' ? "" : " UAH "}
                     </Text>
                     <Text style={styles.subtotal}>
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
         textDecorationStyle: 'solid'
     }
 });
-export default ModalDetails;
+export default withNamespaces()(ModalDetails);
 
 
 

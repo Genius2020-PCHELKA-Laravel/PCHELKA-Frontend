@@ -8,9 +8,10 @@ import FontBold from '../components/FontBold';
 import FontLight from '../components/FontLight';
 import FontRegular from '../components/FontRegular';
 import Spacer from '../components/Spacer';
+import { withNamespaces } from 'react-i18next';
 
 
-const LoginPhoneScreen = ({ navigation }) => {
+const LoginPhoneScreen = ({ navigation, t }) => {
   console.log(navigation.getParam('redirect'))
   const { sendsms } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);
@@ -40,7 +41,7 @@ const LoginPhoneScreen = ({ navigation }) => {
   return (<>
     <View style={styles.container}>
       <Spacer>
-        <FontBold mystyle={styles.mobileText} value="Your mobile number"></FontBold>
+        <FontBold mystyle={styles.mobileText} value={t('yourmobilenumber')}></FontBold>
       </Spacer>
       <View style={styles.phoneParts}>
         <TextInput
@@ -110,4 +111,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginPhoneScreen;
+export default withNamespaces()(LoginPhoneScreen);

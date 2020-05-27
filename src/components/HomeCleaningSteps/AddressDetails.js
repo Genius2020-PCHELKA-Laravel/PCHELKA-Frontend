@@ -10,8 +10,9 @@ import FontRegular from '../FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../Loader';
+import { withNamespaces } from 'react-i18next';
 
-const AddressDetails = ({ children }) => {
+const AddressDetails = ({ children, t }) => {
     const { dispatch, state, getAddresses } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
@@ -38,7 +39,7 @@ const AddressDetails = ({ children }) => {
                         <View style={styles.editcolumn}>
                             <View style={styles.editrow}>
                                 <TouchableOpacity onPress={() => alert("Edit: " + add.id)}>
-                                    <FontBold mystyle={styles.editButton} value='Edit' ></FontBold>
+                                    <FontBold mystyle={styles.editButton} value={t('edit')} ></FontBold>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -66,11 +67,11 @@ const AddressDetails = ({ children }) => {
                 <Spacer>
                     <View style={styles.containerrow}>
                         <View style={styles.containeritem1}>
-                            <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value='Your saved Addresses'></FontBold>
+                            <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('addressq1')}></FontBold>
                         </View>
                         <View style={styles.containeritem2}>
                             <TouchableOpacity onPress={() => alert("AddNew")}>
-                                <FontLight mystyle={styles.textAddressStyle} value="Add new >"></FontLight>
+                                <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -172,4 +173,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddressDetails;
+export default withNamespaces()(AddressDetails);

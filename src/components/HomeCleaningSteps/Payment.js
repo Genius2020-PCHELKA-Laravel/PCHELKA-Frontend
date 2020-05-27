@@ -11,8 +11,9 @@ import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
 // import { LiqpayCheckout } from 'react-native-liqpay';
 // import LiqpayComponent from '../LiqpayComponent';
+import { withNamespaces } from 'react-i18next';
 
-const Payment = ({ children }) => {
+const Payment = ({ children, t }) => {
     const { dispatch, state } = useContext(HCContext);
     const [method, setMethod] = useState(state.method);
 
@@ -29,9 +30,9 @@ const Payment = ({ children }) => {
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
                             <RadioButton value="0" status={state.method == '0' ? 'checked' : 'unchecked'} />
-                            <FontBold value='Pay by credit/debit card' mystyle={{ fontSize: 24 }}></FontBold>
+                            <FontBold value={t('paymentq1')} mystyle={{ fontSize: 24 }}></FontBold>
                         </View>
-                        <FontLight value='insurance when you pay onine UAH 1000 Learn More' mystyle={{ color: 'green', fontSize: 11, marginLeft: 35 }}></FontLight>
+                        <FontLight value={t('paymentq1details')} mystyle={{ color: 'green', fontSize: 11, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
             </TouchableOpacity>
@@ -39,9 +40,9 @@ const Payment = ({ children }) => {
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value="1" status={state.method == '1' ? 'checked' : 'unchecked'} />
-                        <FontBold value='Pay With Cache' mystyle={{ fontSize: 24 }}></FontBold>
+                        <FontBold value={t('paymentq2')} mystyle={{ fontSize: 24 }}></FontBold>
                     </View>
-                    <FontLight value='Pay with cache (+5 UAH)' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                 </Spacer>
             </TouchableOpacity>
         </ScrollView>);
@@ -111,4 +112,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Payment;
+export default withNamespaces()(Payment);

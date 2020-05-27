@@ -11,6 +11,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import ModalDetails from '../components/ModalDetails';
 import { Context as HCContext } from './context/HCContext';
+import { withNamespaces } from 'react-i18next';
 
 const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
@@ -76,57 +77,72 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           completedStepIconColor='#f1c40f'
           labelFontFamily='' backgroundColor='#ffffff'>
           <ProgressStep
-            label="Frequency"
+            label={t('frequency')}
             onNext={onFrequencyStepComplete}
             onPrevious={onPrevStep}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
             nextBtnStyle={styles.nextButtonStyle}
+            nextBtnText={t('next')}
+            previousBtnText={t('previous')}
+            finishBtnText={t('submit')}
           >
             <Frequency />
           </ProgressStep>
           <ProgressStep
-            label="Cleaning"
+            label={t('cleaning')}
             onNext={onNextStep}
             onPrevious={onPrevStep}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
             nextBtnStyle={styles.nextButtonStyle}
             previousBtnStyle={styles.previousButtonStyle}
-            previousBtnTextStyle={styles.ButtonTextStyle}>
+            previousBtnTextStyle={styles.ButtonTextStyle}
+            nextBtnText={t('next')}
+            previousBtnText={t('previous')}
+            finishBtnText={t('submit')}>
             <HomeCleaningDetails />
           </ProgressStep>
           <ProgressStep
-            label="Date"
+            label={t('date')}
             onNext={onNextStep}
             onPrevious={onPrevStep}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
             nextBtnStyle={styles.nextButtonStyle}
             previousBtnStyle={styles.previousButtonStyle}
-            previousBtnTextStyle={styles.ButtonTextStyle}>
+            previousBtnTextStyle={styles.ButtonTextStyle}
+            nextBtnText={t('next')}
+            previousBtnText={t('previous')}
+            finishBtnText={t('submit')}>
             <DateandTimeDetails />
           </ProgressStep>
           <ProgressStep
-            label="Address"
+            label={t('address')}
             onPrevious={onPrevStep}
             onSubmit={onSubmitSteps}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
             nextBtnStyle={styles.nextButtonStyle}
             previousBtnStyle={styles.previousButtonStyle}
-            previousBtnTextStyle={styles.ButtonTextStyle}>
+            previousBtnTextStyle={styles.ButtonTextStyle}
+            nextBtnText={t('next')}
+            previousBtnText={t('previous')}
+            finishBtnText={t('submit')}>
             <AddressDetails />
           </ProgressStep>
           <ProgressStep
-            label="Payment"
+            label={t('payment')}
             onPrevious={onPrevStep}
             onSubmit={onSubmitSteps}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
             nextBtnStyle={styles.nextButtonStyle}
             previousBtnStyle={styles.previousButtonStyle}
-            previousBtnTextStyle={styles.ButtonTextStyle}>
+            previousBtnTextStyle={styles.ButtonTextStyle}
+            nextBtnText={t('next')}
+            previousBtnText={t('previous')}
+            finishBtnText={t('submit')}>
             <Payment />
           </ProgressStep>
         </ProgressSteps>
@@ -155,7 +171,7 @@ const styles = StyleSheet.create({
   },
   previousButtonStyle: {
     top: 20,
-    right: -65,
+    left: 0,
     backgroundColor: '#f1c40f',
     borderRadius: 20,
     borderWidth: 1,
@@ -181,7 +197,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   ButtonTextStyle: {
-    color: '#000'
+    color: '#fff'
   },
 });
-export default HomeCleaningScreen;
+export default withNamespaces()(HomeCleaningScreen);

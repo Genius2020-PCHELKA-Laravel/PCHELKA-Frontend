@@ -8,8 +8,9 @@ import FontBold from '../../components/FontBold';
 import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
+import { withNamespaces } from 'react-i18next';
 
-const Frequency = ({ children }) => {
+const Frequency = ({ children, t }) => {
     const { dispatch, state } = useContext(HCContext);
     const [frequency, setFrequency] = useState(state.frequency);
     let subtotal = state.subtotal;
@@ -73,31 +74,31 @@ const Frequency = ({ children }) => {
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
                             <RadioButton value="One-time" status={state.frequency == 'One-time' ? 'checked' : 'unchecked'} />
-                            <FontBold value='One-time' mystyle={{ fontSize: 24 }}></FontBold>
+                            <FontBold value={t('onetime')} mystyle={{ fontSize: 24 }}></FontBold>
                         </View>
-                        <FontLight value='Book cleaning for one time only' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                        <FontLight value={t('ontimedetails')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { setFrequency('Bi-weekly') }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="Bi-weekly" status={state.frequency == 'Bi-weekly' ? 'checked' : 'unchecked'} />
-                        <FontBold value='Bi-weekly' mystyle={{ fontSize: 24 }}></FontBold>
+                        <RadioButton value='Bi-weekly' status={state.frequency == 'Bi-weekly' ? 'checked' : 'unchecked'} />
+                        <FontBold value={t('biweekly')} mystyle={{ fontSize: 24 }}></FontBold>
                     </View>
-                    <FontLight value='Book a recurring cleaning with the same cleaner every two-weeks' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
-                    <FontLight mystyle={styles.DiscountStyle} value="5% off"></FontLight>
+                    <FontLight value={t('biweeklydetails')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    <FontLight mystyle={styles.DiscountStyle} value={t('5off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { setFrequency('Weekly') }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="Weekly" status={state.frequency == 'Weekly' ? 'checked' : 'unchecked'} />
-                        <FontBold value='Weekly' mystyle={{ fontSize: 24 }}></FontBold>
+                        <RadioButton value='Weekly' status={state.frequency == 'Weekly' ? 'checked' : 'unchecked'} />
+                        <FontBold value={t('weekly')} mystyle={{ fontSize: 24 }}></FontBold>
 
                     </View>
-                    <FontLight value='Book a recurring with the same cleaner every week' mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
-                    <FontLight mystyle={styles.DiscountStyle} value="10% off"></FontLight>
+                    <FontLight value={t('weeklydetails')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    <FontLight mystyle={styles.DiscountStyle} value={t('10off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
             {/* </RadioButton.Group> */}
@@ -130,9 +131,9 @@ const styles = StyleSheet.create({
         margin: 5,
         position: "absolute",
         top: 0,
-        left: 160,
+        left: 265,
         height: 30,
-        width: 60,
+        width: 75,
         backgroundColor: '#f1c40f',
         borderRadius: 10,
         borderWidth: 1,
@@ -154,4 +155,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Frequency;
+export default withNamespaces()(Frequency);

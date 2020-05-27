@@ -84,7 +84,7 @@ const VerifyStack = createStackNavigator(
     LoginPhoneScreen: {
       screen: LoginPhoneScreen,
       navigationOptions: {
-        title: i18n.t('login'),
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('login')} />,
         headerLeft: ({ navigation }) => (
           <Icon
             style={{ left: 15, color: '#FF9800' }}
@@ -95,7 +95,34 @@ const VerifyStack = createStackNavigator(
         ),
       }
     },
-    VerifyScreen: { screen: VerifyScreen },
+    VerifyScreen: {
+      screen: VerifyScreen,
+      navigationOptions: {
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('verify')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#FF9800' }}
+            onPress={() => navigate('LoginPhoneScreen')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      }
+    },
+    RegisterUserScreen: {
+      screen: RegisterUserScreen,
+      navigationOptions: {
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('register')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#FF9800' }}
+            onPress={() => navigate('VerifyScreen')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      }
+    },
   },
   {
     initialRouteName: 'LoginPhoneScreen',
@@ -104,10 +131,16 @@ const VerifyStack = createStackNavigator(
     }
   });
 
-const RegisterFlow = createSwitchNavigator({
-  VerifyFlow: { screen: VerifyStack },
-  RegisterUserScreen: { screen: RegisterUserScreen },
-});
+// const RegisterFlow = createSwitchNavigator({
+//   VerifyFlow: { screen: VerifyStack },
+
+// },
+//   {
+//     initialRouteName: 'VerifyFlow',
+//     defaultNavigationOptions: {
+//       headerShown: true
+//     }
+//   });
 
 
 
@@ -128,7 +161,7 @@ const HomeLoginStackNavigator = createStackNavigator(
         // headerTintColor: '#fff',
       }
     },
-    RegisterFlow: { screen: RegisterFlow, navigationOptions: { headerShown: false } },
+    RegisterFlow: { screen: VerifyStack, navigationOptions: { headerShown: false } },
   },
   {
     initialRouteName: 'HomeScreenLogIn',
@@ -166,7 +199,20 @@ const HomeStackNavigator = createStackNavigator(
         };
       },
     },
-    HomeCleaningScreen: { screen: HomeCleaningScreen, navigationOptions: { title: i18n.t('homecleaning'), } },
+    HomeCleaningScreen: {
+      screen: HomeCleaningScreen,
+      navigationOptions: {
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('homecleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#FF9800' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      }
+    },
 
   });
 const SettingStackNavigator = createStackNavigator(

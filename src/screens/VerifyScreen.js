@@ -11,8 +11,9 @@ import Timer from '../components/Timer';
 import OtpInputs from "react-native-otp-inputs";
 import Axios from '../api/axiosapi';
 import { Context as UserContext } from '../screens/context/UserContext';
+import { withNamespaces } from 'react-i18next';
 
-const VerifyScreen = ({ navigation }) => {
+const VerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, redirect } = navigation.state.params;
     const { verifysms, sendsms } = useContext(AuthContext);
     const { state, getUserDetails, checkFullName } = useContext(UserContext);
@@ -36,7 +37,7 @@ const VerifyScreen = ({ navigation }) => {
     return (<>
         <View style={styles.container}>
             <Spacer>
-                <FontBold mystyle={styles.mobileText} value="Enter The Code That Was Sent To: "></FontBold>
+                <FontBold mystyle={styles.mobileText} value={t('enterthecodethatwassentto')}></FontBold>
                 <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
                 <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
                 <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold>
@@ -62,7 +63,7 @@ const VerifyScreen = ({ navigation }) => {
                 numberOfInputs={4}
                 inputStyles={styles.input}
             />
-            <FontBold mystyle={styles.resendText} value={'Resend Code in: '}></FontBold>
+            <FontBold mystyle={styles.resendText} value={t('resendcodein')}></FontBold>
             <Timer onclick={resend}></Timer>
         </View>
     </>
@@ -96,4 +97,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default VerifyScreen;
+export default withNamespaces()(VerifyScreen);

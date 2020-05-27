@@ -10,7 +10,8 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
-const DateandTimeDetails = ({ children }) => {
+import { withNamespaces } from 'react-i18next';
+const DateandTimeDetails = ({ children, t }) => {
     const { dispatch, state } = useContext(HCContext);
     const [day, setDay] = useState(state.selectedday);
     const [selectedDay, setSelectedDay] = useState(state.selectedday);
@@ -116,7 +117,7 @@ const DateandTimeDetails = ({ children }) => {
     }, [start]);
     return (
         <ScrollView style={{ flex: 1 }}>
-            <FontBold mystyle={styles.qText} value='When would you like cleaning?' />
+            <FontBold mystyle={styles.qText} value={t('dateq1')} />
             <Spacer />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
                 {days}
@@ -139,7 +140,7 @@ const DateandTimeDetails = ({ children }) => {
                 minimumTrackTintColor='#f1c40f'
             /> */}
             <Spacer>
-                <FontBold mystyle={styles.qText} value='what time would you like us to start?' />
+                <FontBold mystyle={styles.qText} value={t('dateq2')} />
             </Spacer>
             <Spacer />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
@@ -267,4 +268,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DateandTimeDetails;
+export default withNamespaces()(DateandTimeDetails);

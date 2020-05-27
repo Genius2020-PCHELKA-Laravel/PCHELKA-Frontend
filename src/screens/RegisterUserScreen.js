@@ -17,8 +17,9 @@ import GooglePlacesInput from '../components/GooglePlacesInput';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from './context/AuthContext';
 import { navigate } from '../navigationRef';
+import { withNamespaces } from 'react-i18next';
 
-const RegisterUserScreen = ({ navigation }) => {
+const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
     const { state, register } = useContext(AuthContext);
     let [fullName, setfullName] = useState('');
@@ -31,15 +32,15 @@ const RegisterUserScreen = ({ navigation }) => {
     const handleSubmitButton = async () => {
         setErrortext('');
         if (!fullName) {
-            setErrortext('Please fill Name');
+            setErrortext(t('pleasefillname'));
             return;
         }
         if (!email) {
-            setErrortext('Please fill Email');
+            setErrortext(t('pleasefillemail'));
             return;
         }
         if (!userAddress) {
-            setErrortext('Please fill Address');
+            setErrortext(t('pleasefilladdress'));
             return;
         }
         //Show Loader
@@ -68,7 +69,7 @@ const RegisterUserScreen = ({ navigation }) => {
 
             } else {
                 setLoading(false);
-                setErrortext('Registration Unsuccessful');
+                setErrortext(t('registrationunsuccessful'));
             }
         } catch (error) {
             //Hide Loader
@@ -136,7 +137,7 @@ const RegisterUserScreen = ({ navigation }) => {
                                 <TextInput
                                     style={styles.inputStyle}
                                     onChangeText={fullName => setfullName(fullName)}
-                                    placeholder="Enter Name"
+                                    placeholder={t('entername')}
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="sentences"
                                     // ref={ref => {
@@ -152,7 +153,7 @@ const RegisterUserScreen = ({ navigation }) => {
                                     style={styles.inputStyle}
                                     onChangeText={email => setemail(email)}
                                     // underlineColorAndroid="#F6F6F7"
-                                    placeholder="Enter Email"
+                                    placeholder={t('enteremail')}
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="none"
                                     keyboardType="email-address"
@@ -169,7 +170,7 @@ const RegisterUserScreen = ({ navigation }) => {
                                     style={styles.inputStyle}
                                     onChangeText={UserAddress => setUserAddress(UserAddress)}
                                     // underlineColorAndroid="#FFFFFF"
-                                    placeholder="Enter Address"
+                                    placeholder={t('enteraddress')}
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="sentences"
                                     // ref={ref => {
@@ -188,7 +189,7 @@ const RegisterUserScreen = ({ navigation }) => {
                                 style={styles.buttonStyle}
                                 activeOpacity={0.5}
                                 onPress={handleSubmitButton}>
-                                <Text style={styles.buttonTextStyle}>REGISTER</Text>
+                                <Text style={styles.buttonTextStyle}>{t('register')}</Text>
                             </TouchableOpacity>
                         </KeyboardAvoidingView>
                     </View>
@@ -197,7 +198,7 @@ const RegisterUserScreen = ({ navigation }) => {
         </>
     );
 };
-export default RegisterUserScreen;
+export default withNamespaces()(RegisterUserScreen);
 
 const styles = StyleSheet.create({
     SectionStyle: {
