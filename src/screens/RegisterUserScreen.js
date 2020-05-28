@@ -12,7 +12,7 @@ import {
     ScrollView,
 } from 'react-native';
 import Loader from '../components/Loader';
-import MapComponent from '../components/MapComponent';
+// import MapComponent from '../components/MapComponent';
 import GooglePlacesInput from '../components/GooglePlacesInput';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from './context/AuthContext';

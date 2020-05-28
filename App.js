@@ -46,6 +46,7 @@ import { navigate } from './src/navigationRef';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { withNamespaces } from 'react-i18next';
 import i18n from './src/locales/i18n';
+import MapScreen from './src/screens/MapScreen';
 
 const theme = {
   ...DefaultTheme,
@@ -221,7 +222,20 @@ const HomeStackNavigator = createStackNavigator(
         ),
       }
     },
-
+    MapScreen: {
+      screen: MapScreen,
+      navigationOptions: {
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('homecleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#ff9800' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      }
+    },
   });
 const SettingStackNavigator = createStackNavigator(
   {

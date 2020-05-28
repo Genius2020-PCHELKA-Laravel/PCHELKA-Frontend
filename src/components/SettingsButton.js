@@ -1,7 +1,7 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
@@ -42,8 +42,11 @@ const SettingsButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            {/* <Loader loading={loading} /> */}
-
+            <TouchableOpacity activeOpacity={.5} onPress={() => navigate('MapScreen')}>
+                <Text style={styles.languageButtonStyle}>Addresses
+                    <Entypo name="chevron-down" size={24} color="black" />
+                </Text>
+            </TouchableOpacity>
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
