@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect, useContext } from 'react';
-import { TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, Image, TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
 import { Container, Footer, FooterTab, Button, } from 'native-base';
-import { CheckBox, Icon } from 'react-native-elements'
-import { RadioButton, Text } from 'react-native-paper';
+import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
+import { RadioButton, Avatar } from 'react-native-paper';
 import Spacer from '../../components/Spacer';
 import FontBold from '../../components/FontBold';
 import FontLight from '../../components/FontLight';
@@ -17,6 +18,7 @@ const DateandTimeDetails = ({ children, t }) => {
     const [selectedDay, setSelectedDay] = useState(state.selectedday);
     const [selectedDate, setSelectedDate] = useState(state.selecteddate);
     const [start, setStart] = useState(state.start);
+    const [selectedprovider, setSelectedProvider] = useState(state.selectedprovider);
     useEffect(() => {
 
     }, []);
@@ -24,6 +26,47 @@ const DateandTimeDetails = ({ children, t }) => {
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     var days = [];
+    const providers = [
+        {
+            name: 'Auto-assign',
+            avatar: '../../../assets/Splash/SplashScreen1.png',
+            evaluation: '5',
+            desc: 'We will assign the besst cleaner',
+            count: -1
+        },
+        {
+            name: 'Mailyn',
+            avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+            evaluation: '4.6',
+            desc: '13 Apr',
+            count: 2
+        },
+        {
+            name: 'Majd',
+            avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+            evaluation: '3.6',
+            desc: '13 Apr',
+            count: 0
+        }, {
+            name: 'Haya',
+            avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+            evaluation: '2.0',
+            desc: '13 Apr',
+            count: 3
+        }, {
+            name: 'Mailyn',
+            avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+            evaluation: '4.6',
+            desc: '13 Apr',
+            count: 0
+        }, {
+            name: 'Samer',
+            avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+            evaluation: '4.6',
+            desc: '13 Apr',
+            count: 1
+        },
+    ];
     // var months = [];
     // var years = [];
     // var now = new Date();
@@ -31,7 +74,7 @@ const DateandTimeDetails = ({ children, t }) => {
     // console.log(now.getDate());
     // console.log(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
     const date = new Date();
-    for (let i = 0; i < 31; i++) {
+    for (let i = 0; i < 15; i++) {
         const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
         days.push(
             <TouchableOpacity key={i} onPress={() => setSelectedDay(i)}>
@@ -47,53 +90,6 @@ const DateandTimeDetails = ({ children, t }) => {
         )
     }
 
-    // const date = new Date();
-    // let datesCollection = []
-    // for (let j = 0; j < 31; j++) {
-    //     const newDate = new Date(date.getTime() + j * 1000 * 60 * 60 * 24);
-    //     //datesCollection.push(`${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`);
-    //     days.push(
-    //         <TouchableOpacity key={j} onPress={() => setSelectedDay(j)}>
-    //             <View style={styles.cloumn}>
-    //                 <Text style={styles.thumbup}>{newDate.getDate()}</Text>
-    //             </View>
-    //         </TouchableOpacity >
-    //     )
-    // }
-    // for (let j = 0; j < 31; j++) {
-    //     const newDate = new Date(date.getTime() + j * 1000 * 60 * 60 * 24);
-    //     // datesCollection.push(`${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`);
-    //     months.push(
-    //         <TouchableOpacity key={j} onPress={() => setSelectedDay(j)}>
-    //             <View style={styles.cloumn}>
-    //                 <Text style={styles.thumbup}>{newDate.getMonth() + 1}</Text>
-    //             </View>
-    //         </TouchableOpacity >
-    //     )
-    // }
-    // for (let j = 0; j < 331; j++) {
-    //     const newDate = new Date(date.getTime() + j * 1000 * 60 * 60 * 24);
-    //     // datesCollection.push(`${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`);
-    //     years.push(
-    //         <TouchableOpacity key={j} onPress={() => setSelectedDay(j)}>
-    //             <View style={styles.cloumn}>
-    //                 <Text style={styles.thumbup}>{newDate.getFullYear()}</Text>
-    //             </View>
-    //         </TouchableOpacity >
-    //     )
-    // }
-    // addDays = () => {
-    //     const date = new Date();
-    //     let datesCollection = []
-
-    //     for (var i = 1; i < 31; i++) {
-    //       const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
-    //       datesCollection.push(`${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}`);
-    //     }
-
-    //     return datesCollection
-    //   }
-    // console.log(days);
     useEffect(() => {
         dispatch({
             type: 'set_selectedday',
@@ -116,9 +112,71 @@ const DateandTimeDetails = ({ children, t }) => {
         });
     }, [start]);
     return (
-        <ScrollView style={{ flex: 1 }}>
-            <FontBold mystyle={styles.qText} value={t('dateq1')} />
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+            <FontBold mystyle={styles.qText} value={t('dateq0')} />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', }}>
+                {
+                    providers.map((u, i) => {
+                        return (
+                            <TouchableOpacity key={i} style={selectedprovider == i ? styles.providerThumdown : styles.providerThumup} onPress={() => setSelectedProvider(i)}>
+                                <View>
+                                    {
+                                        u.name == 'Auto-assign' ?
+                                            <Image style={styles.imageThumdown} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                            :
+                                            <Image
+                                                source={{ uri: u.avatar }}
+                                                // style={styles.imagestyle}
+                                                style={selectedprovider == i ? styles.imageThumdown : styles.imageThumup}
+                                            />
+                                    }
+
+                                    {
+                                        u.count < 0 ?
+                                            null :
+                                            u.count > 0 ?
+                                                <Badge
+                                                    status="success"
+                                                    badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
+                                                    containerStyle={{ position: 'absolute', top: 5, right: 22, }}
+                                                />
+                                                : u.count == 0 ?
+                                                    <Badge
+                                                        status="error"
+                                                        badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
+                                                        containerStyle={{ position: 'absolute', top: 5, right: 22 }}
+                                                    />
+                                                    : null
+                                    }
+                                </View>
+
+                                <View style={{ flexDirection: 'row' }}>
+                                    <FontRegular mustyle={{ fontSize: 12, padding: 0, textAlign: 'center' }} value={u.name} />
+                                    <Text>{' '}</Text>
+                                    {
+                                        u.name != 'Auto-assign' ?
+                                            u.evaluation >= 4 ?
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                :
+                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            : null
+                                    }
+                                    <Text>{' '}</Text>
+                                    {
+                                        u.name != 'Auto-assign' ?
+                                            <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
+                                            : null
+                                    }
+                                </View>
+                                <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.desc} />
+                            </TouchableOpacity>
+
+                        );
+                    })
+                }
+            </ScrollView>
             <Spacer />
+            <FontBold mystyle={styles.qText} value={t('dateq1')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
                 {days}
             </ScrollView>
@@ -137,12 +195,11 @@ const DateandTimeDetails = ({ children, t }) => {
                 step={1}
                 trackStyle={styles.track}
                 thumbStyle={styles.thumb}
-                minimumTrackTintColor='#f1c40f'
+                minimumTrackTintColor='#ff9800'
             /> */}
             <Spacer>
                 <FontBold mystyle={styles.qText} value={t('dateq2')} />
             </Spacer>
-            <Spacer />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => setStart('08:00:00')}><Text style={start == '08:00:00' ? styles.timethumbdown : styles.timethumbup}>08:00</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setStart('08:30:00')}><Text style={start == '08:30:00' ? styles.timethumbdown : styles.timethumbup}>08:30</Text></TouchableOpacity>
@@ -176,13 +233,13 @@ const DateandTimeDetails = ({ children, t }) => {
                 step={1}
                 trackStyle={styles.track}
                 thumbStyle={styles.thumb}
-                minimumTrackTintColor='#f1c40f'
+                minimumTrackTintColor='#ff9800'
             /> */}
 
             <View>
 
             </View>
-        </ScrollView>);
+        </ScrollView >);
 };
 
 const styles = StyleSheet.create({
@@ -215,7 +272,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 30 / 2,
         backgroundColor: 'white',
-        borderColor: '#f1c40f',
+        borderColor: '#ff9800',
         borderWidth: 2,
     },
     thumbup: {
@@ -225,7 +282,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 48 / 2,
         backgroundColor: 'white',
-        borderColor: '#f1c40f',
+        borderColor: '#ff9800',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -236,7 +293,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 48 / 2,
-        backgroundColor: '#f1c40f',
+        backgroundColor: '#ff9800',
         borderColor: 'white',
         borderWidth: 2,
         textAlign: 'center',
@@ -249,7 +306,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 75 / 2,
         backgroundColor: 'white',
-        borderColor: '#f1c40f',
+        borderColor: '#ff9800',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -260,11 +317,55 @@ const styles = StyleSheet.create({
         width: 75,
         height: 48,
         borderRadius: 75 / 2,
-        backgroundColor: '#f1c40f',
+        backgroundColor: '#ff9800',
         borderColor: 'white',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
+    },
+    providerThumup: {
+        backgroundColor: '#fff',
+        width: 120,
+        height: 170,
+        padding: 15,
+        borderColor: "#ff9800",
+        borderWidth: 2,
+        padding: 5,
+        marginRight: 10,
+        marginTop: 10
+    },
+    providerThumdown: {
+        backgroundColor: '#ff9800',
+        width: 120,
+        height: 170,
+        padding: 15,
+        borderColor: "#fff",
+        borderWidth: 2,
+        padding: 5,
+        marginRight: 10,
+        marginTop: 10
+    },
+    imageThumup: {
+        width: 80,
+        height: 80,
+        borderRadius: 45,
+        marginLeft: 10,
+        marginRight: 10,
+        borderWidth: 3,
+        borderColor: "#ff9800",
+        opacity: 1,
+
+    },
+    imageThumdown: {
+        width: 80,
+        height: 80,
+        borderRadius: 45,
+        marginLeft: 10,
+        marginRight: 10,
+        borderWidth: 3,
+        borderColor: "#fff",
+        opacity: 1,
+
     }
 });
 

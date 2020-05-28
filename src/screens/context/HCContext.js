@@ -22,6 +22,8 @@ const HCreducer = (state, action) => {
             return { ...state, desc: action.payload };
         case 'set_selectedday':
             return { ...state, selectedday: action.payload };
+        case 'set_selectedprovider':
+            return { ...state, selectedprovider: action.payload };
         case 'set_fulldate':
             return { ...state, full_date: action.payload.full_date };
         case 'set_start':
@@ -123,5 +125,5 @@ const HCBooking = dispatch => {
 }
 export const { Context, Provider } = createDataContext(HCreducer,
     { getAddresses, getprice, HCBooking },
-    { price: 100, subtotal: 0, discount: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', selected_address_name: '', method: '', addresses: '', selected_address: '' }
+    { price: 100, subtotal: 0, discount: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedprovider: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', selected_address_name: '', method: '', addresses: '', selected_address: '' }
 );

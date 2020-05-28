@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const AppoitmentScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f1c40f" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#ff9800" }}>
     </SafeAreaView>
   );
 };

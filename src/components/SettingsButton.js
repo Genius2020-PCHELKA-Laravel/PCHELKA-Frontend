@@ -80,10 +80,10 @@ const styles = StyleSheet.create({
 
     languageButtonStyle: {
         padding: 10,
-        backgroundColor: '#FF9800',
+        backgroundColor: '#ff9800',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#FF9800',
+        borderColor: '#ff9800',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         top: 10
     },
     avatar: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#ff9800',
         flex: 1,
         right: 20,
         top: 15

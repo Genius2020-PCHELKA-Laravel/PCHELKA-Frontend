@@ -144,7 +144,7 @@ const HomeCleaningDetails = ({ children, t }) => {
                 step={1}
                 trackStyle={styles.track}
                 thumbStyle={styles.thumb}
-                minimumTrackTintColor='#f1c40f'
+                minimumTrackTintColor='#ff9800'
             /> */}
             <Spacer />
             <View style={{ flexDirection: 'row' }}>
@@ -176,7 +176,7 @@ const HomeCleaningDetails = ({ children, t }) => {
                 step={1}
                 trackStyle={styles.track}
                 thumbStyle={styles.thumb}
-                minimumTrackTintColor='#f1c40f'
+                minimumTrackTintColor='#ff9800'
             /> */}
             <Spacer>
                 <FontBold mystyle={styles.qText} value={t('cleaningq3')} />
@@ -184,8 +184,8 @@ const HomeCleaningDetails = ({ children, t }) => {
             <View style={styles.row}>
                 <View style={styles.item}>
                     <Switch
-                        trackColor={{ false: "#767577", true: "#f1c40f" }}
-                        thumbColor={isEnabled ? "#f1c40f" : "#f4f3f4"}
+                        trackColor={{ false: "#767577", true: "#ff9800" }}
+                        thumbColor={isEnabled ? "#ff9800" : "#f4f3f4"}
                         style={styles.switch}
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={toggleSwitch}
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     input: {
         margin: 10,
         height: 60,
-        borderColor: '#f1c40f',
+        borderColor: '#ff9800',
         borderRadius: 15,
         borderWidth: 2,
         fontSize: 18,
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 48 / 2,
         backgroundColor: 'white',
-        borderColor: '#f1c40f',
+        borderColor: '#ff9800',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 48 / 2,
-        backgroundColor: '#f1c40f',
+        backgroundColor: '#ff9800',
         borderColor: 'white',
         borderWidth: 2,
         textAlign: 'center',

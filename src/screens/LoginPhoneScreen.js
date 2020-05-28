@@ -37,7 +37,10 @@ const LoginPhoneScreen = ({ navigation, t }) => {
       console.log("Finish Enter Mobile Phone>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
   }, [mobile]);
-
+  const handleMobileChange = (mobile) => {
+    const filteredmobile = mobile.replace(/\D/gm, '');
+    setMobile(filteredmobile);
+  }
   return (<>
     <View style={styles.container}>
       <Spacer>
@@ -60,7 +63,7 @@ const LoginPhoneScreen = ({ navigation, t }) => {
           maxLength={9}
           //leftIcon={<Icon name='phone' size={24} color='black' />}
           value={mobile}
-          onChangeText={setMobile} />
+          onChangeText={handleMobileChange} />
       </View>
       {/* {mobile.length != 9 ? <Text style={styles.error}> phone should be 9</Text> : null} */}
       {/* {mobile.length == 9 ? [navigation.navigate('Verify', { mobile: mobile })] : null} */}

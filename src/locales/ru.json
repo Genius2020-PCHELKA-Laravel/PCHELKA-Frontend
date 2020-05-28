@@ -10,6 +10,8 @@
   "laundary": "Прачечная",
   "disinfectionservices": "Дезинфекционные услуги",
   "sofacleaning": "Чистка диванов",
+  "fullname": "Полное имя",
+  "mobile": "мобильный",
   //Settings Screen
   "accountsettings": "НАСТРОЙКИ УЧЕТНОЙ ЗАПИСИ",
   "editpersonaldetails": "Изменить личные данные",
@@ -38,6 +40,14 @@
   "pleasefillemail": "Пожалуйста, заполните электронную почту",
   "pleasefilladdress": "Пожалуйста, заполните адрес",
   "registrationunsuccessful": "Регистрация не удалась",
+  "editunsuccessful": "Изменить личные данные Не удалось",
+  //Edit person details
+  "selectdate": "Выберите дату",
+  "male": "мужчина",
+  "female": "женский пол",
+  "entermobile": "Войти мобильный",
+  "pleasefilldob": "Пожалуйста, заполните DOB",
+  "pleasefillgender": "Пожалуйста, заполните Пол",
   //HomeCleaningScreen
   "freauency": "частота",
   "cleaning": "уборка",
@@ -57,6 +67,7 @@
   "cleaningq3": "Вам нужен чистящий материал?",
   "cleaningq4": "Есть ли у вас какие-либо конкретные инструкции по очистке?",
   "cleaningdes": "Пример: ключ под коврик, глажка, мойка окон и т. Д.",
+  "dateq0": "какой очиститель вы предпочитаете?",
   "dateq1": "Когда бы вы хотели уборку?",
   "dateq2": "во сколько вы хотели бы, чтобы мы начали?",
   "addressq1": "Ваши сохраненные адреса",

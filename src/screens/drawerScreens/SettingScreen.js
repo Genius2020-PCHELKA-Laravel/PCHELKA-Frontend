@@ -17,39 +17,44 @@ import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 
 const SettingScreen = ({ navigation, t }) => {
-  const { dispatch, state, getUserDetails } = useContext(UserContext);
-  const [fullName, setFullName] = useState('');
-  const [mobile, setMobile] = useState('');
+  //After Update Get the updatetd info
+  const { dispatch, state, getUserDetails, editUserDetails } = useContext(UserContext);
+  const [fullName, setFullName] = useState(t('fullname'));
+  const [mobile, setMobile] = useState(t('mobile'));
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-
-  // getUserDetails().then((response) => {
-  useEffect(() => {
+  const unsubscribe = navigation.addListener('didFocus', () => {
+    console.log("Settings focussed#");
     getUserDetailsStorage().then((response) => {
-      if (response != null) {
-        setFullName(response.fullName);
-        setMobile(response.mobile);
-        console.log("Getting details of user from AscyncStorage");
-        return;
-      };
-    }).catch((err) => { console.log("SlideBar useffect #1 " + err); });
-
-    getUserDetails().then((details) => {
-      getUserDetailsStorage().then((response) => {
-        console.log("Getting details of user from AscyncStorage");
-        console.log("SET Full Name IN SlideBar:" + response.fullName);
-        setFullName(response.fullName);
-      }).catch((err) => { console.log(err); });
-    }).catch((err) => { console.log("SlideBar useffect #2 " + err); });
+      console.log("SettingsScreen didfocus:: " + JSON.stringify(response));
+      setFullName(response.fullName);
+      setMobile(response.mobile);
+    }).catch(() => {
+      console.log("SettingScreen didfocus:: " + err);
+    });
+  });
+  useEffect(() => {
+    console.log("Settings focussed#");
+    getUserDetailsStorage().then((response) => {
+      console.log("SettingsScreen didfocus:: " + JSON.stringify(response));
+      setFullName(response.fullName);
+      setMobile(response.mobile);
+    }).catch(() => {
+      console.log("SettingScreen didfocus:: " + err);
+    });
   }, []);
-
+  // useEffect(() => {
+  //   // console.log("Settinga#" + JSON.stringify(state.userDetails));
+  //   setFullName(state.userDetails.fullName);
+  //   setMobile(state.userDetails.mobile);
+  // }, [state]);
   return (
     <View style={styles.container}>
       <View>
         <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
         <FontRegular value={fullName} mystyle={styles.name} />
-        <FontRegular value={"+" + mobile} mystyle={styles.mobile} />
+        <FontRegular value={"+ " + mobile} mystyle={styles.mobile} />
         <Avatar
           size="large"
           rounded
@@ -116,6 +121,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   item1: {
+    fontSize: 20,
     marginLeft: 15,
     width: '90%' // is 50% of container width
   },
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
 
   avatar: {
     position: 'absolute',
-    backgroundColor: '#FF9800',
+    backgroundColor: '#ff9800',
     flex: 1,
     marginLeft: 20,
     bottom: -30
@@ -143,7 +149,7 @@ const styles = StyleSheet.create({
   mobile: {
     position: 'absolute',
     fontSize: 20,
-    top: 70,
+    top: 120,
     textAlign: 'center',
     color: '#000',
     justifyContent: 'center',

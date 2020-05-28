@@ -9,7 +9,8 @@ const UserReducer = (state, action) => {
         case 'add_error':
             return { ...state, errorMessage: action.payload };
         case 'get_user_details':
-            console.log(action.payload.fullName);
+            return { ...state, userDetails: action.payload };
+        case 'edit_user_details':
             return { ...state, userDetails: action.payload };
         case 'update_mobile':
             return { ...state, mobile: action.payload };
@@ -22,24 +23,35 @@ const UserReducer = (state, action) => {
 
 const getUserDetails = dispatch => {
     return async () => {
-        const senttoken = await getToken();
-        // console.log("Sent Token details:>>>>>>>>>>>>>> " + senttoken);
         try {
+            const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.post('/details');
-            await setUserDetailsStorage(response.data.data);
-            await dispatch({ type: 'get_user_details', payload: response.data.data });
-            console.log("User Context getUserDetails" + response.data.data.fullName);
+            setUserDetailsStorage(response.data.data);
             return response.data.data;
         } catch (err) {
             console.log("Error in UserContext: " + err)
         }
-        // console.log("Token Before details>>>>>>>>>>>>>>" + senttoken);
-        // dispatch({ type: 'get_user_details', payload: response.data.data.fullName });
-        // console.log("Token After details>>>>>>>>>>>>>>>>" + await getToken() + "\n");
 
     }
 }
+
+const editUserDetails = dispatch => {
+    return async ({ mobile, fullName, email, dateOfBirth, gender, language }) => {
+        console.log({ mobile, fullName, email, dateOfBirth, gender, language });
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/userUpdate', { mobile, fullName, email, dateOfBirth, gender, language });
+            //console.log(response);
+            setUserDetailsStorage({ mobile, fullName, email, dateOfBirth, gender, language });
+            return response.data.status;
+        } catch (error) {
+            console.error("error in edit user: " + error);
+        }
+    };
+}
+
 const checkFullName = dispatch => {
     return async (mobile, redirect) => {
         const senttoken = await getToken();
@@ -58,6 +70,6 @@ const checkFullName = dispatch => {
     }
 }
 export const { Context, Provider } = createDataContext(UserReducer,
-    { getUserDetails, checkFullName },
-    { mobile: '', checkname: '', userDetails: '', fullName: '', errorMessage: '', responsestatus: null }
+    { getUserDetails, editUserDetails, checkFullName },
+    { checkname: '', userDetails: "", errorMessage: '', responsestatus: null }
 );

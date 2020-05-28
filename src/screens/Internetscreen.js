@@ -52,8 +52,18 @@ const InternetScreen = ({ navigation }) => {
   }, []);
   return (<View>
     {
-      // connected ? <Text>No Internet</Text> : <Text></Text>
+      // connected ? <Text>No Internet</Text> : <Text></Text>z
     }
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
+    <Text>NoInternet</Text>
   </View>);
 };
 

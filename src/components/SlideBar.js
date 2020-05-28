@@ -10,29 +10,32 @@ import FontBold from '../components/FontBold';
 import FontRegular from '../components/FontRegular';
 import FontLight from '../components/FontLight';
 import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage } from '../api/userDetails';
-
 export default SlideBar = props => {
     //const { state, getUserDetails } = useContext(UserContext);
-    const { dispatch, state, getUserDetails } = useContext(UserContext);
+    const { state, getUserDetails, dispatch } = useContext(UserContext);
     const [fullName, setFullName] = useState('');
 
     useEffect(() => {
-        getUserDetailsStorage().then((response) => {
-            if (response != null) {
-                setFullName(response.fullName);
-                console.log("Getting details of user from AscyncStorage");
-                return;
-            };
-        }).catch((err) => { console.log("SlideBar useffect #1 " + err); });
-
-        getUserDetails().then((details) => {
-            getUserDetailsStorage().then((response) => {
-                console.log("Getting details of user from AscyncStorage");
-                console.log("SET Full Name IN SlideBar:" + response.fullName);
-                setFullName(response.fullName);
-            }).catch((err) => { console.log(err); });
-        }).catch((err) => { console.log("SlideBar useffect #2 " + err); });
+        getUserDetails().then((response) => {
+            console.log("SlideBar useffect response#1 " + JSON.stringify(response));
+            // dispatch({ type: 'get_user_details', payload: response.data.data });
+            setFullName(response.fullName);
+            setUserDetailsStorage(response);
+        }).catch((err) => {
+            console.log("SlideBar useffect #1 " + err);
+        });
     }, []);
+    // useEffect(() => {
+    //     getUserDetails().then((response) => {
+    //         setFullName(response.fullName);
+    //     }).catch((err) => { console.log("SlideBar useffect #2 " + err); });
+    // }, [state]);
+    // useEffect(() => {
+    //     getUserDetails().then((response) => {
+    //         console.log("SET Full Name IN SlideBar:" + response.fullName);
+    //         setFullName(response.fullName);
+    //     }).catch((err) => { console.log("SlideBar useffect #2 " + err); });
+    // }, [state]);
     return (
         <ScrollView style={styles.container}>
             <Spacer />
@@ -40,7 +43,7 @@ export default SlideBar = props => {
                 <Spacer />
                 <View style={styles.profileHeader}>
                     <View style={styles.profileHeaderPicCircle}>
-                        <FontLight mystyle={{ fontSize: 25, color: '#FF9800' }} value={fullName != null ? fullName.charAt(0) : ""} />
+                        <FontLight mystyle={{ fontSize: 25, color: '#ff9800' }} value={fullName != null ? fullName.charAt(0) : ""} />
                     </View>
                     <FontLight mystyle={styles.profileHeaderText} value={fullName} />
                 </View>

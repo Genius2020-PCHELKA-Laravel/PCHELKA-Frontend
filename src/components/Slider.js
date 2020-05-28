@@ -26,7 +26,18 @@ export default class App extends React.Component {
           autoplay={true}
           images={this.state.images}
           circleLoop={true}
-
+          sliderBoxHeight={250}
+          dotColor="#ff9800"
+          inactiveDotColor="#ffc200"
+          dotStyle={{
+            width: 20,
+            height: 20,
+            borderRadius: 20,
+            marginHorizontal: 0,
+            padding: 0,
+            margin: 0
+          }}
+          imageLoadingColor="#ff9800"
         //onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
         //currentImageEmitter={index => console.warn(`current pos is: ${index}`)}
         />

@@ -10,6 +10,7 @@
   "dependencies": {
     "@expo/vector-icons": "^10.2.0",
     "@react-native-community/async-storage": "^1.10.1",
+    "@react-native-community/datetimepicker": "^2.4.0",
     "@react-native-community/masked-view": "^0.1.6",
     "@react-native-community/netinfo": "^5.5.1",
     "@use-expo/font": "^2.0.0",
@@ -19,6 +20,7 @@
     "i18next": "^19.4.4",
     "i18next-browser-languagedetector": "^4.2.0",
     "link": "^0.1.5",
+    "moment": "^2.26.0",
     "native-base": "^2.13.12",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -45,6 +47,7 @@
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.2.0",
     "react-native-simple-radio-button": "^2.7.4",
+    "react-native-simple-toast": "^1.1.2",
     "react-native-web": "^0.11.7",
     "react-native-windows": "^0.61.9",
     "react-navigation": "^4.3.9",

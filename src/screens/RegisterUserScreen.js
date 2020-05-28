@@ -18,6 +18,7 @@ import Spacer from '../components/Spacer';
 import { Context as AuthContext } from './context/AuthContext';
 import { navigate } from '../navigationRef';
 import { withNamespaces } from 'react-i18next';
+import Toast from 'react-native-simple-toast';
 
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
@@ -182,8 +183,8 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                 />
                             </View>
                             {
-                                errortext != '' ?
-                                    (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
+                                errortext != '' ? Toast.show(errortext, Toast.LONG) : null
+                                // (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
                             }
                             <TouchableOpacity
                                 style={styles.buttonStyle}
@@ -200,6 +201,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
 };
 export default withNamespaces()(RegisterUserScreen);
 
+
 const styles = StyleSheet.create({
     SectionStyle: {
         flexDirection: 'row',
@@ -210,17 +212,19 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#DAA520',
+        backgroundColor: '#ff9800',
         borderWidth: 0,
         color: '#FFFFFF',
-        borderColor: '#DAA520',
-        height: 40,
+        borderColor: '#ff9800',
         alignItems: 'center',
         borderRadius: 30,
         marginLeft: 35,
         marginRight: 35,
         marginTop: 20,
         marginBottom: 20,
+        fontSize: 20,
+        height: 50,
+        textAlign: 'center'
     },
     buttonTextStyle: {
         color: '#FFFFFF',
@@ -234,7 +238,10 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 30,
-        borderColor: 'white',
+        borderColor: '#ff9800',
+        fontSize: 20,
+        padding: 10,
+        height: 50
     },
     errorTextStyle: {
         color: 'red',

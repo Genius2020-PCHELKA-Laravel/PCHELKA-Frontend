@@ -53,7 +53,15 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#3498db',
-    accent: '#f1c40f',
+    accent: '#ff9800',
+    // brandPrimary: '#ff9800',
+    // brandInfo: '#ff9800',
+    // brandSuccess: '#ff9800',
+    // brandDanger: '#ff9800',
+    // brandWarning: '#ff9800',
+    // brandDark: '#ff9800',
+    // brandLight: '#ff9800',
+
   },
 };
 // const navigator = createSwitchNavigator({
@@ -84,10 +92,10 @@ const VerifyStack = createStackNavigator(
     LoginPhoneScreen: {
       screen: LoginPhoneScreen,
       navigationOptions: {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('login')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('login')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigate('HomeScreenLogIn')}
             name="md-arrow-back"
             size={35}
@@ -98,10 +106,10 @@ const VerifyStack = createStackNavigator(
     VerifyScreen: {
       screen: VerifyScreen,
       navigationOptions: {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('verify')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('verify')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigate('LoginPhoneScreen')}
             name="md-arrow-back"
             size={35}
@@ -112,10 +120,10 @@ const VerifyStack = createStackNavigator(
     RegisterUserScreen: {
       screen: RegisterUserScreen,
       navigationOptions: {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('register')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('register')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigate('VerifyScreen')}
             name="md-arrow-back"
             size={35}
@@ -156,7 +164,7 @@ const HomeLoginStackNavigator = createStackNavigator(
         headerRight: () => (
           <LoginButton />),
         headerStyle: {
-          // backgroundColor: '#FF9800',
+          // backgroundColor: '#ff9800',
         },
         // headerTintColor: '#fff',
       }
@@ -183,7 +191,7 @@ const HomeStackNavigator = createStackNavigator(
           title: '',
           headerLeft: () =>
             <Icon
-              style={{ left: 15, color: '#FF9800' }}
+              style={{ left: 15, color: '#ff9800' }}
               onPress={() => navigation.openDrawer()}
               name="md-menu"
               size={40}
@@ -193,7 +201,7 @@ const HomeStackNavigator = createStackNavigator(
           )
           ,
           headerStyle: {
-            // backgroundColor: '#FF9800',
+            // backgroundColor: '#ff9800',
           },
           // headerTintColor: '#fff',
         };
@@ -202,10 +210,10 @@ const HomeStackNavigator = createStackNavigator(
     HomeCleaningScreen: {
       screen: HomeCleaningScreen,
       navigationOptions: {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('homecleaning')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('homecleaning')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigate('HomeNavigator')}
             name="md-arrow-back"
             size={35}
@@ -221,16 +229,16 @@ const SettingStackNavigator = createStackNavigator(
       screen: SettingScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('settings')} />,
+          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('settings')} />,
           headerLeft: () =>
             <Icon
-              style={{ left: 15, color: '#FF9800' }}
+              style={{ left: 15, color: '#ff9800' }}
               onPress={() => navigation.openDrawer()}
               name="md-menu"
               size={40}
             />,
           headerStyle: {
-            // backgroundColor: '#FF9800',
+            // backgroundColor: '#ff9800',
           },
           // headerTintColor: '#fff',
         };
@@ -242,7 +250,7 @@ const SettingStackNavigator = createStackNavigator(
         title: i18n.t('editpersonaldetails'),
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
-          backgroundColor: '#FF9800',
+          backgroundColor: '#ff9800',
         },
         headerTintColor: '#fff',
       }),
@@ -253,7 +261,7 @@ const SettingStackNavigator = createStackNavigator(
         title: 'Manage Addresses',
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
-          backgroundColor: '#FF9800',
+          backgroundColor: '#ff9800',
         },
         headerTintColor: '#fff',
       }),
@@ -264,7 +272,7 @@ const SettingStackNavigator = createStackNavigator(
         title: i18n.t('managecreditcards'),
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
-          backgroundColor: '#FF9800',
+          backgroundColor: '#ff9800',
         },
         headerTintColor: '#fff',
       }),
@@ -296,14 +304,14 @@ const TabNavigator = createMaterialTopTabNavigator({
     initialRouteName: 'Upcoming',
     tabBarPosition: "top",
     tabBarOptions: {
-      activeTintColor: "#FF9800",
+      activeTintColor: "#ff9800",
       inactiveTintColor: 'gray',
       style: {
         backgroundColor: "#fff"
       },
       indicatorStyle: {
         height: 2,
-        backgroundColor: '#FF9800',
+        backgroundColor: '#ff9800',
       },
       showIcon: true
     },
@@ -317,17 +325,17 @@ const AppoitmentStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('appoitments')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('appoitments')} />,
         headerLeft: () =>
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigation.openDrawer()}
             name="md-menu"
             size={40}
           />,
 
         headerStyle: {
-          // backgroundColor: '#FF9800',
+          // backgroundColor: '#ff9800',
         },
         // headerTintColor: '#fff',
       };
@@ -341,18 +349,18 @@ const FreeStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('freecleaning')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('freecleaning')} />,
 
         headerLeft: () =>
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigation.openDrawer()}
             name="md-menu"
             size={40}
           />,
 
         headerStyle: {
-          // backgroundColor: '#FF9800',
+          // backgroundColor: '#ff9800',
         },
         // headerTintColor: '#fff',
       };
@@ -366,17 +374,17 @@ const SupportStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#FF9800', fontSize: 20 }} value={i18n.t('support')} />,
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('support')} />,
         headerLeft: () =>
           <Icon
-            style={{ left: 15, color: '#FF9800' }}
+            style={{ left: 15, color: '#ff9800' }}
             onPress={() => navigation.openDrawer()}
             name="md-menu"
             size={40}
           />,
 
         headerStyle: {
-          // backgroundColor: '#FF9800',
+          // backgroundColor: '#ff9800',
         },
         // headerTintColor: '#fff',
       };

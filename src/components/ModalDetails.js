@@ -43,7 +43,7 @@ const ModalDetails = ({ children, t }) => {
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('servicetype')}></FontRegular>
                         <Spacer />
                         <FontBold mystyle={{ color: 'black', fontSize: 21 }} value={t('homecleaning')}></FontBold>
-                        <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
+                        <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
                         <Spacer />
 
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('details')}></FontRegular>
@@ -80,7 +80,7 @@ const ModalDetails = ({ children, t }) => {
                             </View>
                         </View>
                         <Spacer>
-                            <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
+                            <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
                         </Spacer>
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('dateandtime')}></FontRegular>
                         <View style={styles.row}>
@@ -100,13 +100,13 @@ const ModalDetails = ({ children, t }) => {
                             </View>
                         </View>
                         <Spacer>
-                            <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
+                            <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
                         </Spacer>
                         <Spacer />
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('address')}></FontRegular>
                         <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={state.selected_address_name}></FontBold>
                         <Spacer>
-                            <View style={{ borderBottomColor: '#f1c40f', borderBottomWidth: 1, }} />
+                            <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
                         </Spacer>
                         <FontRegular mystyle={{ color: 'gray', fontSize: 21 }} value={t('price')}></FontRegular>
                         <View style={styles.row}>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
         left: 10,
         bottom: 10,
         paddingHorizontal: 10,
-        // backgroundColor: '#f1c40f',
+        // backgroundColor: '#ff9800',
         borderRadius: 20,
         borderWidth: 1,
         borderColor: '#DAA520',
