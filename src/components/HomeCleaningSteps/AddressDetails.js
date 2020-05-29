@@ -11,7 +11,8 @@ import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../Loader';
 import { withNamespaces } from 'react-i18next';
-
+import { setRedirect } from '../../api/redirect';
+import { navigate } from '../../navigationRef';
 const AddressDetails = ({ children, t }) => {
     const { dispatch, state, getAddresses } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
@@ -25,27 +26,34 @@ const AddressDetails = ({ children, t }) => {
     for (const add of state.addresses) {
         items.push(
             <TouchableOpacity key={add.id} onPress={() => { setSelectedAddress(add.id); setSelectedAddressName(add.address); dispatch({ type: 'set_selected_address_name', payload: add.address, }); }}>
-                <Spacer >
-                    <View style={styles.containerrow}>
-                        <View style={styles.addresscolumn}>
-                            <View style={styles.addressrow}>
-                                <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
-                                <FontBold value={add.address} mystyle={{ fontSize: 24 }}></FontBold>
-                            </View>
-                            <View style={styles.addressrow}>
-                                <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
-                            </View>
+                <View flexDirection='row' style={{ marginBottom: 5 }}>
+                    <View flexDirection='column'>
+                        <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
+                    </View>
+                    <View flexDirection='column'>
+                        <View flexDirection='row'>
+                            <FontBold value={add.address} mystyle={{ fontSize: 24 }}></FontBold>
                         </View>
-                        <View style={styles.editcolumn}>
+                        <View flexDirection='row'>
+                            <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 18 }}></FontLight>
+                        </View>
+                        <View flexDirection='row'>
+                            <FontLight value={add.street} mystyle={{ color: 'gray', fontSize: 18 }}></FontLight>
+                            <FontLight value={add.buildingNumber} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 15 }}></FontLight>
+                            <FontLight value={add.apartment} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 15 }}></FontLight>
+                        </View>
+                    </View>
+                    {/* <View style={styles.editcolumn}>
                             <View style={styles.editrow}>
                                 <TouchableOpacity onPress={() => alert("Edit: " + add.id)}>
                                     <FontBold mystyle={styles.editButton} value={t('edit')} ></FontBold>
                                 </TouchableOpacity>
                             </View>
-                        </View>
-                    </View>
+                        </View> */}
+                </View>
 
-                </Spacer>
+
+
             </TouchableOpacity>
         );
     }
@@ -70,13 +78,13 @@ const AddressDetails = ({ children, t }) => {
                             <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('addressq1')}></FontBold>
                         </View>
                         <View style={styles.containeritem2}>
-                            <TouchableOpacity onPress={() => alert("AddNew")}>
+                            <TouchableOpacity onPress={async () => { await setRedirect('HomeScreen'); navigate('MapScreen'); }}>
                                 <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
                             </TouchableOpacity>
                         </View>
                     </View>
 
-                    {items}
+                    {items.reverse()}
                 </Spacer>
             </ScrollView>
         </View>

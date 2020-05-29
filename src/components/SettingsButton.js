@@ -19,7 +19,9 @@ const SettingsButton = ({ t }) => {
     const [addresses, setAddresses] = useState([]);
     const [address, setAddress] = useState('');
     const [showAddressesModal, setShowAddressesModal] = useState(false);
+    //load new address name in settingsbutton after add new
 
+    //load all addresses
     useEffect(() => {
         getUserAddresses().then((response) => {
             setAddresses(response.reverse());
@@ -28,7 +30,27 @@ const SettingsButton = ({ t }) => {
             console.log("ERROR::SettingsButton::UseEffect ");
             console.log(err);
         });
+        // getUserAddressesStorage().then((response) => {
+        //     if (typeof response != 'undefined') {
+        //         setAddresses(response.reverse());
+        //         setAddress(response[0].details + ',' + response[0].address);
+        //     }
+        //     else {
+        //         getUserAddresses().then((response) => {
+        //             setAddresses(response.reverse());
+        //             setAddress(response[0].details + ',' + response[0].address);
+        //         }).catch((err) => {
+        //             console.log("ERROR::SettingsButton::UseEffect::getUserAddresses::  ");
+        //             console.log(err);
+        //         });
+        //     }
+        // }).catch((error) => {
+        //     console.log("ERROR::SettingsButton::UseEffect::getUserDetailsStorage::  ");
+        //     console.log(error);
+        // });
+
     }, [reloadAddresses]);
+
     const { state, logout } = useContext(AuthContext);
     const [shouldShowLang, setShouldShowLang] = useState(true);
     const [lang, setLang] = useState('en');
@@ -77,7 +99,14 @@ const SettingsButton = ({ t }) => {
                     <Entypo name="chevron-down" size={14} color="#ff9800" />
                 </Text>
             </TouchableOpacity >
-            <HomeScreenAddresses setIsLoading={setIsLoading} addresses={addresses} reloadAddresses={reloadAddresses} setReloadAddresses={setReloadAddresses} showAddressesModal={showAddressesModal} setShowAddressesModal={setShowAddressesModal} />
+            <HomeScreenAddresses
+                setIsLoading={setIsLoading}
+                addresses={addresses}
+                reloadAddresses={reloadAddresses}
+                setReloadAddresses={setReloadAddresses}
+                showAddressesModal={showAddressesModal}
+                setShowAddressesModal={setShowAddressesModal}
+            />
 
             {shouldShowLang ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
