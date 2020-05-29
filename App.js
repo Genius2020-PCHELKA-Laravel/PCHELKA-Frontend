@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Dimensions } from 'react-native';
+import { Text, Dimensions, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -47,7 +47,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { withNamespaces } from 'react-i18next';
 import i18n from './src/locales/i18n';
 import MapScreen from './src/screens/MapScreen';
-
+import MapInput from './src/components/lcation/MapInput'
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -225,15 +225,8 @@ const HomeStackNavigator = createStackNavigator(
     MapScreen: {
       screen: MapScreen,
       navigationOptions: {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('homecleaning')} />,
-        headerLeft: ({ navigation }) => (
-          <Icon
-            style={{ left: 15, color: '#ff9800' }}
-            onPress={() => navigate('HomeNavigator')}
-            name="md-arrow-back"
-            size={35}
-          />
-        ),
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#ff9800', fontSize: 20 }} value={i18n.t('mapScreen')} />,
+        headerShown: false,
       }
     },
   });

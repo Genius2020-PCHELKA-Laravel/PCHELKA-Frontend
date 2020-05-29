@@ -3,7 +3,7 @@ import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 import { setToken, getToken, removeToken } from '../../api/token';
-import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage } from '../../api/userDetails';
+import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage, setUserAddressesStorage } from '../../api/userDetails';
 const UserReducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
@@ -35,7 +35,21 @@ const getUserDetails = dispatch => {
 
     }
 }
+//get the addresses and save locally
+const getUserAddresses = dispatch => {
+    return async () => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var response = await requestApi.get('/userLocation');
+            setUserAddressesStorage(response.data.data);
+            return response.data.data;
+        } catch (err) {
+            console.log("Error in UserContext: " + err)
+        }
 
+    }
+}
 const editUserDetails = dispatch => {
     return async ({ mobile, fullName, email, dateOfBirth, gender, language }) => {
         console.log({ mobile, fullName, email, dateOfBirth, gender, language });
@@ -48,6 +62,22 @@ const editUserDetails = dispatch => {
             return response.data.status;
         } catch (error) {
             console.error("error in edit user: " + error);
+        }
+    };
+}
+//save from Map after confirm and select location
+const saveUserAddressDetails = dispatch => {
+    return async ({ address, lat, lon, details, area, street, buildingNumber, apartment }) => {
+        //console.log({ address, lat, lon, details, area, street, buildingNumber, apartment });
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/userLocation', { address, lat, lon, details, area, street, buildingNumber, apartment });
+            console.log("User Context::saveUserAddressDetails::response");
+            console.log(response);
+            return response.data.status;
+        } catch (error) {
+            console.error("Error::UserContext::saveUserAddressDetails:: " + error);
         }
     };
 }
@@ -65,11 +95,11 @@ const checkFullName = dispatch => {
             else
                 navigate(redirect);
         }).catch((error) => {
-            console.log("User Context: catched: " + error)
+            console.log("UserContext::checkFullName:: " + error)
         });
     }
 }
 export const { Context, Provider } = createDataContext(UserReducer,
-    { getUserDetails, editUserDetails, checkFullName },
+    { getUserDetails, editUserDetails, checkFullName, saveUserAddressDetails, getUserAddresses },
     { checkname: '', userDetails: "", errorMessage: '', responsestatus: null }
 );

@@ -53,7 +53,7 @@ const VerifyScreen = ({ navigation, t }) => {
                             verifysms({ mobile: mobile, enteredotp: enteredotp, otp: resendotp });
                             var res = checkFullName(mobile, redirect);
                         } catch (err) {
-                            console.log("Error>>>>>>>>" + err)
+                            console.log("VerifyScreen::Error>>>>>>>>" + err)
                         }
 
                     } else

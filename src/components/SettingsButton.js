@@ -7,10 +7,24 @@ import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
 import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
+import { Context as UserContext } from '../screens/context/UserContext';
 import { Avatar } from 'react-native-elements';
 import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
+import { setRedirect, getRedirect, removeRedirect } from '../api/redirect'
 const SettingsButton = ({ t }) => {
+    const { getUserAddresses } = useContext(UserContext);
+    const [addresses, setAddresses] = useState([]);
+    const [address, setAddress] = useState('');
+    useEffect(() => {
+        getUserAddresses().then((response) => {
+            setAddresses(addresses);
+            setAddress(response[0].details + ',' + response[0].address);
+        }).catch((err) => {
+            console.log("ERROR::SettingsButton::UseEffect ");
+            console.log(err);
+        });
+    }, []);
     const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
@@ -42,9 +56,12 @@ const SettingsButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            <TouchableOpacity activeOpacity={.5} onPress={() => navigate('MapScreen')}>
-                <Text style={styles.languageButtonStyle}>Addresses
-                    <Entypo name="chevron-down" size={24} color="black" />
+            <TouchableOpacity activeOpacity={.5} onPress={async () => { await setRedirect('HomeNavigator'); navigate('MapScreen') }}>
+                <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
+                    {
+                        address == '' ? t('Addresses') : address
+                    }
+                    <Entypo name="chevron-down" size={14} color="#ff9800" />
                 </Text>
             </TouchableOpacity>
             {shouldShow ?
@@ -80,7 +97,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-
+    locationButtonStyle: {
+        padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#ff9800',
+        textAlign: 'center',
+        fontSize: 12,
+        fontWeight: "500",
+        color: '#ff9800',
+        top: 10,
+        marginRight: 40,
+        width: 150
+    },
     languageButtonStyle: {
         padding: 10,
         backgroundColor: '#ff9800',

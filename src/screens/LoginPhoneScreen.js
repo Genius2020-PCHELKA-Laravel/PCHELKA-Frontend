@@ -12,6 +12,7 @@ import { withNamespaces } from 'react-i18next';
 
 
 const LoginPhoneScreen = ({ navigation, t }) => {
+  console.log('redirect')
   console.log(navigation.getParam('redirect'))
   const { sendsms } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);

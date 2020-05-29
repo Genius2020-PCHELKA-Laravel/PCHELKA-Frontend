@@ -45,7 +45,7 @@ const verifysms = dispatch => {
             console.log('before verify sms>>>>>>>>>>');
             const response = await requestApi.post('/verifysmscode', { enteredotp, otp, mobile });
             console.log(response.data);
-            v = response.data.data.token;
+            let v = response.data.data.token;
             console.log('after verify sms>>>>>>>>>>');
             console.log(v);
             //await AsyncStorage.setItem('token', response.data.data.token);

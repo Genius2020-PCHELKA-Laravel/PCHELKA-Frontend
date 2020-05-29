@@ -1,67 +1,169 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import MapInput from './MapInput';
 import MyMapView from './MyMapView';
-import { getLocation, geocodeLocationByName } from './LocationService';
+import { getLocation, geocodeLocationByName, geocodeLocationByCoords } from './LocationService';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { navigate } from '../../navigationRef';
+import MapView, { Marker } from 'react-native-maps';
+import AddressDetailsConfirm from './AddressDetailsConfirm';
+import Toast from 'react-native-simple-toast';
+import { Context as UserContext } from '../../screens/context/UserContext';
+import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
+import Loader from '../Loader';
+const MapContainer = () => {
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+    const [latitudeDelta, setLatitudeDelta] = useState(0.003);
+    const [longitudeDelta, setLongitudeDelta] = useState(0.003);
+    const [isloading, setIsLoading] = useState(false);
+    const { state, saveUserAddressDetails, dispatch, } = useContext(UserContext);
+    // state = {
+    //     region: {}
+    // };
 
-class MapContainer extends React.Component {
-    state = {
-        region: {}
-    };
+    useEffect(() => {
+        getInitialState();
 
-    componentDidMount() {
-        this.getInitialState();
-    }
 
-    getInitialState() {
-        getLocation().then(
-            (data) => {
-                console.log(data);
-                this.setState({
-                    region: {
-                        latitude: data.latitude,
-                        longitude: data.longitude,
-                        latitudeDelta: 0.003,
-                        longitudeDelta: 0.003
-                    }
-                });
-            }
-        );
-    }
+    }, [])
 
-    getCoordsFromName(loc) {
-        this.setState({
-            region: {
-                latitude: loc.lat,
-                longitude: loc.lng,
-                latitudeDelta: 0.003,
-                longitudeDelta: 0.003
-            }
+
+    const saveUserAddress = async (sbf) => {
+        setIsLoading(true);
+        var redirect = await getRedirect();
+
+        var locname = await geocodeLocationByCoords(latitude, longitude);
+        console.log("Location Name");
+        console.log(locname);
+        console.log(sbf);
+        const parts = sbf.split('@');
+        console.log("parts" + parts[0])
+        var long_name = locname.long_name;
+        var short_name = locname.short_name;
+        console.log("long_name: " + long_name)
+        console.log("short_name: " + short_name)
+        console.log("Entered Street");
+        console.log(parts[0]);
+        console.log("Entered Building");
+        console.log(parts[1]);
+        console.log("Entered Apartment");
+        console.log(parts[2]);
+        saveUserAddressDetails({
+            address: short_name,
+            lat: latitude,
+            lon: longitude,
+            details: long_name,
+            area: "area",
+            street: parts[0],
+            buildingNumber: parts[1],
+            apartment: parts[2]
+        }).then((status) => {
+            setIsLoading(false);
+            Toast.show("Address Correctly Saved", Toast.LONG);
+            navigate(redirect);
+        }).catch(() => {
+            setIsLoading(false);
+            Toast.show("Address can't be Saved", Toast.LONG);
         });
     }
-
-    onMapRegionChange(region) {
-        this.setState({ region });
-    }
-
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <View style={{ flex: 0.1 }}>
-                    <MapInput notifyChange={(loc) => this.getCoordsFromName(loc)}
-                    />
-                </View>
-
-                {
-                    this.state.region['latitude'] ?
-                        <View style={{ flex: 1 }}>
-                            <MyMapView
-                                region={this.state.region}
-                                onRegionChange={(reg) => this.onMapRegionChange(reg)} />
-                        </View> : null}
-            </View>
+    const getInitialState = () => {
+        getLocation().then(
+            (data) => {
+                console.log("MapContainer::getinitialState");
+                console.log(data);
+                setLatitude(data.latitude);
+                setLongitude(data.longitude);
+                setLatitudeDelta(0.003);
+                setLongitudeDelta(0.003);
+            }
         );
     }
-}
 
+    const getCoordsFromName = (loc) => {
+        // this.setState({
+        //     region: {
+        //         latitude: loc.lat,
+        //         longitude: loc.lng,
+        //         latitudeDelta: 0.003,
+        //         longitudeDelta: 0.003
+        //     }
+        // });
+        console.log("MapContainer::getCoordsFromName");
+        console.log(loc);
+        setLatitude(loc.lat);
+        setLongitude(loc.lng);
+        setLatitudeDelta(0.003);
+        setLongitudeDelta(0.003);
+    }
+
+    const onMapRegionChange = (region) => {
+        // this.setState({ region });
+        console.log("MapContainer::onMapRegionChange");
+        console.log(region);
+        setLatitude(region.latitude);
+        setLongitude(region.longitude);
+        setLatitudeDelta(region.latitudeDelta);
+        setLongitudeDelta(region.longitudeDelta);
+    }
+
+    return (
+        <View style={styles.container}>
+            <Loader loading={isloading} />
+            <View style={styles.mapinputstyle}>
+                <View style={styles.item1}>
+                    <Icon
+                        style={{ top: 15, color: '#ff9800' }}
+                        onPress={() => navigate('HomeNavigator')}
+                        name="md-arrow-back"
+                        size={35}
+                    />
+                </View>
+                <View style={styles.item2}>
+                    <MapInput notifyChange={(loc) => {
+                        getCoordsFromName(loc);
+                    }} />
+                </View>
+            </View>
+
+            {
+                latitude != 0 ?
+                    <View style={{ flex: 1 }}>
+                        <MapView
+                            style={{ flex: 1 }}
+                            region={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
+                            loadingEnabled
+                            showsUserLocation={true}
+                            onRegionChangeComplete={(reg) => onMapRegionChange(reg)}
+                        >
+                            <Marker
+                                coordinate={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
+                                pinColor="#ff9800" />
+                        </MapView>
+                    </View> : null
+            }
+            {/* <TouchableOpacity
+                    onPress={() => this.handleSubmitButton()}> */}
+            <AddressDetailsConfirm latitude={latitude} longitude={longitude} onclick={(sbf) => { saveUserAddress(sbf); }} />
+            {/* </TouchableOpacity> */}
+        </View >
+    );
+}
 export default MapContainer;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    mapinputstyle: {
+        position: 'absolute',
+        top: 5,
+        zIndex: 16,
+        flexDirection: 'row',
+    },
+    item1: {
+        width: '10%' // is 50% of container width
+    },
+    item2: {
+        width: '90%' // is 50% of container width
+    }
+});
