@@ -11,31 +11,35 @@ import { Context as UserContext } from '../screens/context/UserContext';
 import { Avatar } from 'react-native-elements';
 import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
-import { setRedirect, getRedirect, removeRedirect } from '../api/redirect'
+import { setRedirect, getRedirect, removeRedirect } from '../api/redirect';
+import HomeScreenAddresses from './lcation/HomeScreenAddresses';
 const SettingsButton = ({ t }) => {
     const { getUserAddresses } = useContext(UserContext);
+    const [reloadAddresses, setReloadAddresses] = useState(false);
     const [addresses, setAddresses] = useState([]);
     const [address, setAddress] = useState('');
+    const [showAddressesModal, setShowAddressesModal] = useState(false);
+
     useEffect(() => {
         getUserAddresses().then((response) => {
-            setAddresses(addresses);
+            setAddresses(response.reverse());
             setAddress(response[0].details + ',' + response[0].address);
         }).catch((err) => {
             console.log("ERROR::SettingsButton::UseEffect ");
             console.log(err);
         });
-    }, []);
+    }, [reloadAddresses]);
     const { state, logout } = useContext(AuthContext);
-    const [shouldShow, setShouldShow] = useState(true);
+    const [shouldShowLang, setShouldShowLang] = useState(true);
     const [lang, setLang] = useState('en');
-    const [loading, setLoading] = useState('en');
+    const [isLoading, setIsLoading] = useState(false);
     const changeLanguage = (lng) => {
         try {
             console.log("Toggle language to:  " + lng);
             setLang(lng);
             storeLang(lng);
             i18n.changeLanguage(lng);
-            shouldShow ? setShouldShow(false) : setShouldShow(true);
+            shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
         } catch (e) { "Error:: " + e }
     }
     useEffect(() => {
@@ -43,12 +47,12 @@ const SettingsButton = ({ t }) => {
             console.log("SettingScreen selected Lang in Use Effect:  " + response);
             setLang(response);
             i18n.changeLanguage(response);
-            shouldShow ? setShouldShow(false) : setShouldShow(true);
+            shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
             if (response == 'en') {
-                setShouldShow(true);
+                setShouldShowLang(true);
             }
             else {
-                setShouldShow(false);
+                setShouldShowLang(false);
             }
         }).catch((err) => {
             console.log("Settings Screen Can not get lang");
@@ -56,15 +60,26 @@ const SettingsButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            <TouchableOpacity activeOpacity={.5} onPress={async () => { await setRedirect('HomeNavigator'); navigate('MapScreen') }}>
+            {/* <TouchableOpacity activeOpacity={.5} onPress={async () => { await setRedirect('HomeNavigator'); navigate('MapScreen') }}>
                 <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
                     {
                         address == '' ? t('Addresses') : address
                     }
                     <Entypo name="chevron-down" size={14} color="#ff9800" />
                 </Text>
-            </TouchableOpacity>
-            {shouldShow ?
+            </TouchableOpacity> */}
+            <TouchableOpacity activeOpacity={.5} onPress={() => { setIsLoading(true); showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
+                <Loader loading={isLoading} />
+                <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
+                    {
+                        address == '' ? t('Addresses') : address
+                    }
+                    <Entypo name="chevron-down" size={14} color="#ff9800" />
+                </Text>
+            </TouchableOpacity >
+            <HomeScreenAddresses setIsLoading={setIsLoading} addresses={addresses} reloadAddresses={reloadAddresses} setReloadAddresses={setReloadAddresses} showAddressesModal={showAddressesModal} setShowAddressesModal={setShowAddressesModal} />
+
+            {shouldShowLang ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
                         {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}

@@ -17,10 +17,9 @@ const MapContainer = () => {
     const [latitudeDelta, setLatitudeDelta] = useState(0.003);
     const [longitudeDelta, setLongitudeDelta] = useState(0.003);
     const [isloading, setIsLoading] = useState(false);
-    const { state, saveUserAddressDetails, dispatch, } = useContext(UserContext);
-    // state = {
-    //     region: {}
-    // };
+    const { state, getUserAddresses, saveUserAddressDetails, dispatch, } = useContext(UserContext);
+    const { } = useContext(UserContext);
+
 
     useEffect(() => {
         getInitialState();
@@ -29,36 +28,47 @@ const MapContainer = () => {
     }, [])
 
 
-    const saveUserAddress = async (sbf) => {
+    const saveUserAddress = async (street, buildingnumber, apartment) => {
         setIsLoading(true);
         var redirect = await getRedirect();
-
         var locname = await geocodeLocationByCoords(latitude, longitude);
-        console.log("Location Name");
-        console.log(locname);
-        console.log(sbf);
-        const parts = sbf.split('@');
-        console.log("parts" + parts[0])
+        // console.log("Location Name");
+        // console.log(locname);
+        // console.log(sbf);
+        // const parts = sbf.split('@');
+        // console.log("parts" + parts[0])
         var long_name = locname.long_name;
         var short_name = locname.short_name;
-        console.log("long_name: " + long_name)
-        console.log("short_name: " + short_name)
-        console.log("Entered Street");
-        console.log(parts[0]);
-        console.log("Entered Building");
-        console.log(parts[1]);
-        console.log("Entered Apartment");
-        console.log(parts[2]);
+        // console.log("long_name: " + long_name)
+        // console.log("short_name: " + short_name)
+        // console.log("Entered Street");
+        // console.log(parts[0]);
+        // console.log("Entered Building");
+        // console.log(parts[1]);
+        // console.log("Entered Apartment");
+        // console.log(parts[2]);
         saveUserAddressDetails({
             address: short_name,
             lat: latitude,
             lon: longitude,
             details: long_name,
             area: "area",
-            street: parts[0],
-            buildingNumber: parts[1],
-            apartment: parts[2]
+            street: street,
+            buildingNumber: buildingnumber,
+            apartment: apartment
         }).then((status) => {
+            //for Adding new Address to the list
+            getUserAddresses().then((response) => {
+                //TODO__update the address in HomeScreen
+                // setAddresses(response.reverse());
+                // setAddress(response[0].details + ',' + response[0].address);
+            }).catch((err) => {
+                console.log("ERROR::MapContainer::submitHandler ");
+                console.log(err);
+            });
+
+
+
             setIsLoading(false);
             Toast.show("Address Correctly Saved", Toast.LONG);
             navigate(redirect);
@@ -138,13 +148,13 @@ const MapContainer = () => {
                         >
                             <Marker
                                 coordinate={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
-                                pinColor="#ff9800" />
+                                pinColor="#d21404" />
                         </MapView>
                     </View> : null
             }
             {/* <TouchableOpacity
                     onPress={() => this.handleSubmitButton()}> */}
-            <AddressDetailsConfirm latitude={latitude} longitude={longitude} onclick={(sbf) => { saveUserAddress(sbf); }} />
+            <AddressDetailsConfirm latitude={latitude} longitude={longitude} onclick={(street, buildingnumber, apartment) => { saveUserAddress(street, buildingnumber, apartment); }} />
             {/* </TouchableOpacity> */}
         </View >
     );
