@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
@@ -10,60 +10,121 @@ import Payment from '../components/HomeCleaningSteps/Payment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import ModalDetails from '../components/ModalDetails';
+import { Context as UserContext } from './context/UserContext';
 import { Context as HCContext } from './context/HCContext';
 import { withNamespaces } from 'react-i18next';
+import Toast from 'react-native-simple-toast';
+import { navigate } from '../navigationRef';
 
 const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
   // };
-  const { state, HCBooking } = useContext(HCContext);
+  const { state: hcstate, HCBooking } = useContext(HCContext);
+  const { state } = useContext(UserContext);
+  // const [hourPrice, setHourPrice] = useState(0);
+  // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
 
-  defaultScrollViewProps = {
+  const defaultScrollViewProps = {
     keyboardShouldPersistTaps: 'handled',
     contentContainerStyle: {
       flex: 1,
-      justifyContent: 'center'
+      justifyContent: 'center',
     }
   };
+  useEffect(() => {
+    console.log("HomeCleaningScreen::UseEffect::gethourprice");
+    console.log("HomeCleaningScreen::UseEffect::State hour price:: " + hcstate.HC.hourPrice)
 
-  onNextStep = () => {
+    console.log("HomeCleaningScreen::UseEffect::gethourmaterialprice");
+    console.log("HomeCleaningScreen::UseEffect::State hour material price:: " + hcstate.HC.materialPrice)
+  }, []);
+
+  const onNextStep = () => {
     console.log('called next step');
   };
 
-  onFrequencyStepComplete = () => {
+  const onFrequencyStepComplete = () => {
     // alert('Frequwncy step completed!');
   };
-
-  onPrevStep = () => {
+  const onAddressStepComplete = () => {
+    console.log(state.selected_address_name);
+    if (typeof state.selected_address == 'undefined') {
+      Toast.show('Select address please', Toast.LONG);
+      return;
+    }
+  };
+  const onPrevStep = () => {
     console.log('called previous step');
   };
 
-  onSubmitSteps = () => {
+  const onSubmitSteps = () => {
+    var frequency = -1;
+    if (hcstate.frequency == 1) frequency = 'One-time';
+    if (hcstate.frequency == 2) frequency = 'Bi-weekly';
+    if (hcstate.frequency == 3) frequency = 'Weekly';
+    var hours = -1;
+    if (hcstate.hours == 2) hours = 4;
+    if (hcstate.hours == 3) hours = 5;
+    if (hcstate.hours == 4) hours = 6;
+    if (hcstate.hours == 5) hours = 7;
+    if (hcstate.hours == 6) hours = 8;
+    if (hcstate.hours == 7) hours = 9;
+    var cleaners = -1;
+    if (hcstate.cleaners == 1) cleaners = 10;
+    if (hcstate.cleaners == 2) cleaners = 11;
+    if (hcstate.cleaners == 3) cleaners = 12;
+    if (hcstate.cleaners == 4) cleaners = 13;
+    var materials = -1;
+    if (hcstate.materials == 0) materials = 14;
+    if (hcstate.materials == 1) materials = 15;
+    var paymentWays = -1;
+    if (hcstate.method == 0) paymentWays = 0;
+    if (hcstate.method == 1) paymentWays = 2;
     HCBooking({
       serviceType: "HomeCleaning",
-      duoDate: state.full_date,
-      duoTime: state.start,
-      subTotal: state.subtotal,
-      discount: state.discount,
-      totalAmount: state.total,
-      locationId: "1",
+      duoDate: hcstate.full_date,
+      duoTime: hcstate.start,
+      subTotal: hcstate.subtotal,
+      discount: hcstate.discount,
+      totalAmount: hcstate.total,
+      locationId: state.selected_address,
       providerId: "1",
       scheduleId: "1",
-      paymentWays: state.method,
-      frequency: state.frequency,
+      paymentWays: paymentWays,
+      frequency: frequency,
       answers: [
         {
-          questionId: 4,
-          answerId: state.materials,
+          questionId: 1,
+          answerId: hcstate.frequency,
+          answerValue: null
+        },
+        {
+          questionId: 2,
+          answerId: hours,
           answerValue: null
         },
         {
           questionId: 3,
+          answerId: cleaners,
+          answerValue: null
+        },
+        {
+          questionId: 4,
+          answerId: materials,
+          answerValue: null
+        },
+        {
+          questionId: 5,
           answerId: null,
-          answerValue: state.desc
+          answerValue: hcstate.desc
         }
       ]
+    }).then(() => {
+      Toast.show('Booked', Toast.LONG);
+      navigate('HomeStackNavigator')
+    }).catch(() => {
+      Toast.show('Error:: NotBooked', Toast.LONG);
     });
   };
   // FFFDD0...Cream EEDC82 ffe5b4 fedc56 ceb180 f8e473 ffbf00 fce205 ffc30b
@@ -120,7 +181,8 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           <ProgressStep
             label={t('address')}
             onPrevious={onPrevStep}
-            onSubmit={onSubmitSteps}
+            onNext={onAddressStepComplete}
+            // onSubmit={onSubmitSteps}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
             nextBtnStyle={styles.nextButtonStyle}
@@ -149,7 +211,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
       </View>
 
       {/* <Text style={styles.modalText}>Modal{'  '}<FontAwesome5 name="chevron-up" size={15} color="#161924" /></Text> */}
-      <ModalDetails style={styles.modalText} total={state.total}></ModalDetails>
+      <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
 
     </>
   );

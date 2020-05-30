@@ -5,65 +5,22 @@ import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
-import Loader from '../components/Loader';
-import { Context as AuthContext } from '../screens/context/AuthContext';
 import { Context as UserContext } from '../screens/context/UserContext';
 import { Avatar } from 'react-native-elements';
 import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
-import { setRedirect, getRedirect, removeRedirect } from '../api/redirect';
 import HomeScreenAddresses from './lcation/HomeScreenAddresses';
 const SettingsButton = ({ t }) => {
-    const { getUserAddresses } = useContext(UserContext);
-    const [reloadAddresses, setReloadAddresses] = useState(false);
-    const [addresses, setAddresses] = useState([]);
+    const { state } = useContext(UserContext);
     const [address, setAddress] = useState('');
     const [showAddressesModal, setShowAddressesModal] = useState(false);
-    //load new address name in settingsbutton after add new
-
-    //load all addresses
-    useEffect(() => {
-        getUserAddresses().then((response) => {
-            setAddresses(response.reverse());
-            setAddress(response[0].details + ',' + response[0].address);
-        }).catch((err) => {
-            console.log("ERROR::SettingsButton::UseEffect ");
-            console.log(err);
-        });
-        // getUserAddressesStorage().then((response) => {
-        //     if (typeof response != 'undefined') {
-        //         setAddresses(response.reverse());
-        //         setAddress(response[0].details + ',' + response[0].address);
-        //     }
-        //     else {
-        //         getUserAddresses().then((response) => {
-        //             setAddresses(response.reverse());
-        //             setAddress(response[0].details + ',' + response[0].address);
-        //         }).catch((err) => {
-        //             console.log("ERROR::SettingsButton::UseEffect::getUserAddresses::  ");
-        //             console.log(err);
-        //         });
-        //     }
-        // }).catch((error) => {
-        //     console.log("ERROR::SettingsButton::UseEffect::getUserDetailsStorage::  ");
-        //     console.log(error);
-        // });
-
-    }, [reloadAddresses]);
-
-    const { state, logout } = useContext(AuthContext);
     const [shouldShowLang, setShouldShowLang] = useState(true);
     const [lang, setLang] = useState('en');
-    const [isLoading, setIsLoading] = useState(false);
-    const changeLanguage = (lng) => {
-        try {
-            console.log("Toggle language to:  " + lng);
-            setLang(lng);
-            storeLang(lng);
-            i18n.changeLanguage(lng);
-            shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
-        } catch (e) { "Error:: " + e }
-    }
+
+    useEffect(() => {
+        setAddress(state.addresses[0].details + ',' + state.addresses[0].address);
+    }, [state.addresses])
+
     useEffect(() => {
         getLang().then((response) => {
             console.log("SettingScreen selected Lang in Use Effect:  " + response);
@@ -80,18 +37,19 @@ const SettingsButton = ({ t }) => {
             console.log("Settings Screen Can not get lang");
         });
     }, []);
+    const changeLanguage = (lng) => {
+        try {
+            console.log("Toggle language to:  " + lng);
+            setLang(lng);
+            storeLang(lng);
+            i18n.changeLanguage(lng);
+            shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
+        } catch (e) { "Error:: " + e }
+    }
+
     return (
         <View style={styles.container}>
-            {/* <TouchableOpacity activeOpacity={.5} onPress={async () => { await setRedirect('HomeNavigator'); navigate('MapScreen') }}>
-                <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
-                    {
-                        address == '' ? t('Addresses') : address
-                    }
-                    <Entypo name="chevron-down" size={14} color="#ff9800" />
-                </Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity activeOpacity={.5} onPress={() => { setIsLoading(true); showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
-                <Loader loading={isLoading} />
+            <TouchableOpacity activeOpacity={.5} onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
                 <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
                     {
                         address == '' ? t('Addresses') : address
@@ -100,10 +58,7 @@ const SettingsButton = ({ t }) => {
                 </Text>
             </TouchableOpacity >
             <HomeScreenAddresses
-                setIsLoading={setIsLoading}
-                addresses={addresses}
-                reloadAddresses={reloadAddresses}
-                setReloadAddresses={setReloadAddresses}
+                addresses={state.addresses}
                 showAddressesModal={showAddressesModal}
                 setShowAddressesModal={setShowAddressesModal}
             />

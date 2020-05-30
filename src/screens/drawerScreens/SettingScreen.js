@@ -8,7 +8,6 @@ import FontLight from '../../components/FontLight';
 import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
 import Spacer from '../../components/Spacer';
-import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage } from '../../api/userDetails';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,37 +17,27 @@ import { withNamespaces } from 'react-i18next';
 
 const SettingScreen = ({ navigation, t }) => {
   //After Update Get the updatetd info
-  const { dispatch, state, getUserDetails, editUserDetails } = useContext(UserContext);
+  const { state } = useContext(UserContext);
   const [fullName, setFullName] = useState(t('fullname'));
   const [mobile, setMobile] = useState(t('mobile'));
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-  const unsubscribe = navigation.addListener('didFocus', () => {
-    console.log("Settings focussed#");
-    getUserDetailsStorage().then((response) => {
-      console.log("SettingsScreen didfocus:: " + JSON.stringify(response));
-      setFullName(response.fullName);
-      setMobile(response.mobile);
-    }).catch(() => {
-      console.log("SettingScreen didfocus:: " + err);
-    });
-  });
+  // const unsubscribe = navigation.addListener('didFocus', () => {
+  //   console.log("Settings focussed#");
+  //   getUserDetailsStorage().then((response) => {
+  //     console.log("SettingsScreen didfocus:: " + JSON.stringify(response));
+  //     setFullName(response.fullName);
+  //     setMobile(response.mobile);
+  //   }).catch(() => {
+  //     console.log("SettingScreen didfocus:: " + err);
+  //   });
+  // });
   useEffect(() => {
-    console.log("Settings focussed#");
-    getUserDetailsStorage().then((response) => {
-      console.log("SettingsScreen didfocus:: " + JSON.stringify(response));
-      setFullName(response.fullName);
-      setMobile(response.mobile);
-    }).catch(() => {
-      console.log("SettingScreen didfocus:: " + err);
-    });
-  }, []);
-  // useEffect(() => {
-  //   // console.log("Settinga#" + JSON.stringify(state.userDetails));
-  //   setFullName(state.userDetails.fullName);
-  //   setMobile(state.userDetails.mobile);
-  // }, [state]);
+    setFullName(state.userDetails.fullName);
+    setMobile(state.userDetails.mobile);
+  }, [state.userDetails]);
+
   return (
     <View style={styles.container}>
       <View>

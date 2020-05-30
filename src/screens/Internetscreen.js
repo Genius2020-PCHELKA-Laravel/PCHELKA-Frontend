@@ -1,69 +1,86 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Button, Alert, Platform } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Permissions } from 'expo';
 
 import NetInfo from '@react-native-community/netinfo';
 import { getToken } from '../api/token';
+import { Context as HCContext } from './context/HCContext';
+import { Context as UserContext } from './context/UserContext';
+import Loader from '../components/Loader';
 
 
 const InternetScreen = ({ navigation }) => {
-  //const [stateToken, setStateToken] = useState('');
-  const [connected, setconnected] = useState(true);
+  const [token, setToken] = useState('');
+  const [isloading, setIsLoading] = useState(false);
 
-  getData = async () => {
+  // const [connected, setConnected] = useState(false);
+  const { setHC, getServices } = useContext(HCContext);
+  const { getUserDetails, getUserAddresses } = useContext(UserContext);
+  testInternetConnection = async () => {
     try {
       const token = await getToken();
-      console.log("Get Data: " + token);
-      NetInfo.fetch().then(state => {
-        setconnected(state.connected);
-        console.log("Internet token>>>>>>>>>>>>>" + typeof (token));
-        console.log("Internet token>>>>>>>>>>>>>" + token);
-        if (state.isConnected && typeof (token) == 'undefined') { navigation.navigate('LoginFlow'); }
-        else if (state.isConnected && typeof (token) != 'undefined') {
-          navigation.navigate('Dashboard');
-        }
-      });
-    } catch (e) {
-      console.log("Internet>>>>>error in token");
+      setToken(token);
+      console.log("InternetScreen::tstInternetConnection::Saved token: ");
+      console.log(token);
+    } catch (error) {
+      setIsLoading(false);
+      console.log("Error::InternetScreen::testInternetConnection");
     }
   }
-  // useEffect(() => {
-  //   this.getData();
-
-  //   NetInfo.fetch().then(state => {
-  //     Alert.alert('connection',
-  //       state.isConnected ? 'is connected' : 'is not connected',
-  //       [{
-  //         text: 'OK', onPress: () => {
-  //           if (state.isConnected && token == '') { navigation.navigate('HomeScreen'); }
-  //           else {
-  //             if (state.isConnected && token != '')
-  //               navigation.navigate('HomeScreen');
-  //           }
-  //         }
-  //       }]);
-
-  //   });
-  // });
   useEffect(() => {
-    getData();
-
+    setIsLoading(true);
+    testInternetConnection().then(() => {
+      NetInfo.fetch().then((connection) => {
+        console.log(connection)
+        //setConnected(state.connected);
+        if (connection.isConnected) {
+          console.log("Connected");
+          getServices().then((response) => {
+            setHC(response[0]);
+            console.log("InternetScreen::UseEffect::getServices::response::");
+            console.log(response);
+          }).catch((error) => {
+            console.log("Error::InternetScreen::UseEffect::getServices");
+            console.log(error);
+          });
+        }
+        else {
+          console.log("Not Connected");
+          setIsLoading(false);
+          return;
+        }
+        if (connection.isConnected && typeof (token) == 'undefined') { setIsLoading(false); navigation.navigate('LoginFlow'); }
+        else if (connection.isConnected && typeof (token) != 'undefined') {
+          getUserDetails().then((response) => {
+            console.log("InterScreen::useffect::getUseDetails::response:: ");
+            console.log(response);
+            getUserAddresses().then((res) => {
+              console.log("InterScreen::useffect::getUserAddresses::response:: ");
+              console.log(res);
+              navigation.navigate('Dashboard');
+            }).catch((error) => {
+              console.log("InterScreen::useffect::getUserAddresses::error:: ");
+              setIsLoading(false);
+            });
+            setIsLoading(false);
+          }).catch((error) => {
+            console.log("InternetScreen::getUserDetails#1 " + error);
+            setIsLoading(false);
+          });
+        }
+      });
+    }).catch(() => {
+      setIsLoading(false);
+    });
   }, []);
   return (<View>
+    <Loader loading={isloading} />
+
     {
-      // connected ? <Text>No Internet</Text> : <Text></Text>z
+      !isloading ? <Text>No Internet</Text> : null
     }
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
-    <Text>NoInternet</Text>
+
   </View>);
 };
 

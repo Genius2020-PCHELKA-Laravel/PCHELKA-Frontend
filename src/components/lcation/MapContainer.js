@@ -9,7 +9,7 @@ import MapView, { Marker } from 'react-native-maps';
 import AddressDetailsConfirm from './AddressDetailsConfirm';
 import Toast from 'react-native-simple-toast';
 import { Context as UserContext } from '../../screens/context/UserContext';
-import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
+// import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
 import Loader from '../Loader';
 const MapContainer = () => {
     const [latitude, setLatitude] = useState(0);
@@ -17,20 +17,16 @@ const MapContainer = () => {
     const [latitudeDelta, setLatitudeDelta] = useState(0.003);
     const [longitudeDelta, setLongitudeDelta] = useState(0.003);
     const [isloading, setIsLoading] = useState(false);
-    const { state, getUserAddresses, saveUserAddressDetails, dispatch, } = useContext(UserContext);
-    const { } = useContext(UserContext);
+    const { state, addNewAddress, } = useContext(UserContext);
 
 
     useEffect(() => {
         getInitialState();
-
-
     }, [])
-
 
     const saveUserAddress = async (street, buildingnumber, apartment) => {
         setIsLoading(true);
-        var redirect = await getRedirect();
+
         var locname = await geocodeLocationByCoords(latitude, longitude);
         // console.log("Location Name");
         // console.log(locname);
@@ -47,7 +43,7 @@ const MapContainer = () => {
         // console.log(parts[1]);
         // console.log("Entered Apartment");
         // console.log(parts[2]);
-        saveUserAddressDetails({
+        addNewAddress({
             address: short_name,
             lat: latitude,
             lon: longitude,
@@ -58,20 +54,9 @@ const MapContainer = () => {
             apartment: apartment
         }).then((status) => {
             //for Adding new Address to the list
-            getUserAddresses().then((response) => {
-                //TODO__update the address in HomeScreen
-                // setAddresses(response.reverse());
-                // setAddress(response[0].details + ',' + response[0].address);
-            }).catch((err) => {
-                console.log("ERROR::MapContainer::submitHandler ");
-                console.log(err);
-            });
-
-
-
             setIsLoading(false);
             Toast.show("Address Correctly Saved", Toast.LONG);
-            navigate(redirect);
+            navigate('HomeNavigator');
         }).catch(() => {
             setIsLoading(false);
             Toast.show("Address can't be Saved", Toast.LONG);
@@ -171,9 +156,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     item1: {
+        left: 15,
         width: '10%' // is 50% of container width
     },
     item2: {
-        width: '90%' // is 50% of container width
+        left: 20,
+        width: '87%' // is 50% of container width
     }
 });

@@ -98,7 +98,7 @@ const DateandTimeDetails = ({ children, t }) => {
 
         const newDate = new Date(date.getTime() + selectedDay * 1000 * 60 * 60 * 24);
 
-        let full_date = newDate.getFullYear().toString() + '-' + newDate.getMonth().toString() + '-' + newDate.getDate();
+        let full_date = newDate.getFullYear().toString() + '-' + (newDate.getMonth() + 1).toString() + '-' + newDate.getDate();
         dispatch({
             type: 'set_fulldate',
             payload: { full_date },
@@ -180,23 +180,9 @@ const DateandTimeDetails = ({ children, t }) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
                 {days}
             </ScrollView>
-            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
-                {months}
-            </ScrollView>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
-                {years}
-            </ScrollView> */}
+
             <Spacer />
-            {/* <Slider
-                value={selectedDay}
-                onValueChange={setSelectedDay}
-                minimumValue={2}
-                maximumValue={8}
-                step={1}
-                trackStyle={styles.track}
-                thumbStyle={styles.thumb}
-                minimumTrackTintColor='#ff9800'
-            /> */}
+
             <Spacer>
                 <FontBold mystyle={styles.qText} value={t('dateq2')} />
             </Spacer>
@@ -225,17 +211,6 @@ const DateandTimeDetails = ({ children, t }) => {
                 <TouchableOpacity onPress={() => setStart('18:30:00')}><Text style={start == '18:30:00' ? styles.timethumbdown : styles.timethumbup}>18:30</Text></TouchableOpacity>
             </ScrollView>
             <Spacer />
-            {/* <Slider
-                value={start}
-                onValueChange={setStart}
-                minimumValue={1}
-                maximumValue={4}
-                step={1}
-                trackStyle={styles.track}
-                thumbStyle={styles.thumb}
-                minimumTrackTintColor='#ff9800'
-            /> */}
-
             <View>
 
             </View>

@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
-import { getUserDetailsStorage } from '../../api/userDetails';
 import { RadioButton } from 'react-native-paper';
 import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
@@ -28,7 +27,6 @@ import Spacer from '../../components/Spacer';
 import { Context as UserContext } from '../context/UserContext';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
-import { setUserDetailsStorage } from '../../api/userDetails';
 const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const { state, editUserDetails, getUserDetails, dispatch } = useContext(UserContext);
     let [previousMobile, setPreviousMobile] = useState('');
@@ -45,22 +43,16 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
-    const unsubscribe = navigation.addListener('didFocus', () => {
-        console.log("EditPersonalDetailsScreen focussed#");
-        getUserDetailsStorage().then((response) => {
-            console.log("SettingsScreen didfocus:: " + JSON.stringify(response));
-            setMobile(response.mobile.toString());
-            setPreviousMobile(response.mobile.toString());
-            setFullName(response.fullName);
-            setEmail(response.email);
-            if (response.dateOfBirth != null)
-                setDob(new Date(response.dateOfBirth));
-            setGender(response.gender);
-        }).catch(() => {
-            console.log("EditPersonalDetailsScreen didfocus:: " + err);
-        });
-    });
 
+    useEffect(() => {
+        setMobile(state.userDetails.mobile.toString());
+        setPreviousMobile(state.userDetails.mobile.toString());
+        setFullName(state.userDetails.fullName);
+        setEmail(state.userDetails.email);
+        if (state.userDetails.dateOfBirth != null)
+            setDob(new Date(state.userDetails.dateOfBirth));
+        setGender(state.userDetails.gender);
+    }, [state.userDetails])
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -91,15 +83,6 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         }
         if (previousMobile != mobile) {
             setErrortext("Mobile Number Changer:::Must verify by SMS")
-            // navigate('LoginPhoneScreen', {
-            //     "redirect": "SettingScreen",
-            //     "mobile": mobile,
-            //     "fullName": fullName,
-            //     "email": email,
-            //     "dateOfBirth": Moment(dob).format('YYYY-MM-DD'),
-            //     "gender": gender,
-            //     "language": "Ar"
-            // });
             return;
         }
         if (!fullName) {
@@ -141,48 +124,21 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                 setLoading(false);
                 setIsRegistraionSuccess(true);
                 console.log('Edit User Successful. Please Login to proceed');
-                // setTimeout(() => {
                 navigation.navigate('SettingNavigator');
-                // }, 3000);
-
-
             } else {
                 setLoading(false);
                 setErrortext(t('editunsuccessful'));
             }
         } catch (error) {
-            //Hide Loader
             setLoading(false);
             console.error(error);
         }
-        //}, 2500);
     };
-
-
-
     return (
         <>
             <View style={styles.mainBody}>
                 <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">
-                    {/* <View style={{ alignItems: 'center' }}>
-                        <Image
-                            source={require('../../assets/back.jpg')}
-                            style={{
-                                width: '50%',
-                                height: 250,
-                                resizeMode: 'contain',
-                                margin: 30,
-                            }}
-                        />
-
-                        <MapComponent style={{
-                            width: '50%',
-                            height: 100,
-                            resizeMode: 'contain',
-                            margin: 30,
-                        }} ></MapComponent>
-                    </View> */}
                     <View style={{ marginTop: 15 }}>
                         <KeyboardAvoidingView enabled>
                             <View style={styles.SectionStyle}>
@@ -358,7 +314,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderColor: '#ff9800',
         fontSize: 20,
-        padding: 10,
         height: 50
     },
     errorTextStyle: {

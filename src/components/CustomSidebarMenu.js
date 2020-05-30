@@ -3,7 +3,6 @@
 
 // import { View, StyleSheet, Text, Alert } from 'react-native';
 // import { AsyncStorage } from "react-native";
-// import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage } from '../../api/userDetails';
 
 // const CustomSidebarMenu = props => {
 //     let items = [

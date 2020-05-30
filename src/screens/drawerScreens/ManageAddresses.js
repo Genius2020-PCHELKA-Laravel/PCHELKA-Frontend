@@ -8,18 +8,19 @@ import FontBold from '../../components/FontBold';
 import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../context/HCContext';
+import { Context as UserContext } from '../context/UserContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../../components/Loader';
 import { withNamespaces } from 'react-i18next';
-import { setRedirect } from '../../api/redirect';
 import { navigate } from '../../navigationRef';
 const ManageAddresses = ({ children, t }) => {
-    const { dispatch, state, getAddresses } = useContext(HCContext);
+    const { dispatch, state } = useContext(HCContext);
+    const { getUserAddresses } = useContext(UserContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
     useEffect(() => {
         console.log("GetAddresses");
-        getAddresses();
+        getUserAddresses();
     }, []);
     const items = []
 
@@ -78,7 +79,10 @@ const ManageAddresses = ({ children, t }) => {
                             <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('addressq1')}></FontBold>
                         </View>
                         <View style={styles.containeritem2}>
-                            <TouchableOpacity onPress={async () => { await setRedirect('HomeScreen'); navigate('MapScreen'); }}>
+                            <TouchableOpacity onPress={async () => {
+                                // dispatch({ type: 'set_redirect', payload: "HomeScreen", });
+                                navigate('MapScreen');
+                            }}>
                                 <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
                             </TouchableOpacity>
                         </View>

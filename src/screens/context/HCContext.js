@@ -8,10 +8,14 @@ const HCreducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
             return { ...state, errorMessage: action.payload };
+        case 'set_services':
+            return { ...state, services: action.payload };
         case 'update_totals':
             return { ...state, discount: action.payload.discount, subtotal: action.payload.subtotal, total: action.payload.total };
         case 'set_frequency':
             return { ...state, frequency: action.payload };
+        case 'set_hc':
+            return { ...state, HC: action.payload };
         case 'set_hours':
             return { ...state, hours: action.payload };
         case 'set_cleaners':
@@ -28,10 +32,6 @@ const HCreducer = (state, action) => {
             return { ...state, full_date: action.payload.full_date };
         case 'set_start':
             return { ...state, start: action.payload };
-        case 'set_selected_address':
-            return { ...state, selected_address: action.payload };
-        case 'set_selected_address_name':
-            return { ...state, selected_address_name: action.payload };
         case 'update_addresses':
             return { ...state, addresses: action.payload };
         case 'set_method':
@@ -42,41 +42,31 @@ const HCreducer = (state, action) => {
             return state;
     }
 };
-const getprice = (dispatch) => {
+const getServices = (dispatch) => {
     return async () => {
         try {
-            console.log(">>>>>>>>");
-            // const senttoken = await getToken();
-            //requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            //const response = await requestApi.post('/logout');
-            dispatch({ type: 'get_price', payload: computed });
+            const response = await requestApi.get('/service');
+            dispatch({ type: 'set_services', payload: response.data.data });
+            return response.data.data;
         } catch (err) {
-            console.log(err);
+            console.log("Error::HCContex::getservices" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+const setHC = (dispatch) => {
+    return async (HCDetails) => {
+        try {
+            // console.log("####################");
+            // console.log(HCDetails);
+            dispatch({ type: 'set_hc', payload: HCDetails });
+        } catch (err) {
+            console.log("HCContex::setHC::" + err);
             dispatch({ type: 'add_error', payload: err })
         }
     };
 }
 
-const getAddresses = (dispatch) => {
-    return async () => {
-        await dispatch({ type: 'loader', payload: true });
-        try {
-            console.log("Addresses >>>>>>>>");
-            const senttoken = await getToken();
-            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            // console.log("get Addresses:               " + senttoken);
-            const response = await requestApi.get('/userLocation');
-            console.log("status: " + response.data.status);
-            if (response.data.status == true)
-                await dispatch({ type: 'loader', payload: false });
-            dispatch({ type: 'update_addresses', payload: response.data.data });
-        } catch (err) {
-            await dispatch({ type: 'loader', payload: false });
-            console.log("ERROR::HCCContext:: " + err);
-            dispatch({ type: 'add_error', payload: err })
-        }
-    };
-}
 const HCBooking = dispatch => {
     return async ({
         serviceType,
@@ -90,8 +80,7 @@ const HCBooking = dispatch => {
         scheduleId,
         paymentWays,
         frequency,
-        answers,
-
+        answers
     }) => {
         try {
             const senttoken = await getToken();
@@ -108,7 +97,7 @@ const HCBooking = dispatch => {
                 scheduleId,
                 paymentWays,
                 frequency,
-                answers,
+                answers
             }).then((response) => {
                 console.log("HCBooking::HCCContext" + response.data);
                 if (response.data.status == true)
@@ -124,6 +113,31 @@ const HCBooking = dispatch => {
     }
 }
 export const { Context, Provider } = createDataContext(HCreducer,
-    { getAddresses, getprice, HCBooking },
-    { price: 100, subtotal: 0, discount: 0, VAT: 0, total: 0, errorMessage: '', loading: false, frequency: 'One-time', hours: 2, cleaners: 1, materials: 0, requirematerials: 'No', desc: '', selectedprovider: '', selectedday: '', full_date: 'Sun 12-12-20', start: '', selected_address_name: '', method: '', addresses: '', selected_address: '' }
+    {
+        getServices,
+        setHC,
+        HCBooking
+    },
+    {
+        services: [],
+        HC: '',
+        subtotal: 0,
+        discount: 0,
+        VAT: 0,
+        total: 0,
+        errorMessage: '',
+        loading: false,
+        frequency: 1,
+        hours: 2,
+        cleaners: 1,
+        materials: 0,
+        requirematerials: 'No',
+        desc: '',
+        selectedprovider: '',
+        selectedday: '',
+        full_date: '',
+        start: '',
+        method: '',
+        addresses: '',
+    }
 );

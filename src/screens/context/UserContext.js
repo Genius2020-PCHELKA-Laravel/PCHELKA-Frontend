@@ -3,19 +3,29 @@ import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 import { setToken, getToken, removeToken } from '../../api/token';
-import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage, setUserAddressesStorage } from '../../api/userDetails';
+
 const UserReducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
             return { ...state, errorMessage: action.payload };
-        case 'get_user_details':
+        case 'set_user_details':
             return { ...state, userDetails: action.payload };
         case 'edit_user_details':
             return { ...state, userDetails: action.payload };
+        case 'add_new_address':
+            return { ...state, addresses: [action.payload, ...state.addresses] };
+        case 'set_user_addresses':
+            return { ...state, addresses: action.payload };
         case 'update_mobile':
             return { ...state, mobile: action.payload };
+        case 'set_full_name':
+            return { ...state, fullname: action.payload };
         case 'check_full_name':
             return { ...state, checkname: action.payload };
+        case 'set_selected_address':
+            return { ...state, selected_address: action.payload };
+        case 'set_selected_address_name':
+            return { ...state, selected_address_name: action.payload };
         default:
             return state;
     }
@@ -27,7 +37,9 @@ const getUserDetails = dispatch => {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.post('/details');
-            setUserDetailsStorage(response.data.data);
+            dispatch({ type: 'set_user_details', payload: response.data.data });
+            //dispatch({ type: 'set_full_name', payload: response.data.data.fullName });
+            //setUserDetailsStorage(response.data.data);
             return response.data.data;
         } catch (err) {
             console.log("Error in UserContext: " + err)
@@ -42,8 +54,9 @@ const getUserAddresses = dispatch => {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.get('/userLocation');
-            setUserAddressesStorage(response.data.data);
-            return response.data.data;
+            dispatch({ type: 'set_user_addresses', payload: response.data.data.slice(0).reverse() });
+            //setUserAddressesStorage(response.data.data);
+            return response.data.data.reverse();
         } catch (err) {
             console.log("Error in UserContext: " + err)
         }
@@ -57,8 +70,7 @@ const editUserDetails = dispatch => {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             const response = await requestApi.post('/userUpdate', { mobile, fullName, email, dateOfBirth, gender, language });
-            //console.log(response);
-            setUserDetailsStorage({ mobile, fullName, email, dateOfBirth, gender, language });
+            dispatch({ type: 'edit_user_details', payload: { mobile, fullName, email, dateOfBirth, gender, language } });
             return response.data.status;
         } catch (error) {
             console.error("error in edit user: " + error);
@@ -66,18 +78,22 @@ const editUserDetails = dispatch => {
     };
 }
 //save from Map after confirm and select location
-const saveUserAddressDetails = dispatch => {
+const addNewAddress = dispatch => {
     return async ({ address, lat, lon, details, area, street, buildingNumber, apartment }) => {
         //console.log({ address, lat, lon, details, area, street, buildingNumber, apartment });
         try {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             const response = await requestApi.post('/userLocation', { address, lat, lon, details, area, street, buildingNumber, apartment });
-            console.log("User Context::saveUserAddressDetails::response");
+            var id = response.data.data.locationId;
+            dispatch({ type: 'add_new_address', payload: { id, address, lat, lon, details, area, street, buildingNumber, apartment } });
+            dispatch({ type: 'set_selected_address_name', payload: address });
+            dispatch({ type: 'set_selected_address', payload: id });
+            console.log("User Context::addNewAddress::response");
             console.log(response);
             return response.data.status;
         } catch (error) {
-            console.error("Error::UserContext::saveUserAddressDetails:: " + error);
+            console.error("Error::UserContext::addNewAddress:: " + error);
         }
     };
 }
@@ -100,6 +116,21 @@ const checkFullName = dispatch => {
     }
 }
 export const { Context, Provider } = createDataContext(UserReducer,
-    { getUserDetails, editUserDetails, checkFullName, saveUserAddressDetails, getUserAddresses },
-    { checkname: '', userDetails: "", errorMessage: '', responsestatus: null }
+    {
+        getUserDetails,
+        editUserDetails,
+        checkFullName,
+        addNewAddress,
+        getUserAddresses
+    },
+    {
+        addresses: [],
+        fullname: '',
+        checkname: '',
+        userDetails: "",
+        errorMessage: '',
+        responsestatus: null,
+        selected_address_name: '',
+        selected_address: ''
+    }
 );

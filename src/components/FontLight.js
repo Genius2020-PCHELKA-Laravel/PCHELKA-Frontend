@@ -28,7 +28,7 @@ export default class FontLight extends React.Component {
         if (!this.state.fontsLoaded) {
             return <AppLoading />;
         } else {
-            return <Text style={this.props.mystyle}><Text style={styles.regularfont}>{this.props.value}</Text></Text>
+            return <Text style={this.props.mystyle}><Text style={styles.lightfont}>{this.props.value}</Text></Text>
         }
     }
 

@@ -7,40 +7,52 @@ import Spacer from '../Spacer';
 import FontBold from '../FontBold';
 import FontLight from '../FontLight';
 import FontRegular from '../FontRegular';
+import { Context as UserContext } from '../../screens/context/UserContext';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../Loader';
 import { withNamespaces } from 'react-i18next';
-import { setRedirect } from '../../api/redirect';
 import { navigate } from '../../navigationRef';
 const AddressDetails = ({ children, t }) => {
-    const { dispatch, state, getAddresses } = useContext(HCContext);
+    const { state, getUserAddresses, dispatch } = useContext(UserContext);
+    const { state: hcstate } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
     useEffect(() => {
         console.log("GetAddresses");
-        getAddresses();
+        getUserAddresses();
     }, []);
+
     const items = []
 
     for (const add of state.addresses) {
         items.push(
-            <TouchableOpacity key={add.id} onPress={() => { setSelectedAddress(add.id); setSelectedAddressName(add.address); dispatch({ type: 'set_selected_address_name', payload: add.address, }); }}>
+            <TouchableOpacity
+                key={add.id}
+                onPress={() => {
+                    setSelectedAddress(add.id);
+                    setSelectedAddressName(add.address);
+                    dispatch({ type: 'set_selected_address_name', payload: add.address, });
+                }}>
                 <View flexDirection='row' style={{ marginBottom: 5 }}>
                     <View flexDirection='column'>
                         <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
                     </View>
                     <View flexDirection='column'>
                         <View flexDirection='row'>
-                            <FontBold value={add.address} mystyle={{ fontSize: 24 }}></FontBold>
+                            <FontBold value={add.address} mystyle={{ fontSize: 18 }}></FontBold>
                         </View>
                         <View flexDirection='row'>
-                            <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 18 }}></FontLight>
+                            <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
                         </View>
                         <View flexDirection='row'>
-                            <FontLight value={add.street} mystyle={{ color: 'gray', fontSize: 18 }}></FontLight>
-                            <FontLight value={add.buildingNumber} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 15 }}></FontLight>
-                            <FontLight value={add.apartment} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 15 }}></FontLight>
+                            <FontLight value={add.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                        </View>
+                        <View flexDirection='row'>
+                            <FontLight value={add.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                        </View>
+                        <View flexDirection='row'>
+                            <FontLight value={add.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
                         </View>
                     </View>
                     {/* <View style={styles.editcolumn}>
@@ -51,9 +63,6 @@ const AddressDetails = ({ children, t }) => {
                             </View>
                         </View> */}
                 </View>
-
-
-
             </TouchableOpacity>
         );
     }
@@ -70,21 +79,26 @@ const AddressDetails = ({ children, t }) => {
 
     return (
         <View style={styles.container}>
+            {/* <Text>{selectedAddress}</Text>
+            <Text>{selectedAddressName}</Text> */}
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Loader loading={state.loading} />
+                {/* <Loader loading={state.loading} /> */}
                 <Spacer>
                     <View style={styles.containerrow}>
                         <View style={styles.containeritem1}>
-                            <FontBold mystyle={{ color: 'gray', fontSize: 21 }} value={t('addressq1')}></FontBold>
+                            <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('addressq1')}></FontBold>
                         </View>
                         <View style={styles.containeritem2}>
-                            <TouchableOpacity onPress={async () => { await setRedirect('HomeScreen'); navigate('MapScreen'); }}>
+                            <TouchableOpacity onPress={async () => {
+                                // dispatch({ type: 'set_redirect', payload: "HomeScreen", });
+                                navigate('MapScreen');
+                            }}>
                                 <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
                             </TouchableOpacity>
                         </View>
                     </View>
 
-                    {items.reverse()}
+                    {items}
                 </Spacer>
             </ScrollView>
         </View>

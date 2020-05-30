@@ -3,7 +3,6 @@ import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 import { setToken, getToken, removeToken } from '../../api/token';
-import { getUserDetailsStorage, setUserDetailsStorage, removeUserDetailsStorage } from '../../api/userDetails';
 const LocationReducer = (state, action) => {
     switch (action.type) {
         case 'add_error':

@@ -17,18 +17,12 @@ import FontLight from '../FontLight';
 import FontRegular from '../FontRegular';
 import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
-import { setRedirect, getRedirect, removeRedirect } from '../../api/redirect';
+import { setRedirect } from '../../api/redirect';
 import { navigate } from '../../navigationRef';
 export default class HomeScreenAddresses extends React.Component {
-    //const [modalVisible, setModalVisible] = useState(false);
-    // const { state, getprice0, getprice1, getprice2 } = useContext(HCContext);
     constructor(props) {
         super(props);
-        // this.state = {
-        //     spare: this.props.addresses,
-        // };
     }
-
     render() {
         return (
             <View >
@@ -39,25 +33,33 @@ export default class HomeScreenAddresses extends React.Component {
                     onRequestClose={() => {
                         alert('Modal has been closed.');
                     }}
-                    onShow={() => this.props.setIsLoading(false)}
                 >
-
                     <View style={styles.wrapper}>
                         <View style={styles.container}>
                             <View style={{ justifyContent: 'center', alignItems: 'center', top: 5 }}>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        this.props.setReloadAddresses(!this.props.reloadAddresses);
                                         this.props.setShowAddressesModal(false);
                                     }}
-                                    style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#ff9800', borderRadius: 35, width: '25%' }}>
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        backgroundColor: '#ff9800',
+                                        borderRadius: 35, width: '25%'
+                                    }}>
                                     <Entypo name="chevron-down" size={35} color="#f5f5f7" />
                                 </TouchableOpacity>
                             </View>
                             <View flexDirection='row'>
                                 <FontBold value="Your addresses" mystyle={{ fontSize: 20, left: 15, top: 15, }} />
-                                <TouchableOpacity onPress={async () => { this.props.setReloadAddresses(!this.props.reloadAddresses); await setRedirect('HomeNavigator'); navigate('MapScreen'); this.props.setShowAddressesModal(false); }} style={{ position: 'absolute', right: 15 }}>
-
+                                <TouchableOpacity
+                                    onPress={async () => {
+                                        navigate('MapScreen');
+                                        this.props.setShowAddressesModal(false);
+                                    }}
+                                    style={{
+                                        position: 'absolute', right: 15
+                                    }}>
                                     <Entypo name="plus" size={45} color="#ff9800" />
                                 </TouchableOpacity>
                             </View>
@@ -71,10 +73,10 @@ export default class HomeScreenAddresses extends React.Component {
                                             <TouchableOpacity key={i} onPress={() => { }}>
                                                 <Spacer>
                                                     <View flexDirection='row'>
-                                                        <View flexDirection='column'>
+                                                        <View flexDirection='column' style={{ width: '10%' }}>
                                                             <Entypo name="location" size={25} color="#d21404" />
                                                         </View>
-                                                        <View flexDirection='column' style={{ left: 15 }}>
+                                                        <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
                                                             <View flexDirection='row' >
                                                                 <FontBold mystyle={{ fontSize: 18, }} value={u.address + ', '} />
                                                             </View>
@@ -83,7 +85,11 @@ export default class HomeScreenAddresses extends React.Component {
                                                             </View>
                                                             <View flexDirection='row'>
                                                                 <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.street + ', '} />
+                                                            </View>
+                                                            <View flexDirection='row'>
                                                                 <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.buildingNumber + ', '} />
+                                                            </View>
+                                                            <View flexDirection='row'>
                                                                 <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.apartment} />
                                                             </View>
                                                         </View>
@@ -98,22 +104,13 @@ export default class HomeScreenAddresses extends React.Component {
                                     // </Spacer>
                                 }
                             </ScrollView>
-
-
-
                         </View>
                     </View>
                 </Modal>
-
-
-
             </View >
         );
     }
-
-
 }
-
 
 const styles = StyleSheet.create({
     container: {

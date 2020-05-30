@@ -19,12 +19,9 @@ import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
 
 export default class AddressDetailsConfirm extends React.Component {
-    //const [modalVisible, setModalVisible] = useState(false);
-    // const { state, getprice0, getprice1, getprice2 } = useContext(HCContext);
     constructor(props) {
         super(props);
         this.state = { modalVisible: false, street: '', buildingnumber: '', apartment: '' };
-        //this.handleSubmitButton();
     }
     handleSubmitButton() {
         console.log("Passed Latitude to AddressDetailsConfir::");
@@ -39,7 +36,6 @@ export default class AddressDetailsConfirm extends React.Component {
             return;
         }
         else {
-
             this.setState({ street: '', buildingnumber: '', apartment: '' });
             this.setState({ modalVisible: true });
         }
@@ -54,7 +50,6 @@ export default class AddressDetailsConfirm extends React.Component {
                     onRequestClose={() => {
                         alert('Modal has been closed.');
                     }} >
-
                     <View style={styles.wrapper}>
                         <View style={styles.container}>
                             <View style={{ justifyContent: 'center', alignItems: 'center', top: 5 }}>
@@ -80,6 +75,7 @@ export default class AddressDetailsConfirm extends React.Component {
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="none"
                                     keyboardType="default"
+                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._emailinput = ref;
                                     // }}
@@ -99,6 +95,7 @@ export default class AddressDetailsConfirm extends React.Component {
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="none"
                                     keyboardType="default"
+                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._emailinput = ref;
                                     // }}
@@ -118,6 +115,7 @@ export default class AddressDetailsConfirm extends React.Component {
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="none"
                                     keyboardType="default"
+                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._emailinput = ref;
                                     // }}

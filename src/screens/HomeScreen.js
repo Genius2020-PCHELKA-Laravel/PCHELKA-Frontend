@@ -20,19 +20,19 @@ const HomeScreen = ({ navigation, t }) => {
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-  const [testToken, setTestToken] = useState('');
+  // const [testToken, setTestToken] = useState('');
 
-  getData = async () => {
-    try {
-      setTestToken(await getToken());
-      console.log("Get Data: " + token);
-    } catch (e) {
-      console.log("error in token" + e);
-    }
-  }
-  useEffect(() => {
-    getData();
-  }, []);
+  // getData = async () => {
+  //   try {
+  //     setTestToken(await getToken());
+  //     console.log("Get Data: " + token);
+  //   } catch (e) {
+  //     console.log("error in token" + e);
+  //   }
+  // }
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
     <ScrollView style={styles.container}>

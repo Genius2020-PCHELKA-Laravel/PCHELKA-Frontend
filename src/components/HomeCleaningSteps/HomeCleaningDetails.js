@@ -12,19 +12,19 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 
 const HomeCleaningDetails = ({ children, t }) => {
-    const { dispatch, state } = useContext(HCContext);
-    const [hours, setHours] = useState(state.hours);
-    const [cleaners, setCleaners] = useState(state.cleaners);
-    const [materials, setMaterials] = useState(state.materials);
-    const [requirematerials, setRequireMaterials] = useState(state.requirematerials);
-    const [isEnabled, setIsEnabled] = state.materials == 0 ? useState(false) : useState(true);
-    const [desc, setDesc] = useState(state.desc);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    let subtotal = state.subtotal;
-    let discount = state.discount;
-    let total = state.total;
+    const { dispatch, state: hcstate } = useContext(HCContext);
+    const [hours, setHours] = useState(hcstate.hours);
+    const [cleaners, setCleaners] = useState(hcstate.cleaners);
+    const [materials, setMaterials] = useState(hcstate.materials);
+    const [requirematerials, setRequireMaterials] = useState(hcstate.requirematerials);
+    const [isEnabled, setIsEnabled] = hcstate.materials == 0 ? useState(false) : useState(true);
+    const [desc, setDesc] = useState(hcstate.desc);
+    const toggleSwitch = () => setIsEnabled(previoushcstate => !previoushcstate);
+    let subtotal = hcstate.subtotal;
+    let discount = hcstate.discount;
+    let total = hcstate.total;
     useEffect(() => {
-        console.log("Frequency in Home Cleaning Details: " + state.frequency);
+        console.log("Frequency in Home Cleaning Details: " + hcstate.frequency);
     }, []);
     useEffect(() => {
         if (isEnabled == true) {
@@ -38,22 +38,22 @@ const HomeCleaningDetails = ({ children, t }) => {
     }, [isEnabled]);
 
     useEffect(() => {
-        console.log("HHHHHHHHHH " + hours)
-        subtotal = (state.price * hours * cleaners) + materials;
-        total = (state.price * hours * cleaners) + materials;
-        if (state.frequency == 'Bi-weekly') {
+        console.log("HHHHHHHHHH " + hours);
+        subtotal = (hcstate.HC.hourPrice * hours * hcstate.cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
+        total = (hcstate.HC.hourPrice * hours * hcstate.cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
+        if (hcstate.frequency == 2) {
             total = total * 2;
             discount = total * 0.05;
             discount = parseFloat(discount).toFixed(2);
             subtotal = total - discount;
         }
-        else if (state.frequency == 'Weekly') {
+        else if (hcstate.frequency == 3) {
             total = total * 4;
             discount = total * 0.1;
             discount = parseFloat(discount).toFixed(2);
             subtotal = total - discount;
         }
-        subtotal = subtotal - state.VAT;
+        subtotal = subtotal - hcstate.VAT;
         total = parseFloat(total).toFixed(2);
         subtotal = parseFloat(subtotal).toFixed(2);
         dispatch({
@@ -69,21 +69,21 @@ const HomeCleaningDetails = ({ children, t }) => {
 
     useEffect(() => {
         console.log("CCCCCCCCC " + cleaners)
-        subtotal = (state.price * hours * cleaners) + materials;
-        total = (state.price * hours * cleaners) + materials;
-        if (state.frequency == 'Bi-weekly') {
+        subtotal = (hcstate.HC.hourPrice * hcstate.hours * cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
+        total = (hcstate.HC.hourPrice * hcstate.hours * cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
+        if (hcstate.frequency == 2) {
             total = total * 2;
             discount = total * 0.05;
             discount = parseFloat(discount).toFixed(2);
             subtotal = total - discount;
         }
-        else if (state.frequency == 'Weekly') {
+        else if (hcstate.frequency == 3) {
             total = total * 4;
             discount = total * 0.1;
             discount = parseFloat(discount).toFixed(2);
             subtotal = total - discount;
         }
-        subtotal = subtotal - state.VAT;
+        subtotal = subtotal - hcstate.VAT;
         total = parseFloat(total).toFixed(2);
         subtotal = parseFloat(subtotal).toFixed(2);
         dispatch({
@@ -98,22 +98,22 @@ const HomeCleaningDetails = ({ children, t }) => {
     }, [cleaners]);
     useEffect(() => {
         console.log("MMMMMMMM " + materials)
-        // console.log(state.materials)
-        subtotal = (state.price * hours * cleaners) + materials;
-        total = (state.price * hours * cleaners) + materials;
-        if (state.frequency == 'Bi-weekly') {
+        // console.log(hcstate.materials)
+        subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (materials * hcstate.hours * hcstate.HC.materialPrice);
+        total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (materials * hcstate.hours * hcstate.HC.materialPrice);
+        if (hcstate.frequency == 2) {
             total = total * 2;
             discount = total * 0.05;
             discount = parseFloat(discount).toFixed(2);
             subtotal = total - discount;
         }
-        else if (state.frequency == 'Weekly') {
+        else if (hcstate.frequency == 3) {
             total = total * 4;
             discount = total * 0.1;
             discount = parseFloat(discount).toFixed(2);
             subtotal = total - discount;
         }
-        subtotal = subtotal - state.VAT;
+        subtotal = subtotal - hcstate.VAT;
         total = parseFloat(total).toFixed(2);
         subtotal = parseFloat(subtotal).toFixed(2);
         dispatch({
@@ -135,17 +135,6 @@ const HomeCleaningDetails = ({ children, t }) => {
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <FontBold mystyle={styles.qText} value={t('cleaningq1')} />
-            {/* <FontRegular mystyle={styles.aText} value={hours + ' Hours'} />
-            <Slider
-                value={hours}
-                onValueChange={setHours}
-                minimumValue={2}
-                maximumValue={8}
-                step={1}
-                trackStyle={styles.track}
-                thumbStyle={styles.thumb}
-                minimumTrackTintColor='#ff9800'
-            /> */}
             <Spacer />
             <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => setHours(2)}><Text style={hours == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
@@ -167,17 +156,6 @@ const HomeCleaningDetails = ({ children, t }) => {
                 <TouchableOpacity onPress={() => setCleaners(4)}><Text style={cleaners == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
             </View>
             <Spacer />
-            {/* <FontRegular mystyle={styles.aText} value={cleaners + ' Cleaners'} />
-            <Slider
-                value={cleaners}
-                onValueChange={setCleaners}
-                minimumValue={1}
-                maximumValue={4}
-                step={1}
-                trackStyle={styles.track}
-                thumbStyle={styles.thumb}
-                minimumTrackTintColor='#ff9800'
-            /> */}
             <Spacer>
                 <FontBold mystyle={styles.qText} value={t('cleaningq3')} />
             </Spacer>
@@ -276,27 +254,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginRight: 4
     }
-    // track: {
-    //     height: 10,
-    //     borderRadius: 4,
-    //     backgroundColor: 'white',
-    //     shadowColor: 'black',
-    //     shadowOffset: { width: 0, height: 1 },
-    //     shadowRadius: 1,
-    //     shadowOpacity: 0.15,
-    // },
-    // thumb: {
-    //     width: 20,
-    //     height: 20,
-    //     backgroundColor: '#f8a1d6',
-    //     borderColor: '#a4126e',
-    //     borderWidth: 5,
-    //     borderRadius: 10,
-    //     shadowColor: 'black',
-    //     shadowOffset: { width: 0, height: 2 },
-    //     shadowRadius: 2,
-    //     shadowOpacity: 0.35,
-    // }
 });
 
 export default withNamespaces()(HomeCleaningDetails);
