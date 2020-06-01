@@ -67,7 +67,9 @@ export default class HomeScreenAddresses extends React.Component {
                             <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
                             <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
                                 {
-                                    // typeof this.props.addresses == 'undefined' ?
+                                    // typeof this.props.authtoken != 'undefined'
+                                    //     || this.props.authtoken != ''
+                                    //     ?
                                     this.props.addresses.map((u, i) => {
                                         return (
                                             <TouchableOpacity key={i} onPress={() => { }}>
@@ -100,7 +102,7 @@ export default class HomeScreenAddresses extends React.Component {
                                     })
                                     // :
                                     // <Spacer>
-                                    //     <FontBold value="No addresses yet" mystyle={{ fontSize: 20, left: 15, top: 15, }} />
+                                    //     <FontBold value="You must Login" mystyle={{ fontSize: 20, left: 15, top: 15, }} />
                                     // </Spacer>
                                 }
                             </ScrollView>

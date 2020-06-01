@@ -9,19 +9,20 @@ import AddressDetails from '../components/HomeCleaningSteps/AddressDetails';
 import Payment from '../components/HomeCleaningSteps/Payment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
-import ModalDetails from '../components/ModalDetails';
+import ModalDetails from '../components/HomeCleaningSteps/ModalDetails';
 import { Context as UserContext } from './context/UserContext';
 import { Context as HCContext } from './context/HCContext';
 import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
 import { navigate } from '../navigationRef';
-
+import Loader from '../components/Loader';
 const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
   // };
-  const { state: hcstate, HCBooking } = useContext(HCContext);
+  const { state: hcstate, HCBooking, dispatch, getProviders, getSchedules } = useContext(HCContext);
   const { state } = useContext(UserContext);
+  const [isloading, setIsLoading] = useState(false);
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
 
@@ -34,31 +35,101 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   };
   useEffect(() => {
     console.log("HomeCleaningScreen::UseEffect::gethourprice");
+    console.log("HomeCleaningScreen::UseEffect::State hour price:: " + hcstate.HC.name)
+
+    console.log("HomeCleaningScreen::UseEffect::gethourprice");
     console.log("HomeCleaningScreen::UseEffect::State hour price:: " + hcstate.HC.hourPrice)
 
     console.log("HomeCleaningScreen::UseEffect::gethourmaterialprice");
-    console.log("HomeCleaningScreen::UseEffect::State hour material price:: " + hcstate.HC.materialPrice)
-  }, []);
+    console.log("HomeCleaningScreen::UseEffect::State hour material price:: " + hcstate.HC.materialPrice);
+    getProviders({ serviceType: 'HomeCleaning' }).then((response) => {
+      console.log("HomeCleaniningScreen::Providers");
+      console.log(response);
+    }).catch((error) => {
+      console.log("Error::HomeCleaniningScreen::Providers");
+      console.log(error);
+    });
 
-  const onNextStep = () => {
-    console.log('called next step');
-  };
+    // getSchedulesDays({ id: 1 }).then((response) => {
+    //   console.log("HomeCleaniningScreen::schedules");
+    //   console.log(response);
+    // }).catch((error) => {
+    //   console.log("Error::HomeCleaniningScreen::schedules");
+    //   console.log(error);
+    // });
+    getSchedules().then((response) => {
+      console.log("HomeCleaniningScreen::schedules");
+      //console.log(response);
+      //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
+    }).catch((error) => {
+      console.log("Error::HomeCleaniningScreen::schedules");
+      console.log(error);
+    });
+
+  }, []);
+  useEffect(() => {
+    // const availabledates = [];
+    // hcstate.schedules.filter((e) => e.serviceProviderId == hcstate.providerid).map((u, i) => {
+    //   availabledates[i] = u.availableDate;
+    // });
+    // const uniqueNDates = Array.from(new Set(availabledates));
+    // console.log("#########Unique dates:");
+    // console.log(uniqueNDates);
+  }, [hcstate.providerid]);
 
   const onFrequencyStepComplete = () => {
-    // alert('Frequwncy step completed!');
+    console.log('state.frequency:: ' + hcstate.frequency);
+  };
+  const onCleaningDetailsComplete = () => {
+    console.log('hcstate.hours ' + hcstate.hours);
+    console.log('hcstate.cleaners ' + hcstate.cleaners);
+    console.log('hcstate.materials ' + hcstate.materials);
+    console.log('hcstate.desc ' + hcstate.desc);
+  };
+  const onDateTimeStepComplete = () => {
+    console.log('hcstate.full_date::hcstate.providerid ' + hcstate.providerid);
+    console.log('hcstate.full_date::hcstate.autoassign ' + hcstate.autoassign);
+    console.log('hcstate.full_date::hcstate.start ' + hcstate.full_date + '  ' + hcstate.start);
+    if (hcstate.full_date == '') {
+      Toast.show('Select date please', Toast.LONG);
+      return;
+    }
+    if (hcstate.start == '') {
+      Toast.show('Select time please', Toast.LONG);
+      return;
+    }
   };
   const onAddressStepComplete = () => {
-    console.log(state.selected_address_name);
-    if (typeof state.selected_address == 'undefined') {
+    console.log('state.selected_address_name:: ' + state.selected_address_name);
+    if (state.selected_address == '') {
       Toast.show('Select address please', Toast.LONG);
       return;
     }
   };
+
   const onPrevStep = () => {
     console.log('called previous step');
   };
 
   const onSubmitSteps = () => {
+    console.log('hcstate.method:: ' + hcstate.method);
+    if (state.selected_address == '') {
+      Toast.show('Select address please', Toast.LONG);
+      return;
+    }
+    if (hcstate.full_date == '') {
+      Toast.show('Select date please', Toast.LONG);
+      return;
+    }
+    if (hcstate.start == '') {
+      Toast.show('Select time please', Toast.LONG);
+      return;
+    }
+    if (hcstate.method == -1) {
+      Toast.show('Select payment method please', Toast.LONG);
+      return;
+    }
+    setIsLoading(true);
     var frequency = -1;
     if (hcstate.frequency == 1) frequency = 'One-time';
     if (hcstate.frequency == 2) frequency = 'Bi-weekly';
@@ -89,7 +160,8 @@ const HomeCleaningScreen = ({ navigation, t }) => {
       discount: hcstate.discount,
       totalAmount: hcstate.total,
       locationId: state.selected_address,
-      providerId: "1",
+      providerId: hcstate.providerid,
+      autoassign: hcstate.autoassign,
       scheduleId: "1",
       paymentWays: paymentWays,
       frequency: frequency,
@@ -121,9 +193,15 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         }
       ]
     }).then(() => {
+      setIsLoading(false);
+      dispatch({
+        type: 'RESET'
+      });
       Toast.show('Booked', Toast.LONG);
-      navigate('HomeStackNavigator')
-    }).catch(() => {
+      navigate('HomeNavigator')
+    }).catch((error) => {
+      console.log(error);
+      setIsLoading(false);
       Toast.show('Error:: NotBooked', Toast.LONG);
     });
   };
@@ -131,6 +209,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   return (
     <>
       <View style={{ flex: 1, marginTop: 10, margin: 15 }}>
+        <Loader loading={isloading} />
         <ProgressSteps
           activeStepIconBorderColor='#f1c40f'
           activeLabelColor='#f1c40f'
@@ -152,7 +231,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           </ProgressStep>
           <ProgressStep
             label={t('cleaning')}
-            onNext={onNextStep}
+            onNext={onCleaningDetailsComplete}
             onPrevious={onPrevStep}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
@@ -166,7 +245,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           </ProgressStep>
           <ProgressStep
             label={t('date')}
-            onNext={onNextStep}
+            onNext={onDateTimeStepComplete}
             onPrevious={onPrevStep}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}
@@ -180,8 +259,8 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           </ProgressStep>
           <ProgressStep
             label={t('address')}
-            onPrevious={onPrevStep}
             onNext={onAddressStepComplete}
+            onPrevious={onPrevStep}
             // onSubmit={onSubmitSteps}
             scrollViewProps={defaultScrollViewProps}
             nextBtnTextStyle={styles.ButtonTextStyle}

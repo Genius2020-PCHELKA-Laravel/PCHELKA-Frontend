@@ -54,7 +54,7 @@ const getUserAddresses = dispatch => {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.get('/userLocation');
-            dispatch({ type: 'set_user_addresses', payload: response.data.data.slice(0).reverse() });
+            dispatch({ type: 'set_user_addresses', payload: response.data.data.reverse() });
             //setUserAddressesStorage(response.data.data);
             return response.data.data.reverse();
         } catch (err) {

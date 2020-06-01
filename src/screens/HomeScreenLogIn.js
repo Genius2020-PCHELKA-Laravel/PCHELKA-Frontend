@@ -41,7 +41,7 @@ const HomeScreenLogIn = ({ navigation, t }) => {
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginPhoneScreen', { redirect: "HomeCleaningScreen" })}>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginPhoneScreen', { redirect: "Dashboard" })}>
             <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
               <FontBold value={t('booknow')}>

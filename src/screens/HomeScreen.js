@@ -13,9 +13,12 @@ import { AppLoading } from 'expo';
 import Slider from '../components/Slider';
 import FontBold from '../components/FontBold';
 import { Context as AuthContext } from './context/AuthContext';
+import { Context as UserContext } from './context/UserContext';
+import { Context as HCContext } from './context/HCContext';
 import { navigate } from '../navigationRef';
-
 const HomeScreen = ({ navigation, t }) => {
+  const { getUserDetails, getUserAddresses } = useContext(UserContext);
+  const { setHC, getServices } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
@@ -30,9 +33,29 @@ const HomeScreen = ({ navigation, t }) => {
   //     console.log("error in token" + e);
   //   }
   // }
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getServices().then((response) => {
+      setHC(response[0]);
+      console.log("HomeScreen::UseEffect::getServices::response::");
+      console.log(response);
+    }).catch((error) => {
+      console.log("Error::HomeScreen::UseEffect::getServices");
+      console.log(error);
+    });
+
+    getUserDetails().then((response) => {
+      console.log("HomeScreen::useffect::getUseDetails::response:: ");
+      console.log(response);
+      getUserAddresses().then((res) => {
+        console.log("HomeScreen::useffect::getUserAddresses::response:: ");
+        console.log(res);
+      }).catch((error) => {
+        console.log("HomeScreen::useffect::getUserAddresses::error:: ");
+      });
+    }).catch((error) => {
+      console.log("HomeScreen::getUserDetails#1 " + error);
+    });
+  }, []);
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
     <ScrollView style={styles.container}>

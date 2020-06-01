@@ -10,6 +10,8 @@ import { Avatar } from 'react-native-elements';
 import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
 import HomeScreenAddresses from './lcation/HomeScreenAddresses';
+import { getToken } from '../api/token';
+
 const SettingsButton = ({ t }) => {
     const { state } = useContext(UserContext);
     const [address, setAddress] = useState('');
@@ -18,7 +20,8 @@ const SettingsButton = ({ t }) => {
     const [lang, setLang] = useState('en');
 
     useEffect(() => {
-        setAddress(state.addresses[0].details + ',' + state.addresses[0].address);
+        if (typeof addresses != 'undefined')
+            setAddress(state.addresses[0].details + ',' + state.addresses[0].address);
     }, [state.addresses])
 
     useEffect(() => {

@@ -19,7 +19,6 @@ const AddressDetails = ({ children, t }) => {
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
     useEffect(() => {
-        console.log("GetAddresses");
         getUserAddresses();
     }, []);
 

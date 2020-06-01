@@ -4,12 +4,19 @@ import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 
 import { setToken, getToken, removeToken } from '../../api/token';
+
 const HCreducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
             return { ...state, errorMessage: action.payload };
         case 'set_services':
             return { ...state, services: action.payload };
+        case 'set_providers':
+            return { ...state, providers: action.payload };
+        // case 'set_schedules_days':
+        //     return { ...state, schedulesdays: action.payload };
+        case 'set_schedules':
+            return { ...state, schedules: action.payload };
         case 'update_totals':
             return { ...state, discount: action.payload.discount, subtotal: action.payload.subtotal, total: action.payload.total };
         case 'set_frequency':
@@ -26,18 +33,42 @@ const HCreducer = (state, action) => {
             return { ...state, desc: action.payload };
         case 'set_selectedday':
             return { ...state, selectedday: action.payload };
-        case 'set_selectedprovider':
-            return { ...state, selectedprovider: action.payload };
-        case 'set_fulldate':
-            return { ...state, full_date: action.payload.full_date };
+        // case 'reset_selectedday':
+        //     return { ...state, selectedday: action.payload };
+        // case 'reset_start':
+        //     return { ...state, selectedday: action.payload };
+        case 'set_providerid':
+            return { ...state, providerid: action.payload };
+        case 'set_autoassign':
+            return { ...state, autoassign: action.payload };
+        // case 'set_fulldate':
+        //     return { ...state, full_date: action.payload.full_date };
         case 'set_start':
             return { ...state, start: action.payload };
-        case 'update_addresses':
-            return { ...state, addresses: action.payload };
         case 'set_method':
             return { ...state, method: action.payload };
-        case 'loader':
-            return { ...state, loading: action.payload };
+
+        case "RESET":
+            return {
+                ...state,
+                providerid: '',
+                autoassign: 1,
+                subtotal: 0,
+                discount: 0,
+                VAT: 0,
+                total: 0,
+                errorMessage: '',
+                frequency: 1,
+                hours: 2,
+                cleaners: 1,
+                materials: 0,
+                requirematerials: 'No',
+                desc: '',
+                selectedday: '',
+                // full_date: '',
+                start: '',
+                method: -1,
+            };
         default:
             return state;
     }
@@ -54,6 +85,53 @@ const getServices = (dispatch) => {
         }
     };
 }
+const getProviders = (dispatch) => {
+    return async ({ serviceType }) => {
+        try {
+            const response = await requestApi.post('/providers', { serviceType });
+            dispatch({ type: 'set_providers', payload: response.data.data });
+            console.log(response)
+            return response.data.data;
+        } catch (err) {
+            console.log("Error::HCContex::getProviders" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+
+//from belal
+// const getSchedulesDays = (dispatch) => {
+//     return async ({ id }) => {
+//         try {
+//             const response = await requestApi.post('/schedulesDays', { id });
+//             const availabledates = [];
+//             response.data.data.map((u, i) => {
+//                 availabledates[i] = u.availableDate;
+//             });
+//             dispatch({ type: 'set_schedules_days', payload: availabledates });
+//             return response.data.data;
+//         } catch (err) {
+//             console.log("Error::HCContex::getScheduledays" + err);
+//             dispatch({ type: 'add_error', payload: err })
+//         }
+//     };
+// }
+//from maher
+const getSchedules = (dispatch) => {
+    return async () => {
+        try {
+            const response = await requestApi.get('/getSchedules');
+            //console.log(_.filter(schedules, { serviceProviderId: 1, availableDate: "2020-05-31" }))
+            dispatch({ type: 'set_schedules', payload: response.data.data });
+            return response.data.data;
+        } catch (err) {
+            console.log("Error::HCContex::getSchedules" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+
+
 const setHC = (dispatch) => {
     return async (HCDetails) => {
         try {
@@ -116,28 +194,33 @@ export const { Context, Provider } = createDataContext(HCreducer,
     {
         getServices,
         setHC,
-        HCBooking
+        HCBooking,
+        getProviders,
+        // getSchedulesDays,
+        getSchedules,
     },
     {
         services: [],
+        providers: [],
+        //schedulesdays: [],
+        schedules: [],
         HC: '',
+        providerid: '',
+        autoassign: 1,
         subtotal: 0,
         discount: 0,
         VAT: 0,
         total: 0,
         errorMessage: '',
-        loading: false,
         frequency: 1,
         hours: 2,
         cleaners: 1,
         materials: 0,
         requirematerials: 'No',
         desc: '',
-        selectedprovider: '',
         selectedday: '',
-        full_date: '',
+        // full_date: '',
         start: '',
-        method: '',
-        addresses: '',
+        method: -1,
     }
 );

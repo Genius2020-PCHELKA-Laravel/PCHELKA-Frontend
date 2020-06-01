@@ -14,14 +14,25 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { withNamespaces } from 'react-i18next';
 
 const Payment = ({ children, t }) => {
-    const { dispatch, state } = useContext(HCContext);
-    const [method, setMethod] = useState(state.method);
+    const { dispatch, state: hcstate } = useContext(HCContext);
+    const [method, setMethod] = useState(hcstate.method);
 
     useEffect(() => {
         dispatch({
             type: 'set_method',
             payload: method,
         });
+        subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
+        total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
+        if (method == 1) {
+            subtotal = subtotal + 5;
+        }
+        var discount = hcstate.discount;
+        dispatch({
+            type: 'update_totals',
+            payload: { subtotal, total, discount },
+        });
+
     }, [method]);
     return (
         <ScrollView>
@@ -29,7 +40,7 @@ const Payment = ({ children, t }) => {
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
-                            <RadioButton value="0" status={state.method == '0' ? 'checked' : 'unchecked'} />
+                            <RadioButton value="0" status={hcstate.method == '0' ? 'checked' : 'unchecked'} />
                             <FontBold value={t('paymentq1')} mystyle={{ fontSize: 24 }}></FontBold>
                         </View>
                         <FontLight value={t('paymentq1details')} mystyle={{ color: 'green', fontSize: 11, marginLeft: 35 }}></FontLight>
@@ -39,7 +50,7 @@ const Payment = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setMethod(1) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="1" status={state.method == '1' ? 'checked' : 'unchecked'} />
+                        <RadioButton value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
                         <FontBold value={t('paymentq2')} mystyle={{ fontSize: 24 }}></FontBold>
                     </View>
                     <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
