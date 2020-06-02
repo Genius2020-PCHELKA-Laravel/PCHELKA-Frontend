@@ -35,10 +35,11 @@ export default class Timer extends React.Component {
     }
     componentWillUnmount() {
         console.log("####################Unmount Timer");
-        this.props.onclick = null;
-        this.setState({ time: {}, seconds: 0 });
-        this.startTimer.bind(null);
-        this.countDown.bind(null);
+        clearInterval(this.timer);
+        // this.props.onclick = null;
+        // this.setState({ time: {}, seconds: 0 });
+        // this.startTimer.bind(null);
+        // this.countDown.bind(null);
     }
     startTimer() {
         if (this.timer == 0 && this.state.seconds > 0) {

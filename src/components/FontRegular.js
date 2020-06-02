@@ -4,12 +4,21 @@ import { Text, StyleSheet } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 export default class FontRegular extends React.Component {
+    componentDidMount() {
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+    }
     useFonts(fontMap) {
         (async () => {
             await Font.loadAsync(fontMap);
-            this.setState({
-                fontsLoaded: true
-            })
+            if (this.mounted) {
+                this.setState({
+                    fontsLoaded: true
+                })
+            }
         })();
     }
     constructor(props) {

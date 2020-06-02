@@ -2,6 +2,7 @@ import createDataContext from './createDataContext';
 import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
+import Toast from 'react-native-simple-toast';
 
 import { setToken, getToken, removeToken } from '../../api/token';
 
@@ -47,7 +48,19 @@ const HCreducer = (state, action) => {
             return { ...state, start: action.payload };
         case 'set_method':
             return { ...state, method: action.payload };
+        case 'set_order_id':
+            return { ...state, order_id: action.payload };
+        case 'set_card':
+            return { ...state, card: action.payload };
+        case 'set_card_exp_month':
+            return { ...state, card_exp_month: action.payload };
+        case 'set_card_exp_year':
+            return { ...state, card_exp_year: action.payload };
+        case 'set_card_cvv':
+            return { ...state, card_cvv: action.payload };
 
+        case 'set_valid':
+            return { ...state, valid: action.payload };
         case "RESET":
             return {
                 ...state,
@@ -68,6 +81,12 @@ const HCreducer = (state, action) => {
                 // full_date: '',
                 start: '',
                 method: -1,
+                order_id: '',
+                card: '',
+                card_exp_month: '',
+                card_exp_year: '',
+                card_cvv: '',
+                valid: '',
             };
         default:
             return state;
@@ -135,8 +154,6 @@ const getSchedules = (dispatch) => {
 const setHC = (dispatch) => {
     return async (HCDetails) => {
         try {
-            // console.log("####################");
-            // console.log(HCDetails);
             dispatch({ type: 'set_hc', payload: HCDetails });
         } catch (err) {
             console.log("HCContex::setHC::" + err);
@@ -144,6 +161,41 @@ const setHC = (dispatch) => {
         }
     };
 }
+
+
+const pay = (dispatch) => {
+    return async ({ order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description }) => {
+        try {
+            console.log('{ order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description }');
+            console.log({ order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description });
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            await requestApi.post('/pay',
+                { order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description }).
+                then((response) => {
+                    console.log("pay::HCCContext" + JSON.stringify(response.data.data));
+                    if (response.data.data.result == 'ok') {
+                        console.log("result: ok, status:success");
+                        Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status, Toast.LONG);
+                        return response.data.data;
+                    }
+                    else if (response.data.data.result == 'error') {
+                        Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status + "\n Error: " + response.data.data.err_description, Toast.LONG);
+                        return response.data.data;
+                    }
+                }).catch((error) => {
+                    console.log("Error::NotPaid::HCBooking: " + error);
+                    Toast.show("Not completed payment", Toast.LONG);
+                    return response.data.data;
+                });
+        } catch (err) {
+            console.log("Error::HCContex::pay::" + err);
+            dispatch({ type: 'add_error', payload: err })
+            return response.data.data;
+        }
+    };
+}
+
 
 const HCBooking = dispatch => {
     return async ({
@@ -198,6 +250,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
         getProviders,
         // getSchedulesDays,
         getSchedules,
+        pay
     },
     {
         services: [],
@@ -222,5 +275,11 @@ export const { Context, Provider } = createDataContext(HCreducer,
         // full_date: '',
         start: '',
         method: -1,
+        order_id: '',
+        card: '',
+        card_exp_month: '',
+        card_exp_year: '',
+        card_cvv: '',
+        valid: '',
     }
 );

@@ -20,7 +20,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
   // };
-  const { state: hcstate, HCBooking, dispatch, getProviders, getSchedules } = useContext(HCContext);
+  const { state: hcstate, HCBooking, dispatch, getProviders, getSchedules, pay } = useContext(HCContext);
   const { state } = useContext(UserContext);
   const [isloading, setIsLoading] = useState(false);
   // const [hourPrice, setHourPrice] = useState(0);
@@ -57,14 +57,14 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     //   console.log("Error::HomeCleaniningScreen::schedules");
     //   console.log(error);
     // });
-    getSchedules().then((response) => {
-      console.log("HomeCleaniningScreen::schedules");
-      //console.log(response);
-      //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
-    }).catch((error) => {
-      console.log("Error::HomeCleaniningScreen::schedules");
-      console.log(error);
-    });
+    // getSchedules().then((response) => {
+    //   console.log("HomeCleaniningScreen::schedules");
+    //   //console.log(response);
+    //   //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
+    // }).catch((error) => {
+    //   console.log("Error::HomeCleaniningScreen::schedules");
+    //   console.log(error);
+    // });
 
   }, []);
   useEffect(() => {
@@ -87,10 +87,10 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     console.log('hcstate.desc ' + hcstate.desc);
   };
   const onDateTimeStepComplete = () => {
-    console.log('hcstate.full_date::hcstate.providerid ' + hcstate.providerid);
-    console.log('hcstate.full_date::hcstate.autoassign ' + hcstate.autoassign);
-    console.log('hcstate.full_date::hcstate.start ' + hcstate.full_date + '  ' + hcstate.start);
-    if (hcstate.full_date == '') {
+    console.log('hcstate.providerid ' + hcstate.providerid);
+    console.log('hcstate.autoassign ' + hcstate.autoassign);
+    console.log('hcstate.selectedday::hcstate.start ' + hcstate.selectedday + '  ' + hcstate.start);
+    if (hcstate.selectedday == '') {
       Toast.show('Select date please', Toast.LONG);
       return;
     }
@@ -111,25 +111,62 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     console.log('called previous step');
   };
 
-  const onSubmitSteps = () => {
+  const onSubmitSteps = async () => {
+    setIsLoading(true);
     console.log('hcstate.method:: ' + hcstate.method);
-    if (state.selected_address == '') {
-      Toast.show('Select address please', Toast.LONG);
+    // console.log('hcstate.selectedday:: ' + hcstate.selectedday);
+    if (hcstate.method == 0 && hcstate.valid == false) {
+      Toast.show('Your card number not valid', Toast.LONG);
+      setIsLoading(false);
       return;
     }
-    if (hcstate.full_date == '') {
+    var oid = '';
+    if (hcstate.method == 0 && hcstate.valid == true) {
+      oid = "order_id_" + Math.floor(1000000000000 + Math.random() * 9000000000000);
+      var result = await pay({
+        order_id: oid,
+        card: hcstate.card.replace(/\s/g, ''),
+        card_exp_month: hcstate.card_exp_month,
+        card_exp_year: hcstate.card_exp_year,
+        card_cvv: hcstate.card_cvv,
+        amount: hcstate.subtotal,
+        description: hcstate.selectedday + "  " + oid + " " + hcstate.desc
+      }).then((response) => {
+        console.log("###################" + JSON.stringify(response));
+        console.log("HomeCleaningScreen::paid");
+      }).catch(() => {
+        console.log("HomeCleaningScreen::NOTpaid" + error);
+        setIsLoading(false);
+        return;
+      });
+      console.log(result);
+      if (!result) {
+        setIsLoading(false);
+        return;
+      }
+
+
+    }
+    if (state.selected_address == '') {
+      Toast.show('Select address please', Toast.LONG);
+      setIsLoading(false);
+      return;
+    }
+    if (hcstate.selectedday == '') {
       Toast.show('Select date please', Toast.LONG);
+      setIsLoading(false);
       return;
     }
     if (hcstate.start == '') {
       Toast.show('Select time please', Toast.LONG);
+      setIsLoading(false);
       return;
     }
     if (hcstate.method == -1) {
       Toast.show('Select payment method please', Toast.LONG);
+      setIsLoading(false);
       return;
     }
-    setIsLoading(true);
     var frequency = -1;
     if (hcstate.frequency == 1) frequency = 'One-time';
     if (hcstate.frequency == 2) frequency = 'Bi-weekly';
@@ -154,7 +191,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     if (hcstate.method == 1) paymentWays = 2;
     HCBooking({
       serviceType: "HomeCleaning",
-      duoDate: hcstate.full_date,
+      duoDate: hcstate.selectedday,
       duoTime: hcstate.start,
       subTotal: hcstate.subtotal,
       discount: hcstate.discount,

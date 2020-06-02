@@ -9,34 +9,79 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { ScrollView } from 'react-native-gesture-handler';
-// import { LiqpayCheckout } from 'react-native-liqpay';
-// import LiqpayComponent from '../LiqpayComponent';
+// import Liqpay from '../Liqpay';
 import { withNamespaces } from 'react-i18next';
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 const Payment = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
     const [method, setMethod] = useState(hcstate.method);
+    const [showCard, setShowCard] = useState(hcstate.method);
+    // const [valid, setValid] = useState(false);
+    // const [cvc, setCVC] = useState('');
+    // const [expiryMonth, setExpiryMonth] = useState('');
+    // const [expiryYear, setExpiryYear] = useState('');
+    // const [number, setNumber] = useState('');
 
+    const _onChange = (form) => {
+        if (form.valid) {
+            console.log(form);
+            // setValid(form.valid);
+            // setCVC(form.values.cvc);
+            var parts = form.values.expiry.split("/");
+            // setExpiryMonth(parts[0]);
+            // setExpiryYear(parts[1]);
+            // setNumber(form.values.number);
+
+            dispatch({ type: 'set_valid', payload: form.valid });
+            dispatch({ type: 'set_card', payload: form.values.number });
+            dispatch({ type: 'set_card_exp_month', payload: parts[0] });
+            dispatch({ type: 'set_card_exp_year', payload: parts[1] });
+            dispatch({ type: 'set_card_cvv', payload: form.values.cvc });
+        }
+
+    }
+
+    useEffect(() => {
+        if (hcstate.method == 0)
+            setShowCard(true);
+        else
+            setShowCard(false);
+    }, []);
     useEffect(() => {
         dispatch({
             type: 'set_method',
             payload: method,
         });
-        subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
-        total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
-        if (method == 1) {
-            subtotal = subtotal + 5;
+        // subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
+        // total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
+        var subtotal = hcstate.subtotal;
+        var total = hcstate.total;
+        if (method == -1)
+            return;
+        if (method == 0) {
+            subtotal = parseFloat(subtotal) - 5.0;
+            total = parseFloat(total) - 5.0;
+            var discount = hcstate.discount;
+            dispatch({
+                type: 'update_totals',
+                payload: { subtotal, total, discount },
+            });
         }
-        var discount = hcstate.discount;
-        dispatch({
-            type: 'update_totals',
-            payload: { subtotal, total, discount },
-        });
+        if (method == 1) {
+            subtotal = parseFloat(subtotal) + 5.0;
+            total = parseFloat(total) + 5.0;
+            var discount = hcstate.discount;
+            dispatch({
+                type: 'update_totals',
+                payload: { subtotal, total, discount },
+            });
+        }
 
     }, [method]);
     return (
         <ScrollView>
-            <TouchableOpacity onPress={() => { setMethod(0) }}>
+            <TouchableOpacity onPress={() => { setShowCard(true); setMethod(0) }}>
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row', fontSize: 24 }}>
@@ -47,7 +92,13 @@ const Payment = ({ children, t }) => {
                     </View>
                 </Spacer>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { setMethod(1) }}>
+            {/* <Liqpay /> */}
+            {/* <LiteCreditCardInput onChange={_onChange} autoFocus={false} cardScale={8} /> */}
+
+            {showCard ? <LiteCreditCardInput onChange={_onChange} autoFocus={false} cardScale={4} /> : null}
+
+
+            <TouchableOpacity onPress={() => { setShowCard(false); setMethod(1) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />

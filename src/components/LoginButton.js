@@ -1,5 +1,5 @@
 
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
@@ -12,6 +12,22 @@ const LoginButton = ({ t }) => {
     const { state, login } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
+
+
+    function Effect(props) {
+        const val = useRef();
+        React.useEffect(() => {
+            val.current = props;
+        }, [props]);
+        React.useEffect(() => {
+            console.log("MOUNT", props);
+            return () => console.log("UNMOUNT", val.current);
+        }, [val]);
+        return null;
+    }
+
+
+
     const changeLanguage = (lng) => {
         try {
             console.log("Toggle language to:  " + lng);
@@ -22,7 +38,7 @@ const LoginButton = ({ t }) => {
         } catch (e) { "Error:: " + e }
         RNRestart.Restart();
     }
-    useEffect(() => {
+    Effect(() => {
         getLang().then((response) => {
             console.log("SettingScreen selected Lang in Use Effect:  " + response);
             setLang(response);
@@ -37,7 +53,7 @@ const LoginButton = ({ t }) => {
         }).catch((err) => {
             console.log("Settings Screen Can not get lang");
         });
-    }, []);
+    });
     return (
         <View style={styles.container}>
             {shouldShow ?

@@ -11,21 +11,20 @@ import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
+import Loader from '../Loader';
 const DateandTimeDetails = ({ children, t }) => {
-    const { dispatch, state: hcstate } = useContext(HCContext);
+    const { dispatch, state: hcstate, getSchedules } = useContext(HCContext);
     //const [day, setDay] = useState(hcstate.selectedday);
     const [selectedDay, setSelectedDay] = useState(hcstate.selectedday);
-    // const [selectedDate, setSelectedDate] = useState(hcstate.selecteddate);
     const [start, setStart] = useState(hcstate.start);
     const [providerid, setProviderid] = useState(hcstate.providerid);
     const [autoassign, setAutoassign] = useState(hcstate.autoassign);
+    const [isloading, setIsLoading] = useState(false);
 
     let days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    var days = [];
     const isInArray = (array, value) => {
-
         return (array.find(item => { return item == value }) || []).length > 0;
     }
     useEffect(() => {
@@ -52,6 +51,28 @@ const DateandTimeDetails = ({ children, t }) => {
         console.log('start::selectedDay' + selectedDay);
         console.log('start::start' + start);
     }, [start]);
+    useEffect(() => {
+        getSchedules().then((response) => {
+            console.log("HomeCleaniningScreen::schedules");
+            //console.log(response);
+            //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
+        }).catch((error) => {
+            console.log("Error::HomeCleaniningScreen::schedules");
+            console.log(error);
+        });
+    }, []);
+    useEffect(() => {
+        getSchedules().then((response) => {
+            console.log("HomeCleaniningScreen::schedules");
+            setIsLoading(false);
+            console.log(response);
+            //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
+        }).catch((error) => {
+            console.log("Error::HomeCleaniningScreen::schedules");
+            console.log(error);
+            setIsLoading(false);
+        });
+    }, [providerid]);
     // const isInArray = (providerid,schedules , value) => {
     //     _.filter(schedules, { serviceProviderId:providerid, availableDate:value })
     //     return (array.find(item => { return item == value }) || []).length > 0;
@@ -98,6 +119,7 @@ const DateandTimeDetails = ({ children, t }) => {
     /////////////////////
     //dayes
     ///////////////////
+    var days = [];
     const date = new Date();
     for (let i = 0; i < 15; i++) {
         const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
@@ -113,9 +135,6 @@ const DateandTimeDetails = ({ children, t }) => {
                 availabledates[i] = u.availableDate;
             });
             const uniqueNDates = Array.from(new Set(availabledates));
-            // console.log("#########providerid:" + hcstate.providerid);
-            // console.log("#########Unique dates:");
-            // console.log(uniqueNDates);
             var controlstyles = isInArray(uniqueNDates, fdate) ? false : true;
         }
         days.push(
@@ -144,9 +163,49 @@ const DateandTimeDetails = ({ children, t }) => {
             </TouchableOpacity>
         )
     }
+    /////////////////////
+    //starts
+    ///////////////////
+    var starts = [];
+    //const date = new Date();
+    for (let i = 0; i < 21; i++) {
+        const newDateStart = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
+        let fdate = newDateStart.getFullYear().toString() +
+            '-' + ((newDateStart.getMonth() + 1 < 10 ? '0' : '') + (newDateStart.getMonth() + 1)).toString() +
+            '-' + ((newDateStart.getDate() < 10 ? '0' : '') + (newDateStart.getDate())).toString();
+        let fhour = i == 0 || i == 1 ? "08" : i == 2 || i == 3 ? "09" : i == 4 || i == 5 ? "10" :
+            i == 6 || i == 7 ? "11" : i == 8 || i == 9 ? "12" : i == 10 || i == 11 ? "13" :
+                i == 12 || i == 13 ? "14" : i == 14 || i == 15 ? "15" : i == 16 || i == 17 ? "16" :
+                    i == 18 || i == 19 ? "17" : i == 20 || i == 21 ? "18" : "";
+        let fminute = i % 2 == 0 ? "00" : "30";
+        let fstart = fhour + ":" + fminute + ":00";
+        var timecontrolstyles = false;
 
+        if (hcstate.providerid != '') {
+            const timeStarts = [];
+            hcstate.schedules.filter((e) => { return (e.serviceProviderId == hcstate.providerid && e.availableDate == hcstate.selectedday) }).map((u, i) => {
+                timeStarts[i] = u.timeStart;
+            });
+            console.log(timeStarts);
+            //const uniqueNStarts = Array.from(new Set(timeStarts));
+            var timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
+        }
+        starts.push(
+            <TouchableOpacity key={fstart} onPress={() => {
+                dispatch({ type: 'set_start', payload: fstart });
+                setStart(fstart);
+            }}
+                disabled={timecontrolstyles}>
+                <View>
+                    <Text style={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
+                    <View style={timecontrolstyles ? styles.timediagonaline : null}></View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+            <Loader loading={isloading} />
             <FontBold mystyle={styles.qText} value={t('dateq0')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', }}>
                 {/* redering Auto-Assign */}
@@ -187,6 +246,7 @@ const DateandTimeDetails = ({ children, t }) => {
                         return (
                             <TouchableOpacity key={u.id} style={providerid == u.id ? styles.providerThumdown : styles.providerThumup}
                                 onPress={() => {
+                                    setIsLoading(true);
                                     setSelectedDay('');
                                     setStart('');
                                     dispatch({
@@ -257,16 +317,21 @@ const DateandTimeDetails = ({ children, t }) => {
             </ScrollView>
 
             <Spacer />
-
-            <Spacer>
-                <FontBold mystyle={styles.qText} value={t('dateq2')} />
-            </Spacer>
+            <Spacer />
+            <FontBold mystyle={styles.qText} value={t('dateq2')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={() => {
+                {starts}
+            </ScrollView>
 
+            <Spacer />
+
+            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => {
                     dispatch({ type: 'set_start', payload: '08:00:00' });
                     setStart('08:00:00');
-                }}><Text style={start == '08:00:00' ? styles.timethumbdown : styles.timethumbup}>08:00</Text></TouchableOpacity>
+                }}>
+                    <Text style={start == '08:00:00' ? styles.timethumbdown : styles.timethumbup}>08:00</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     setStart('08:30:00')
                     dispatch({ type: 'set_start', payload: '08:30:00' });
@@ -351,12 +416,13 @@ const DateandTimeDetails = ({ children, t }) => {
                     setStart('18:30:00')
                     dispatch({ type: 'set_start', payload: '18:30:00' });
                 }}><Text style={start == '18:30:00' ? styles.timethumbdown : styles.timethumbup}>18:30</Text></TouchableOpacity>
-            </ScrollView>
+            </ScrollView> */}
             <Spacer />
             <View>
 
             </View>
-        </ScrollView >);
+        </ScrollView >
+    );
 };
 
 const styles = StyleSheet.create({
@@ -452,6 +518,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginRight: 4
     },
+    timenotactive: {
+        fontSize: 24,
+        padding: 7,
+        width: 75,
+        height: 48,
+        borderRadius: 75 / 2,
+        backgroundColor: '#dcdcdc',
+        borderColor: '#aaa',
+        borderWidth: 2,
+        textAlign: 'center',
+        marginRight: 4
+    },
     providerThumup: {
         backgroundColor: '#fff',
         width: 120,
@@ -503,6 +581,15 @@ const styles = StyleSheet.create({
         right: 2,
         top: 22,
         width: 60,
+        borderBottomColor: '#dcdcdc',
+        borderBottomWidth: 2,
+    },
+    timediagonaline: {
+        position: 'absolute',
+        transform: [{ rotate: '-45deg' }],
+        right: 2,
+        top: 22,
+        width: 80,
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 2,
     },

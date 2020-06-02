@@ -6,8 +6,11 @@ import { RectButton } from 'react-native-gesture-handler';
 
 const Loader = props => {
     const { loading, ...attributes } = props;
+    componentDidMount = () => {
+        this.mounted = true;
+    }
     componentWillUnmount = () => {
-        return;
+        this.mounted = false;
     }
     return (
         <Modal
