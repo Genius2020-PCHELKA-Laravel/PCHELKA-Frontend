@@ -80,7 +80,7 @@ const HCreducer = (state, action) => {
                 selectedday: '',
                 // full_date: '',
                 start: '',
-                method: -1,
+                method: 0,
                 order_id: '',
                 card: '',
                 card_exp_month: '',
@@ -170,29 +170,32 @@ const pay = (dispatch) => {
             console.log({ order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description });
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            await requestApi.post('/pay',
-                { order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description }).
-                then((response) => {
-                    console.log("pay::HCCContext" + JSON.stringify(response.data.data));
-                    if (response.data.data.result == 'ok') {
-                        console.log("result: ok, status:success");
-                        Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status, Toast.LONG);
-                        return response.data.data;
-                    }
-                    else if (response.data.data.result == 'error') {
-                        Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status + "\n Error: " + response.data.data.err_description, Toast.LONG);
-                        return response.data.data;
-                    }
-                }).catch((error) => {
-                    console.log("Error::NotPaid::HCBooking: " + error);
-                    Toast.show("Not completed payment", Toast.LONG);
-                    return response.data.data;
-                });
+            var result = await requestApi.post('/pay',
+                { order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description });
+            // console.log("pay::HCCContext" + result);
+            return result;
+            // .then((response) => {
+            // console.log("pay::HCCContext" + JSON.stringify(response.data.data));
+
+            // if (response.data.data.result == 'ok') {
+            //     console.log("result: ok, status:success");
+            //     Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status, Toast.LONG);
+            //     return true;
+            // }
+            // else if (response.data.data.result == 'error') {
+            //     Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status + "\n Error: " + response.data.data.err_description, Toast.LONG);
+            //     return false;
+            // }
+            // }).catch((error) => {
+            //     console.log("Error::NotPaid::HCBooking: " + error);
+            //     Toast.show("Not completed payment", Toast.LONG);
+            //     return false;
+            // });
         } catch (err) {
             console.log("Error::HCContex::pay::" + err);
             dispatch({ type: 'add_error', payload: err })
-            return response.data.data;
         }
+
     };
 }
 
@@ -274,7 +277,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
         selectedday: '',
         // full_date: '',
         start: '',
-        method: -1,
+        method: 0,
         order_id: '',
         card: '',
         card_exp_month: '',

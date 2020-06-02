@@ -23,6 +23,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   const { state: hcstate, HCBooking, dispatch, getProviders, getSchedules, pay } = useContext(HCContext);
   const { state } = useContext(UserContext);
   const [isloading, setIsLoading] = useState(false);
+  // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
 
@@ -112,6 +113,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   };
 
   const onSubmitSteps = async () => {
+    var ispaid = '';
     setIsLoading(true);
     console.log('hcstate.method:: ' + hcstate.method);
     // console.log('hcstate.selectedday:: ' + hcstate.selectedday);
@@ -122,7 +124,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     }
     var oid = '';
     if (hcstate.method == 0 && hcstate.valid == true) {
-      oid = "order_id_" + Math.floor(1000000000000 + Math.random() * 9000000000000);
+      oid = "order_id_" + Math.floor(1000000000000 + Math.random() * 9000000000000) + "_" + Math.floor(1000000000000 + Math.random() * 9000000000000);
       var result = await pay({
         order_id: oid,
         card: hcstate.card.replace(/\s/g, ''),
@@ -132,115 +134,124 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         amount: hcstate.subtotal,
         description: hcstate.selectedday + "  " + oid + " " + hcstate.desc
       }).then((response) => {
-        console.log("###################" + JSON.stringify(response));
+        // console.log("###################" + JSON.stringify(response));
         console.log("HomeCleaningScreen::paid");
+        if (response.data.data.result == 'ok') {
+          console.log("result: ok, status:success");
+          Toast.show("Thank you for your order\nPayment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status, Toast.LONG);
+          ispaid = 'yes';
+        }
+        else if (response.data.data.result == 'error') {
+          Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status + "\n Error: " + response.data.data.err_description, Toast.LONG);
+          setIsLoading(false);
+          ispaid = 'no';
+        }
       }).catch(() => {
         console.log("HomeCleaningScreen::NOTpaid" + error);
         setIsLoading(false);
-        return;
+        ispaid = 'no';
+        Toast.show("Not completed payment", Toast.LONG);
       });
-      console.log(result);
-      if (!result) {
+    }
+    console.log("ispaid" + ispaid);
+    // to prevent from booking
+    if (hcstate.method == 1 || ispaid == 'yes') {
+
+      if (state.selected_address == '') {
+        Toast.show('Select address please', Toast.LONG);
         setIsLoading(false);
         return;
       }
-
-
-    }
-    if (state.selected_address == '') {
-      Toast.show('Select address please', Toast.LONG);
-      setIsLoading(false);
-      return;
-    }
-    if (hcstate.selectedday == '') {
-      Toast.show('Select date please', Toast.LONG);
-      setIsLoading(false);
-      return;
-    }
-    if (hcstate.start == '') {
-      Toast.show('Select time please', Toast.LONG);
-      setIsLoading(false);
-      return;
-    }
-    if (hcstate.method == -1) {
-      Toast.show('Select payment method please', Toast.LONG);
-      setIsLoading(false);
-      return;
-    }
-    var frequency = -1;
-    if (hcstate.frequency == 1) frequency = 'One-time';
-    if (hcstate.frequency == 2) frequency = 'Bi-weekly';
-    if (hcstate.frequency == 3) frequency = 'Weekly';
-    var hours = -1;
-    if (hcstate.hours == 2) hours = 4;
-    if (hcstate.hours == 3) hours = 5;
-    if (hcstate.hours == 4) hours = 6;
-    if (hcstate.hours == 5) hours = 7;
-    if (hcstate.hours == 6) hours = 8;
-    if (hcstate.hours == 7) hours = 9;
-    var cleaners = -1;
-    if (hcstate.cleaners == 1) cleaners = 10;
-    if (hcstate.cleaners == 2) cleaners = 11;
-    if (hcstate.cleaners == 3) cleaners = 12;
-    if (hcstate.cleaners == 4) cleaners = 13;
-    var materials = -1;
-    if (hcstate.materials == 0) materials = 14;
-    if (hcstate.materials == 1) materials = 15;
-    var paymentWays = -1;
-    if (hcstate.method == 0) paymentWays = 0;
-    if (hcstate.method == 1) paymentWays = 2;
-    HCBooking({
-      serviceType: "HomeCleaning",
-      duoDate: hcstate.selectedday,
-      duoTime: hcstate.start,
-      subTotal: hcstate.subtotal,
-      discount: hcstate.discount,
-      totalAmount: hcstate.total,
-      locationId: state.selected_address,
-      providerId: hcstate.providerid,
-      autoassign: hcstate.autoassign,
-      scheduleId: "1",
-      paymentWays: paymentWays,
-      frequency: frequency,
-      answers: [
-        {
-          questionId: 1,
-          answerId: hcstate.frequency,
-          answerValue: null
-        },
-        {
-          questionId: 2,
-          answerId: hours,
-          answerValue: null
-        },
-        {
-          questionId: 3,
-          answerId: cleaners,
-          answerValue: null
-        },
-        {
-          questionId: 4,
-          answerId: materials,
-          answerValue: null
-        },
-        {
-          questionId: 5,
-          answerId: null,
-          answerValue: hcstate.desc
-        }
-      ]
-    }).then(() => {
-      setIsLoading(false);
-      dispatch({
-        type: 'RESET'
+      if (hcstate.selectedday == '') {
+        Toast.show('Select date please', Toast.LONG);
+        setIsLoading(false);
+        return;
+      }
+      if (hcstate.start == '') {
+        Toast.show('Select time please', Toast.LONG);
+        setIsLoading(false);
+        return;
+      }
+      if (hcstate.method == -1) {
+        Toast.show('Select payment method please', Toast.LONG);
+        setIsLoading(false);
+        return;
+      }
+      var frequency = -1;
+      if (hcstate.frequency == 1) frequency = 'One-time';
+      if (hcstate.frequency == 2) frequency = 'Bi-weekly';
+      if (hcstate.frequency == 3) frequency = 'Weekly';
+      var hours = -1;
+      if (hcstate.hours == 2) hours = 4;
+      if (hcstate.hours == 3) hours = 5;
+      if (hcstate.hours == 4) hours = 6;
+      if (hcstate.hours == 5) hours = 7;
+      if (hcstate.hours == 6) hours = 8;
+      if (hcstate.hours == 7) hours = 9;
+      var cleaners = -1;
+      if (hcstate.cleaners == 1) cleaners = 10;
+      if (hcstate.cleaners == 2) cleaners = 11;
+      if (hcstate.cleaners == 3) cleaners = 12;
+      if (hcstate.cleaners == 4) cleaners = 13;
+      var materials = -1;
+      if (hcstate.materials == 0) materials = 14;
+      if (hcstate.materials == 1) materials = 15;
+      var paymentWays = -1;
+      if (hcstate.method == 0) paymentWays = 0;
+      if (hcstate.method == 1) paymentWays = 2;
+      HCBooking({
+        serviceType: "HomeCleaning",
+        duoDate: hcstate.selectedday,
+        duoTime: hcstate.start,
+        subTotal: hcstate.subtotal,
+        discount: hcstate.discount,
+        totalAmount: hcstate.total,
+        locationId: state.selected_address,
+        providerId: hcstate.providerid,
+        autoassign: hcstate.autoassign,
+        scheduleId: "1",
+        paymentWays: paymentWays,
+        frequency: frequency,
+        answers: [
+          {
+            questionId: 1,
+            answerId: hcstate.frequency,
+            answerValue: null
+          },
+          {
+            questionId: 2,
+            answerId: hours,
+            answerValue: null
+          },
+          {
+            questionId: 3,
+            answerId: cleaners,
+            answerValue: null
+          },
+          {
+            questionId: 4,
+            answerId: materials,
+            answerValue: null
+          },
+          {
+            questionId: 5,
+            answerId: null,
+            answerValue: hcstate.desc
+          }
+        ]
+      }).then(() => {
+        setIsLoading(false);
+        dispatch({
+          type: 'RESET'
+        });
+        Toast.show('Booked', Toast.LONG);
+        navigate('HomeNavigator')
+      }).catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        Toast.show('Error:: NotBooked', Toast.LONG);
       });
-      Toast.show('Booked', Toast.LONG);
-      navigate('HomeNavigator')
-    }).catch((error) => {
-      console.log(error);
-      setIsLoading(false);
-      Toast.show('Error:: NotBooked', Toast.LONG);
-    });
+    }
   };
   // FFFDD0...Cream EEDC82 ffe5b4 fedc56 ceb180 f8e473 ffbf00 fce205 ffc30b
   return (
