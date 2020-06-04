@@ -41,13 +41,13 @@ const SettingScreen = ({ navigation, t }) => {
   return (
     <View style={styles.container}>
       <View>
-        <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
+        <Image resizeMethod='auto' style={{ opacity: 0.8, backgroundColor: 'black', borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
         <FontRegular value={fullName} mystyle={styles.name} />
         <FontRegular value={"+ " + mobile} mystyle={styles.mobile} />
         <Avatar
           size="large"
           rounded
-          icon={{ name: 'user', type: 'font-awesome' }}
+          icon={{ name: 'user', type: 'font-awesome', color: '#000' }}
           onPress={() => console.log("Works!")}
 
           activeOpacity={0.7}
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 
   avatar: {
     position: 'absolute',
-    backgroundColor: '#ff9800',
+    backgroundColor: '#f5c500',
     flex: 1,
     marginLeft: 20,
     bottom: -30
@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
     color: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 30
+    marginHorizontal: 30,
+    color: '#fff',
   },
   mobile: {
     position: 'absolute',
@@ -143,7 +144,8 @@ const styles = StyleSheet.create({
     color: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 30
+    marginHorizontal: 30,
+    color: '#fff',
   },
   listtitle: {
     color: '#aaa',

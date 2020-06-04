@@ -54,6 +54,7 @@ export default class HomeScreenAddresses extends React.Component {
                                 <FontBold value="Your addresses" mystyle={{ fontSize: 20, left: 15, top: 15, }} />
                                 <TouchableOpacity
                                     onPress={async () => {
+                                        setRedirect('HomeNavigator');
                                         navigate('MapScreen');
                                         this.props.setShowAddressesModal(false);
                                     }}
@@ -70,7 +71,7 @@ export default class HomeScreenAddresses extends React.Component {
                                     // typeof this.props.authtoken != 'undefined'
                                     //     || this.props.authtoken != ''
                                     //     ?
-                                    this.props.addresses.map((u, i) => {
+                                    this.props.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
                                         return (
                                             <TouchableOpacity key={i} onPress={() => { }}>
                                                 <Spacer>

@@ -61,6 +61,13 @@ const HCreducer = (state, action) => {
 
         case 'set_valid':
             return { ...state, valid: action.payload };
+        case 'set_upcoming':
+            return { ...state, upcoming: action.payload };
+        case 'set_past':
+            return { ...state, past: action.payload };
+        case 'set_reloadappoitments':
+            return { ...state, reloadAppointments: action.payload };
+
         case "RESET":
             return {
                 ...state,
@@ -80,13 +87,16 @@ const HCreducer = (state, action) => {
                 selectedday: '',
                 // full_date: '',
                 start: '',
-                method: 0,
+                method: -1,
                 order_id: '',
                 card: '',
                 card_exp_month: '',
                 card_exp_year: '',
                 card_cvv: '',
                 valid: '',
+                upcoming: [],
+                past: [],
+                reloadAppointments: '',
             };
         default:
             return state;
@@ -232,6 +242,7 @@ const HCBooking = dispatch => {
                 frequency,
                 answers
             }).then((response) => {
+                dispatch({ type: 'set_reloadappoitments', payload: 1 })
                 console.log("HCBooking::HCCContext" + response.data);
                 if (response.data.status == true)
                     console.log("Booked");
@@ -245,6 +256,48 @@ const HCBooking = dispatch => {
         }
     }
 }
+
+
+const getUpcoming = (dispatch) => {
+    return async () => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var result = await requestApi.get('/upComingBooking');
+            // console.log("getUpcoming::HCCContext" + result.data.data);
+            if (result.data.status) {
+                dispatch({ type: 'set_upcoming', payload: result.data.data });
+                return result.data.data;
+            }
+            else
+                Toast.show(result.data.error, Toast.LONG);
+
+        } catch (err) {
+            console.log("Error::HCContex::upComingBooking::" + err);
+            dispatch({ type: 'add_error', payload: err });
+        }
+    };
+}
+const getPast = (dispatch) => {
+    return async () => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var result = await requestApi.get('/pastBooking');
+            console.log("pastBooking::HCCContext" + result.data.data);
+            if (result.data.status) {
+                dispatch({ type: 'set_past', payload: result.data.data });
+                return result.data.data;
+            }
+            else
+                Toast.show(result.data.error, Toast.LONG);
+        } catch (err) {
+            console.log("Error::HCContex::pastBooking::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+
+    };
+}
 export const { Context, Provider } = createDataContext(HCreducer,
     {
         getServices,
@@ -253,7 +306,9 @@ export const { Context, Provider } = createDataContext(HCreducer,
         getProviders,
         // getSchedulesDays,
         getSchedules,
-        pay
+        pay,
+        getUpcoming,
+        getPast
     },
     {
         services: [],
@@ -277,12 +332,15 @@ export const { Context, Provider } = createDataContext(HCreducer,
         selectedday: '',
         // full_date: '',
         start: '',
-        method: 0,
+        method: -1,
         order_id: '',
         card: '',
         card_exp_month: '',
         card_exp_year: '',
         card_cvv: '',
         valid: '',
+        upcoming: [],
+        past: [],
+        reloadAppointments: ''
     }
 );

@@ -1,41 +1,83 @@
-// import React, { Component } from "react";
-// import { Text, TouchableOpacity, View } from "react-native";
-// import Dialog from "react-native-dialog";
+import React from 'react';
+import { StyleSheet, View, Modal, Text, TouchableOpacity } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+import Dialog from "react-native-dialog";
+import RNRestart from 'react-native-restart'; // Import package from node modules
+import Spacer from './Spacer';
+import i18n from '../locales/i18n';
+import { getLang, storeLang } from '../api/userLanguage';
 
-// export default class ConfirmationDialog extends Component {
-//     state = {
-//         dialogVisible: false
-//     };
+const ConfirmationDialog = props => {
+    const { changing, setChanging, ...attributes } = props;
 
-//     showDialog = () => {
-//         this.setState({ dialogVisible: true });
-//     };
+    componentDidMount = () => {
+        this.mounted = true;
+    }
+    componentWillUnmount = () => {
+        this.mounted = false;
+    }
+    const handleCancel = () => {
+        //this.setState({ dialogVisible: false });
+    };
 
-//     handleCancel = () => {
-//         this.setState({ dialogVisible: false });
-//     };
+    const handleChange = () => {
+        try {
+            console.log("Toggle language to:  " + lng);
+            setLang(lang);
+            storeLang(lang);
+            i18n.changeLanguage(lang);
+            //shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
+        } catch (e) { "Error:: " + e }
+        setChanging(false);
+        RNRestart.Restart();
+    };
 
-//     handleDelete = () => {
-//         // The user has pressed the "Delete" button, so here you can do your own logic.
-//         // ...Your logic
-//         this.setState({ dialogVisible: false });
-//     };
+    return (
+        <Modal
+            transparent={true}
+            animationType={'none'}
+            visible={changing}
+            onRequestClose={() => {
+                console.log('close modal');
+            }}>
+            <View >
+                {/* <TouchableOpacity onPress={() => { }}>
+                    <Text>Show Dialog</Text>
+                </TouchableOpacity> */}
+                <Dialog.Container visible={changing}>
+                    <Dialog.Title>Restart</Dialog.Title>
+                    <Dialog.Description>
+                        Changing language require restarting the App
+          </Dialog.Description>
 
-//     render() {
-//         return (
-//             <View>
-//                 {/* <TouchableOpacity onPress={this.showDialog}>
-//                     <Text>Show Dialog</Text>
-//                 </TouchableOpacity> */}
-//                 <Dialog.Container visible={dialogVisible}>
-//                     <Dialog.Title>Account delete</Dialog.Title>
-//                     <Dialog.Description>
-//                         Do you want to delete this account? You cannot undo this action.
-//           </Dialog.Description>
-//                     <Dialog.Button label="Cancel" onPress={this.handleCancel} />
-//                     <Dialog.Button label="Delete" onPress={this.handleDelete} />
-//                 </Dialog.Container>
-//             </View>
-//         );
-//     }
-// }
+                    <Dialog.Button style={styles.btn} label="Cancel" onPress={() => setChanging(false)} />
+                    <Dialog.Button style={styles.btn} label="Restart" onPress={handleChange} />
+                </Dialog.Container>
+            </View>
+        </Modal>
+    );
+};
+export default ConfirmationDialog;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        backgroundColor: '#00000040',
+    },
+    btn: {
+        backgroundColor: '#f5c500',
+        borderRadius: 14,
+        borderWidth: 1,
+        color: '#000',
+        borderRadius: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        marginHorizontal: 10,
+
+    },
+
+});

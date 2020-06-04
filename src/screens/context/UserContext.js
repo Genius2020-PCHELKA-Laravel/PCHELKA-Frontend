@@ -12,8 +12,10 @@ const UserReducer = (state, action) => {
             return { ...state, userDetails: action.payload };
         case 'edit_user_details':
             return { ...state, userDetails: action.payload };
+        // case 'add_new_address':
+        //     return { ...state, addresses: [action.payload, ...state.addresses] };
         case 'add_new_address':
-            return { ...state, addresses: [action.payload, ...state.addresses] };
+            return { ...state, addresses: [...state.addresses, action.payload] };
         case 'set_user_addresses':
             return { ...state, addresses: action.payload };
         case 'update_mobile':
@@ -54,9 +56,9 @@ const getUserAddresses = dispatch => {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.get('/userLocation');
-            dispatch({ type: 'set_user_addresses', payload: response.data.data.reverse() });
+            dispatch({ type: 'set_user_addresses', payload: response.data.data });
             //setUserAddressesStorage(response.data.data);
-            return response.data.data.reverse();
+            return response.data.data;
         } catch (err) {
             console.log("Error in UserContext: " + err)
         }

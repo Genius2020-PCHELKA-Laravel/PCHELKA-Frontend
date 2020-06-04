@@ -36,7 +36,7 @@ const LoginButton = ({ t }) => {
             i18n.changeLanguage(lng);
             shouldShow ? setShouldShow(false) : setShouldShow(true);
         } catch (e) { "Error:: " + e }
-        RNRestart.Restart();
+        // RNRestart.Restart();
     }
     Effect(() => {
         getLang().then((response) => {
@@ -59,20 +59,20 @@ const LoginButton = ({ t }) => {
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
-                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
+                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
                 :
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
                     <Text style={styles.languageButtonStyle}>English{' '}
-                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
+                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
             }
             <TouchableOpacity onPress={() => { login(); }}>
-                {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
+                {/* <FontBold mystyle={styles.loginButtonStyle} value={t('login')}></FontBold> */}
                 <Text style={styles.loginButtonStyle}>
-                    {t('login')} <FontAwesome5 name="user" size={20} color="white" />
+                    {t('login')} {' '} <FontAwesome5 name="user" size={14} color="#000" />
                 </Text>
             </TouchableOpacity>
 
@@ -85,32 +85,34 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     loginButtonStyle: {
-        padding: 10,
-        backgroundColor: '#ff9800',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f5c500',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#ff9800',
+        borderColor: '#000',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
         right: 15,
-        color: 'white'
+        color: '#000'
     },
     languageButtonStyle: {
-        padding: 10,
-        backgroundColor: '#ff9800',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f5c500',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#ff9800',
+        borderColor: '#000',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
-        fontWeight: "500",
+        fontWeight: "900",
         right: 30,
-        color: 'white'
+        color: '#000'
     },
 });
 

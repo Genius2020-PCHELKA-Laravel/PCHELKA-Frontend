@@ -12,6 +12,8 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Slider from '../components/Slider';
 import FontBold from '../components/FontBold';
+import FontRegular from '../components/FontRegular';
+import FontLight from '../components/FontLight';
 import { Context as AuthContext } from './context/AuthContext';
 import { getToken } from '../api/token';
 import NetInfo from '@react-native-community/netinfo';
@@ -22,30 +24,16 @@ const HomeScreenLogIn = ({ navigation, t }) => {
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
-  // const [testToken, setTestToken] = useState('');
-
-  // getData = async () => {
-  //   try {
-  //     setTestToken(await getToken());
-  //     console.log("Get Data: " + token);
-  //   } catch (e) {
-  //     console.log("error in token" + e);
-  //   }
-  // }
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-  //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
           <TouchableOpacity onPress={() => navigation.navigate('LoginPhoneScreen', { redirect: "HomeCleaningScreen" })}>
-            <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
+            <Image resizeMethod='auto' style={{ opacity: 0.8, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
-              <FontBold value={t('booknow')}>
-              </FontBold>{' '}
+              <FontRegular value={t('booknow')}>
+              </FontRegular>{' '}
               <FontAwesome5 name="chevron-right" size={15} color="white" />
             </Text>
             <Text style={styles.cleaningservicetext}>
@@ -72,27 +60,37 @@ const HomeScreenLogIn = ({ navigation, t }) => {
       <Spacer>
         <View style={styles.bottomcontainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('fulltimemade')} imagesource={require('../../assets/maid.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('laundary')} imagesource={require('../../assets/maid.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('disinfectionservices')} imagesource={require('../../assets/disinfection.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('sofacleaning')} imagesource={require('../../assets/sofa.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('matresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
           </ScrollView>
         </View>
       </Spacer>
+      <Spacer />
+      <Spacer />
+      <Spacer />
     </ScrollView>
   </>)
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white'
+  },
   everthingtext: {
-    fontSize: 10,
+    fontSize: 12,
     color: 'gray',
-    // fontFamily: 'Comfortaa-Bold'
   },
   homescreentext: {
-    fontSize: 30,
-    fontWeight: "500",
-    // fontFamily: 'Comfortaa-Regular'
+    fontSize: 24,
   },
   servicetext: {
     fontSize: 14,
@@ -137,23 +135,23 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 10,
     height: 35,
-    backgroundColor: '#DAA520',
-    borderRadius: 10,
+    backgroundColor: '#ff9800',
+    padding: 5,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#DAA520',
+    borderColor: '#ff9800',
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: "500",
-    // fontFamily: 'Comfortaa-Bold',
-    padding: 5,
+    paddingHorizontal: 25,
     color: 'white'
   },
   cleaningservicetext: {
     margin: 5,
     position: "absolute",
-    top: 15,
+    top: 5,
     left: 10,
     alignItems: 'center',
     alignContent: 'center',
@@ -162,6 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     // fontFamily: 'Comfortaa-Bold',
     padding: 5,
+    color: '#fff'
   },
   cleaningservicedetailtext: {
     margin: 5,
@@ -174,9 +173,8 @@ const styles = StyleSheet.create({
     fontSize: 21,
     // fontFamily: 'Comfortaa-Regular',
     padding: 5,
-    color: 'yellow'
+    color: '#fff'
   }
-
 });
 
 

@@ -46,20 +46,20 @@ const LogoutButton = ({ t }) => {
             {shouldShow ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
-                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
+                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
                 :
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
                     <Text style={styles.languageButtonStyle}>English{' '}
-                        <FontAwesome5 name="exchange-alt" size={20} color="white" />
+                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
             }
             <TouchableOpacity onPress={() => { setIsLoading(true); logout().then(() => setIsLoading(false)).catch(() => setIsLoading(false)); }}>
                 {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
                 <Text style={styles.logoutButtonStyle}>
-                    {t('logout')} <FontAwesome5 name="user" size={20} color="white" />
+                    {t('logout')} {' '}<FontAwesome5 name="user" size={14} color="#000" />
                 </Text>
             </TouchableOpacity>
 
@@ -75,31 +75,34 @@ const styles = StyleSheet.create({
 
     },
     logoutButtonStyle: {
-        padding: 10,
-        backgroundColor: '#ff9800',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f5c500',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#ff9800',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: "500",
-        color: 'white'
-    },
-    languageButtonStyle: {
-        padding: 10,
-        backgroundColor: '#ff9800',
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: '#ff9800',
+        borderColor: '#000',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
         right: 15,
-        color: 'white'
+        color: '#000'
+    },
+    languageButtonStyle: {
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f5c500',
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#000',
+        alignItems: 'center',
+        alignContent: 'center',
+        textAlign: 'center',
+        fontSize: 12,
+        fontWeight: "900",
+        right: 30,
+        color: '#000'
     },
 });
 

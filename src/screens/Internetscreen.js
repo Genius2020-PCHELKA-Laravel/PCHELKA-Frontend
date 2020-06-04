@@ -46,11 +46,11 @@ const InternetScreen = ({ navigation }) => {
         setIsLoading(false);
         return;
       }
-      if (connection.isConnected && (typeof (testToken) == 'undefined' || testToken == '')) {
+      if (connection.isConnected && (typeof (testToken) == 'undefined')) {
         setIsLoading(false);
         navigation.navigate('LoginFlow');
       }
-      else if (connection.isConnected && (typeof (testToken) != 'undefined' || testToken != '')) {
+      else if (connection.isConnected && (typeof (testToken) != 'undefined')) {
         navigation.navigate('Dashboard');
         setIsLoading(false);
       }

@@ -215,7 +215,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                         <FontBold mystyle={styles.inputStyle} value={Moment(dob).format('YYYY-MM-DD')} />
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={showDatepicker} >
-                                        <Fontisto name="date" size={24} color="#FF9800" style={{ left: 9, top: 9 }} />
+                                        <Fontisto name="date" size={24} color="#f5c500" style={{ left: 9, top: 9 }} />
                                     </TouchableOpacity>
                                 </View>
 
@@ -265,7 +265,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                 style={styles.buttonStyle}
                                 activeOpacity={0.5}
                                 onPress={handleSubmitButton}>
-                                <Text style={styles.buttonTextStyle}>{t('edit')}</Text>
+                                <Text style={styles.buttonTextStyle}>{t('save')}</Text>
                             </TouchableOpacity>
                         </KeyboardAvoidingView>
                     </View>
@@ -286,10 +286,10 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#ff9800',
+        backgroundColor: '#f5c500',
         borderWidth: 0,
         color: '#FFFFFF',
-        borderColor: '#ff9800',
+        borderColor: '#f5c500',
         alignItems: 'center',
         borderRadius: 30,
         marginLeft: 35,
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     buttonTextStyle: {
-        color: '#FFFFFF',
+        color: '#000',
         paddingVertical: 10,
         fontSize: 22,
     },
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 30,
-        borderColor: '#ff9800',
+        borderColor: '#f5c500',
         fontSize: 20,
         height: 50
     },

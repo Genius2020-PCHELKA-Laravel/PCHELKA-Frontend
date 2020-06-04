@@ -17,6 +17,7 @@ const Payment = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
     const [method, setMethod] = useState(hcstate.method);
     const [showCard, setShowCard] = useState(hcstate.method);
+    const [cashPressed, setCashPressed] = useState(false);
     // const [valid, setValid] = useState(false);
     // const [cvc, setCVC] = useState('');
     // const [expiryMonth, setExpiryMonth] = useState('');
@@ -53,22 +54,22 @@ const Payment = ({ children, t }) => {
             type: 'set_method',
             payload: method,
         });
-        // subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
-        // total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
-        var subtotal = hcstate.subtotal;
-        var total = hcstate.total;
+        var subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
+        var total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
+        var discount = hcstate.discount;
+
+        // var subtotal = hcstate.subtotal;
+        // var total = hcstate.total;
         if (method == -1)
             return;
         if (method == 0) {
-            subtotal = parseFloat(subtotal) - 5.0;
-            total = parseFloat(total) - 5.0;
-            var discount = hcstate.discount;
             dispatch({
                 type: 'update_totals',
                 payload: { subtotal, total, discount },
             });
         }
         if (method == 1) {
+            setCashPressed(true);
             subtotal = parseFloat(subtotal) + 5.0;
             total = parseFloat(total) + 5.0;
             var discount = hcstate.discount;
@@ -77,6 +78,7 @@ const Payment = ({ children, t }) => {
                 payload: { subtotal, total, discount },
             });
         }
+        console.log(cashPressed)
 
     }, [method]);
     return (

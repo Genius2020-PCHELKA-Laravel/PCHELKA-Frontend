@@ -13,58 +13,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Loader from '../Loader';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
+import { getRedirect, setRedirect, removeRedirect } from '../../api/redirect';
+
 const AddressDetails = ({ children, t }) => {
     const { state, getUserAddresses, dispatch } = useContext(UserContext);
     const { state: hcstate } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
-    useEffect(() => {
-        getUserAddresses();
-    }, []);
 
-    const items = []
 
-    for (const add of state.addresses) {
-        items.push(
-            <TouchableOpacity
-                key={add.id}
-                onPress={() => {
-                    setSelectedAddress(add.id);
-                    setSelectedAddressName(add.address);
-                    dispatch({ type: 'set_selected_address_name', payload: add.address, });
-                }}>
-                <View flexDirection='row' style={{ marginBottom: 5 }}>
-                    <View flexDirection='column'>
-                        <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
-                    </View>
-                    <View flexDirection='column'>
-                        <View flexDirection='row'>
-                            <FontBold value={add.address} mystyle={{ fontSize: 18 }}></FontBold>
-                        </View>
-                        <View flexDirection='row'>
-                            <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                        </View>
-                        <View flexDirection='row'>
-                            <FontLight value={add.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                        </View>
-                        <View flexDirection='row'>
-                            <FontLight value={add.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                        </View>
-                        <View flexDirection='row'>
-                            <FontLight value={add.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                        </View>
-                    </View>
-                    {/* <View style={styles.editcolumn}>
-                            <View style={styles.editrow}>
-                                <TouchableOpacity onPress={() => alert("Edit: " + add.id)}>
-                                    <FontBold mystyle={styles.editButton} value={t('edit')} ></FontBold>
-                                </TouchableOpacity>
-                            </View>
-                        </View> */}
-                </View>
-            </TouchableOpacity>
-        );
-    }
+
+
+
     useEffect(() => {
         dispatch({
             type: 'set_selected_address',
@@ -72,14 +32,11 @@ const AddressDetails = ({ children, t }) => {
         });
     }, [selectedAddress]);
 
-    useEffect(() => {
-
-    }, [selectedAddressName]);
 
     return (
         <View style={styles.container}>
-            {/* <Text>{selectedAddress}</Text>
-            <Text>{selectedAddressName}</Text> */}
+            {/* <Text>{state.selected_address}</Text>
+            <Text>{state.selected_address_name}</Text> */}
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* <Loader loading={state.loading} /> */}
                 <Spacer>
@@ -89,7 +46,7 @@ const AddressDetails = ({ children, t }) => {
                         </View>
                         <View style={styles.containeritem2}>
                             <TouchableOpacity onPress={async () => {
-                                // dispatch({ type: 'set_redirect', payload: "HomeScreen", });
+                                setRedirect('HomeCleaningScreen');
                                 navigate('MapScreen');
                             }}>
                                 <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
@@ -97,7 +54,44 @@ const AddressDetails = ({ children, t }) => {
                         </View>
                     </View>
 
-                    {items}
+                    {
+                        state.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((add, i) => {
+                            return (
+                                <TouchableOpacity
+                                    key={add.id}
+                                    onPress={() => {
+                                        setSelectedAddress(add.id);
+                                        setSelectedAddressName(add.address);
+                                        dispatch({ type: 'set_selected_address', payload: add.id, });
+                                        dispatch({ type: 'set_selected_address_name', payload: add.address, });
+                                    }}>
+                                    <View flexDirection='row' style={{ marginBottom: 5 }}>
+                                        <View flexDirection='column'>
+                                            <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
+                                        </View>
+                                        <View flexDirection='column'>
+                                            {/* <Text>{add.id}</Text> */}
+                                            <View flexDirection='row'>
+                                                <FontBold value={add.address} mystyle={{ fontSize: 18 }}></FontBold>
+                                            </View>
+                                            <View flexDirection='row'>
+                                                <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                            </View>
+                                            <View flexDirection='row'>
+                                                <FontLight value={add.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                            </View>
+                                            <View flexDirection='row'>
+                                                <FontLight value={add.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                            </View>
+                                            <View flexDirection='row'>
+                                                <FontLight value={add.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        })
+                    }
                 </Spacer>
             </ScrollView>
         </View>

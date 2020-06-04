@@ -1,6 +1,6 @@
 
 import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, RefreshControl } from 'react-native';
 import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
@@ -11,6 +11,7 @@ import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
 import HomeScreenAddresses from './lcation/HomeScreenAddresses';
 import { getToken } from '../api/token';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const SettingsButton = ({ t }) => {
     const { state } = useContext(UserContext);
@@ -18,6 +19,7 @@ const SettingsButton = ({ t }) => {
     const [showAddressesModal, setShowAddressesModal] = useState(false);
     const [shouldShowLang, setShouldShowLang] = useState(true);
     const [lang, setLang] = useState('en');
+    const [changing, setChanging] = useState(false);
 
     useEffect(() => {
         if (typeof addresses != 'undefined')
@@ -57,7 +59,7 @@ const SettingsButton = ({ t }) => {
                     {
                         address == '' ? t('Addresses') : address
                     }
-                    <Entypo name="chevron-down" size={14} color="#ff9800" />
+                    {' '}<Entypo name="chevron-down" size={14} color="#000" />
                 </Text>
             </TouchableOpacity >
             <HomeScreenAddresses
@@ -65,8 +67,9 @@ const SettingsButton = ({ t }) => {
                 showAddressesModal={showAddressesModal}
                 setShowAddressesModal={setShowAddressesModal}
             />
-
+            {/* <ConfirmationDialog changing={changing} setChanging={setChanging} /> */}
             {shouldShowLang ?
+                // <TouchableOpacity activeOpacity={.5} onPress={() => setChanging(true)}>
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
                         {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
@@ -82,7 +85,7 @@ const SettingsButton = ({ t }) => {
             <Avatar
                 size="small"
                 rounded
-                icon={{ name: 'user', type: 'font-awesome' }}
+                icon={{ name: 'user', type: 'font-awesome', color: '#000' }}
                 onPress={() => navigate('SettingNavigator')}
                 activeOpacity={0.7}
                 containerStyle={styles.avatar}
@@ -100,39 +103,43 @@ const styles = StyleSheet.create({
 
     },
     locationButtonStyle: {
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
         backgroundColor: '#fff',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#ff9800',
+        borderColor: '#000',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
-        color: '#ff9800',
+        color: '#000',
         top: 10,
         marginRight: 40,
         width: 150
     },
     languageButtonStyle: {
-        padding: 10,
-        backgroundColor: '#ff9800',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f5c500',
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#ff9800',
+        borderColor: '#000',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
         right: 30,
-        color: 'white',
+        color: '#000',
         top: 10
     },
     avatar: {
-        backgroundColor: '#ff9800',
+        borderColor: '#000',
+        borderWidth: 1,
+        backgroundColor: '#f5c500',
         flex: 1,
         right: 20,
-        top: 15
+        top: 15,
     },
 });
 

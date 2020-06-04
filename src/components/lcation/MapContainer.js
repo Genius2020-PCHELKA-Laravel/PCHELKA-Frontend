@@ -9,7 +9,7 @@ import MapView, { Marker } from 'react-native-maps';
 import AddressDetailsConfirm from './AddressDetailsConfirm';
 import Toast from 'react-native-simple-toast';
 import { Context as UserContext } from '../../screens/context/UserContext';
-// import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
+import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
 import Loader from '../Loader';
 const MapContainer = () => {
     const [latitude, setLatitude] = useState(0);
@@ -52,11 +52,14 @@ const MapContainer = () => {
             street: street,
             buildingNumber: buildingnumber,
             apartment: apartment
-        }).then((status) => {
+        }).then(async (status) => {
             //for Adding new Address to the list
             setIsLoading(false);
             Toast.show("Address Correctly Saved", Toast.LONG);
-            navigate('HomeNavigator');
+            // navigate('HomeNavigator');
+            var redirect = await getRedirect();
+            removeRedirect();
+            navigate(redirect);
         }).catch(() => {
             setIsLoading(false);
             Toast.show("Address can't be Saved", Toast.LONG);
