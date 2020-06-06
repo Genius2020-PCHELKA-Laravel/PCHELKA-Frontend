@@ -136,7 +136,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     };
     return (
         <>
-            <View style={styles.mainBody}>
+            <View style={styles.container}>
                 <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">
                     <View style={{ marginTop: 15 }}>
@@ -153,6 +153,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                     // ref={ref => {
                                     //     this._fullnameinput = ref;
                                     // }}
+                                    editable={false}
                                     returnKeyType="next"
                                     // onSubmitEditing={() => this._emailinput && this._emailinput.focus()}
                                     blurOnSubmit={false}
@@ -277,31 +278,33 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
 export default withNamespaces()(EditPersonalDetailsScreen);
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
     SectionStyle: {
         flexDirection: 'row',
         height: 40,
-        marginTop: 20,
-        marginLeft: 35,
-        marginRight: 35,
+        marginTop: 15,
+        marginLeft: 15,
+        marginRight: 15,
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#f5c500',
-        borderWidth: 0,
-        color: '#FFFFFF',
-        borderColor: '#f5c500',
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#7a7a7a',
         alignItems: 'center',
-        borderRadius: 30,
-        marginLeft: 35,
-        marginRight: 35,
-        marginTop: 20,
-        marginBottom: 20,
-        fontSize: 20,
+        borderRadius: 7,
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 15,
+        marginBottom: 2150,
         height: 50,
         textAlign: 'center'
     },
     buttonTextStyle: {
-        color: '#000',
+        color: '#7a7a7a',
         paddingVertical: 10,
         fontSize: 22,
     },
@@ -311,7 +314,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 1,
-        borderRadius: 30,
+        borderRadius: 7,
         borderColor: '#f5c500',
         fontSize: 20,
         height: 50

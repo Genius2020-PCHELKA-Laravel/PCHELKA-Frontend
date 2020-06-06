@@ -59,7 +59,7 @@ const LogoutButton = ({ t }) => {
             <TouchableOpacity onPress={() => { setIsLoading(true); logout().then(() => setIsLoading(false)).catch(() => setIsLoading(false)); }}>
                 {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
                 <Text style={styles.logoutButtonStyle}>
-                    {t('logout')} {' '}<FontAwesome5 name="user" size={14} color="#000" />
+                    {t('logout')} {' '}<FontAwesome5 name="user" size={14} color="#7a7a7a" />
                 </Text>
             </TouchableOpacity>
 
@@ -77,32 +77,32 @@ const styles = StyleSheet.create({
     logoutButtonStyle: {
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: '#f5c500',
-        borderRadius: 25,
+        backgroundColor: '#fff',
+        borderRadius: 7,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#7a7a7a',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "500",
         right: 15,
-        color: '#000'
+        color: '#7a7a7a'
     },
     languageButtonStyle: {
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: '#f5c500',
-        borderRadius: 25,
+        backgroundColor: '#fff',
+        borderRadius: 7,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#7a7a7a',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "900",
         right: 30,
-        color: '#000'
+        color: '#7a7a7a'
     },
 });
 

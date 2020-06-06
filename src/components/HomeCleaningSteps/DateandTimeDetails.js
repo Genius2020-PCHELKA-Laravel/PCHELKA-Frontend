@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, Image, TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
-import { Container, Footer, FooterTab, Button, } from 'native-base';
+import { Container, Footer, FooterTab, Button } from 'native-base';
+import Toast from 'react-native-simple-toast';
+
 import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
 import { RadioButton, Avatar } from 'react-native-paper';
 import Spacer from '../../components/Spacer';
@@ -27,6 +29,7 @@ const DateandTimeDetails = ({ children, t }) => {
     const isInArray = (array, value) => {
         return (array.find(item => { return item == value }) || []).length > 0;
     }
+
     useEffect(() => {
         dispatch({
             type: 'set_providerid',
@@ -121,7 +124,7 @@ const DateandTimeDetails = ({ children, t }) => {
     ///////////////////
     var days = [];
     const date = new Date();
-    for (let i = 0; i < 15; i++) {
+    for (let i = 1; i < 15; i++) {
         const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
         // (d.getDate() < 10 ? '0' : '') + d.getDate
         let fdate = newDate.getFullYear().toString() +
@@ -153,7 +156,7 @@ const DateandTimeDetails = ({ children, t }) => {
                 disabled={controlstyles}>
                 <View style={styles.cloumn}>
                     <View style={styles.item1}>
-                        <FontRegular mystyle={{ textAlign: 'center', padding: 2 }} value={days_names[(newDate.getDay() + i) % 7]} />
+                        <FontRegular mystyle={{}} value={days_names[(newDate.getDay()) % 7]} />
                     </View>
                     <View style={styles.item2}>
                         <Text style={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup}>{newDate.getDate()}</Text>
@@ -181,17 +184,40 @@ const DateandTimeDetails = ({ children, t }) => {
         let fstart = fhour + ":" + fminute + ":00";
         var timecontrolstyles = false;
 
+        const timeStarts = [];
         if (hcstate.providerid != '') {
-            const timeStarts = [];
             hcstate.schedules.filter((e) => { return (e.serviceProviderId == hcstate.providerid && e.availableDate == hcstate.selectedday) }).map((u, i) => {
                 timeStarts[i] = u.timeStart;
             });
             console.log(timeStarts);
             //const uniqueNStarts = Array.from(new Set(timeStarts));
+
             var timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
+            // for (var j = 0; j < parseInt(hcstate.hours); j++) {
+            //     timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
+            // }
         }
         starts.push(
             <TouchableOpacity key={fstart} onPress={() => {
+                if (providerid != '') {
+                    var selectedhour = fstart.split(':')[0];
+                    var selectedminute = fstart.split(':')[1];
+                    var limithour = parseInt(selectedhour) + parseInt(hcstate.hours);
+                    for (var j = parseInt(selectedhour); j <= limithour; j++) {
+                        var limit = '';
+                        if (j < 10)
+                            limit = '0' + j + ':' + selectedminute + ':' + '00';
+                        else
+                            limit = j + ':' + selectedminute + ':' + '00';
+                        console.log(j + " limit: " + limit);
+                        if (isInArray(timeStarts, limit) ? false : true) {
+                            Toast.show('You selected ' + hcstate.hours + ' hours' + '\n select Another time please', Toast.LONG);
+                            return;
+                        }
+                    }
+                }
+
+
                 dispatch({ type: 'set_start', payload: fstart });
                 setStart(fstart);
             }}
@@ -207,7 +233,7 @@ const DateandTimeDetails = ({ children, t }) => {
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <Loader loading={isloading} />
             <FontBold mystyle={styles.qText} value={t('dateq0')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15 }}>
                 {/* redering Auto-Assign */}
                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
                     onPress={() => {
@@ -233,10 +259,10 @@ const DateandTimeDetails = ({ children, t }) => {
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <FontRegular mustyle={{ fontSize: 12, padding: 0, textAlign: 'center' }} value='Auto-Assign' />
+                        <FontBold mystyle={{ fontSize: 10, marginLeft: 5 }} value={t('autoassign')} />
 
                     </View>
-                    <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value='We will assign the best cleaner' />
+                    <FontRegular mystyle={{ color: "#000", fontSize: 12, marginLeft: 5 }} value={t('wewillassignthebestcleaner')} />
                 </TouchableOpacity>
 
                 {/* redering the providers */}
@@ -290,7 +316,7 @@ const DateandTimeDetails = ({ children, t }) => {
                                     } */}
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <FontRegular mustyle={{ fontSize: 12, padding: 0, textAlign: 'center' }} value={u.name} />
+                                    <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={u.name} />
                                     <Text>{' '}</Text>
                                     {/* {
                                         u.evaluation >= 4 ?
@@ -312,125 +338,27 @@ const DateandTimeDetails = ({ children, t }) => {
             </ScrollView>
             <Spacer />
             <FontBold mystyle={styles.qText} value={t('dateq1')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
                 {days}
             </ScrollView>
 
             <Spacer />
-            <Spacer />
             <FontBold mystyle={styles.qText} value={t('dateq2')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
                 {starts}
             </ScrollView>
 
-            <Spacer />
 
-            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={() => {
-                    dispatch({ type: 'set_start', payload: '08:00:00' });
-                    setStart('08:00:00');
-                }}>
-                    <Text style={start == '08:00:00' ? styles.timethumbdown : styles.timethumbup}>08:00</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('08:30:00')
-                    dispatch({ type: 'set_start', payload: '08:30:00' });
-                }}><Text style={start == '08:30:00' ? styles.timethumbdown : styles.timethumbup}>08:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('09:00:00')
-                    dispatch({ type: 'set_start', payload: '04:00:00' });
-                }}><Text style={start == '09:00:00' ? styles.timethumbdown : styles.timethumbup}>09:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('09:30:00')
-                    dispatch({ type: 'set_start', payload: '04:30:00' });
-                }}><Text style={start == '09:30:00' ? styles.timethumbdown : styles.timethumbup}>09:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('10:00:00')
-                    dispatch({ type: 'set_start', payload: '10:00:00' });
-                }}><Text style={start == '10:00:00' ? styles.timethumbdown : styles.timethumbup}>10:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('10:30:00')
-                    dispatch({ type: 'set_start', payload: '10:30:00' });
-                }}><Text style={start == '10:30:00' ? styles.timethumbdown : styles.timethumbup}>10:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('11:00:00')
-                    dispatch({ type: 'set_start', payload: '11:00:00' });
-                }}><Text style={start == '11:00:00' ? styles.timethumbdown : styles.timethumbup}>11:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('11:30:00')
-                    dispatch({ type: 'set_start', payload: '11:30:00' });
-                }}><Text style={start == '11:30:00' ? styles.timethumbdown : styles.timethumbup}>11:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('12:00:00')
-                    dispatch({ type: 'set_start', payload: '12:00:00' });
-                }}><Text style={start == '12:00:00' ? styles.timethumbdown : styles.timethumbup}>12:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('12:30:00')
-                    dispatch({ type: 'set_start', payload: '12:30:00' });
-                }}><Text style={start == '12:30:00' ? styles.timethumbdown : styles.timethumbup}>12:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('13:00:00')
-                    dispatch({ type: 'set_start', payload: '13:00:00' });
-                }}><Text style={start == '13:00:00' ? styles.timethumbdown : styles.timethumbup}>13:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('13:30:00')
-                    dispatch({ type: 'set_start', payload: '13:30:00' });
-                }}><Text style={start == '13:30:00' ? styles.timethumbdown : styles.timethumbup}>13:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('14:00:00')
-                    dispatch({ type: 'set_start', payload: '14:00:00' });
-                }}><Text style={start == '14:00:00' ? styles.timethumbdown : styles.timethumbup}>14:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('14:30:00')
-                    dispatch({ type: 'set_start', payload: '14:30:00' });
-                }}><Text style={start == '14:30:00' ? styles.timethumbdown : styles.timethumbup}>14:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('15:00:00')
-                    dispatch({ type: 'set_start', payload: '15:00:00' });
-                }}><Text style={start == '15:00:00' ? styles.timethumbdown : styles.timethumbup}>15:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('15:30:00')
-                    dispatch({ type: 'set_start', payload: '15:30:00' });
-                }}><Text style={start == '15:30:00' ? styles.timethumbdown : styles.timethumbup}>15:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('16:00:00')
-                    dispatch({ type: 'set_start', payload: '16:00:00' });
-                }}><Text style={start == '16:00:00' ? styles.timethumbdown : styles.timethumbup}>16:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('16:30:00')
-                    dispatch({ type: 'set_start', payload: '16:30:00' });
-                }}><Text style={start == '16:30:00' ? styles.timethumbdown : styles.timethumbup}>16:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('17:00:00')
-                    dispatch({ type: 'set_start', payload: '17:00:00' });
-                }}><Text style={start == '17:00:00' ? styles.timethumbdown : styles.timethumbup}>17:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('17:30:00')
-                    dispatch({ type: 'set_start', payload: '17:30:00' });
-                }}><Text style={start == '17:30:00' ? styles.timethumbdown : styles.timethumbup}>17:30</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('18:00:00')
-                    dispatch({ type: 'set_start', payload: '18:00:00' });
-                }}><Text style={start == '18:00:00' ? styles.timethumbdown : styles.timethumbup}>18:00</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    setStart('18:30:00')
-                    dispatch({ type: 'set_start', payload: '18:30:00' });
-                }}><Text style={start == '18:30:00' ? styles.timethumbdown : styles.timethumbup}>18:30</Text></TouchableOpacity>
-            </ScrollView> */}
-            <Spacer />
-            <View>
 
-            </View>
         </ScrollView >
     );
 };
 
 const styles = StyleSheet.create({
     cloumn: {
+        marginTop: 0,
         flex: 1,
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        alignItems: 'flex-start' // if you want to fill rows left to right
+        alignItems: 'center' // if you want to fill rows left to right
     },
     item1: {
         height: '30%' // is 50% of container width
@@ -440,22 +368,19 @@ const styles = StyleSheet.create({
     },
     qText: {
         fontSize: 20,
+        marginLeft: 15,
+        marginBottom: 7
     },
     aText: {
-        fontSize: 14,
+        fontSize: 12,
         textAlign: 'center',
-    },
-    track: {
-        height: 4,
-        borderRadius: 2,
-        backgroundColor: '#d0d0d0',
     },
     thumb: {
         width: 30,
         height: 30,
         borderRadius: 30 / 2,
         backgroundColor: 'white',
-        borderColor: '#ff9800',
+        borderColor: '#f5c500',
         borderWidth: 2,
     },
     thumbup: {
@@ -465,7 +390,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 48 / 2,
         backgroundColor: 'white',
-        borderColor: '#ff9800',
+        borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -476,7 +401,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 48 / 2,
-        backgroundColor: '#ff9800',
+        backgroundColor: '#f5c500aa',
         borderColor: 'white',
         borderWidth: 2,
         textAlign: 'center',
@@ -495,35 +420,36 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     timethumbup: {
-        fontSize: 24,
+        fontSize: 20,
         padding: 7,
-        width: 75,
-        height: 48,
-        borderRadius: 75 / 2,
+        width: 65,
+        height: 40,
+        borderRadius: 65 / 2,
         backgroundColor: 'white',
-        borderColor: '#ff9800',
+        borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
     },
     timethumbdown: {
-        fontSize: 24,
+        fontSize: 20,
         padding: 7,
-        width: 75,
-        height: 48,
-        borderRadius: 75 / 2,
-        backgroundColor: '#ff9800',
+        width: 65,
+        height: 40,
+        borderRadius: 65 / 2,
+        backgroundColor: '#f5c500aa',
         borderColor: 'white',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
     },
     timenotactive: {
-        fontSize: 24,
+        // display: 'none',
+        fontSize: 20,
         padding: 7,
-        width: 75,
-        height: 48,
-        borderRadius: 75 / 2,
+        width: 65,
+        height: 40,
+        borderRadius: 65 / 2,
         backgroundColor: '#dcdcdc',
         borderColor: '#aaa',
         borderWidth: 2,
@@ -534,23 +460,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: 120,
         height: 170,
-        padding: 15,
-        borderColor: "#ff9800",
+        borderColor: "#f5c500aa",
+        borderRadius: 4,
         borderWidth: 2,
-        padding: 5,
         marginRight: 10,
-        marginTop: 10
     },
     providerThumdown: {
-        backgroundColor: '#ff9800',
+        backgroundColor: '#f5c500aa',
         width: 120,
         height: 170,
-        padding: 15,
         borderColor: "#fff",
-        borderWidth: 2,
-        padding: 5,
+        borderRadius: 2,
+        borderWidth: 4,
         marginRight: 10,
-        marginTop: 10
     },
     imageThumup: {
         width: 80,
@@ -559,7 +481,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         borderWidth: 3,
-        borderColor: "#ff9800",
+        borderColor: "#f5c500",
         opacity: 1,
 
     },

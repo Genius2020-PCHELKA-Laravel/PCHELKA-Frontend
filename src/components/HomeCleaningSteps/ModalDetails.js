@@ -8,7 +8,7 @@ import {
     StyleSheet,
     ScrollView
 } from 'react-native';
-import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Context as UserContext } from '../../screens/context/UserContext';
 import Spacer from '../Spacer';
@@ -22,9 +22,9 @@ const ModalDetails = ({ children, t }) => {
     const { state: hcstate, getprice0, getprice1, getprice2 } = useContext(HCContext);
     const { state } = useContext(UserContext);
     let modalfrequency = '';
-    if (hcstate.frequency == 1) modalfrequency = 'One-time';
-    else if (hcstate.frequency == 2) modalfrequency = 'Bi-weekly';
-    else if (hcstate.frequency == 3) modalfrequency = 'Weekly';
+    if (hcstate.frequency == 1) modalfrequency = t('onetime');
+    else if (hcstate.frequency == 2) modalfrequency = t('biweekly');
+    else if (hcstate.frequency == 3) modalfrequency = t('weekly');
     let modalmaterials = hcstate.hours * hcstate.materials * hcstate.HC.materialPrice;
     return (
         <View style={{ marginTop: 22 }}>
@@ -33,112 +33,112 @@ const ModalDetails = ({ children, t }) => {
                 transparent={false}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    alert('Modal has been closed.');
+                    // alert('Modal has been closed.');
                 }}>
-                <View style={{ marginTop: 22 }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            setModalVisible(!modalVisible);
-                        }}>
-                        <View style={{ left: 20 }}>
+                <TouchableOpacity
+                    onPress={() => {
+                        setModalVisible(!modalVisible);
+                    }}>
+                    <View style={{ marginLeft: 15, marginTop: 5 }}>
 
-                            <FontAwesome5 name="times" size={50} color="#161924" />
-                        </View>
-                    </TouchableOpacity>
+                        <FontAwesome name="times" size={35} color="#7a7a7a" />
+                    </View>
+                </TouchableOpacity>
+                <View style={{ marginTop: 22 }}>
                     <ScrollView style={styles.container} >
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 18 }} value={t('servicetype')}></FontRegular>
+                        <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('homecleaning')}></FontBold>
-                        <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
-                        <FontRegular mystyle={{ color: 'gray', fontSize: 18 }} value={t('details')}></FontRegular>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
+                        <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('frequency')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('frequency')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={modalfrequency}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalfrequency}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('duration')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('duration')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.hours + ' hours'}></FontBold>
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('numberofcleaners')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.cleaners + ' cleaners'}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.hours + ' ' + t('hours')}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('Materials')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('numberofcleaners')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={modalmaterials + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.cleaners + ' ' + t('cleaners')}></FontBold>
+                            </View>
+                        </View>
+                        <View style={styles.row}>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('materials')}></FontBold>
+                            </View>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalmaterials + ' UAH'}></FontBold>
                             </View>
                         </View>
 
                         <Spacer />
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('dateandtime')}></FontBold>
-                        <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('date')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('date')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.selectedday}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedday}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('time')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('time')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.start}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.start}></FontBold>
                             </View>
                         </View>
                         <Spacer />
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('address')}></FontBold>
-                        <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
-                        <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={state.selected_address_name}></FontBold>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
+                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={state.selected_address_name}></FontBold>
                         <Spacer />
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('price')}></FontBold>
-                        <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('subtotal')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('subtotals')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.subtotal + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.subtotal + ' UAH'}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('vat')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('vat')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.VAT + ' UAH'}></FontBold>
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('discount')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.discount + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.VAT + ' UAH'}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('total')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('discount')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={hcstate.total + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.discount + ' UAH'}></FontBold>
+                            </View>
+                        </View>
+                        <View style={styles.row}>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('total')}></FontBold>
+                            </View>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.total + ' UAH'}></FontBold>
                             </View>
                         </View>
                     </ScrollView>
@@ -149,20 +149,29 @@ const ModalDetails = ({ children, t }) => {
                 onPress={() => {
                     setModalVisible(true);
                 }} style={styles.modalButtonStyle}>
-                <Text style={styles.total}>{t('total')}
-                    <Text style={styles.subtotal}>
-                        {hcstate.frequency == 'One-time' ? "" : " UAH "}
-                    </Text>
-                    <Text style={styles.subtotal}>
-                        {hcstate.frequency == 'One-time' ? "" : hcstate.total}
-                    </Text>
-                    {/* <Text style={styles.subtotal}>  UAH</Text>
+                <View flexDirection='row'>
+
+                    <View flexDirection='column'>
+                        <Text style={styles.total}>{t('total')}
+                            <Text style={styles.subtotal}>
+                                {hcstate.frequency == 1 ? "" : " UAH "}
+                            </Text>
+                            <Text style={styles.subtotal}>
+                                {hcstate.frequency == 1 ? "" : hcstate.total}
+                            </Text>
+                            {/* <Text style={styles.subtotal}>  UAH</Text>
                     <Text style={styles.subtotal}> {hcstate.total} </Text> */}
-                </Text>
-                <Text style={styles.modalText}>
-                    {hcstate.subtotal} UAH {' '}
-                    <FontAwesome5 name="chevron-up" size={15} color="#161924" />
-                </Text>
+                        </Text>
+                        <Text style={styles.modalText}>
+                            {hcstate.subtotal} UAH {' '}
+                        </Text>
+                    </View>
+                    <View flexDirection='column' style={{ justifyContent: 'center', marginLeft: 25 }}>
+                        <FontAwesome5 name="chevron-up" size={25} color="#f5c500" />
+
+                    </View>
+                </View>
+
             </TouchableOpacity>
         </View >
     );
@@ -192,12 +201,16 @@ const styles = StyleSheet.create({
     modalButtonStyle: {
         position: 'absolute',
         left: 10,
+        marginRight: 10,
         bottom: 10,
-        paddingHorizontal: 10,
-        // backgroundColor: '#ff9800',
-        borderRadius: 20,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 14,
         borderWidth: 1,
-        borderColor: '#DAA520',
+        borderColor: '#7a7a7a',
+        width: "95%",
+        color: '#7a7a7a'
         // fontFamily: 'Comfortaa-Bold',
     },
     total: {

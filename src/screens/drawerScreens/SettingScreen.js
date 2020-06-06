@@ -47,7 +47,7 @@ const SettingScreen = ({ navigation, t }) => {
         <Avatar
           size="large"
           rounded
-          icon={{ name: 'user', type: 'font-awesome', color: '#000' }}
+          icon={{ name: 'user', type: 'font-awesome', color: '#fff' }}
           onPress={() => console.log("Works!")}
 
           activeOpacity={0.7}
@@ -69,12 +69,12 @@ const SettingScreen = ({ navigation, t }) => {
             <FontAwesome5 mystyle={styles.item2} name="chevron-right" size={15} color="black" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { navigate('ManageCreditCards') }}>
+        {/* <TouchableOpacity onPress={() => { navigate('ManageCreditCards') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('managecreditcards')}></FontBold>
             <FontAwesome5 mystyle={styles.item2} name="chevron-right" size={15} color="black" />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Spacer />
         <Spacer />
         <FontLight mystyle={styles.listtitle} value={t('appsettings')} ></FontLight>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 
   avatar: {
     position: 'absolute',
-    backgroundColor: '#f5c500',
+    backgroundColor: '#7a7a7a',
     flex: 1,
     marginLeft: 20,
     bottom: -30

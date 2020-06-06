@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   image: {
-    width: '98%',
+    width: '100%',
     borderRadius: 7,
     height: 120,
-    opacity: 0.8,
+    opacity: 0.6,
     backgroundColor: 'black',
 
   },
@@ -55,27 +55,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 5,
-    margin: 2,
+    marginHorizontal: 5,
     borderColor: '#fff',
     borderWidth: 1,
-    backgroundColor: '#f5c500',
+    backgroundColor: '#fff',
     borderRadius: 7,
-    padding: 14
+    borderWidth: 1,
+    borderColor: '#7a7a7a'
   },
   ButtonStyle: {
     marginTop: 10,
     padding: 5,
     marginLeft: 30,
     marginRight: 30,
-    backgroundColor: '#ff9800',
-    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#ff9800',
+    borderColor: '#fff',
     fontSize: 16,
     fontWeight: "500",
-    color: 'white',
-    paddingHorizontal: 25
+    color: '#7a7a7a',
   },
 });
 

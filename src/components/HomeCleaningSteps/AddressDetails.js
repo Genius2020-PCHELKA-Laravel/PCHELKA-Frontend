@@ -42,7 +42,7 @@ const AddressDetails = ({ children, t }) => {
                 <Spacer>
                     <View style={styles.containerrow}>
                         <View style={styles.containeritem1}>
-                            <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('addressq1')}></FontBold>
+                            <FontBold mystyle={{ color: '#000', fontSize: 20, marginLeft: 7 }} value={t('addressq1')}></FontBold>
                         </View>
                         <View style={styles.containeritem2}>
                             <TouchableOpacity onPress={async () => {
@@ -65,7 +65,7 @@ const AddressDetails = ({ children, t }) => {
                                         dispatch({ type: 'set_selected_address', payload: add.id, });
                                         dispatch({ type: 'set_selected_address_name', payload: add.address, });
                                     }}>
-                                    <View flexDirection='row' style={{ marginBottom: 5 }}>
+                                    <View flexDirection='row' style={{}}>
                                         <View flexDirection='column'>
                                             <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
                                         </View>
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
         width: '70%' // is 50% of container width
     },
     containeritem2: {
-        paddingHorizontal: 10,
         width: '30%' // is 50% of container width
     },
     addresscolumn: {
@@ -134,58 +133,23 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row'
     },
-    text: {
-        fontSize: 30
-    },
     textAddressStyle: {
-        margin: 5,
-        backgroundColor: '#ddd',
-        borderRadius: 10,
+        marginTop: 5,
+        marginRight: 5,
+        backgroundColor: '#f5c500',
+        borderRadius: 4,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#7a7a7a',
+        color: '#000',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 11,
         fontWeight: "500",
-        // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            height: 10,
-            width: 0
-        },
-        shadowRadius: 25,
+        paddingHorizontal: 15,
+        paddingVertical: 5
     },
-    btnAddressStyle: {
-        margin: 5,
-        position: "absolute",
-        height: 30,
-        backgroundColor: '#ff9800',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#DAA520',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 14,
-        fontWeight: "500",
-        // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            height: 10,
-            width: 0
-        },
-        shadowRadius: 25,
-    },
-    editButton: {
-        fontSize: 16,
-        color: '#aaa',
-        padding: 10,
-    },
+
 });
 
 export default withNamespaces()(AddressDetails);

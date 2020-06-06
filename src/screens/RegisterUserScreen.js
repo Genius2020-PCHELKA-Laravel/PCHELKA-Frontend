@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 //Import all required component
 import {
     StyleSheet,
@@ -12,23 +12,36 @@ import {
     ScrollView,
 } from 'react-native';
 import Loader from '../components/Loader';
+import FontBold from '../components/FontBold';
+import FontRegular from '../components/FontRegular';
+import FontLight from '../components/FontLight';
 // import MapComponent from '../components/MapComponent';
 import GooglePlacesInput from '../components/GooglePlacesInput';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from './context/AuthContext';
+import { Context as UserContext } from './context/UserContext';
 import { navigate } from '../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
+import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons';
+import { setRedirect } from '../api/redirect';
+import MapContainer from '../components/lcation/MapContainer';
 
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
     const { state, register } = useContext(AuthContext);
+    const { state: ustate } = useContext(UserContext);
     let [fullName, setfullName] = useState('');
     let [email, setemail] = useState('');
-    let [userAddress, setUserAddress] = useState('');
+    // let [userAddress, setUserAddress] = useState("");
     let [loading, setLoading] = useState(false);
     let [errortext, setErrortext] = useState('');
     let [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
+
+    // useEffect(() => {
+    //     if (ustate.addresses != [])
+    //         setUserAddress(ustate.addresses[0].address);
+    // }, [ustate.addresses]);
 
     const handleSubmitButton = async () => {
         setErrortext('');
@@ -40,22 +53,14 @@ const RegisterUserScreen = ({ navigation, t }) => {
             setErrortext(t('pleasefillemail'));
             return;
         }
-        if (!userAddress) {
-            setErrortext(t('pleasefilladdress'));
-            return;
-        }
+        // if (!userAddress) {
+        //     setErrortext(t('pleasefilladdress'));
+        //     return;
+        // }
         //Show Loader
         setLoading(true);
         var result = await register({
-            fullName: fullName, email: email, language: "Ar",
-            address: userAddress,
-            lat: "-87.8",
-            lon: "-99.18",
-            details: "sdsad",
-            area: "sdsad",
-            street: "sadasd",
-            buildingNumber: "asdsa",
-            apartment: "sadsad"
+            fullName: fullName, email: email, language: "En"
         });
         //setTimeout(function () {
         try {
@@ -75,6 +80,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
         } catch (error) {
             //Hide Loader
             setLoading(false);
+            setErrortext(t('registrationunsuccessful'));
             console.error(error);
         }
         //}, 2500);
@@ -111,7 +117,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                 {/* <GooglePlacesInput /> */}
             {/* <ScrollView keyboardShouldPersistTaps="handled"> */}
 
-            <View style={styles.mainBody}>
+            <View style={styles.container}>
                 <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">
                     {/* <View style={{ alignItems: 'center' }}>
@@ -132,7 +138,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                             margin: 30,
                         }} ></MapComponent>
                     </View> */}
-                    <View style={{ marginTop: 15 }}>
+                    <View >
                         <KeyboardAvoidingView enabled>
                             <View style={styles.SectionStyle}>
                                 <TextInput
@@ -166,10 +172,11 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                     blurOnSubmit={false}
                                 />
                             </View>
-                            <View style={styles.SectionStyle}>
+                            {/* <View flexDirection='row' style={styles.addressSectionStyle}>
                                 <TextInput
-                                    style={styles.inputStyle}
+                                    style={styles.addressinputStyle}
                                     onChangeText={UserAddress => setUserAddress(UserAddress)}
+                                    value={userAddress}
                                     // underlineColorAndroid="#FFFFFF"
                                     placeholder={t('enteraddress')}
                                     placeholderTextColor="#aaa"
@@ -177,11 +184,23 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                     // ref={ref => {
                                     //     this._addressinput = ref;
                                     // }}
+                                    editable={false}
                                     returnKeyType="next"
                                     // onSubmitEditing={Keyboard.dismiss}
                                     blurOnSubmit={false}
                                 />
-                            </View>
+                                <TouchableOpacity
+                                    activeOpacity={0.5}
+                                    onPress={async () => {
+                                        setRedirect('RegisterUserScreen');
+                                        navigate('MapScreen');
+                                    }}
+                                    style={{
+                                        position: 'absolute', right: 15,
+                                    }}>
+                                    <Entypo name="plus" size={45} color="#7a7a7a" />
+                                </TouchableOpacity>
+                            </View> */}
                             {
                                 errortext != '' ? Toast.show(errortext, Toast.LONG) : null
                                 // (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
@@ -190,7 +209,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                 style={styles.buttonStyle}
                                 activeOpacity={0.5}
                                 onPress={handleSubmitButton}>
-                                <Text style={styles.buttonTextStyle}>{t('register')}</Text>
+                                <FontBold mystyle={styles.buttonTextStyle} value={t('register')} />
                             </TouchableOpacity>
                         </KeyboardAvoidingView>
                     </View>
@@ -203,33 +222,43 @@ export default withNamespaces()(RegisterUserScreen);
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
     SectionStyle: {
         flexDirection: 'row',
-        height: 40,
-        marginTop: 20,
-        marginLeft: 35,
-        marginRight: 35,
-        margin: 10,
+        height: 50,
+        marginTop: 15,
+        marginLeft: 15,
+        marginRight: 15,
+    },
+    addressSectionStyle: {
+        flexDirection: 'row',
+        height: 50,
+        marginTop: 15,
+        marginLeft: 15,
+        marginRight: 15,
     },
     buttonStyle: {
-        backgroundColor: '#ff9800',
+        backgroundColor: '#fff',
         borderWidth: 0,
-        color: '#FFFFFF',
-        borderColor: '#ff9800',
+        borderColor: '#7a7a7a',
+        borderWidth: 1,
         alignItems: 'center',
-        borderRadius: 30,
-        marginLeft: 35,
-        marginRight: 35,
-        marginTop: 20,
+        borderRadius: 7,
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 15,
         marginBottom: 20,
         fontSize: 20,
         height: 50,
         textAlign: 'center'
     },
     buttonTextStyle: {
-        color: '#FFFFFF',
+        color: '#7a7a7a',
         paddingVertical: 10,
-        fontSize: 16,
+        fontSize: 20,
     },
     inputStyle: {
         flex: 1,
@@ -237,10 +266,21 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 1,
-        borderRadius: 30,
-        borderColor: '#ff9800',
+        borderRadius: 7,
+        borderColor: '#f5c500',
         fontSize: 20,
         padding: 10,
+        height: 50
+    },
+    addressinputStyle: {
+        flex: 1,
+        color: 'black',
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderWidth: 1,
+        borderRadius: 7,
+        borderColor: '#f5c500',
+        fontSize: 20,
         height: 50
     },
     errorTextStyle: {

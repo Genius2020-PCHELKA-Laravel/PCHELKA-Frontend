@@ -135,8 +135,7 @@ const HomeCleaningDetails = ({ children, t }) => {
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <FontBold mystyle={styles.qText} value={t('cleaningq1')} />
-            <Spacer />
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', left: 15 }}>
                 <TouchableOpacity onPress={() => setHours(2)}><Text style={hours == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setHours(3)}><Text style={hours == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setHours(4)}><Text style={hours == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
@@ -146,26 +145,22 @@ const HomeCleaningDetails = ({ children, t }) => {
                 {/* <TouchableOpacity onPress={() => setHours(8)}><Text style={hours == 8 ? styles.thumbdown : styles.thumbup}>8</Text></TouchableOpacity> */}
             </View>
             <Spacer />
-            <Spacer>
-                <FontBold mystyle={styles.qText} value={t('cleaningq2')} />
-            </Spacer>
-            <View style={{ flexDirection: 'row' }}>
+            <FontBold mystyle={styles.qText} value={t('cleaningq2')} />
+            <View style={{ flexDirection: 'row', left: 15 }}>
                 <TouchableOpacity onPress={() => setCleaners(1)}><Text style={cleaners == 1 ? styles.thumbdown : styles.thumbup}>1</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCleaners(2)}><Text style={cleaners == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCleaners(3)}><Text style={cleaners == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCleaners(4)}><Text style={cleaners == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
             </View>
             <Spacer />
-            <Spacer>
-                <FontBold mystyle={styles.qText} value={t('cleaningq3')} />
-            </Spacer>
+            <FontBold mystyle={styles.qText} value={t('cleaningq3')} />
             <View style={styles.row}>
                 <View style={styles.item}>
                     <Switch
-                        trackColor={{ false: "#767577", true: "#ff9800" }}
-                        thumbColor={isEnabled ? "#ff9800" : "#f4f3f4"}
+                        trackColor={{ false: "#7a7a7a", true: "#f5c500" }}
+                        thumbColor={isEnabled ? "#f5c500" : "#f4f3f4"}
                         style={styles.switch}
-                        ios_backgroundColor="#3e3e3e"
+                        ios_backgroundColor="#7a7a7a"
                         onValueChange={toggleSwitch}
                         value={isEnabled}
                     />
@@ -174,12 +169,9 @@ const HomeCleaningDetails = ({ children, t }) => {
                     <FontRegular mystyle={styles.aText} value={requirematerials} />
                 </View>
             </View>
-            <View>
 
-            </View>
-            <Spacer>
-                <FontBold mystyle={styles.qText} value={t('cleaningq4')} />
-            </Spacer>
+            <Spacer />
+            <FontBold mystyle={styles.qText} value={t('cleaningq4')} />
             <TextInput
                 value={desc}
                 onChangeText={setDesc}
@@ -204,10 +196,11 @@ const styles = StyleSheet.create({
     },
     qText: {
         fontSize: 20,
+        marginLeft: 15,
+        marginBottom: 7,
     },
     aText: {
         fontSize: 14,
-        textAlign: 'center',
     },
     switch: {
         width: 30,
@@ -215,21 +208,18 @@ const styles = StyleSheet.create({
         transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }]
     },
     input: {
-        margin: 10,
+        marginLeft: 15,
+        marginRight: 15,
         height: 60,
-        borderColor: '#ff9800',
-        borderRadius: 15,
+        borderColor: '#f5c500',
+        borderRadius: 7,
         borderWidth: 2,
         fontSize: 18,
         textAlign: 'left',
         paddingLeft: 10,
         paddingRight: 10,
     },
-    track: {
-        height: 4,
-        borderRadius: 2,
-        backgroundColor: '#d0d0d0',
-    },
+
     thumbup: {
         fontSize: 24,
         padding: 7,
@@ -237,7 +227,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 48 / 2,
         backgroundColor: 'white',
-        borderColor: '#ff9800',
+        borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -248,7 +238,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 48 / 2,
-        backgroundColor: '#ff9800',
+        backgroundColor: '#f5c500',
         borderColor: 'white',
         borderWidth: 2,
         textAlign: 'center',

@@ -34,7 +34,7 @@ const HomeScreenLogIn = ({ navigation, t }) => {
             <Text style={styles.booknowButtonStyle}>
               <FontRegular value={t('booknow')}>
               </FontRegular>{' '}
-              <FontAwesome5 name="chevron-right" size={15} color="white" />
+              <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
             </Text>
             <Text style={styles.cleaningservicetext}>
               <FontBold value={t('cleaningservicetext')} />
@@ -80,14 +80,13 @@ const HomeScreenLogIn = ({ navigation, t }) => {
     </ScrollView>
   </>)
 };
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white'
   },
   everthingtext: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 15,
+    color: '#b4b4b4',
   },
   homescreentext: {
     fontSize: 24,
@@ -135,18 +134,18 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 10,
     height: 35,
-    backgroundColor: '#ff9800',
+    backgroundColor: '#f5c500',
     padding: 5,
-    borderRadius: 14,
+    borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#ff9800',
+    borderColor: '#7a7a7a',
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: "500",
     paddingHorizontal: 25,
-    color: 'white'
+    color: '#7a7a7a'
   },
   cleaningservicetext: {
     margin: 5,
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 26,
     fontWeight: "900",
     // fontFamily: 'Comfortaa-Bold',
     padding: 5,
@@ -170,12 +169,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'left',
-    fontSize: 21,
+    fontSize: 15,
     // fontFamily: 'Comfortaa-Regular',
     padding: 5,
     color: '#fff'
   }
+
 });
+
 
 
 export default withNamespaces()(HomeScreenLogIn);

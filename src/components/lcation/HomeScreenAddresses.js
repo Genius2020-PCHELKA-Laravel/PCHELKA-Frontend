@@ -9,16 +9,18 @@ import {
     ScrollView,
     TextInput,
 } from 'react-native';
-import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons';
 // import { Context as HCContext } from '../screens/context/HCContext';
 import Spacer from '../Spacer';
 import FontBold from '../FontBold';
 import FontLight from '../FontLight';
 import FontRegular from '../FontRegular';
-import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
 import { setRedirect } from '../../api/redirect';
 import { navigate } from '../../navigationRef';
+import { withNamespaces } from 'react-i18next';
+import i18n from '../../locales/i18n';
+
 export default class HomeScreenAddresses extends React.Component {
     constructor(props) {
         super(props);
@@ -36,36 +38,35 @@ export default class HomeScreenAddresses extends React.Component {
                 >
                     <View style={styles.wrapper}>
                         <View style={styles.container}>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', top: 5 }}>
+                            <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
                                 <TouchableOpacity
+                                    activeOpacity={0.5}
                                     onPress={() => {
                                         this.props.setShowAddressesModal(false);
                                     }}
                                     style={{
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        backgroundColor: '#ff9800',
-                                        borderRadius: 35, width: '25%'
+                                        backgroundColor: '#fff',
                                     }}>
-                                    <Entypo name="chevron-down" size={35} color="#f5f5f7" />
+                                    <FontAwesome name="times" size={35} color="#7a7a7a" />
                                 </TouchableOpacity>
                             </View>
                             <View flexDirection='row'>
-                                <FontBold value="Your addresses" mystyle={{ fontSize: 20, left: 15, top: 15, }} />
+                                <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: 20, left: 15, top: 15, }} />
                                 <TouchableOpacity
+                                    activeOpacity={0.5}
                                     onPress={async () => {
                                         setRedirect('HomeNavigator');
                                         navigate('MapScreen');
                                         this.props.setShowAddressesModal(false);
                                     }}
                                     style={{
-                                        position: 'absolute', right: 15
+                                        position: 'absolute', right: 15,
                                     }}>
-                                    <Entypo name="plus" size={45} color="#ff9800" />
+                                    <Entypo name="plus" size={45} color="#7a7a7a" />
                                 </TouchableOpacity>
                             </View>
                             <Spacer />
-                            <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, }} />
+                            <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginLeft: 15, marginRight: 15 }} />
                             <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
                                 {
                                     // typeof this.props.authtoken != 'undefined'
@@ -119,10 +120,10 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 500,
+        height: 450,
         width: '100%',
         bottom: 0,
-        borderRadius: 35
+        borderRadius: 14
     },
     wrapper: {
         flex: 1,

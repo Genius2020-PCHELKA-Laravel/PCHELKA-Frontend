@@ -7,6 +7,8 @@ import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { getLang, storeLang } from '../api/userLanguage';
+import { Avatar } from 'react-native-elements';
+
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LoginButton = ({ t }) => {
     const { state, login } = useContext(AuthContext);
@@ -72,7 +74,8 @@ const LoginButton = ({ t }) => {
             <TouchableOpacity onPress={() => { login(); }}>
                 {/* <FontBold mystyle={styles.loginButtonStyle} value={t('login')}></FontBold> */}
                 <Text style={styles.loginButtonStyle}>
-                    {t('login')} {' '} <FontAwesome5 name="user" size={14} color="#000" />
+                    {t('login')} {' '}
+                    <FontAwesome5 name="user" size={14} color="#7a7a7a" />
                 </Text>
             </TouchableOpacity>
 
@@ -87,33 +90,36 @@ const styles = StyleSheet.create({
     loginButtonStyle: {
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: '#f5c500',
-        borderRadius: 25,
+        backgroundColor: '#fff',
+        borderRadius: 7,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#7a7a7a',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
-        fontWeight: "500",
+        fontWeight: "bold",
         right: 15,
-        color: '#000'
+        color: '#7a7a7a'
     },
     languageButtonStyle: {
         paddingVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: '#f5c500',
-        borderRadius: 25,
+        backgroundColor: '#fff',
+        borderRadius: 7,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#7a7a7a',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 12,
         fontWeight: "900",
         right: 30,
-        color: '#000'
+        color: '#7a7a7a',
+        fontWeight: "bold",
+
     },
+
 });
 
 export default withNamespaces()(LoginButton);

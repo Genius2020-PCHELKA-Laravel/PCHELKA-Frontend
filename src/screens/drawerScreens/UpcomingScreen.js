@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useContext } from 'react';
+import React, { Component, useEffect, useContext, useState } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { Context as HCContext } from '../context/HCContext';
 import FontBold from '../../components/FontBold';
@@ -6,19 +6,41 @@ import FontRegular from '../../components/FontRegular';
 import FontLight from '../../components/FontLight';
 import Spacer from '../../components/Spacer';
 import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler';
+import Loader from '../../components/Loader';
 
 
 const UpcomingScreen = ({ navigation }) => {
     const { state: hcstate, getUpcoming } = useContext(HCContext);
-
+    const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        setIsLoading(true);
+        getUpcoming().then((response) => {
+            console.log("HomeScreen::useffect::getUpcoming::response:: ");
+            console.log("######################" + JSON.stringify(response));
+            setIsLoading(false);
+        }).catch((error) => {
+            console.log(error);
+            setIsLoading(false);
+        });
+    }, []);
+    useEffect(() => {
+        getUpcoming().then((response) => {
+            console.log("HomeScreen::useffect::getUpcoming::response:: ");
+            console.log("######################" + JSON.stringify(response));
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [hcstate.reloadAppointments]);
 
 
     return (
-        <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#fff' }}>
+            <Loader loading={isLoading} />
             {
                 hcstate.upcoming.sort((a, b) => a.duoDate > b.duoDate ? 1 : -1).map((booking, i) => {
                     return (
-                        <TouchableOpacity key={booking.id} activeOpacity={0.5} onPress={() => { }}>
+                        <TouchableOpacity key={booking.id} activeOpacity={0.5} onPress={() => { }} style={{ backgroundColor: '#fff' }}>
                             <Spacer >
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ flexDirection: 'column' }}>
@@ -72,7 +94,8 @@ const UpcomingScreen = ({ navigation }) => {
                     );
                 })
             }
-        </View >
+        </ScrollView>
+
     );
 
 }

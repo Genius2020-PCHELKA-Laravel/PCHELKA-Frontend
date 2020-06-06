@@ -57,9 +57,9 @@ const SettingsButton = ({ t }) => {
             <TouchableOpacity activeOpacity={.5} onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
                 <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
                     {
-                        address == '' ? t('Addresses') : address
+                        address == '' ? t('addresses') : address
                     }
-                    {' '}<Entypo name="chevron-down" size={14} color="#000" />
+                    {' '}<Entypo name="chevron-down" size={14} color="#f5c500" />
                 </Text>
             </TouchableOpacity >
             <HomeScreenAddresses
@@ -68,24 +68,24 @@ const SettingsButton = ({ t }) => {
                 setShowAddressesModal={setShowAddressesModal}
             />
             {/* <ConfirmationDialog changing={changing} setChanging={setChanging} /> */}
-            {shouldShowLang ?
-                // <TouchableOpacity activeOpacity={.5} onPress={() => setChanging(true)}>
+
+
+            {/* {shouldShowLang ?
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
                     <Text style={styles.languageButtonStyle}>русский {' '}
-                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
                 :
                 <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
                     <Text style={styles.languageButtonStyle}>English{' '}
-                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                     </Text>
                 </TouchableOpacity>
             }
+             */}
             <Avatar
                 size="small"
                 rounded
-                icon={{ name: 'user', type: 'font-awesome', color: '#000' }}
+                icon={{ size: 15, name: 'user', type: 'font-awesome', color: '#fff' }}
                 onPress={() => navigate('SettingNavigator')}
                 activeOpacity={0.7}
                 containerStyle={styles.avatar}
@@ -106,16 +106,17 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 10,
         backgroundColor: '#fff',
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: '#000',
+        // borderRadius: 25,
+        // borderWidth: 1,
+        // borderColor: '#000',
         textAlign: 'center',
-        fontSize: 12,
-        fontWeight: "500",
+        fontSize: 16,
+        // fontWeight: "500",
         color: '#000',
         top: 10,
         marginRight: 40,
-        width: 150
+        width: 200,
+        fontWeight: "bold"
     },
     languageButtonStyle: {
         paddingVertical: 10,
@@ -134,9 +135,9 @@ const styles = StyleSheet.create({
         top: 10
     },
     avatar: {
-        borderColor: '#000',
+        borderColor: '#7a7a7a',
         borderWidth: 1,
-        backgroundColor: '#f5c500',
+        backgroundColor: '#7a7a7a',
         flex: 1,
         right: 20,
         top: 15,

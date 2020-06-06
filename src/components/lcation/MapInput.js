@@ -10,7 +10,7 @@ class MapInput extends React.Component {
                 styles={{
                     container: {
                         borderWidth: 1,
-                        borderColor: '#ff9800',
+                        borderColor: '#f5c500',
                         top: 15,
                         right: 10,
 
@@ -43,7 +43,7 @@ class MapInput extends React.Component {
                 returnKeyType={'search'} // Can be left out for default return key 
                 listViewDisplayed={false}    // true/false/undefined
                 fetchDetails={true}
-                placeholderTextColor="#ff9800"
+                placeholderTextColor="#f5c500"
                 onPress={
                     (data, details = null) => { // 'details' is provided when fetchDetails = true
                         this.props.notifyChange(details.geometry.location);

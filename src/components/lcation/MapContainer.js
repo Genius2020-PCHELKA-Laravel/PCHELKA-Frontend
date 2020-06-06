@@ -11,6 +11,8 @@ import Toast from 'react-native-simple-toast';
 import { Context as UserContext } from '../../screens/context/UserContext';
 import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
 import Loader from '../Loader';
+import i18n from '../../locales/i18n';
+
 const MapContainer = () => {
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
@@ -55,14 +57,14 @@ const MapContainer = () => {
         }).then(async (status) => {
             //for Adding new Address to the list
             setIsLoading(false);
-            Toast.show("Address Correctly Saved", Toast.LONG);
+            Toast.show(i18n.t('addresscorrectlysaved'), Toast.LONG);
             // navigate('HomeNavigator');
             var redirect = await getRedirect();
             removeRedirect();
             navigate(redirect);
         }).catch(() => {
             setIsLoading(false);
-            Toast.show("Address can't be Saved", Toast.LONG);
+            Toast.show(i18n.t('addresscantbesaved'), Toast.LONG);
         });
     }
     const getInitialState = () => {
@@ -111,7 +113,7 @@ const MapContainer = () => {
             <View style={styles.mapinputstyle}>
                 <View style={styles.item1}>
                     <Icon
-                        style={{ top: 15, color: '#ff9800' }}
+                        style={{ top: 15, color: '#f5c500' }}
                         onPress={() => navigate('HomeNavigator')}
                         name="md-arrow-back"
                         size={35}

@@ -37,7 +37,7 @@ import LogoutButton from './src/components/LogoutButton';
 import SettingsButton from './src/components/SettingsButton';
 import LoginButton from './src/components/LoginButton';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
+import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons, Fontisto, Ionicons } from '@expo/vector-icons';
 import EditPersonalDetailsScreen from './src/screens/drawerScreens/EditPersonalDetailsScreen';
 import ManageAddresses from './src/screens/drawerScreens/ManageAddresses';
 import ManageCreditCards from './src/screens/drawerScreens/ManageCreditCards';
@@ -54,7 +54,7 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#f5c500',
-    accent: '#ff9800',
+    accent: '#f5c500',
     // brandPrimary: '#f5c500',
     // brandInfo: '#f5c500',
     // brandSuccess: '#f5c500',
@@ -191,12 +191,11 @@ const HomeStackNavigator = createStackNavigator(
         return {
           title: '',
           headerLeft: () =>
-            <Icon
+            <Ionicons
               style={{ left: 15, color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
-              name="md-menu"
-              size={40}
-            />,
+              name="ios-menu" size={40} color="black" />
+          ,
           headerRight: () => (
             <SettingsButton />
           )
@@ -238,10 +237,10 @@ const SettingStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('settings')} />,
           headerLeft: () =>
-            <Icon
+            <Ionicons
               style={{ left: 15, color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
-              name="md-menu"
+              name="ios-menu"
               size={40}
             />,
           headerStyle: {
@@ -334,10 +333,10 @@ const AppoitmentStackNavigator = createStackNavigator(
       return {
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('appoitments')} />,
         headerLeft: () =>
-          <Icon
+          <Ionicons
             style={{ left: 15, color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
-            name="md-menu"
+            name="ios-menu"
             size={40}
           />,
 
@@ -359,10 +358,10 @@ const FreeStackNavigator = createStackNavigator(
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('freecleaning')} />,
 
         headerLeft: () =>
-          <Icon
+          <Ionicons
             style={{ left: 15, color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
-            name="md-menu"
+            name="ios-menu"
             size={40}
           />,
 
@@ -383,10 +382,10 @@ const SupportStackNavigator = createStackNavigator(
       return {
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('support')} />,
         headerLeft: () =>
-          <Icon
+          <Ionicons
             style={{ left: 15, color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
-            name="md-menu"
+            name="ios-menu"
             size={40}
           />,
 

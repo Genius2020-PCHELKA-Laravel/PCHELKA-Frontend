@@ -7,6 +7,7 @@ import HomeCleaningDetails from '../components/HomeCleaningSteps/HomeCleaningDet
 import DateandTimeDetails from '../components/HomeCleaningSteps/DateandTimeDetails';
 import AddressDetails from '../components/HomeCleaningSteps/AddressDetails';
 import Payment from '../components/HomeCleaningSteps/Payment';
+import Spacer from '../components/Spacer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import ModalDetails from '../components/HomeCleaningSteps/ModalDetails';
@@ -16,6 +17,8 @@ import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
 import { navigate } from '../navigationRef';
 import Loader from '../components/Loader';
+import i18n from '../locales/i18n';
+
 const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
@@ -92,18 +95,18 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     console.log('hcstate.autoassign ' + hcstate.autoassign);
     console.log('hcstate.selectedday::hcstate.start ' + hcstate.selectedday + '  ' + hcstate.start);
     if (hcstate.selectedday == '') {
-      Toast.show('Select date please', Toast.LONG);
+      Toast.show(i18n.t('selectdateplease'), Toast.LONG);
       return;
     }
     if (hcstate.start == '') {
-      Toast.show('Select time please', Toast.LONG);
+      Toast.show(i18n.t('selecttimeplease'), Toast.LONG);
       return;
     }
   };
   const onAddressStepComplete = () => {
     console.log('state.selected_address_name:: ' + state.selected_address_name);
     if (state.selected_address == '') {
-      Toast.show('Select address please', Toast.LONG);
+      Toast.show(i18n.t('selectaddressplease'), Toast.LONG);
       return;
     }
   };
@@ -113,12 +116,32 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   };
 
   const onSubmitSteps = async () => {
+    if (state.selected_address == '') {
+      Toast.show(i18n.t('selectaddressplease'), Toast.LONG);
+      setIsLoading(false);
+      return;
+    }
+    if (hcstate.selectedday == '') {
+      Toast.show(i18n.t('selectdateplease'), Toast.LONG);
+      setIsLoading(false);
+      return;
+    }
+    if (hcstate.start == '') {
+      Toast.show(i18n.t('selecttimeplease'), Toast.LONG);
+      setIsLoading(false);
+      return;
+    }
+    if (hcstate.method == -1) {
+      Toast.show(i18n.t('selectpaymentmethodplease'), Toast.LONG);
+      setIsLoading(false);
+      return;
+    }
     var ispaid = '';
     setIsLoading(true);
     console.log('hcstate.method:: ' + hcstate.method);
     // console.log('hcstate.selectedday:: ' + hcstate.selectedday);
     if (hcstate.method == 0 && hcstate.valid == false) {
-      Toast.show('Your card number not valid', Toast.LONG);
+      Toast.show(i18n.t('yourcardnumbernotvalid'), Toast.LONG);
       setIsLoading(false);
       return;
     }
@@ -138,11 +161,11 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         console.log("HomeCleaningScreen::paid");
         if (response.data.data.result == 'ok') {
           console.log("result: ok, status:success");
-          Toast.show("Thank you for your order\nPayment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status, Toast.LONG);
+          Toast.show(i18n.t('thankyouforyourorder') + "\n" + i18n.t('paymentresult') + ": " + response.data.data.result + "\n" + i18n.t('paymentstatus') + ": " + response.data.data.status, Toast.LONG);
           ispaid = 'yes';
         }
         else if (response.data.data.result == 'error') {
-          Toast.show("Payment result: " + response.data.data.result + "\n Payment status: " + response.data.data.status + "\n Error: " + response.data.data.err_description, Toast.LONG);
+          Toast.show(i18n.t('paymentresult') + ": " + response.data.data.result + "\n" + i18n.t('paymentstatus') + ": " + response.data.data.status + "\n" + i18n.t('error') + ": " + response.data.data.err_description, Toast.LONG);
           setIsLoading(false);
           ispaid = 'no';
         }
@@ -150,33 +173,14 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         console.log("HomeCleaningScreen::NOTpaid" + error);
         setIsLoading(false);
         ispaid = 'no';
-        Toast.show("Not completed payment", Toast.LONG);
+        Toast.show(i18n.t('notcompletedpayment'), Toast.LONG);
       });
     }
     console.log("ispaid" + ispaid);
     // to prevent from booking
     if (hcstate.method == 1 || ispaid == 'yes') {
 
-      if (state.selected_address == '') {
-        Toast.show('Select address please', Toast.LONG);
-        setIsLoading(false);
-        return;
-      }
-      if (hcstate.selectedday == '') {
-        Toast.show('Select date please', Toast.LONG);
-        setIsLoading(false);
-        return;
-      }
-      if (hcstate.start == '') {
-        Toast.show('Select time please', Toast.LONG);
-        setIsLoading(false);
-        return;
-      }
-      if (hcstate.method == -1) {
-        Toast.show('Select payment method please', Toast.LONG);
-        setIsLoading(false);
-        return;
-      }
+
       var frequency = -1;
       if (hcstate.frequency == 1) frequency = 'One-time';
       if (hcstate.frequency == 2) frequency = 'Bi-weekly';
@@ -244,28 +248,29 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         dispatch({
           type: 'RESET'
         });
-        Toast.show('Booked', Toast.LONG);
+        Toast.show(i18n.t('booked'), Toast.LONG);
         navigate('HomeNavigator')
       }).catch((error) => {
         console.log(error);
         setIsLoading(false);
-        Toast.show('Error:: NotBooked', Toast.LONG);
+        Toast.show(i18n.t('notbooked'), Toast.LONG);
       });
     }
   };
   // FFFDD0...Cream EEDC82 ffe5b4 fedc56 ceb180 f8e473 ffbf00 fce205 ffc30b
   return (
     <>
-      <View style={{ flex: 1, marginTop: 10, margin: 15 }}>
+      <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <Loader loading={isloading} />
         <ProgressSteps
-          activeStepIconBorderColor='#f1c40f'
-          activeLabelColor='#f1c40f'
-          completedProgressBarColor='#f1c40f'
-          completedStepIconColor='#f1c40f'
-          labelFontFamily='' backgroundColor='#ffffff'>
+          activeStepIconBorderColor='#f5c500'
+          activeLabelColor='#f5c500'
+          completedProgressBarColor='#f5c500'
+          completedStepIconColor='#f5c500'
+          labelFontFamily=''
+          backgroundColor='#fff'>
           <ProgressStep
-            label={t('frequency')}
+            label={'    ' + t('frequency')}
             onNext={onFrequencyStepComplete}
             onPrevious={onPrevStep}
             scrollViewProps={defaultScrollViewProps}
@@ -321,7 +326,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
             <AddressDetails />
           </ProgressStep>
           <ProgressStep
-            label={t('payment')}
+            label={t('payment') + '  '}
             onPrevious={onPrevStep}
             onSubmit={onSubmitSteps}
             scrollViewProps={defaultScrollViewProps}
@@ -331,14 +336,16 @@ const HomeCleaningScreen = ({ navigation, t }) => {
             previousBtnTextStyle={styles.ButtonTextStyle}
             nextBtnText={t('next')}
             previousBtnText={t('previous')}
+            finishBtnStyle={styles.nextButtonStyle}
+            finishBtnTextStyle={styles.ButtonTextStyle}
             finishBtnText={t('submit')}>
             <Payment />
           </ProgressStep>
         </ProgressSteps>
+        <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
       </View>
 
       {/* <Text style={styles.modalText}>Modal{'  '}<FontAwesome5 name="chevron-up" size={15} color="#161924" /></Text> */}
-      <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
 
     </>
   );
@@ -349,44 +356,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   nextButtonStyle: {
-    top: 20,
-    right: -65,
-    backgroundColor: '#f1c40f',
-    borderRadius: 20,
+    top: 0,
+    right: -50,
+    backgroundColor: '#fff',
+    borderRadius: 7,
     borderWidth: 1,
-    borderColor: '#DAA520',
+    borderColor: '#7a7a7a',
     // fontFamily: 'Comfortaa-Bold',
-    paddingHorizontal: 25,
+    width: '100%'
   },
   previousButtonStyle: {
-    top: 20,
-    left: 0,
-    backgroundColor: '#f1c40f',
-    borderRadius: 20,
+    top: 0,
+    left: -50,
+    backgroundColor: '#fff',
+    borderRadius: 7,
     borderWidth: 1,
-    borderColor: '#DAA520',
+    borderColor: '#7a7a7a',
     // fontFamily: 'Comfortaa-Bold',
-    paddingHorizontal: 20,
-  },
-  modalButtonStyle: {
-    position: 'absolute',
-    left: 10,
-    bottom: 35,
-    paddingHorizontal: 20,
-    backgroundColor: '#f1c40f',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#DAA520',
-    // fontFamily: 'Comfortaa-Bold',
+    width: '100%'
 
   },
-  modalText: {
-    color: '#000',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
   ButtonTextStyle: {
-    color: '#fff'
+    color: '#7a7a7a',
+    fontSize: 14,
   },
 });
 export default withNamespaces()(HomeCleaningScreen);

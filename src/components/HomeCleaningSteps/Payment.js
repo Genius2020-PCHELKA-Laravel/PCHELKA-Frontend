@@ -86,11 +86,11 @@ const Payment = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setShowCard(true); setMethod(0) }}>
                 <Spacer>
                     <View>
-                        <View style={{ flexDirection: 'row', fontSize: 24 }}>
+                        <View style={{ flexDirection: 'row' }}>
                             <RadioButton value="0" status={hcstate.method == '0' ? 'checked' : 'unchecked'} />
-                            <FontBold value={t('paymentq1')} mystyle={{ fontSize: 24 }}></FontBold>
+                            <FontBold value={t('paymentq1')} mystyle={{ fontSize: 20 }}></FontBold>
                         </View>
-                        <FontLight value={t('paymentq1details')} mystyle={{ color: 'green', fontSize: 11, marginLeft: 35 }}></FontLight>
+                        <FontLight value={t('paymentq1details')} mystyle={{ color: 'green', fontSize: 14, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
             </TouchableOpacity>
@@ -104,9 +104,9 @@ const Payment = ({ children, t }) => {
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
-                        <FontBold value={t('paymentq2')} mystyle={{ fontSize: 24 }}></FontBold>
+                        <FontBold value={t('paymentq2')} mystyle={{ fontSize: 20 }}></FontBold>
                     </View>
-                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
                 </Spacer>
             </TouchableOpacity>
         </ScrollView>);

@@ -57,7 +57,7 @@ const Frequency = ({ children, t }) => {
         console.log("Discount: " + discount)
     }, [frequency]);
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
             {/* <Text>{frequency}</Text>
             <Text>Frequency:{hcstate.frequency}</Text>
             <Text>Price:{hcstate.price}</Text>
@@ -69,11 +69,11 @@ const Frequency = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setFrequency(1) }}>
                 <Spacer>
                     <View>
-                        <View style={{ flexDirection: 'row', fontSize: 24 }}>
+                        <View style={{ flexDirection: 'row' }}>
                             <RadioButton value="1" status={hcstate.frequency == 1 ? 'checked' : 'unchecked'} />
-                            <FontBold value={t('onetime')} mystyle={{ fontSize: 24 }}></FontBold>
+                            <FontBold value={t('onetime')} mystyle={{ fontSize: 20 }}></FontBold>
                         </View>
-                        <FontLight value={t('ontimedetails')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                        <FontLight value={t('ontimedetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
                     </View>
                 </Spacer>
             </TouchableOpacity>
@@ -81,9 +81,9 @@ const Frequency = ({ children, t }) => {
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value='2' status={hcstate.frequency == 2 ? 'checked' : 'unchecked'} />
-                        <FontBold value={t('biweekly')} mystyle={{ fontSize: 24 }}></FontBold>
+                        <FontBold value={t('biweekly')} mystyle={{ fontSize: 20 }}></FontBold>
                     </View>
-                    <FontLight value={t('biweeklydetails')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('biweeklydetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
                     <FontLight mystyle={styles.DiscountStyle} value={t('5off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
@@ -91,10 +91,10 @@ const Frequency = ({ children, t }) => {
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
                         <RadioButton value='3' status={hcstate.frequency == 3 ? 'checked' : 'unchecked'} />
-                        <FontBold value={t('weekly')} mystyle={{ fontSize: 24 }}></FontBold>
+                        <FontBold value={t('weekly')} mystyle={{ fontSize: 20 }}></FontBold>
 
                     </View>
-                    <FontLight value={t('weeklydetails')} mystyle={{ color: 'gray', fontSize: 18, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('weeklydetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
                     <FontLight mystyle={styles.DiscountStyle} value={t('10off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
@@ -121,9 +121,6 @@ const Frequency = ({ children, t }) => {
 };
 
 const styles = StyleSheet.create({
-    text: {
-        fontSize: 30
-    },
     DiscountStyle: {
         margin: 5,
         position: "absolute",
@@ -132,17 +129,18 @@ const styles = StyleSheet.create({
         height: 30,
         width: 75,
         backgroundColor: '#f5c500',
-        borderRadius: 10,
+        borderRadius: 14,
         borderWidth: 1,
-        borderColor: '#f5c500',
+        borderColor: '#7a7a7a',
+        color: '#7a7a7a',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 14,
-        fontWeight: "500",
+        fontSize: 11,
         // fontFamily: 'Comfortaa-Bold',
         padding: 5,
         shadowColor: '#2AC062',
+        fontWeight: 'bold',
         shadowOpacity: 0.5,
         shadowOffset: {
             height: 10,

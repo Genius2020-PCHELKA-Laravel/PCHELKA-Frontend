@@ -27,12 +27,12 @@ export default class App extends React.Component {
           images={this.state.images}
           circleLoop={true}
           sliderBoxHeight={200}
-          dotColor="#ff9800"
-          inactiveDotColor="#f5c500"
+          dotColor="#f5c500"
+          inactiveDotColor="#b4b4b4"
           dotStyle={{
-            width: 20,
-            height: 20,
-            borderRadius: 20,
+            width: 15,
+            height: 15,
+            borderRadius: 15,
             marginHorizontal: 0,
             padding: 0,
             margin: 0
