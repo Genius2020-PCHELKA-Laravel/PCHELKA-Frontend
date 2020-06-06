@@ -3,7 +3,6 @@ import { Text, Image, TextInput, StyleSheet, View, Switch, TouchableOpacity, Scr
 import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
 import { Container, Footer, FooterTab, Button } from 'native-base';
 import Toast from 'react-native-simple-toast';
-import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
 import { RadioButton, Avatar } from 'react-native-paper';
 import Spacer from '../../components/Spacer';
@@ -15,7 +14,6 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
-import ModalDetails from '../../components/HomeCleaningSteps/ModalDetails'
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch, state: hcstate, getSchedules } = useContext(HCContext);
     //const [day, setDay] = useState(hcstate.selectedday);
@@ -232,252 +230,55 @@ const HCRescheduleScreen = ({ children, t }) => {
             </TouchableOpacity>
         )
     }
-    const defaultScrollViewProps = {
-        keyboardShouldPersistTaps: 'handled',
-        contentContainerStyle: {
-            flex: 1,
-            justifyContent: 'center',
-        }
-    };
+
     return (
-        <>
-            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
                 <Loader loading={isloading} />
-                <ProgressSteps
-                    activeStepIconBorderColor='#f5c500'
-                    activeLabelColor='#f5c500'
-                    completedProgressBarColor='#f5c500'
-                    completedStepIconColor='#f5c500'
-                    labelFontFamily=''
-                    backgroundColor='#fff'
-                    activeStep={2}>
-                    <ProgressStep
-                        label={'    ' + t('frequency')}
-                        // onNext={onFrequencyStepComplete}
-                        // onPrevious={onPrevStep}
-                        scrollViewProps={defaultScrollViewProps}
-                        nextBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnStyle={styles.nextButtonStyle}
-                        nextBtnText={t('next')}
-                        previousBtnText={t('previous')}
-                        finishBtnText={t('submit')}
-                        isComplete={true}
-                    >
-                    </ProgressStep>
-                    <ProgressStep
-                        label={t('cleaning')}
-                        // onNext={onCleaningDetailsComplete}
-                        // onPrevious={onPrevStep}
-                        scrollViewProps={defaultScrollViewProps}
-                        nextBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnStyle={styles.nextButtonStyle}
-                        previousBtnStyle={styles.previousButtonStyle}
-                        previousBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnText={t('next')}
-                        previousBtnText={t('previous')}
-                        finishBtnText={t('submit')}
-                        isComplete={true}
-                    >
-                    </ProgressStep>
-                    <ProgressStep
-                        label={t('date')}
-                        // onNext={onDateTimeStepComplete}
-                        // onPrevious={onPrevStep}
-                        scrollViewProps={defaultScrollViewProps}
-                        nextBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnStyle={styles.nextButtonStyle}
-                        previousBtnStyle={styles.previousButtonStyle}
-                        previousBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnText={t('next')}
-                        previousBtnText={t('previous')}
-                        finishBtnText={t('submit')}
-                        previousBtnDisabled
-                        nextBtnDisabled
-                    >
 
-                        <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
-                            <Loader loading={isloading} />
-                            <FontBold mystyle={styles.qText} value={t('dateq0')} />
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15 }}>
-                                {/* redering Auto-Assign */}
-                                <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
-                                    onPress={() => {
-                                        setSelectedDay('');
-                                        setStart('');
-                                        dispatch({
-                                            type: 'set_selectedday',
-                                            payload: '',
-                                        });
-                                        dispatch({
-                                            type: 'set_start',
-                                            payload: '',
-                                        });
-                                        console.log('AutoAssign::hcstate.selectedday' + hcstate.selectedday);
-                                        console.log('AutoAssign::hcstate.start' + hcstate.start);
-                                        console.log('AutoAssign::selectedDay' + selectedDay);
-                                        console.log('AutoAssign::start' + start);
-                                        setAutoassign(1);
-                                        setProviderid('');
-                                    }}>
-                                    <View>
-                                        <Image style={styles.imageThumdown} source={require('../../../assets/Splash/SplashScreen1.png')} />
-                                    </View>
+                <FontBold mystyle={styles.qText} value={t('dateq1')} />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
+                    {days}
+                </ScrollView>
 
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FontBold mystyle={{ fontSize: 10, marginLeft: 5 }} value={t('autoassign')} />
+                <Spacer />
+                <FontBold mystyle={styles.qText} value={t('dateq2')} />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
+                    {starts}
+                </ScrollView>
+                <View style={styles.ourpolicycontainer}>
+                    <AntDesign style={{ marginBottom: 5 }} name="warning" size={30} color="#d21404" />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('ourpolicydoc')} />
+                    <View style={styles.container}>
+                        <TouchableOpacity
+                            style={styles.policybuttonStyle}
+                            activeOpacity={0.5}
+                            onPress={() => {
+                                navigate('ReschedulePolicy');
+                            }}>
+                            <FontLight mystyle={{ color: "blue" }} value={t('viewourpolicy')} />
+                        </TouchableOpacity>
+                    </View>
 
-                                    </View>
-                                    <FontRegular mystyle={{ color: "#000", fontSize: 12, marginLeft: 5 }} value={t('wewillassignthebestcleaner')} />
-                                </TouchableOpacity>
-
-                                {/* redering the providers */}
-
-                                {
-                                    hcstate.providers.map((u, i) => {
-                                        return (
-                                            <TouchableOpacity key={u.id} style={providerid == u.id ? styles.providerThumdown : styles.providerThumup}
-                                                onPress={() => {
-                                                    setIsLoading(true);
-                                                    setSelectedDay('');
-                                                    setStart('');
-                                                    dispatch({
-                                                        type: 'set_selectedday',
-                                                        payload: '',
-                                                    });
-                                                    dispatch({
-                                                        type: 'set_start',
-                                                        payload: '',
-                                                    });
-                                                    console.log('Provider::hcstate.selectedday' + hcstate.selectedday);
-                                                    console.log('Provider::hcstate.start' + hcstate.start);
-                                                    console.log('Provider::selectedDay' + selectedDay);
-                                                    console.log('Provider::start' + start);
-                                                    setAutoassign(0);
-                                                    setProviderid(u.id);
-                                                }}>
-                                                <View>
-                                                    {
-                                                        <Image
-                                                            source={{ uri: u.imageUrl }}
-                                                            style={providerid == i ? styles.imageThumdown : styles.imageThumup}
-                                                        />
-                                                    }
-                                                    {/* {
-                                            u.count < 0 ?
-                                                null :
-                                                u.count > 0 ?
-                                                    <Badge
-                                                        status="success"
-                                                        badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
-                                                        containerStyle={{ position: 'absolute', top: 5, right: 22, }}
-                                                    />
-                                                    : u.count == 0 ?
-                                                        <Badge
-                                                            status="error"
-                                                            badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
-                                                            containerStyle={{ position: 'absolute', top: 5, right: 22 }}
-                                                        />
-                                                        : null
-                                        } */}
-                                                </View>
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={u.name} />
-                                                    <Text>{' '}</Text>
-                                                    {/* {
-                                            u.evaluation >= 4 ?
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                :
-                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
-                                        } */}
-                                                    {/* <Text>{' '}</Text>
-                                        {
-                                            <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
-                                        } */}
-                                                </View>
-                                                {/* <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.desc} /> */}
-                                            </TouchableOpacity>
-
-                                        );
-                                    })
-                                }
-                            </ScrollView>
-                            <Spacer />
-                            <FontBold mystyle={styles.qText} value={t('dateq1')} />
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                                {days}
-                            </ScrollView>
-
-                            <Spacer />
-                            <FontBold mystyle={styles.qText} value={t('dateq2')} />
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                                {starts}
-                            </ScrollView>
-                        </ScrollView >
-                    </ProgressStep>
-                    <ProgressStep
-                        label={t('address')}
-                        // onNext={onAddressStepComplete}
-                        // onPrevious={onPrevStep}
-                        // onSubmit={onSubmitSteps}
-                        scrollViewProps={defaultScrollViewProps}
-                        nextBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnStyle={styles.nextButtonStyle}
-                        previousBtnStyle={styles.previousButtonStyle}
-                        previousBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnText={t('next')}
-                        previousBtnText={t('previous')}
-                        finishBtnText={t('submit')}>
-                    </ProgressStep>
-                    <ProgressStep
-                        label={t('payment') + '  '}
-                        // onPrevious={onPrevStep}
-                        // onSubmit={onSubmitSteps}
-                        scrollViewProps={defaultScrollViewProps}
-                        nextBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnStyle={styles.nextButtonStyle}
-                        previousBtnStyle={styles.previousButtonStyle}
-                        previousBtnTextStyle={styles.ButtonTextStyle}
-                        nextBtnText={t('next')}
-                        previousBtnText={t('previous')}
-                        finishBtnStyle={styles.nextButtonStyle}
-                        finishBtnTextStyle={styles.ButtonTextStyle}
-                        finishBtnText={t('submit')}>
-                    </ProgressStep>
-                </ProgressSteps>
-                <TouchableOpacity
-                    style={styles.mynextButtonStyle}
-                    activeOpacity={0.5}
-                    onPress={() => {
-                        navigate('HCRescheduleReduced');
-                    }}>
-                    <FontBold mystyle={styles.mybuttonTextStyle} value={t('next')} />
-                </TouchableOpacity>
-                <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
-            </View>
-        </>
-        //          <View style={styles.ourpolicycontainer}>
-        //                 <AntDesign style={{ marginBottom: 5 }} name="warning" size={30} color="#d21404" />
-        //                 <FontLight mystyle={{ fontSize: 16 }} value={t('ourpolicydoc')} />
-        //                 <View style={styles.container}>
-        //                     <TouchableOpacity
-        //                         style={styles.policybuttonStyle}
-        //                         activeOpacity={0.5}
-        //                         onPress={() => {
-        //                             navigate('ReschedulePolicy');
-        //                         }}>
-        //                         <FontLight mystyle={{ color: "blue" }} value={t('viewourpolicy')} />
-        //                     </TouchableOpacity>
-        //                 </View>
-
-        //             </View> 
-        // <TouchableOpacity
-        //     style={styles.reschedulebuttonStyle}
-        //     activeOpacity={0.5}
-        //     onPress={() => {
-        //         navigate('HCReschedule');
-        //     }}>
-        //     <FontBold mystyle={styles.buttonTextStyle} value={t('reschedule')} />
-        // </TouchableOpacity> 
+                </View>
+            </ScrollView >
+            <TouchableOpacity
+                style={styles.cancelbuttonStyle}
+                activeOpacity={0.5}
+                onPress={() => {
+                    navigate('HCReschedule');
+                }}>
+                <FontBold mystyle={styles.buttonTextStyle} value={t('cancel')} />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.reschedulebuttonStyle}
+                activeOpacity={0.5}
+                onPress={() => {
+                    navigate('HCReschedule');
+                }}>
+                <FontBold mystyle={styles.buttonTextStyle} value={t('reschedule')} />
+            </TouchableOpacity>
+        </View>
     );
 };
 
@@ -643,49 +444,58 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
     },
     ourpolicycontainer: {
-        margin: 15,
+        margin: 18,
         borderWidth: 1,
         borderColor: "#7a7a7a",
         padding: 15,
     },
-    reschedulebuttonStyle: {
+    cancelbuttonStyle: {
         position: 'absolute',
         bottom: 15,
-        left: 10,
         right: 10,
-        backgroundColor: '#fff',
+        backgroundColor: '#d21404',
         borderWidth: 1,
-        borderColor: '#7a7a7a',
+        borderColor: '#fff',
         alignItems: 'center',
         borderRadius: 7,
         marginTop: 20,
         marginBottom: 20,
         height: 50,
         textAlign: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: "40%"
+    },
+    reschedulebuttonStyle: {
+        position: 'absolute',
+        bottom: 15,
+        left: 10,
+        backgroundColor: '#404d21',
+        borderWidth: 1,
+        borderColor: '#fff',
+        alignItems: 'center',
+        borderRadius: 7,
+        marginTop: 20,
+        marginBottom: 20,
+        height: 50,
+        textAlign: 'center',
+        justifyContent: 'center',
+        width: "40%"
     },
     buttonTextStyle: {
-        color: '#7a7a7a',
+        color: '#fff',
         paddingVertical: 10,
         fontSize: 22,
     },
     mynextButtonStyle: {
-        position: 'absolute',
-        bottom: 58,
-        right: 15,
+        display: 'none',
+        top: 0,
+        right: -50,
         backgroundColor: '#fff',
         borderRadius: 7,
         borderWidth: 1,
         borderColor: '#7a7a7a',
         // fontFamily: 'Comfortaa-Bold',
-        width: '25%',
-        paddingVertical: 10,
-        alignItems: "center"
-    },
-    myButtonTextStyle: {
-        color: '#7a7a7a',
-        fontSize: 20,
-        textAlign: "center"
+        width: '100%'
     },
     nextButtonStyle: {
         display: 'none',

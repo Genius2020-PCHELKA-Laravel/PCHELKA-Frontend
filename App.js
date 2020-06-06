@@ -21,6 +21,7 @@ import UpcomingScreen from './src/screens/drawerScreens/UpcomingScreen';
 import PastScreen from './src/screens/drawerScreens/PastScreen';
 import UpcomingDetailsScreen from './src/screens/drawerScreens/UpcomingDetailsScreen';
 import HCRescheduleScreen from './src/screens/drawerScreens/HCRescheduleScreen';
+import HCRescheduleReducedScreen from './src/screens/drawerScreens/HCRescheduleReducedScreen';
 import ReschedulePolicyScreen from './src/screens/drawerScreens/ReschedulePolicyScreen';
 import FreeScreen from './src/screens/drawerScreens/FreeScreen';
 import SupportScreen from './src/screens/drawerScreens/SupportScreen';
@@ -359,6 +360,16 @@ const AppoitmentStackNavigator = createStackNavigator(
     },
     HCReschedule: {
       screen: HCRescheduleScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
+        headerStyle: {
+          backgroundColor: '#f5c500',
+        },
+        headerTintColor: '#fff',
+      }),
+    },
+    HCRescheduleReduced: {
+      screen: HCRescheduleReducedScreen,
       navigationOptions: ({ navigation }) => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
         headerStyle: {
