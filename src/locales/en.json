@@ -47,6 +47,7 @@
   "pleasefillname": "Please fill Name",
   "pleasefillemail": "Please fill Email",
   "pleasefilladdress": "Please fill Address",
+  "pleaseuseanotheremail": "Please use another email",
   "registrationunsuccessful": "Registration Unsuccessful",
   "editunsuccessful": "Edit personal details Unsuccessful",
   //Edit person details
@@ -107,6 +108,7 @@
   "numberofcleaners": "Number of cleaners",
   "hours": "Hours",
   "cleaners": "Cleaners",
+  "cleaner": "Cleaner",
   "materials": "Materials",
   "dateandtime": "Date & Time",
   "time": "Time",
@@ -130,5 +132,19 @@
   "addresscantbesaved": "Address can't be Saved",
   "enteraddress": "Enter Address",
   "enterbuildingnumber": "Enter Building Number",
-  "enterapartment": "Enter Apartment"
+  "enterapartment": "Enter Apartment",
+  //Appoitments
+  "HomeCleaning": "Home Cleaning",
+  "refcode": "Ref. Code",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "upcomingappoitment": "Upcoming Appoitment",
+  "reschedule": "Reschedule",
+  "schedule": "Schedule",
+  "Confirm": "Confirm",
+  "Completed": "Completed",
+  "withmaterials": "with cleaning materials",
+  "withoutmaterials": "without cleaning materials",
+  "cash": "Cash",
+  "ourpolicy": "Our Policy"
 }

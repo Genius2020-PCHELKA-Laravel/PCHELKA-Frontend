@@ -99,16 +99,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
   },
-  mobileText: { marginTop: 0, fontSize: 30, fontFamily: 'Comfortaa-Bold' },
-  Textss: { fontSize: 12, paddingRight: 280 },
+  mobileText: { marginLeft: 15, fontSize: 30 },
   input: {
-    fontSize: 24,
+    fontSize: 30,
     paddingBottom: 20,
     padding: 20,
     paddingHorizontal: 10,
-    marginBottom: 10
   },
   phoneParts: {
     flexDirection: 'row'

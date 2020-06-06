@@ -41,7 +41,7 @@ const SettingScreen = ({ navigation, t }) => {
   return (
     <View style={styles.container}>
       <View>
-        <Image resizeMethod='auto' style={{ opacity: 0.8, backgroundColor: 'black', borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
+        <Image resizeMethod='auto' style={{ opacity: 0.9, backgroundColor: 'black', borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
         <FontRegular value={fullName} mystyle={styles.name} />
         <FontRegular value={"+ " + mobile} mystyle={styles.mobile} />
         <Avatar
@@ -60,13 +60,13 @@ const SettingScreen = ({ navigation, t }) => {
         <TouchableOpacity onPress={() => { navigate('EditPersonalDetailsScreen') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('editpersonaldetails')}></FontBold>
-            <FontAwesome5 mystyle={styles.item2} name="chevron-right" size={15} color="black" />
+            <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => { navigate('ManageAddresses') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('manageaddresses')} ></FontBold>
-            <FontAwesome5 mystyle={styles.item2} name="chevron-right" size={15} color="black" />
+            <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={() => { navigate('ManageCreditCards') }}>
@@ -101,33 +101,35 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   row: {
-    padding: 15,
+    padding: 10,
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    borderBottomColor: 'gray',
+    borderBottomColor: '#7a7a7a',
     borderBottomWidth: 1,
   },
   item1: {
-    fontSize: 20,
+    fontSize: 16,
     marginLeft: 15,
-    width: '90%' // is 50% of container width
+    width: '70%' // is 50% of container width
   },
   item2: {
-    width: '10%' // is 50% of container width
+    position: "absolute",
+    top: 15,
+    right: 15
   },
 
   avatar: {
     position: 'absolute',
-    backgroundColor: '#7a7a7a',
+    backgroundColor: '#f5c500',
     flex: 1,
     marginLeft: 20,
     bottom: -30
   },
   name: {
     position: 'absolute',
-    fontSize: 40,
+    fontSize: 35,
     top: 20,
     textAlign: 'center',
     color: '#000',
@@ -141,7 +143,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     top: 120,
     textAlign: 'center',
-    color: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 30,
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   },
   listtitle: {
     color: '#aaa',
-    fontSize: 16,
+    fontSize: 14,
     marginLeft: 15
   }
 });

@@ -46,6 +46,7 @@
   "pleasefillname": "Пожалуйста, заполните Имя",
   "pleasefillemail": "Пожалуйста, заполните электронную почту",
   "pleasefilladdress": "Пожалуйста, заполните адрес",
+  "pleaseuseanotheremail": "Пожалуйста, используйте другой адрес электронной почты",
   "registrationunsuccessful": "Регистрация не удалась",
   "editunsuccessful": "Изменить личные данные Не удалось",
   //Edit person details
@@ -106,6 +107,7 @@
   "numberofcleaners": "Количество уборщиков",
   "hours": "часов",
   "cleaners": "Чистящие средства",
+  "cleaner": "очиститель",
   "materials": "материалы",
   "dateandtime": "Дата и время",
   "time": "Время",
@@ -129,5 +131,19 @@
   "addresscantbesaved": "Адрес не может быть сохранен",
   "enteraddress": "Введите адрес",
   "enterbuildingnumber": "Введите номер здания",
-  "enterapartment": "Введите квартиру"
+  "enterapartment": "Введите квартиру",
+  //Appoitments
+  "HomeCleaning": "Уборка дома",
+  "refcode": "Ссылка Код",
+  "upcoming": "предстоящий",
+  "past": "прошлое",
+  "upcomingappoitment": "Предстоящая встреча",
+  "reschedule": "Перепланирование",
+  "schedule": "График",
+  "Confirm": "Подтверждение",
+  "Completed": "Завершенный",
+  "withmaterials": "с чистящими средствами",
+  "withoutmaterials": "без чистящих материалов",
+  "cash": "Денежные средства",
+  "ourpolicy": "Наша политика"
 }

@@ -9,9 +9,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Splash/pchelka.png",
     "splash": {
-      "image": "./assets/SplashScreen1.png",
+      "image": "./assets/Splash/splash2.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },

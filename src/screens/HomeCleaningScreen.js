@@ -202,7 +202,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
       if (hcstate.materials == 1) materials = 15;
       var paymentWays = -1;
       if (hcstate.method == 0) paymentWays = 0;
-      if (hcstate.method == 1) paymentWays = 2;
+      if (hcstate.method == 1) paymentWays = 1;
       HCBooking({
         serviceType: "HomeCleaning",
         duoDate: hcstate.selectedday,

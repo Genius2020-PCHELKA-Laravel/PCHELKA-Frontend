@@ -16,8 +16,6 @@ const authreducer = (state, action) => {
         case 'register':
             //console.log(action.payload);
             return { ...state, responsestatus: action.payload };
-        case 'loader':
-            return { ...state, loading: action.payload };
         case "RESET":
             return initialState;
         default:
@@ -99,27 +97,15 @@ const register = dispatch => {
     return async ({ fullName, email, language }) => {
         console.log({ fullName, email, language });
         try {
-            await dispatch({ type: 'loader', payload: true });
             const senttoken = await getToken();
             console.log("Register Sent Token:>>>>>>>>>>>>>> " + senttoken);
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             const response = await requestApi.post('/register', { fullName, email, language });
             console.log("response in context register Auth Context>>>>>>>>>>>>>>>>" + response.data.status);
-            await dispatch({ type: 'register', payload: response.data.status });
-            if (response.data.status == true)
-                await dispatch({ type: 'loader', payload: false });
-            return response.data.status;
+            return response.data;
         } catch (error) {
-            await dispatch({ type: 'loader', payload: false });
             console.error("error in registration: " + error);
         }
-        // .then(res => {
-        // Return something
-
-        // return true;
-        //   }).catch((error) => { });;
-        //console.log(this.state);
-        // return response.data;
     };
 }
 

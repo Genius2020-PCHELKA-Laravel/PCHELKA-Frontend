@@ -67,6 +67,8 @@ const HCreducer = (state, action) => {
             return { ...state, past: action.payload };
         case 'set_reloadappoitments':
             return { ...state, reloadAppointments: action.payload };
+        case 'set_selected_upcoming':
+            return { ...state, selectedupcoming: action.payload };
 
         case "RESET":
             return {
@@ -97,6 +99,7 @@ const HCreducer = (state, action) => {
                 upcoming: [],
                 past: [],
                 reloadAppointments: '',
+                selectedupcoming: {},
             };
         default:
             return state;
@@ -298,6 +301,25 @@ const getPast = (dispatch) => {
 
     };
 }
+const getSelectedUpcoming = (dispatch) => {
+    return async ({ id }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var result = await requestApi.post('/getBookingById', { id });
+            console.log("getselectedUpcoming::HCCContext:  " + JSON.stringify(result.data.data));
+            if (result.data.status) {
+                dispatch({ type: 'set_selected_upcoming', payload: result.data.data });
+                return result.data.data;
+            }
+            else
+                Toast.show(result.data.error, Toast.LONG);
+        } catch (err) {
+            console.log("Error::HCContex::selectedupComing::" + err);
+            dispatch({ type: 'add_error', payload: err });
+        }
+    };
+}
 export const { Context, Provider } = createDataContext(HCreducer,
     {
         getServices,
@@ -308,7 +330,8 @@ export const { Context, Provider } = createDataContext(HCreducer,
         getSchedules,
         pay,
         getUpcoming,
-        getPast
+        getPast,
+        getSelectedUpcoming,
     },
     {
         services: [],
@@ -341,6 +364,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
         valid: '',
         upcoming: [],
         past: [],
-        reloadAppointments: ''
+        reloadAppointments: '',
+        selectedupcoming: {},
     }
 );

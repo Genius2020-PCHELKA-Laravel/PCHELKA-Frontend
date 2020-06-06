@@ -24,19 +24,19 @@ export default SlideBar = props => {
                 <Spacer />
                 <View style={styles.profileHeader}>
                     <View style={styles.profileHeaderPicCircle}>
-                        <FontLight mystyle={{ fontSize: 25, color: '#f5c500' }} value={fullName != null ? fullName.charAt(0) : ""} />
+                        <FontLight mystyle={{ fontSize: 25, color: '#ffd700' }} value={fullName != null ? fullName.charAt(0) : ""} />
                     </View>
                     <FontLight mystyle={styles.profileHeaderText} value={fullName} />
                 </View>
                 <View style={styles.profileHeaderLine} />
                 <View>
                     <DrawerNavigatorItems
-                        activeBackgroundColor="#ff9800"
-                        activeTintColor="#f5c500"
+                        activeBackgroundColor="#f5c500"
+                        activeTintColor="#ffd700"
 
                         activeLabelStyle={{}}
-                        inactiveBackgroundColor="#f5c500"
-                        inactiveTintColor="#ff9800"
+                        inactiveBackgroundColor="#ffd700"
+                        inactiveTintColor="#f5c500"
                         iconContainerStyle=""
                         iconContainerStyle={{ position: 'absolute', right: 15 }}
                         itemStyle={{
@@ -50,7 +50,7 @@ export default SlideBar = props => {
                             // marginHorizontal: 2,
                         }}
                         itemsContainerStyle={{
-                            backgroundColor: '#f5c500',
+                            backgroundColor: '#ffd700',
                         }}
                         {...props} />
                 </View>
@@ -60,19 +60,19 @@ export default SlideBar = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5c500',
+        backgroundColor: '#ffd700',
     },
 
     sideMenuContainer: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#f5c500',
+        backgroundColor: '#ffd700',
         paddingTop: 0,
         color: 'white',
     },
     profileHeader: {
         flexDirection: 'row',
-        backgroundColor: '#f5c500',
+        backgroundColor: '#ffd700',
         padding: 15,
         textAlign: 'center',
     },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     profileHeaderLine: {
         height: 3,
         marginHorizontal: 20,
-        backgroundColor: '#ff9800',
+        backgroundColor: '#f5c500',
         marginTop: 15,
         marginBottom: 30,
     },

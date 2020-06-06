@@ -67,12 +67,15 @@ const RegisterUserScreen = ({ navigation, t }) => {
             //Hide Loader
             console.log(result);
             // If server response message same as Data Matched
-            if (result == true) {
+            if (result.status == true && result.data == "Duplicated Email") {
+                setLoading(false);
+                setIsRegistraionSuccess(false);
+                setErrortext(t('pleaseuseanotheremail'));
+            } else if (result.status == true && result.data == "success") {
                 setLoading(false);
                 setIsRegistraionSuccess(true);
                 console.log('Registration Successful. Please Login to proceed');
                 navigation.navigate(redirect);
-
             } else {
                 setLoading(false);
                 setErrortext(t('registrationunsuccessful'));
@@ -202,7 +205,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                 </TouchableOpacity>
                             </View> */}
                             {
-                                errortext != '' ? Toast.show(errortext, Toast.LONG) : null
+                                errortext != '' ? Toast.show(errortext, Toast.SHORT) : null
                                 // (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
                             }
                             <TouchableOpacity
