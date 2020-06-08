@@ -70,6 +70,9 @@ const HCreducer = (state, action) => {
         case 'set_selected_upcoming':
             return { ...state, selectedupcoming: action.payload };
 
+        case 'set_selected_upcoming_provider_data':
+            return { ...state, selectedupcomingproviderdata: action.payload };
+
         case "RESET":
             return {
                 ...state,
@@ -100,6 +103,7 @@ const HCreducer = (state, action) => {
                 past: [],
                 reloadAppointments: '',
                 selectedupcoming: {},
+                selectedupcomingproviderdata: {}
             };
         default:
             return state;
@@ -122,7 +126,7 @@ const getProviders = (dispatch) => {
         try {
             const response = await requestApi.post('/providers', { serviceType });
             dispatch({ type: 'set_providers', payload: response.data.data });
-            console.log(response)
+            //console.log(response)
             return response.data.data;
         } catch (err) {
             console.log("Error::HCContex::getProviders" + err);
@@ -150,9 +154,9 @@ const getProviders = (dispatch) => {
 // }
 //from maher
 const getSchedules = (dispatch) => {
-    return async () => {
+    return async ({ id }) => {
         try {
-            const response = await requestApi.get('/getSchedules');
+            const response = await requestApi.post('/getSchedules', { id });
             //console.log(_.filter(schedules, { serviceProviderId: 1, availableDate: "2020-05-31" }))
             dispatch({ type: 'set_schedules', payload: response.data.data });
             return response.data.data;
@@ -306,8 +310,8 @@ const getSelectedUpcoming = (dispatch) => {
         try {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            var result = await requestApi.post('/getBookingById', { id });
-            console.log("getselectedUpcoming::HCCContext:  " + JSON.stringify(result.data.data));
+            var result = await requestApi.post('/getHCBookingById', { id });
+            //console.log("getselectedUpcoming::HCCContext:  " + JSON.stringify(result.data.data));
             if (result.data.status) {
                 dispatch({ type: 'set_selected_upcoming', payload: result.data.data });
                 return result.data.data;
@@ -366,5 +370,6 @@ export const { Context, Provider } = createDataContext(HCreducer,
         past: [],
         reloadAppointments: '',
         selectedupcoming: {},
+        selectedupcomingproviderdata: {},
     }
 );

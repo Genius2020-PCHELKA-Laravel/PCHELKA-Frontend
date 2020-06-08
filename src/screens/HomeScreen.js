@@ -20,7 +20,7 @@ import { Context as HCContext } from './context/HCContext';
 import { navigate } from '../navigationRef';
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses } = useContext(UserContext);
-  const { state: hcstate, setHC, getServices, getUpcoming } = useContext(HCContext);
+  const { state: hcstate, setHC, getServices, getUpcoming, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
@@ -36,6 +36,7 @@ const HomeScreen = ({ navigation, t }) => {
   //   }
   // }
   useEffect(() => {
+    //hcdispatch({ type: 'RESET' });
     getServices().then((response) => {
       setHC(response[0]);
       console.log("HomeScreen::UseEffect::getServices::response::");

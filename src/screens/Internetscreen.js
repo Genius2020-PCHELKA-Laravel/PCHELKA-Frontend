@@ -32,10 +32,18 @@ const InternetScreen = ({ navigation }) => {
 
   }
   useEffect(() => {
-    setIsLoading(true);
-    testLogin();
+    let isCancelled1 = false;
+    if (!isCancelled1) {
+
+      setIsLoading(true);
+      testLogin();
+    }
+    return () => {
+      isCancelled1 = true;
+    };
   }, [])
   useEffect(() => {
+    let isCancelled2 = false;
     NetInfo.fetch().then((connection) => {
       console.log(connection)
       if (connection.isConnected) {
@@ -43,19 +51,25 @@ const InternetScreen = ({ navigation }) => {
       }
       else {
         console.log("Not Connected");
-        setIsLoading(false);
+        if (!isCancelled2)
+          setIsLoading(false);
         return;
       }
       if (connection.isConnected && (typeof (testToken) == 'undefined')) {
-        setIsLoading(false);
+        if (!isCancelled2)
+          setIsLoading(false);
         navigation.navigate('LoginFlow');
       }
       else if (connection.isConnected && (typeof (testToken) != 'undefined')) {
+        if (!isCancelled2)
+          setIsLoading(false);
         navigation.navigate('Dashboard');
-        setIsLoading(false);
       }
     });
 
+    return () => {
+      isCancelled2 = true;
+    };
   }, [testToken]);
 
 

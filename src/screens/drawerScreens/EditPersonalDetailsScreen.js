@@ -119,11 +119,15 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         });
         //setTimeout(function () {
         try {
-            if (result == true) {
+            if (result.status == true && result.data == "Duplicated Email") {
                 //await dispatch({ type: 'edit_user_details', payload: result });
                 setLoading(false);
+                setIsRegistraionSuccess(false);
+                setErrortext(t('pleaseuseanotheremail'));
+            } else if (result.status == true && result.data == "success") {
+                setLoading(false);
                 setIsRegistraionSuccess(true);
-                console.log('Edit User Successful. Please Login to proceed');
+                console.log('Registration Successful. Please Login to proceed');
                 navigation.navigate('SettingNavigator');
             } else {
                 setLoading(false);

@@ -25,6 +25,7 @@ const Payment = ({ children, t }) => {
     // const [number, setNumber] = useState('');
 
     const _onChange = (form) => {
+        let isCanceled = false;
         if (form.valid) {
             console.log(form);
             // setValid(form.valid);
@@ -33,53 +34,76 @@ const Payment = ({ children, t }) => {
             // setExpiryMonth(parts[0]);
             // setExpiryYear(parts[1]);
             // setNumber(form.values.number);
+            if (!isCanceled)
+                dispatch({ type: 'set_valid', payload: form.valid });
+            if (!isCanceled)
+                dispatch({ type: 'set_card', payload: form.values.number });
+            if (!isCanceled)
+                dispatch({ type: 'set_card_exp_month', payload: parts[0] });
+            if (!isCanceled)
+                dispatch({ type: 'set_card_exp_year', payload: parts[1] });
+            if (!isCanceled)
+                dispatch({ type: 'set_card_cvv', payload: form.values.cvc });
 
-            dispatch({ type: 'set_valid', payload: form.valid });
-            dispatch({ type: 'set_card', payload: form.values.number });
-            dispatch({ type: 'set_card_exp_month', payload: parts[0] });
-            dispatch({ type: 'set_card_exp_year', payload: parts[1] });
-            dispatch({ type: 'set_card_cvv', payload: form.values.cvc });
         }
-
+        return () => {
+            isCanceled = true;
+        };
     }
 
     useEffect(() => {
-        if (hcstate.method == 0)
-            setShowCard(true);
-        else
-            setShowCard(false);
+        let isCanceled = false;
+        if (hcstate.method == 0) {
+            if (!isCanceled)
+                setShowCard(true);
+        }
+        else {
+            if (!isCanceled)
+                setShowCard(false);
+        }
+        return () => {
+            isCanceled = true;
+        };
     }, []);
     useEffect(() => {
-        dispatch({
-            type: 'set_method',
-            payload: method,
-        });
+        let isCanceled = false;
+        if (!isCanceled)
+            dispatch({ type: 'set_method', payload: method, });
         var subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
         var total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.HC.materialPrice);
         var discount = hcstate.discount;
-
+        if (hcstate.frequency == 2) {
+            total = parseFloat(total * 2).toFixed(2);
+            discount = parseFloat(total * 0.05).toFixed(2);
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = parseFloat(total - discount).toFixed(2);
+        }
+        else if (hcstate.frequency == 3) {
+            total = parseFloat(total * 4).toFixed(2);
+            discount = parseFloat(total * 0.1).toFixed(2);
+            discount = parseFloat(discount).toFixed(2);
+            subtotal = parseFloat(total - discount).toFixed(2);
+        }
         // var subtotal = hcstate.subtotal;
         // var total = hcstate.total;
         if (method == -1)
             return;
         if (method == 0) {
-            dispatch({
-                type: 'update_totals',
-                payload: { subtotal, total, discount },
-            });
+            if (!isCanceled)
+                dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
         }
         if (method == 1) {
-            setCashPressed(true);
-            subtotal = parseFloat(subtotal) + 5.0;
-            total = parseFloat(total) + 5.0;
-            var discount = hcstate.discount;
-            dispatch({
-                type: 'update_totals',
-                payload: { subtotal, total, discount },
-            });
+            if (!isCanceled)
+                setCashPressed(true);
+            subtotal = (parseFloat(subtotal) + 5.0).toFixed(2);
+            total = (parseFloat(total) + 5.0).toFixed(2);
+            if (!isCanceled)
+                dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
         }
         console.log(cashPressed)
-
+        return () => {
+            isCanceled = true;
+        };
     }, [method]);
     return (
         <ScrollView>

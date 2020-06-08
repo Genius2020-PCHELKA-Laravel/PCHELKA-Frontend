@@ -13,22 +13,31 @@ import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
 
 const UpcomingScreen = ({ navigation, t }) => {
-    const { state: hcstate, getUpcoming, getSelectedUpcoming } = useContext(HCContext);
+    const { state: hcstate, getUpcoming, getSelectedUpcoming, dispatch: hcdispatch } = useContext(HCContext);
     const [isLoading, setIsLoading] = useState(false);
+
+
     useEffect(() => {
-        setIsLoading(true);
+        let isCancelled1 = false;
+        if (!isCancelled1)
+            setIsLoading(true);
         getUpcoming().then((response) => {
-            console.log("HomeScreen::useffect::getUpcoming::response:: ");
-            console.log("######################" + JSON.stringify(response));
-            setIsLoading(false);
+            //console.log("Upcoming::useffect::getUpcoming::response:: ");
+            //console.log("######################" + JSON.stringify(response));
+            if (!isCancelled1)
+                setIsLoading(false);
         }).catch((error) => {
             console.log(error);
-            setIsLoading(false);
+            if (!isCancelled1)
+                setIsLoading(false);
         });
+        return () => {
+            isCancelled1 = true;
+        };
     }, []);
     useEffect(() => {
         getUpcoming().then((response) => {
-            console.log("HomeScreen::useffect::getUpcoming::response:: ");
+            console.log("Upcoming::useffect::getUpcoming::response:: ");
             console.log("######################" + JSON.stringify(response));
         }).catch((error) => {
             console.log(error);
@@ -46,8 +55,14 @@ const UpcomingScreen = ({ navigation, t }) => {
                             key={booking.id}
                             activeOpacity={0.5}
                             onPress={async () => {
+                                hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
                                 setIsLoading(true);
-                                await getSelectedUpcoming({ id: booking.id });
+                                await getSelectedUpcoming({
+                                    id: booking.id,
+                                    providerData: booking.providerData
+                                }).then((response) => {
+                                    console.log("####SelectedUpcoming####" + JSON.stringify(response));
+                                });
                                 setIsLoading(false);
                                 navigate('HCUpcomingDetails')
                             }}
@@ -80,13 +95,13 @@ const UpcomingScreen = ({ navigation, t }) => {
                                             booking.status == 'Completed' ?
                                                 <Badge
                                                     status="success"
-                                                    value={t('confirm')}
+                                                    value={t('Completed')}
                                                     badgeStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
                                                     containerStyle={{ position: 'absolute', top: 60, right: 0, paddingHorizontal: 15 }}
-                                                /> : booking.status == 'Confirm' ?
+                                                /> : booking.status == 'Confirmed' ?
                                                     <Badge
                                                         status="warning"
-                                                        value={t('confirm')}
+                                                        value={t('confirmed')}
                                                         badgeStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
                                                         containerStyle={{ position: 'absolute', top: 60, right: 0, paddingHorizontal: 15 }}
                                                     /> : null

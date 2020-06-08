@@ -73,7 +73,7 @@ const editUserDetails = dispatch => {
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             const response = await requestApi.post('/userUpdate', { mobile, fullName, email, dateOfBirth, gender, language });
             dispatch({ type: 'edit_user_details', payload: { mobile, fullName, email, dateOfBirth, gender, language } });
-            return response.data.status;
+            return response.data;
         } catch (error) {
             console.error("error in edit user: " + error);
         }

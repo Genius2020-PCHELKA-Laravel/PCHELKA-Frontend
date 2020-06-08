@@ -55,7 +55,7 @@ const DateandTimeDetails = ({ children, t }) => {
         console.log('start::start' + start);
     }, [start]);
     useEffect(() => {
-        getSchedules().then((response) => {
+        getSchedules({ id: providerid }).then((response) => {
             console.log("HomeCleaniningScreen::schedules");
             //console.log(response);
             //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
@@ -65,7 +65,7 @@ const DateandTimeDetails = ({ children, t }) => {
         });
     }, []);
     useEffect(() => {
-        getSchedules().then((response) => {
+        getSchedules({ id: providerid }).then((response) => {
             console.log("HomeCleaniningScreen::schedules");
             setIsLoading(false);
             console.log(response);
@@ -417,7 +417,9 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        marginRight: 4,
+        color: "#7a7a7a"
+
     },
     timethumbup: {
         fontSize: 20,
@@ -444,7 +446,7 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     timenotactive: {
-        // display: 'none',
+        display: 'none',
         fontSize: 20,
         padding: 7,
         width: 65,
@@ -454,7 +456,9 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        marginRight: 4,
+        color: "#7a7a7a"
+
     },
     providerThumup: {
         backgroundColor: '#fff',

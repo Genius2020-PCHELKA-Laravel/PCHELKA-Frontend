@@ -11,20 +11,21 @@ import FontBold from '../../components/FontBold';
 import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
+import { Context as UserContext } from '../../screens/context/UserContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
 import ModalDetails from '../../components/HomeCleaningSteps/ModalDetails'
 const HCRescheduleScreen = ({ children, t }) => {
-    const { dispatch, state: hcstate, getSchedules } = useContext(HCContext);
+    const { dispatch: hcdispatch, state: hcstate, getSchedules } = useContext(HCContext);
+    const { dispatch: udispatch, state: ustate } = useContext(UserContext);
     //const [day, setDay] = useState(hcstate.selectedday);
     const [selectedDay, setSelectedDay] = useState(hcstate.selectedupcoming.duoDate);
     const [start, setStart] = useState(hcstate.selectedupcoming.duoTime);
-    const [providerid, setProviderid] = useState(hcstate.providerid);
+    const [providerid, setProviderid] = useState(hcstate.selectedupcomingproviderdata.id);
     const [autoassign, setAutoassign] = useState(hcstate.autoassign);
     const [isloading, setIsLoading] = useState(false);
-    console.log(hcstate.providers)
 
     let days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -34,94 +35,106 @@ const HCRescheduleScreen = ({ children, t }) => {
     }
 
     useEffect(() => {
-        dispatch({
-            type: 'set_providerid',
-            payload: providerid,
-        });
+        let isCancelled1 = false;
+        if (!isCancelled1)
+            hcdispatch({
+                type: 'set_providerid',
+                payload: providerid,
+            });
+        return () => {
+            isCancelled1 = true;
+        };
     }, [providerid]);
     useEffect(() => {
-        dispatch({
-            type: 'set_autoassign',
-            payload: autoassign,
-        });
+        let isCancelled2 = false;
+        if (!isCancelled2)
+            hcdispatch({
+                type: 'set_autoassign',
+                payload: autoassign,
+            });
+        return () => {
+            isCancelled2 = true;
+        };
     }, [autoassign]);
     useEffect(() => {
         console.log('Day::hcstate.selectedday' + hcstate.selectedday);
         console.log('Day::hcstate.start' + hcstate.start);
         console.log('Day::selectedDay' + selectedDay);
         console.log('Day::start' + start);
+        let isCancelled3 = false;
+        if (!isCancelled3)
+            hcdispatch({
+                type: 'set_selectedday',
+                payload: selectedDay,
+            });
+        return () => {
+            isCancelled3 = true;
+        };
     }, [selectedDay]);
     useEffect(() => {
         console.log('start::hcstate.selectedday' + hcstate.selectedday);
         console.log('start::hcstate.start' + hcstate.start);
         console.log('start::selectedDay' + selectedDay);
         console.log('start::start' + start);
+        let isCancelled4 = false;
+        if (!isCancelled4)
+            hcdispatch({
+                type: 'set_start',
+                payload: start,
+            });
+        return () => {
+            isCancelled4 = true;
+        };
     }, [start]);
     useEffect(() => {
-        getSchedules().then((response) => {
-            console.log("HomeCleaniningScreen::schedules");
-            //console.log(response);
-            //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
-        }).catch((error) => {
-            console.log("Error::HomeCleaniningScreen::schedules");
-            console.log(error);
-        });
-    }, []);
-    useEffect(() => {
-        getSchedules().then((response) => {
-            console.log("HomeCleaniningScreen::schedules");
-            setIsLoading(false);
+        getSchedules({ id: providerid }).then((response) => {
+            console.log("HCRescheduleScreen::schedules");
             console.log(response);
             //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
         }).catch((error) => {
-            console.log("Error::HomeCleaniningScreen::schedules");
+            console.log("Error::HCRescheduleScreen::schedules");
             console.log(error);
-            setIsLoading(false);
         });
+        let isCancelled5 = false;
+
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_frequency', payload: hcstate.selectedupcoming.frequency, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_hours', payload: hcstate.selectedupcoming.hoursNeeded, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_cleaners', payload: hcstate.selectedupcoming.cleanerCount, });
+        // var materialpricepaid = hcstate.selectedupcoming.hoursNeeded * hcstate.selectedupcoming.requireMaterial * hcstate.HC.materialPrice;
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedupcoming.requireMaterial, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'update_totals', payload: { total: (hcstate.selectedupcoming.totalAmount).toFixed(2), subtotal: (hcstate.selectedupcoming.subTotal).toFixed(2), discount: (hcstate.selectedupcoming.discount).toFixed(2) }, });
+        if (!isCancelled5)
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedupcoming.addressDetails.address, });
+
+        return () => {
+            isCancelled5 = true;
+        };
+    }, []);
+    useEffect(() => {
+        let isCancelled6 = false;
+        if (!isCancelled6)
+            setIsLoading(true);
+        getSchedules({ id: providerid }).then((response) => {
+            console.log("HCRescheduleScreen::schedules");
+            if (!isCancelled6)
+                setIsLoading(false);
+            console.log(response);
+            //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
+        }).catch((error) => {
+            console.log("Error::HCRescheduleScreen::schedules");
+            console.log(error);
+            if (!isCancelled6)
+                setIsLoading(false);
+        });
+        return () => {
+            isCancelled6 = true;
+        };
     }, [providerid]);
-    // const isInArray = (providerid,schedules , value) => {
-    //     _.filter(schedules, { serviceProviderId:providerid, availableDate:value })
-    //     return (array.find(item => { return item == value }) || []).length > 0;
-    // }    
-    // const providers = [
-    //     {
-    //         providerid: 1,
-    //         name: 'Mailyn',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 2
-    //     },
-    //     {
-    //         providerid: 2,
-    //         name: 'Majd',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    //         evaluation: '3.6',
-    //         desc: '13 Apr',
-    //         count: 0
-    //     }, {
-    //         providerid: 3,
-    //         name: 'Haya',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '2.0',
-    //         desc: '13 Apr',
-    //         count: 3
-    //     }, {
-    //         providerid: 4,
-    //         name: 'Mailyn',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 0
-    //     }, {
-    //         providerid: 5,
-    //         name: 'Samer',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 1
-    //     },
-    // ];
     /////////////////////
     //dayes
     ///////////////////
@@ -147,11 +160,11 @@ const HCRescheduleScreen = ({ children, t }) => {
             <TouchableOpacity key={fdate} onPress={() => {
                 setSelectedDay(fdate);
                 setStart('');
-                dispatch({
+                hcdispatch({
                     type: 'set_selectedday',
                     payload: fdate,
                 });
-                dispatch({
+                hcdispatch({
                     type: 'set_start',
                     payload: '',
                 });
@@ -196,6 +209,7 @@ const HCRescheduleScreen = ({ children, t }) => {
             //const uniqueNStarts = Array.from(new Set(timeStarts));
 
             var timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
+            var previousstartstyle = (hcstate.selectedupcoming.duoTime == fstart && hcstate.selectedupcoming.duoDate == selectedDay);
             // for (var j = 0; j < parseInt(hcstate.hours); j++) {
             //     timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
             // }
@@ -219,15 +233,13 @@ const HCRescheduleScreen = ({ children, t }) => {
                         }
                     }
                 }
-
-
-                dispatch({ type: 'set_start', payload: fstart });
+                hcdispatch({ type: 'set_start', payload: fstart });
                 setStart(fstart);
             }}
                 disabled={timecontrolstyles}>
                 <View>
-                    <Text style={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
-                    <View style={timecontrolstyles ? styles.timediagonaline : null}></View>
+                    <Text style={previousstartstyle ? styles.timenotactiveprevious : timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
+                    <View style={previousstartstyle ? styles.timediagonalineprevious : timecontrolstyles ? styles.timediagonaline : null}></View>
                 </View>
             </TouchableOpacity>
         )
@@ -304,11 +316,11 @@ const HCRescheduleScreen = ({ children, t }) => {
                                     onPress={() => {
                                         setSelectedDay('');
                                         setStart('');
-                                        dispatch({
+                                        hcdispatch({
                                             type: 'set_selectedday',
                                             payload: '',
                                         });
-                                        dispatch({
+                                        hcdispatch({
                                             type: 'set_start',
                                             payload: '',
                                         });
@@ -332,37 +344,37 @@ const HCRescheduleScreen = ({ children, t }) => {
 
                                 {/* redering the providers */}
 
-                                {
-                                    hcstate.providers.map((u, i) => {
-                                        return (
-                                            <TouchableOpacity key={u.id} style={providerid == u.id ? styles.providerThumdown : styles.providerThumup}
-                                                onPress={() => {
-                                                    setIsLoading(true);
-                                                    setSelectedDay('');
-                                                    setStart('');
-                                                    dispatch({
-                                                        type: 'set_selectedday',
-                                                        payload: '',
-                                                    });
-                                                    dispatch({
-                                                        type: 'set_start',
-                                                        payload: '',
-                                                    });
-                                                    console.log('Provider::hcstate.selectedday' + hcstate.selectedday);
-                                                    console.log('Provider::hcstate.start' + hcstate.start);
-                                                    console.log('Provider::selectedDay' + selectedDay);
-                                                    console.log('Provider::start' + start);
-                                                    setAutoassign(0);
-                                                    setProviderid(u.id);
-                                                }}>
-                                                <View>
-                                                    {
-                                                        <Image
-                                                            source={{ uri: u.imageUrl }}
-                                                            style={providerid == i ? styles.imageThumdown : styles.imageThumup}
-                                                        />
-                                                    }
-                                                    {/* {
+
+                                {/* hcstate.selectedupcomingproviderdata.map((u, i) => { */}
+
+                                <TouchableOpacity key={hcstate.selectedupcomingproviderdata.id} style={providerid == hcstate.selectedupcomingproviderdata.id ? styles.providerThumdown : styles.providerThumup}
+                                    onPress={() => {
+                                        setIsLoading(true);
+                                        setSelectedDay('');
+                                        setStart('');
+                                        hcdispatch({
+                                            type: 'set_selectedday',
+                                            payload: '',
+                                        });
+                                        hcdispatch({
+                                            type: 'set_start',
+                                            payload: '',
+                                        });
+                                        console.log('Provider::hcstate.selectedday' + hcstate.selectedday);
+                                        console.log('Provider::hcstate.start' + hcstate.start);
+                                        console.log('Provider::selectedDay' + selectedDay);
+                                        console.log('Provider::start' + start);
+                                        setAutoassign(0);
+                                        setProviderid(hcstate.selectedupcomingproviderdata.id);
+                                    }}>
+                                    <View>
+
+                                        <Image
+                                            source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }}
+                                            style={providerid == hcstate.selectedupcomingproviderdata.id ? styles.imageThumdown : styles.imageThumup}
+                                        />
+
+                                        {/* {
                                             u.count < 0 ?
                                                 null :
                                                 u.count > 0 ?
@@ -378,28 +390,24 @@ const HCRescheduleScreen = ({ children, t }) => {
                                                             containerStyle={{ position: 'absolute', top: 5, right: 22 }}
                                                         />
                                                         : null
-                                        } */}
-                                                </View>
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={u.name} />
-                                                    <Text>{' '}</Text>
-                                                    {/* {
+                                        }  */}
+                                    </View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={hcstate.selectedupcomingproviderdata.name} />
+                                        {/* <Text>{' '}</Text>
+                                         {
                                             u.evaluation >= 4 ?
                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
                                                 :
                                                 <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
-                                        } */}
-                                                    {/* <Text>{' '}</Text>
+                                        } 
+                                         <Text>{' '}</Text>
                                         {
                                             <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
-                                        } */}
-                                                </View>
-                                                {/* <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.desc} /> */}
-                                            </TouchableOpacity>
-
-                                        );
-                                    })
-                                }
+                                        }  */}
+                                    </View>
+                                    {/* <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.desc} /> */}
+                                </TouchableOpacity>
                             </ScrollView>
                             <Spacer />
                             <FontBold mystyle={styles.qText} value={t('dateq1')} />
@@ -544,7 +552,9 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        marginRight: 4,
+        color: "#7a7a7a"
+
     },
     timethumbup: {
         fontSize: 20,
@@ -571,7 +581,7 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     timenotactive: {
-        // display: 'none',
+        display: 'none',
         fontSize: 20,
         padding: 7,
         width: 65,
@@ -581,7 +591,23 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        marginRight: 4,
+        color: "#7a7a7a"
+    },
+    timenotactiveprevious: {
+        // display: 'none',
+        fontSize: 20,
+        padding: 7,
+        width: 65,
+        height: 40,
+        borderRadius: 65 / 2,
+        backgroundColor: 'red',
+        borderColor: '#aaa',
+        borderWidth: 2,
+        textAlign: 'center',
+        marginRight: 4,
+        color: "#7a7a7a"
+
     },
     providerThumup: {
         backgroundColor: '#fff',
@@ -640,6 +666,15 @@ const styles = StyleSheet.create({
         top: 22,
         width: 80,
         borderBottomColor: '#dcdcdc',
+        borderBottomWidth: 2,
+    },
+    timediagonalineprevious: {
+        position: 'absolute',
+        transform: [{ rotate: '-45deg' }],
+        right: 2,
+        top: 22,
+        width: 80,
+        borderBottomColor: 'red',
         borderBottomWidth: 2,
     },
     ourpolicycontainer: {

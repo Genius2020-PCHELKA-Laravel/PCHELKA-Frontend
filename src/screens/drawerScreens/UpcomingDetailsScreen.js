@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component, useContext, useEffect } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity } from 'react-native';
 import { navigate } from '../../navigationRef';
 import FontBold from "../../components/FontBold";
@@ -9,10 +9,11 @@ import { Context as HCContext } from '../context/HCContext';
 import Spacer from '../../components/Spacer';
 
 const UpcomingDetailsScreen = ({ navigation, t }) => {
-    const { state: hcstate, getUpcoming, getSelectedUpcoming } = useContext(HCContext);
+    const { state: hcstate, getUpcoming, getSelectedUpcoming, getProviders, dispatch: hcdispatch } = useContext(HCContext);
     const paymentWaysStr = hcstate.selectedupcoming.paymentWays == 0 ? t('Liqpay') : t('cash');
     const cleanersStr = hcstate.selectedupcoming.cleanerCount > 1 ? t('cleaners') : t('cleaner');
-    const materialsStr = hcstate.selectedupcoming.requireMaterial == 1 ? t('withmaterials') : t('withoutmaterials')
+    const materialsStr = hcstate.selectedupcoming.requireMaterial == 1 ? t('withmaterials') : t('withoutmaterials');
+
 
     return (
         <View style={styles.container}>
@@ -60,6 +61,15 @@ const UpcomingDetailsScreen = ({ navigation, t }) => {
                     + ")"
                 } />
             </View>
+
+            {/* <TouchableOpacity
+                style={styles.cancelbuttonStyle}
+                activeOpacity={0.5}
+                onPress={() => {
+                    navigate('HCReschedule');
+                }}>
+                <FontBold mystyle={styles.buttonTextStyle} value={t('cancel')} />
+            </TouchableOpacity> */}
             <TouchableOpacity
                 style={styles.reschedulebuttonStyle}
                 activeOpacity={0.5}
@@ -76,6 +86,42 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
+
+    title: { marginLeft: 15, marginTop: 15 },
+    subtitle: { marginLeft: 15, marginTop: 0, fontSize: 18, marginBottom: 5, },
+    totalAmount: { color: '#f5c500ff', marginLeft: 15, marginTop: 50, fontSize: 18, },
+    // reschedulebuttonStyle: {
+    //     position: 'absolute',
+    //     bottom: 15,
+    //     right: 10,
+    //     backgroundColor: '#404d21',
+    //     borderWidth: 1,
+    //     borderColor: '#fff',
+    //     alignItems: 'center',
+    //     borderRadius: 7,
+    //     marginTop: 20,
+    //     marginBottom: 20,
+    //     height: 50,
+    //     textAlign: 'center',
+    //     justifyContent: 'center',
+    //     width: "40%"
+    // },
+    // cancelbuttonStyle: {
+    //     position: 'absolute',
+    //     bottom: 15,
+    //     left: 10,
+    //     backgroundColor: '#d21404',
+    //     borderWidth: 1,
+    //     borderColor: '#fff',
+    //     alignItems: 'center',
+    //     borderRadius: 7,
+    //     marginTop: 20,
+    //     marginBottom: 20,
+    //     height: 50,
+    //     textAlign: 'center',
+    //     justifyContent: 'center',
+    //     width: "40%"
+    // },
     reschedulebuttonStyle: {
         position: 'absolute',
         bottom: 15,
@@ -97,8 +143,5 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         fontSize: 22,
     },
-    title: { marginLeft: 15, marginTop: 15 },
-    subtitle: { marginLeft: 15, marginTop: 0, fontSize: 18, marginBottom: 5, },
-    totalAmount: { color: '#f5c500ff', marginLeft: 15, marginTop: 50, fontSize: 18, }
 });
 export default withNamespaces()(UpcomingDetailsScreen);

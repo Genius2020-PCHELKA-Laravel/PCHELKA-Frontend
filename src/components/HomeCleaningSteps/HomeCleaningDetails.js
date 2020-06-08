@@ -27,17 +27,22 @@ const HomeCleaningDetails = ({ children, t }) => {
         console.log("Frequency in Home Cleaning Details: " + hcstate.frequency);
     }, []);
     useEffect(() => {
+        let isCanceled = false;
         if (isEnabled == true) {
-            setMaterials(1);
-            setRequireMaterials('Yes');
+            if (!isCanceled) setMaterials(1);
+            if (!isCanceled) setRequireMaterials('Yes');
         }
         else if (isEnabled == false) {
-            setMaterials(0);
-            setRequireMaterials('No');
+            if (!isCanceled) setMaterials(0);
+            if (!isCanceled) setRequireMaterials('No');
         }
+        return () => {
+            isCanceled = true;
+        };
     }, [isEnabled]);
 
     useEffect(() => {
+        let isCanceled = false;
         console.log("HHHHHHHHHH " + hours);
         subtotal = (hcstate.HC.hourPrice * hours * hcstate.cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
         total = (hcstate.HC.hourPrice * hours * hcstate.cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
@@ -56,18 +61,18 @@ const HomeCleaningDetails = ({ children, t }) => {
         subtotal = subtotal - hcstate.VAT;
         total = parseFloat(total).toFixed(2);
         subtotal = parseFloat(subtotal).toFixed(2);
-        dispatch({
-            type: 'set_hours',
-            payload: hours,
-        });
-        dispatch({
-            type: 'update_totals',
-            payload: { subtotal, total, discount },
-        });
+        if (!isCanceled)
+            dispatch({ type: 'set_hours', payload: hours, });
+        if (!isCanceled)
+            dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
         console.log("Discount: " + discount)
+        return () => {
+            isCanceled = true;
+        };
     }, [hours]);
 
     useEffect(() => {
+        let isCanceled = false;
         console.log("CCCCCCCCC " + cleaners)
         subtotal = (hcstate.HC.hourPrice * hcstate.hours * cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
         total = (hcstate.HC.hourPrice * hcstate.hours * cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
@@ -86,17 +91,17 @@ const HomeCleaningDetails = ({ children, t }) => {
         subtotal = subtotal - hcstate.VAT;
         total = parseFloat(total).toFixed(2);
         subtotal = parseFloat(subtotal).toFixed(2);
-        dispatch({
-            type: 'set_cleaners',
-            payload: cleaners,
-        });
-        dispatch({
-            type: 'update_totals',
-            payload: { subtotal, total, discount },
-        });
-        console.log("Discount: " + discount)
+        if (!isCanceled)
+            dispatch({ type: 'set_cleaners', payload: cleaners, });
+        if (!isCanceled)
+            dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
+        console.log("Discount: " + discount);
+        return () => {
+            isCanceled = true;
+        };
     }, [cleaners]);
     useEffect(() => {
+        let isCanceled = false;
         console.log("MMMMMMMM " + materials)
         // console.log(hcstate.materials)
         subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (materials * hcstate.hours * hcstate.HC.materialPrice);
@@ -116,21 +121,22 @@ const HomeCleaningDetails = ({ children, t }) => {
         subtotal = subtotal - hcstate.VAT;
         total = parseFloat(total).toFixed(2);
         subtotal = parseFloat(subtotal).toFixed(2);
-        dispatch({
-            type: 'set_materials',
-            payload: materials,
-        });
-        dispatch({
-            type: 'update_totals',
-            payload: { subtotal, total, discount },
-        });
-        console.log("Discount: " + discount)
+        if (!isCanceled)
+            dispatch({ type: 'set_materials', payload: materials, });
+        if (!isCanceled)
+            dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
+        console.log("Discount: " + discount);
+        return () => {
+            isCanceled = true;
+        };
     }, [materials]);
     useEffect(() => {
-        dispatch({
-            type: 'set_desc',
-            payload: desc,
-        });
+        let isCanceled = false;
+        if (!isCanceled)
+            dispatch({ type: 'set_desc', payload: desc, });
+        return () => {
+            isCanceled = true;
+        };
     }, [desc]);
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>

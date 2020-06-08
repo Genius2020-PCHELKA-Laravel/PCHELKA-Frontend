@@ -23,7 +23,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
   // };
-  const { state: hcstate, HCBooking, dispatch, getProviders, getSchedules, pay } = useContext(HCContext);
+  const { state: hcstate, HCBooking, dispatch: hcdispatch, getProviders, getSchedules, pay } = useContext(HCContext);
   const { state } = useContext(UserContext);
   const [isloading, setIsLoading] = useState(false);
   // const [ispaid, setIspaid] = useState('');
@@ -37,6 +37,25 @@ const HomeCleaningScreen = ({ navigation, t }) => {
       justifyContent: 'center',
     }
   };
+  // const unsubscribe = navigation.addListener('didFocus', () => {
+
+  // });
+  useEffect(() => {
+    let isCanceled = false;
+    if (!isCanceled)
+      hcdispatch({ type: 'RESET' });
+    if (!isCanceled)
+      hcdispatch({ type: 'set_frequency', payload: 1 });
+    if (!isCanceled)
+      hcdispatch({ type: 'set_hours', payload: 2 });
+    if (!isCanceled)
+      hcdispatch({ type: 'set_cleaners', payload: 1 });
+    if (!isCanceled)
+      hcdispatch({ type: 'set_materials', payload: 0 });
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
   useEffect(() => {
     console.log("HomeCleaningScreen::UseEffect::gethourprice");
     console.log("HomeCleaningScreen::UseEffect::State hour price:: " + hcstate.HC.name)
@@ -245,7 +264,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         ]
       }).then(() => {
         setIsLoading(false);
-        dispatch({
+        hcdispatch({
           type: 'RESET'
         });
         Toast.show(i18n.t('booked'), Toast.LONG);

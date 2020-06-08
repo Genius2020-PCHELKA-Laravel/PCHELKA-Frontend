@@ -10,19 +10,20 @@ import FontBold from '../../components/FontBold';
 import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
+import { Context as UserContext } from '../../screens/context/UserContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
 const HCRescheduleScreen = ({ children, t }) => {
-    const { dispatch, state: hcstate, getSchedules } = useContext(HCContext);
+    const { dispatch: hcdispatch, state: hcstate, getSchedules } = useContext(HCContext);
+    const { dispatch: udispatch, state: ustate } = useContext(UserContext);
     //const [day, setDay] = useState(hcstate.selectedday);
-    const [selectedDay, setSelectedDay] = useState(hcstate.selectedupcoming.duoDate);
-    const [start, setStart] = useState(hcstate.selectedupcoming.duoTime);
+    const [selectedDay, setSelectedDay] = useState(hcstate.selectedday);
+    const [start, setStart] = useState(hcstate.start);
     const [providerid, setProviderid] = useState(hcstate.providerid);
     const [autoassign, setAutoassign] = useState(hcstate.autoassign);
     const [isloading, setIsLoading] = useState(false);
-    console.log(hcstate.providers)
 
     let days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -32,94 +33,108 @@ const HCRescheduleScreen = ({ children, t }) => {
     }
 
     useEffect(() => {
-        dispatch({
-            type: 'set_providerid',
-            payload: providerid,
-        });
+        let isCancelled1 = false;
+        if (!isCancelled1)
+            hcdispatch({
+                type: 'set_providerid',
+                payload: providerid,
+            });
+        return () => {
+            isCancelled1 = true;
+        };
     }, [providerid]);
     useEffect(() => {
-        dispatch({
-            type: 'set_autoassign',
-            payload: autoassign,
-        });
+        let isCancelled2 = false;
+        if (!isCancelled2)
+            hcdispatch({
+                type: 'set_autoassign',
+                payload: autoassign,
+            });
+        return () => {
+            isCancelled2 = true;
+        };
     }, [autoassign]);
     useEffect(() => {
         console.log('Day::hcstate.selectedday' + hcstate.selectedday);
         console.log('Day::hcstate.start' + hcstate.start);
         console.log('Day::selectedDay' + selectedDay);
         console.log('Day::start' + start);
+        let isCancelled3 = false;
+        if (!isCancelled3)
+            hcdispatch({
+                type: 'set_selectedday',
+                payload: selectedDay,
+            });
+        return () => {
+            isCancelled3 = true;
+        };
     }, [selectedDay]);
     useEffect(() => {
         console.log('start::hcstate.selectedday' + hcstate.selectedday);
         console.log('start::hcstate.start' + hcstate.start);
         console.log('start::selectedDay' + selectedDay);
         console.log('start::start' + start);
+        let isCancelled4 = false;
+        if (!isCancelled4)
+            hcdispatch({
+                type: 'set_start',
+                payload: start,
+            });
+        return () => {
+            isCancelled4 = true;
+        };
     }, [start]);
     useEffect(() => {
-        getSchedules().then((response) => {
-            console.log("HomeCleaniningScreen::schedules");
-            //console.log(response);
-            //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
-        }).catch((error) => {
-            console.log("Error::HomeCleaniningScreen::schedules");
-            console.log(error);
-        });
-    }, []);
-    useEffect(() => {
-        getSchedules().then((response) => {
-            console.log("HomeCleaniningScreen::schedules");
-            setIsLoading(false);
+        getSchedules({ id: providerid }).then((response) => {
+            console.log("HCRescheduleScreen::schedules");
             console.log(response);
             //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
         }).catch((error) => {
-            console.log("Error::HomeCleaniningScreen::schedules");
+            console.log("Error::HCRescheduleScreen::schedules");
             console.log(error);
-            setIsLoading(false);
         });
+        let isCancelled5 = false;
+        let frequency = '';
+        if (hcstate.selectedupcoming.frequency == 1) frequency = "One-time";
+        else if (hcstate.selectedupcoming.frequency == 2) frequency = "Bi-weekly";
+        else if (hcstate.selectedupcoming.frequency == 3) frequency = "Weekly";
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_frequency', payload: frequency, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_hours', payload: hcstate.selectedupcoming.hoursNeeded, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_cleaners', payload: hcstate.selectedupcoming.cleanerCount, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedupcoming.requireMaterial, });
+        if (!isCancelled5)
+            hcdispatch({ type: 'update_totals', payload: { total: (hcstate.selectedupcoming.totalAmount).toFixed(2), subtotal: (hcstate.selectedupcoming.subTotal).toFixed(2), discount: (hcstate.selectedupcoming.discount).toFixed(2) }, });
+        if (!isCancelled5)
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedupcoming.addressDetails.address, });
+
+        return () => {
+            isCancelled5 = true;
+        };
+    }, []);
+    useEffect(() => {
+        let isCancelled6 = false;
+        if (!isCancelled6)
+            setIsLoading(true);
+        getSchedules({ id: providerid }).then((response) => {
+            console.log("HCRescheduleScreen::schedules");
+            if (!isCancelled6)
+                setIsLoading(false);
+            console.log(response);
+            //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
+        }).catch((error) => {
+            console.log("Error::HCRescheduleScreen::schedules");
+            console.log(error);
+            if (!isCancelled6)
+                setIsLoading(false);
+        });
+        return () => {
+            isCancelled6 = true;
+        };
     }, [providerid]);
-    // const isInArray = (providerid,schedules , value) => {
-    //     _.filter(schedules, { serviceProviderId:providerid, availableDate:value })
-    //     return (array.find(item => { return item == value }) || []).length > 0;
-    // }    
-    // const providers = [
-    //     {
-    //         providerid: 1,
-    //         name: 'Mailyn',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 2
-    //     },
-    //     {
-    //         providerid: 2,
-    //         name: 'Majd',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    //         evaluation: '3.6',
-    //         desc: '13 Apr',
-    //         count: 0
-    //     }, {
-    //         providerid: 3,
-    //         name: 'Haya',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '2.0',
-    //         desc: '13 Apr',
-    //         count: 3
-    //     }, {
-    //         providerid: 4,
-    //         name: 'Mailyn',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 0
-    //     }, {
-    //         providerid: 5,
-    //         name: 'Samer',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 1
-    //     },
-    // ];
     /////////////////////
     //dayes
     ///////////////////
@@ -145,11 +160,11 @@ const HCRescheduleScreen = ({ children, t }) => {
             <TouchableOpacity key={fdate} onPress={() => {
                 setSelectedDay(fdate);
                 setStart('');
-                dispatch({
+                hcdispatch({
                     type: 'set_selectedday',
                     payload: fdate,
                 });
-                dispatch({
+                hcdispatch({
                     type: 'set_start',
                     payload: '',
                 });
@@ -194,6 +209,7 @@ const HCRescheduleScreen = ({ children, t }) => {
             //const uniqueNStarts = Array.from(new Set(timeStarts));
 
             var timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
+            var previousstartstyle = (hcstate.selectedupcoming.duoTime == fstart && hcstate.selectedupcoming.duoDate == selectedDay);
             // for (var j = 0; j < parseInt(hcstate.hours); j++) {
             //     timecontrolstyles = isInArray(timeStarts, fstart) ? false : true;
             // }
@@ -217,35 +233,28 @@ const HCRescheduleScreen = ({ children, t }) => {
                         }
                     }
                 }
-
-
-                dispatch({ type: 'set_start', payload: fstart });
+                hcdispatch({ type: 'set_start', payload: fstart });
                 setStart(fstart);
             }}
                 disabled={timecontrolstyles}>
                 <View>
-                    <Text style={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
-                    <View style={timecontrolstyles ? styles.timediagonaline : null}></View>
+                    <Text style={previousstartstyle ? styles.timenotactiveprevious : timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
+                    <View style={previousstartstyle ? styles.timediagonalineprevious : timecontrolstyles ? styles.timediagonaline : null}></View>
                 </View>
             </TouchableOpacity>
         )
     }
-
+    const defaultScrollViewProps = {
+        keyboardShouldPersistTaps: 'handled',
+        contentContainerStyle: {
+            flex: 1,
+            justifyContent: 'center',
+        }
+    };
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
                 <Loader loading={isloading} />
-
-                <FontBold mystyle={styles.qText} value={t('dateq1')} />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                    {days}
-                </ScrollView>
-
-                <Spacer />
-                <FontBold mystyle={styles.qText} value={t('dateq2')} />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                    {starts}
-                </ScrollView>
                 <View style={styles.ourpolicycontainer}>
                     <AntDesign style={{ marginBottom: 5 }} name="warning" size={30} color="#d21404" />
                     <FontLight mystyle={{ fontSize: 16 }} value={t('ourpolicydoc')} />
@@ -259,17 +268,19 @@ const HCRescheduleScreen = ({ children, t }) => {
                             <FontLight mystyle={{ color: "blue" }} value={t('viewourpolicy')} />
                         </TouchableOpacity>
                     </View>
-
                 </View>
+                <FontBold mystyle={styles.qText} value={t('dateq1')} />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
+                    {days}
+                </ScrollView>
+
+                <Spacer />
+                <FontBold mystyle={styles.qText} value={t('dateq2')} />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
+                    {starts}
+                </ScrollView>
+
             </ScrollView >
-            <TouchableOpacity
-                style={styles.cancelbuttonStyle}
-                activeOpacity={0.5}
-                onPress={() => {
-                    navigate('HCReschedule');
-                }}>
-                <FontBold mystyle={styles.buttonTextStyle} value={t('cancel')} />
-            </TouchableOpacity>
             <TouchableOpacity
                 style={styles.reschedulebuttonStyle}
                 activeOpacity={0.5}
@@ -345,7 +356,8 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        marginRight: 4,
+        color: "#7a7a7a"
     },
     timethumbup: {
         fontSize: 20,
@@ -372,7 +384,7 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     timenotactive: {
-        // display: 'none',
+        display: 'none',
         fontSize: 20,
         padding: 7,
         width: 65,
@@ -382,7 +394,24 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        marginRight: 4,
+        color: "#7a7a7a"
+
+    },
+    timenotactiveprevious: {
+        // display: 'none',
+        fontSize: 20,
+        padding: 7,
+        width: 65,
+        height: 40,
+        borderRadius: 65 / 2,
+        backgroundColor: '#d21404',
+        borderColor: '#aaa',
+        borderWidth: 2,
+        textAlign: 'center',
+        marginRight: 4,
+        color: "#7a7a7a"
+
     },
     providerThumup: {
         backgroundColor: '#fff',
@@ -443,49 +472,22 @@ const styles = StyleSheet.create({
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 2,
     },
+    timediagonalineprevious: {
+        position: 'absolute',
+        transform: [{ rotate: '-45deg' }],
+        right: 2,
+        top: 22,
+        width: 80,
+        borderBottomColor: '#d21404',
+        borderBottomWidth: 2,
+    },
     ourpolicycontainer: {
         margin: 18,
         borderWidth: 1,
         borderColor: "#7a7a7a",
         padding: 15,
     },
-    cancelbuttonStyle: {
-        position: 'absolute',
-        bottom: 15,
-        right: 10,
-        backgroundColor: '#d21404',
-        borderWidth: 1,
-        borderColor: '#fff',
-        alignItems: 'center',
-        borderRadius: 7,
-        marginTop: 20,
-        marginBottom: 20,
-        height: 50,
-        textAlign: 'center',
-        justifyContent: 'center',
-        width: "40%"
-    },
-    reschedulebuttonStyle: {
-        position: 'absolute',
-        bottom: 15,
-        left: 10,
-        backgroundColor: '#404d21',
-        borderWidth: 1,
-        borderColor: '#fff',
-        alignItems: 'center',
-        borderRadius: 7,
-        marginTop: 20,
-        marginBottom: 20,
-        height: 50,
-        textAlign: 'center',
-        justifyContent: 'center',
-        width: "40%"
-    },
-    buttonTextStyle: {
-        color: '#fff',
-        paddingVertical: 10,
-        fontSize: 22,
-    },
+
     mynextButtonStyle: {
         display: 'none',
         top: 0,
@@ -519,6 +521,27 @@ const styles = StyleSheet.create({
         // fontFamily: 'Comfortaa-Bold',
         width: '100%'
 
+    },
+    reschedulebuttonStyle: {
+        position: 'absolute',
+        bottom: 15,
+        left: 10,
+        right: 10,
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#7a7a7a',
+        alignItems: 'center',
+        borderRadius: 7,
+        marginTop: 20,
+        marginBottom: 20,
+        height: 50,
+        textAlign: 'center',
+        justifyContent: 'center'
+    },
+    buttonTextStyle: {
+        color: '#7a7a7a',
+        paddingVertical: 10,
+        fontSize: 22,
     },
     // notactive: {
     //     transform: [{ rotate: '-45deg' }],

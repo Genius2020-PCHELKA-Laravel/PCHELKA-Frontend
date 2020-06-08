@@ -9,7 +9,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Splash/pchelka.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/Splash/splash2.png",
       "resizeMode": "cover",
