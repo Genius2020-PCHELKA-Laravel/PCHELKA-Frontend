@@ -44,10 +44,12 @@
   "entername": "Enter Name",
   "enteremail": "Enter Email",
   "enteraddress": "Enter Address",
+  "pleasefillmobile": "Please fill mobile",
   "pleasefillname": "Please fill Name",
   "pleasefillemail": "Please fill Email",
   "pleasefilladdress": "Please fill Address",
   "pleaseuseanotheremail": "Please use another email",
+  "pleaseuseanothermobile": "Please use another mobile",
   "registrationunsuccessful": "Registration Unsuccessful",
   "editunsuccessful": "Edit personal details Unsuccessful",
   //Edit person details

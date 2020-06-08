@@ -67,12 +67,11 @@ const getUserAddresses = dispatch => {
 }
 const editUserDetails = dispatch => {
     return async ({ mobile, fullName, email, dateOfBirth, gender, language }) => {
-        console.log({ mobile, fullName, email, dateOfBirth, gender, language });
+        //console.log({ mobile, fullName, email, dateOfBirth, gender, language });
         try {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             const response = await requestApi.post('/userUpdate', { mobile, fullName, email, dateOfBirth, gender, language });
-            dispatch({ type: 'edit_user_details', payload: { mobile, fullName, email, dateOfBirth, gender, language } });
             return response.data;
         } catch (error) {
             console.error("error in edit user: " + error);

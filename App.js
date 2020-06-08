@@ -38,6 +38,7 @@ import LoginButton from './src/components/LoginButton';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons, Fontisto, Ionicons } from '@expo/vector-icons';
 import EditPersonalDetailsScreen from './src/screens/drawerScreens/EditPersonalDetailsScreen';
+import ChangeMobileVerifyScreen from './src/screens/drawerScreens/ChangeMobileVerifyScreen';
 import ManageAddresses from './src/screens/drawerScreens/ManageAddresses';
 import ManageCreditCards from './src/screens/drawerScreens/ManageCreditCards';
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -254,6 +255,18 @@ const SettingStackNavigator = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         // title: i18n.t('editpersonaldetails'),
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('editpersonaldetails')} />,
+        // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
+        headerStyle: {
+          backgroundColor: '#f5c500',
+        },
+        headerTintColor: '#fff',
+      }),
+    },
+    ChangeMobileVerifyScreen: {
+      screen: ChangeMobileVerifyScreen,
+      navigationOptions: ({ navigation }) => ({
+        // title: i18n.t('editpersonaldetails'),
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('verify')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',

@@ -146,10 +146,11 @@ const RegisterUserScreen = ({ navigation, t }) => {
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={styles.inputStyle}
-                                    onChangeText={fullName => setfullName(fullName)}
+                                    onChangeText={(fullName) => { setErrortext(''); setfullName(fullName); }}
                                     placeholder={t('entername')}
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="sentences"
+                                    maxLength={20}
                                     // ref={ref => {
                                     //     this._fullnameinput = ref;
                                     // }}
@@ -161,12 +162,13 @@ const RegisterUserScreen = ({ navigation, t }) => {
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={styles.inputStyle}
-                                    onChangeText={email => setemail(email)}
+                                    onChangeText={(email) => { setErrortext(''); setemail(email); }}
                                     // underlineColorAndroid="#F6F6F7"
                                     placeholder={t('enteremail')}
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="none"
                                     keyboardType="email-address"
+                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._emailinput = ref;
                                     // }}

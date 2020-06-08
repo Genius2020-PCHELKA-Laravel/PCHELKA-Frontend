@@ -43,10 +43,12 @@
   "entername": "Введите имя",
   "enteremail": "Введите адрес электронной почты",
   "enteraddress": "Введите адрес",
+  "pleasefillmobile": "Пожалуйста, заполните мобильный",
   "pleasefillname": "Пожалуйста, заполните Имя",
   "pleasefillemail": "Пожалуйста, заполните электронную почту",
   "pleasefilladdress": "Пожалуйста, заполните адрес",
   "pleaseuseanotheremail": "Пожалуйста, используйте другой адрес электронной почты",
+  "pleaseuseanothermobile": "Пожалуйста, используйте другой мобильный",
   "registrationunsuccessful": "Регистрация не удалась",
   "editunsuccessful": "Изменить личные данные Не удалось",
   //Edit person details

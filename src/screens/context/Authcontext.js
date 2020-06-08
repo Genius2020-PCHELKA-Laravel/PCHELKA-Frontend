@@ -59,6 +59,52 @@ const verifysms = dispatch => {
         }
     };
 }
+const changemobilesendsms = dispatch => {
+    return async ({ mobile, otp, email }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/changemobilesendsms', { mobile, otp, email });
+            return response.data;
+        }
+        catch (err) {
+            console.log(err);
+            await dispatch({ type: 'add_error', payload: 'something went wrong with changemobilesendsms' })
+        }
+
+    };
+}
+const changemobileverifysms = dispatch => {
+    return async ({
+        mobile,
+        enteredotp,
+        otp,
+        fullName,
+        email,
+        dateOfBirth,
+        gender,
+        language
+    }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/changemobileverifysms', {
+                mobile,
+                enteredotp,
+                otp,
+                fullName,
+                email,
+                dateOfBirth,
+                gender,
+                language
+            });
+        }
+        catch (err) {
+            console.log("errrror:" + err);
+            dispatch({ type: 'add_error', payload: 'something went wrong with changemobileverifysms' })
+        }
+    };
+}
 const logout = (dispatch) => {
     return async () => {
         try {
@@ -118,6 +164,6 @@ const getservices=dispach=>{
     };
 }*/
 export const { Context, Provider } = createDataContext(authreducer,
-    { sendsms, logout, verifysms, register, login },
+    { sendsms, logout, verifysms, register, login, changemobilesendsms, changemobileverifysms },
     { loading: false, token: null, errorMessage: '', responsestatus: null }
 );

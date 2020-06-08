@@ -25,10 +25,13 @@ import {
 import Loader from '../../components/Loader';
 import Spacer from '../../components/Spacer';
 import { Context as UserContext } from '../context/UserContext';
+import { Context as AuthContext } from '../context/AuthContext';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const { state, editUserDetails, getUserDetails, dispatch } = useContext(UserContext);
+    const { changemobilesendsms, changemobileverifysms } = useContext(AuthContext);
+
     let [previousMobile, setPreviousMobile] = useState('');
     let [mobile, setMobile] = useState('');
     let [fullName, setFullName] = useState('');
@@ -52,7 +55,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         if (state.userDetails.dateOfBirth != null)
             setDob(new Date(state.userDetails.dateOfBirth));
         setGender(state.userDetails.gender);
-    }, [state.userDetails])
+    }, [state.userDetails]);
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -81,10 +84,6 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
             setErrortext(t('pleasefillmobile'));
             return;
         }
-        if (previousMobile != mobile) {
-            setErrortext("Mobile Number Changer:::Must verify by SMS")
-            return;
-        }
         if (!fullName) {
             setErrortext(t('pleasefillname'));
             return;
@@ -93,50 +92,106 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
             setErrortext(t('pleasefillemail'));
             return;
         }
-        // if (!dob) {
-        //     setErrortext(t('pleasefilldob'));
-        //     return;
-        // }
+
         if (!gender) {
             setErrortext(t('pleasefillgender'));
             return;
         }
-
-        // if (!userAddress) {
-        //     setErrortext(t('pleasefilladdress'));
-        //     return;
-        // }
-        //Show Loader
-
         setLoading(true);
-        var result = await editUserDetails({
-            "mobile": mobile,
-            "fullName": fullName,
-            "email": email,
-            "dateOfBirth": Moment(dob).format('YYYY-MM-DD'),
-            "gender": gender,
-            "language": "Ar"
-        });
-        //setTimeout(function () {
-        try {
-            if (result.status == true && result.data == "Duplicated Email") {
+
+        if (previousMobile != mobile) {
+            //setErrortext("Mobile Number Changer:::Must verify by SMS");
+            var otp = Math.floor(1000 + Math.random() * 9000).toString();
+            const result = await changemobilesendsms({ mobile: mobile, email: email, otp: otp });
+            if (result.status == true && result.data == "Duplicated Mobile") {
+                //await dispatch({ type: 'edit_user_details', payload: result });
+                setLoading(false);
+                setIsRegistraionSuccess(false);
+                setErrortext(t('pleaseuseanothermobile'));
+                return;
+            } else if (result.status == true && result.data == "Duplicated Email") {
                 //await dispatch({ type: 'edit_user_details', payload: result });
                 setLoading(false);
                 setIsRegistraionSuccess(false);
                 setErrortext(t('pleaseuseanotheremail'));
-            } else if (result.status == true && result.data == "success") {
-                setLoading(false);
-                setIsRegistraionSuccess(true);
-                console.log('Registration Successful. Please Login to proceed');
-                navigation.navigate('SettingNavigator');
-            } else {
-                setLoading(false);
-                setErrortext(t('editunsuccessful'));
+                return;
             }
-        } catch (error) {
             setLoading(false);
-            console.error(error);
+            dispatch({ type: 'update_mobile', payload: "+" + mobile });
+            navigate('ChangeMobileVerifyScreen', {
+                mobile: mobile,
+                otp: otp,
+                fullName: fullName,
+                email: email,
+                dateOfBirth: Moment(dob).format('YYYY-MM-DD'),
+                gender: gender,
+                language: "Ar"
+            });
+            //return;
+        } else {
+            var result = await editUserDetails({
+                "mobile": mobile,
+                "fullName": fullName,
+                "email": email,
+                "dateOfBirth": Moment(dob).format('YYYY-MM-DD'),
+                "gender": gender,
+                "language": "Ar"
+            });
+            //setTimeout(function () {
+            try {
+                if (result.status == true && result.data == "Duplicated Mobile") {
+                    //await dispatch({ type: 'edit_user_details', payload: result });
+                    setLoading(false);
+                    setIsRegistraionSuccess(false);
+                    setErrortext(t('pleaseuseanothermobile'));
+                } else if (result.status == true && result.data == "Duplicated Email") {
+                    //await dispatch({ type: 'edit_user_details', payload: result });
+                    setLoading(false);
+                    setIsRegistraionSuccess(false);
+                    setErrortext(t('pleaseuseanotheremail'));
+                } else if (result.status == true && result.data == "success") {
+                    setLoading(false);
+                    setIsRegistraionSuccess(true);
+                    console.log('Registration Successful. Please Login to proceed');
+                    dispatch({ type: 'edit_user_details', payload: { mobile: mobile, fullName: fullName, email: email, dateOfBirth: dob, gender: gender, language: "En" } });
+                    navigation.navigate('SettingNavigator');
+                } else {
+                    setLoading(false);
+                    setErrortext(t('editunsuccessful'));
+                }
+            } catch (error) {
+                setLoading(false);
+                console.error(error);
+            }
         }
+        // var result = await editUserDetails({
+        //     "mobile": mobile,
+        //     "fullName": fullName,
+        //     "email": email,
+        //     "dateOfBirth": Moment(dob).format('YYYY-MM-DD'),
+        //     "gender": gender,
+        //     "language": "Ar"
+        // });
+        // //setTimeout(function () {
+        // try {
+        //     if (result.status == true && result.data == "Duplicated Email") {
+        //         //await dispatch({ type: 'edit_user_details', payload: result });
+        //         setLoading(false);
+        //         setIsRegistraionSuccess(false);
+        //         setErrortext(t('pleaseuseanotheremail'));
+        //     } else if (result.status == true && result.data == "success") {
+        //         setLoading(false);
+        //         setIsRegistraionSuccess(true);
+        //         console.log('Registration Successful. Please Login to proceed');
+        //         navigation.navigate('SettingNavigator');
+        //     } else {
+        //         setLoading(false);
+        //         setErrortext(t('editunsuccessful'));
+        //     }
+        // } catch (error) {
+        //     setLoading(false);
+        //     console.error(error);
+        // }
     };
     return (
         <>
@@ -148,7 +203,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={styles.inputStyle}
-                                    onChangeText={mobile => handleMobileChange(mobile)}
+                                    onChangeText={(mobile) => { setErrortext(''); handleMobileChange(mobile); }}
                                     placeholder={t('entermobile')}
                                     placeholderTextColor="#aaa"
                                     value={mobile}
@@ -157,7 +212,6 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                     // ref={ref => {
                                     //     this._fullnameinput = ref;
                                     // }}
-                                    editable={false}
                                     returnKeyType="next"
                                     // onSubmitEditing={() => this._emailinput && this._emailinput.focus()}
                                     blurOnSubmit={false}
@@ -166,7 +220,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={styles.inputStyle}
-                                    onChangeText={fullName => setFullName(fullName)}
+                                    onChangeText={(fullName) => { setErrortext(''); setFullName(fullName); }}
                                     placeholder={t('entername')}
                                     placeholderTextColor="#aaa"
                                     autoCapitalize="sentences"
@@ -183,8 +237,9 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={styles.inputStyle}
-                                    onChangeText={email => setEmail(email)}
+                                    onChangeText={(email) => { setErrortext(''); setEmail(email); }}
                                     value={email}
+                                    maxLength={25}
                                     // underlineColorAndroid="#F6F6F7"
                                     placeholder={t('enteremail')}
                                     placeholderTextColor="#aaa"
