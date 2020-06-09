@@ -34,6 +34,11 @@
   "appoitments": "Appoitments",
   "freecleaning": "Free Cleaning",
   "support": "Support",
+  "wearealwaysreadytohelp": "We are always ready to help.",
+  "youcanreach": "You can reach us between 8Am-7PM (Weekdays), 9Am-6PM (Fridays)",
+  "callus": "Call Us",
+  "emailus": "Email Us",
+  "chatwithus": "Chat with Us",
   //registerFlow
   "verify": "Verify",
   "register": "Register",
@@ -101,8 +106,9 @@
   "paymentstatus": "Payment status",
   "error": "Error",
   "notcompletedpayment": "Payment does not completed",
-  "booked": "booked",
+  "booked": "Booked",
   "notbooked": "Booking does not completed",
+  "homepage": "Home Page",
   //Modal
   "servicetype": "SERVICE TYPE",
   "details": "Details",
@@ -118,6 +124,7 @@
   "subtotals": "Subtotals",
   "vat": "VAT",
   "discount": "Discount",
+  "subtotal": "Subtotal",
   "total": "Total",
   "next": "    Next    ",
   "previous": "Previous",
@@ -151,5 +158,16 @@
   "ourpolicy": "Our Policy",
   "ourpolicydoc": "You can reschedule the booking for free as long as you reschedule it witin 10 minutes after you have placed your booking request.",
   "viewourpolicy": "View our policy",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "reschedulepolicy": "Reschedule Policy",
+  "type": "Type",
+  "reschedulefee": "Reschedule Fee",
+  "tenminafterplacing": "10 minutes after placing the request",
+  "12beforeappoitment": "12+ hour before the appoitment",
+  "122beforeappoitment": "12-2 hours before the appoitment",
+  "2hbeforeappoitment": "Less than 2 hours before the appoitment",
+  "missedappoitment": "Missed appoitment",
+  "freeofcharge": "Free of charge",
+  "twentyfivepercent": "25% of appoitment value",
+  "onehandredpercent": "100% of appoitment value"
 }

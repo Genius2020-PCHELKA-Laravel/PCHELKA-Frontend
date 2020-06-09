@@ -22,7 +22,7 @@ const SettingsButton = ({ t }) => {
     const [changing, setChanging] = useState(false);
 
     useEffect(() => {
-        if (typeof addresses != 'undefined')
+        if (state.addressesloaded && state.addresses != '' && typeof state.addresses != 'undefined')
             setAddress(state.addresses[0].details + ',' + state.addresses[0].address);
     }, [state.addresses])
 
@@ -54,7 +54,10 @@ const SettingsButton = ({ t }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity activeOpacity={.5} onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
+            <TouchableOpacity
+                style={{ marginRight: 25 }}
+                activeOpacity={.5}
+                onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
                 <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
                     {
                         address == '' ? t('addresses') : address

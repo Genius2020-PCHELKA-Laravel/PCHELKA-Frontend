@@ -18,9 +18,8 @@ const servicesdetails = ({ navigation, title, imagesource, t }) => {
         </Text>
         <TouchableOpacity activeOpacity={0.5}>
           <Text flexDirection="row" style={styles.ButtonStyle}>
-            <FontRegular value={t('booknow')} >
-            </FontRegular>{' '}
-            <FontAwesome5 name="chevron-right" size={15} color="white" />
+            <FontRegular value={t('booknow') + "  "} mystyle={styles.booktext} />
+            {/* <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" /> */}
           </Text>
         </TouchableOpacity>
       </View>
@@ -38,14 +37,16 @@ const styles = StyleSheet.create({
     bottom: 75,
     fontSize: 18,
     color: '#fff',
-    left: 20,
+    textAlign: "center"
   },
   booktext: {
     fontSize: 16,
+    textAlignVertical: "center",
   },
   image: {
     width: '100%',
-    borderRadius: 7,
+    borderTopLeftRadius: 7,
+    borderTopLeftRadius: 7,
     height: 120,
     opacity: 0.6,
     backgroundColor: 'black',

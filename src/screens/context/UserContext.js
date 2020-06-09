@@ -18,6 +18,9 @@ const UserReducer = (state, action) => {
             return { ...state, addresses: [...state.addresses, action.payload] };
         case 'set_user_addresses':
             return { ...state, addresses: action.payload };
+        case 'set_user_addresses_loaded':
+            return { ...state, addressesloaded: action.payload };
+
         case 'update_mobile':
             return { ...state, mobile: action.payload };
         case 'set_full_name':
@@ -56,7 +59,6 @@ const getUserAddresses = dispatch => {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
             var response = await requestApi.get('/userLocation');
-            dispatch({ type: 'set_user_addresses', payload: response.data.data });
             //setUserAddressesStorage(response.data.data);
             return response.data.data;
         } catch (err) {
@@ -126,6 +128,7 @@ export const { Context, Provider } = createDataContext(UserReducer,
     },
     {
         addresses: [],
+        addressesloaded: false,
         fullname: '',
         checkname: '',
         userDetails: "",

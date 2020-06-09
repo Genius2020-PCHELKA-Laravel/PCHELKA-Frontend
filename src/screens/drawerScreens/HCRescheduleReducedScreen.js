@@ -265,7 +265,8 @@ const HCRescheduleScreen = ({ children, t }) => {
                             onPress={() => {
                                 navigate('ReschedulePolicy');
                             }}>
-                            <FontLight mystyle={{ color: "blue" }} value={t('viewourpolicy')} />
+                            <Spacer />
+                            <FontLight mystyle={{ textAlign: "center", color: "blue" }} value={t('viewourpolicy')} />
                         </TouchableOpacity>
                     </View>
                 </View>

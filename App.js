@@ -9,6 +9,7 @@ import FontLight from './src/components/FontLight'
 import HomeScreen from './src/screens/HomeScreen';
 import { setNavigator } from './src/navigationRef';
 import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
+import BookedScreen from './src/components/HomeCleaningSteps/BookedScreen'
 import freecleaning from './src/screens/freecleaning';
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
 import { Provider as UserProvider } from './src/screens/context/UserContext';
@@ -48,6 +49,7 @@ import { withNamespaces } from 'react-i18next';
 import i18n from './src/locales/i18n';
 import MapScreen from './src/screens/MapScreen';
 import MapInput from './src/components/lcation/MapInput'
+
 const theme = {
   ...DefaultTheme,
   roundness: 2,
@@ -65,6 +67,7 @@ const theme = {
 
   },
 };
+
 // const navigator = createSwitchNavigator({
 //   switch1: createStackNavigator({
 //     Internet: InternetScreen,
@@ -227,6 +230,29 @@ const HomeStackNavigator = createStackNavigator(
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('mapScreen')} />,
         headerShown: false,
       }
+    },
+    BookedScreen: {
+      screen: BookedScreen,
+      // navigationOptions: {
+      //   title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('booked')} />,
+      //   headerShown: false,
+      // },
+      navigationOptions: ({ navigation }) => {
+        return {
+          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('booked')} />,
+          headerLeft: () =>
+            <Icon
+              style={{ left: 15, color: '#f5c500' }}
+              onPress={() => navigate('HomeNavigator')}
+              name="md-arrow-back"
+              size={35}
+            />,
+          headerStyle: {
+            // backgroundColor: '#f5c500',
+          },
+          // headerTintColor: '#fff',
+        };
+      },
     },
   });
 const SettingStackNavigator = createStackNavigator(

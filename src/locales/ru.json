@@ -27,7 +27,7 @@
   "appsettings": "Настройки приложения",
   //App.js
   "home": "дом",
-  "draweraccountsettings": "Настройки учетной записи",
+  "draweraccountsettings": "настройки",
   "homecleaning": "Уборка дома",
   "settings": "настройки",
   "appoitments": "Назначения",
@@ -102,6 +102,7 @@
   "notcompletedpayment": "Платеж не завершен",
   "booked": "забронированы",
   "notbooked": "Бронирование не завершено",
+  "homepage": "Домашняя страница",
   //Modal
   "servicetype": "ТИП ОБСЛУЖИВАНИЯ",
   "details": "подробности",
@@ -117,6 +118,7 @@
   "subtotals": "подытоги",
   "vat": "НДС",
   "discount": "скидка",
+  "subtotal": "Промежуточный итог",
   "total": "Всего",
   "next": " следующий",
   "previous": "предыдущий",
@@ -150,5 +152,16 @@
   "ourpolicy": "Наша политика",
   "ourpolicydoc": "Вы можете перенести бронирование бесплатно, если вы перенесете его через 10 минут после того, как вы разместили запрос на бронирование.",
   "viewourpolicy": "Посмотреть нашу политику",
-  "cancel": "Отмена"
+  "cancel": "Отмена",
+  "reschedulepolicy": "Перепланировать политику",
+  "type": "Тип",
+  "reschedulefee": "Перенести плату",
+  "tenminafterplacing": "10 минут после размещения запроса",
+  "12beforeappoitment": "12+ за час до назначения",
+  "122beforeappoitment": "12-2 часов до назначения",
+  "2hbeforeappoitment": "Менее чем за 2 часа до назначения",
+  "missedappoitment": "Пропущенная встреча",
+  "freeofcharge": "Бесплатно",
+  "twentyfivepercent": "25% стоимости назначения",
+  "onehandredpercent": "100% стоимости назначения"
 }

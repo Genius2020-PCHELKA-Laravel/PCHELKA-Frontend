@@ -8,6 +8,7 @@ import { getToken } from '../api/token';
 import { Context as HCContext } from './context/HCContext';
 import { Context as UserContext } from './context/UserContext';
 import Loader from '../components/Loader';
+import { getLang, storeLang } from '../api/userLanguage';
 
 
 const InternetScreen = ({ navigation }) => {
@@ -38,6 +39,12 @@ const InternetScreen = ({ navigation }) => {
       setIsLoading(true);
       testLogin();
     }
+    getLang().then((response) => {
+      console.log("logoutbutton selected Lang in Use Effect:  " + response);
+      i18n.changeLanguage(response);
+    }).catch((err) => {
+      console.log("logoutbutton Screen Can not get lang");
+    });
     return () => {
       isCancelled1 = true;
     };

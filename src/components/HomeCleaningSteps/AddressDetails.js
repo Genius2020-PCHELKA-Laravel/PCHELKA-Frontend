@@ -16,22 +16,20 @@ import { navigate } from '../../navigationRef';
 import { getRedirect, setRedirect, removeRedirect } from '../../api/redirect';
 
 const AddressDetails = ({ children, t }) => {
-    const { state, getUserAddresses, dispatch } = useContext(UserContext);
+    const { state: ustate, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
     const { state: hcstate } = useContext(HCContext);
-    const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
-    const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
-
-
-
-
-
+    const [selectedAddress, setSelectedAddress] = useState(ustate.selected_address);
+    const [selectedAddressName, setSelectedAddressName] = useState(ustate.selected_address_name);
     useEffect(() => {
-        dispatch({
-            type: 'set_selected_address',
-            payload: selectedAddress,
-        });
+        let isCanceled = false;
+        if (!isCanceled) {
+            udispatch({ type: 'set_selected_address', payload: selectedAddress, });
+            udispatch({ type: 'set_selected_addressName', payload: selectedAddressName, });
+        }
+        return () => {
+            isCanceled = true;
+        };
     }, [selectedAddress]);
-
 
     return (
         <View style={styles.container}>
@@ -55,15 +53,15 @@ const AddressDetails = ({ children, t }) => {
                     </View>
 
                     {
-                        state.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((add, i) => {
+                        ustate.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((add, i) => {
                             return (
                                 <TouchableOpacity
                                     key={add.id}
                                     onPress={() => {
                                         setSelectedAddress(add.id);
                                         setSelectedAddressName(add.address);
-                                        dispatch({ type: 'set_selected_address', payload: add.id, });
-                                        dispatch({ type: 'set_selected_address_name', payload: add.address, });
+                                        udispatch({ type: 'set_selected_address', payload: add.id, });
+                                        udispatch({ type: 'set_selected_address_name', payload: add.address, });
                                     }}>
                                     <View flexDirection='row' style={{}}>
                                         <View flexDirection='column'>

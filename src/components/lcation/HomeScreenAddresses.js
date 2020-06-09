@@ -72,36 +72,39 @@ export default class HomeScreenAddresses extends React.Component {
                                     // typeof this.props.authtoken != 'undefined'
                                     //     || this.props.authtoken != ''
                                     //     ?
-                                    this.props.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
-                                        return (
-                                            <TouchableOpacity key={i} onPress={() => { }}>
-                                                <Spacer>
-                                                    <View flexDirection='row'>
-                                                        <View flexDirection='column' style={{ width: '10%' }}>
-                                                            <Entypo name="location" size={25} color="#d21404" />
+                                    typeof this.props.addresses != 'undefined' ?
+
+                                        this.props.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
+                                            return (
+                                                <TouchableOpacity key={i} onPress={() => { }}>
+                                                    <Spacer>
+                                                        <View flexDirection='row'>
+                                                            <View flexDirection='column' style={{ width: '10%' }}>
+                                                                <Entypo name="location" size={25} color="#d21404" />
+                                                            </View>
+                                                            <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
+                                                                <View flexDirection='row' >
+                                                                    <FontBold mystyle={{ fontSize: 18, }} value={u.address + ', '} />
+                                                                </View>
+                                                                <View flexDirection='row' >
+                                                                    <FontBold mystyle={{ fontSize: 18, }} value={u.details} />
+                                                                </View>
+                                                                <View flexDirection='row'>
+                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.street + ', '} />
+                                                                </View>
+                                                                <View flexDirection='row'>
+                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.buildingNumber + ', '} />
+                                                                </View>
+                                                                <View flexDirection='row'>
+                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.apartment} />
+                                                                </View>
+                                                            </View>
                                                         </View>
-                                                        <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
-                                                            <View flexDirection='row' >
-                                                                <FontBold mystyle={{ fontSize: 18, }} value={u.address + ', '} />
-                                                            </View>
-                                                            <View flexDirection='row' >
-                                                                <FontBold mystyle={{ fontSize: 18, }} value={u.details} />
-                                                            </View>
-                                                            <View flexDirection='row'>
-                                                                <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.street + ', '} />
-                                                            </View>
-                                                            <View flexDirection='row'>
-                                                                <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.buildingNumber + ', '} />
-                                                            </View>
-                                                            <View flexDirection='row'>
-                                                                <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.apartment} />
-                                                            </View>
-                                                        </View>
-                                                    </View>
-                                                </Spacer>
-                                            </TouchableOpacity>
-                                        );
-                                    })
+                                                    </Spacer>
+                                                </TouchableOpacity>
+                                            );
+                                        })
+                                        : null
                                     // :
                                     // <Spacer>
                                     //     <FontBold value="You must Login" mystyle={{ fontSize: 20, left: 15, top: 15, }} />

@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, View, Modal, Text, TouchableOpacity } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Dialog from "react-native-dialog";
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNRestart from 'react-native-restart';
 import Spacer from './Spacer';
 import i18n from '../locales/i18n';
 import { getLang, storeLang } from '../api/userLanguage';
+import { Updates } from 'expo';
 
 const ConfirmationDialog = props => {
-    const { changing, setChanging, ...attributes } = props;
+    const { changing, setChanging, lang, ...attributes } = props;
 
     componentDidMount = () => {
         this.mounted = true;
@@ -20,16 +21,15 @@ const ConfirmationDialog = props => {
         //this.setState({ dialogVisible: false });
     };
 
-    const handleChange = () => {
+    const handleChange = async () => {
         try {
-            console.log("Toggle language to:  " + lng);
-            setLang(lang);
-            storeLang(lang);
-            i18n.changeLanguage(lang);
+            console.log("Toggle language to:  " + lang);
+            await storeLang(lang);
+            await i18n.changeLanguage(lang);
             //shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
         } catch (e) { "Error:: " + e }
         setChanging(false);
-        RNRestart.Restart();
+        Updates.reload()
     };
 
     return (
@@ -69,14 +69,15 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: '#f5c500',
-        borderRadius: 14,
+        borderRadius: 7,
+        borderColor: "#7a7a7a",
         borderWidth: 1,
-        color: '#000',
-        borderRadius: 10,
+        color: '#7a7a7a',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
         marginHorizontal: 10,
+        backgroundColor: "#fff"
 
     },
 

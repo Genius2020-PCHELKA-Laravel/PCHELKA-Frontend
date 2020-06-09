@@ -8,12 +8,15 @@ import FontBold from './FontBold';
 import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { getLang, storeLang } from '../api/userLanguage';
+import ConfirmationDialog from './ConfirmationDialog';
+
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LogoutButton = ({ t }) => {
     const { state, logout } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
     const [isloading, setIsLoading] = useState(false);
+    const [changing, setChanging] = useState(false);
     const changeLanguage = (lng) => {
         try {
             console.log("Toggle language to:  " + lng);
@@ -25,7 +28,7 @@ const LogoutButton = ({ t }) => {
     }
     useEffect(() => {
         getLang().then((response) => {
-            console.log("SettingScreen selected Lang in Use Effect:  " + response);
+            console.log("logoutbutton selected Lang in Use Effect:  " + response);
             setLang(response);
             i18n.changeLanguage(response);
             shouldShow ? setShouldShow(false) : setShouldShow(true);
@@ -36,24 +39,23 @@ const LogoutButton = ({ t }) => {
                 setShouldShow(false);
             }
         }).catch((err) => {
-            console.log("Settings Screen Can not get lang");
+            console.log("logoutbutton Screen Can not get lang");
         });
     }, []);
     return (
         <View style={styles.container}>
             <Loader loading={isloading} />
+            <ConfirmationDialog lang={lang} changing={changing} setChanging={setChanging} />
 
             {shouldShow ?
-                <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
-                    <Text style={styles.languageButtonStyle}>русский {' '}
-                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
-                    </Text>
+                // <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
+                <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                    <FontBold mystyle={styles.languageButtonStyle} value={'русский'} />
+                    {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
                 </TouchableOpacity>
                 :
-                <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
-                    <Text style={styles.languageButtonStyle}>English{' '}
-                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
-                    </Text>
+                <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('en'); setChanging(true) }}>
+                    <FontBold mystyle={styles.languageButtonStyle} value={'English'} />
                 </TouchableOpacity>
             }
             <TouchableOpacity onPress={() => { setIsLoading(true); logout().then(() => setIsLoading(false)).catch(() => setIsLoading(false)); }}>
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
         color: '#7a7a7a'
     },
     languageButtonStyle: {
-        paddingVertical: 10,
+        paddingVertical: 8,
         paddingHorizontal: 10,
         backgroundColor: '#fff',
         borderRadius: 7,

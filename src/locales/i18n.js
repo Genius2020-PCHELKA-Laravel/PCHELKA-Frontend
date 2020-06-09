@@ -2,7 +2,7 @@ import i18n from "i18next";
 import { reactI18nextModule } from "react-i18next";
 import translationEN from './en.json';
 import translationRU from './ru.json';
-
+import { getLang } from '../api/userLanguage';
 
 // the translations
 const resources = {
@@ -18,7 +18,7 @@ i18n
   .use(reactI18nextModule) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: "en",
+    lng: "ru",
 
     keySeparator: false, // we do not use keys in form messages.welcome
 

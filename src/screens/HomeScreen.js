@@ -19,7 +19,7 @@ import { Context as UserContext } from './context/UserContext';
 import { Context as HCContext } from './context/HCContext';
 import { navigate } from '../navigationRef';
 const HomeScreen = ({ navigation, t }) => {
-  const { getUserDetails, getUserAddresses } = useContext(UserContext);
+  const { getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
   const { state: hcstate, setHC, getServices, getUpcoming, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
@@ -52,6 +52,8 @@ const HomeScreen = ({ navigation, t }) => {
       getUserAddresses().then((res) => {
         console.log("HomeScreen::useffect::getUserAddresses::response:: ");
         console.log(res);
+        udispatch({ type: 'set_user_addresses_loaded', payload: true });
+        udispatch({ type: 'set_user_addresses', payload: res });
       }).catch((error) => {
         console.log("HomeScreen::useffect::getUserAddresses::error:: ");
       });
@@ -84,10 +86,10 @@ const HomeScreen = ({ navigation, t }) => {
       <Spacer>
         <View style={styles.middlecontainer1}>
           <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen', { redirect: "Dashboard" })}>
-            <Image resizeMethod='auto' style={{ opacity: 0.8, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/homecleaning.jpg')} />
+            <Image resizeMethod='auto' style={{ opacity: 0.5, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/services/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
-              <FontRegular value={t('booknow')}>
-              </FontRegular>{' '}
+              <FontBold value={t('booknow')}>
+              </FontBold>{' '}
               <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
             </Text>
             <Text style={styles.cleaningservicetext}>
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5c500',
     padding: 5,
     borderRadius: 4,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: '#7a7a7a',
     alignItems: 'center',
     alignContent: 'center',
@@ -203,21 +205,22 @@ const styles = StyleSheet.create({
   cleaningservicetext: {
     margin: 5,
     position: "absolute",
-    top: 5,
+    top: 45,
     left: 10,
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 26,
+    fontSize: 34,
     fontWeight: "900",
     // fontFamily: 'Comfortaa-Bold',
     padding: 5,
-    color: '#fff'
+    color: '#fff',
+    fontWeight: "bold"
   },
   cleaningservicedetailtext: {
     margin: 5,
     position: "absolute",
-    top: 60,
+    top: 85,
     left: 10,
     alignItems: 'center',
     alignContent: 'center',

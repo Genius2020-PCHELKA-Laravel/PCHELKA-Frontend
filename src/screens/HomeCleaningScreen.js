@@ -135,6 +135,11 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   };
 
   const onSubmitSteps = async () => {
+    if (hcstate.method == -1) {
+      Toast.show(i18n.t('selectpaymentmethodplease'), Toast.LONG);
+      setIsLoading(false);
+      return;
+    }
     if (state.selected_address == '') {
       Toast.show(i18n.t('selectaddressplease'), Toast.LONG);
       setIsLoading(false);
@@ -150,11 +155,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
       setIsLoading(false);
       return;
     }
-    if (hcstate.method == -1) {
-      Toast.show(i18n.t('selectpaymentmethodplease'), Toast.LONG);
-      setIsLoading(false);
-      return;
-    }
+
     var ispaid = '';
     setIsLoading(true);
     console.log('hcstate.method:: ' + hcstate.method);
@@ -268,7 +269,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
           type: 'RESET'
         });
         Toast.show(i18n.t('booked'), Toast.LONG);
-        navigate('HomeNavigator')
+        navigate('BookedScreen')
       }).catch((error) => {
         console.log(error);
         setIsLoading(false);

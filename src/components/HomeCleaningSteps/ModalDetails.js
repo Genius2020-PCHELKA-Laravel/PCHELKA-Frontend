@@ -152,19 +152,22 @@ const ModalDetails = ({ children, t }) => {
                 <View flexDirection='row'>
 
                     <View flexDirection='column'>
-                        <Text style={styles.total}>{t('total')}
-                            <Text style={styles.subtotal}>
-                                {hcstate.frequency == 1 ? "" : " UAH "}
-                            </Text>
-                            <Text style={styles.subtotal}>
-                                {hcstate.frequency == 1 ? "" : hcstate.total}
-                            </Text>
-                            {/* <Text style={styles.subtotal}>  UAH</Text>
-                    <Text style={styles.subtotal}> {hcstate.total} </Text> */}
-                        </Text>
-                        <Text style={styles.modalText}>
-                            {hcstate.subtotal} UAH {' '}
-                        </Text>
+                        {/* <Text style={styles.total}>{t('total')} */}
+                        <View style={{ flexDirection: "row" }}>
+                            <View style={{ flexDirection: "column" }}>
+                                <FontBold mystyle={styles.modalText} value={t('total') + ": "} />
+                                <FontBold mystyle={styles.modalText} value={t('subtotal') + ": "} />
+                            </View>
+                            <View style={{ flexDirection: "column" }}>
+                                <FontBold mystyle={styles.subtotal}
+                                    value={hcstate.frequency == 1 ? "" : "UAH " + hcstate.total} />
+                                <FontBold mystyle={styles.modalText}
+                                    value={"UAH " + hcstate.subtotal} />
+                            </View>
+
+                        </View>
+
+                        {/* </Text> */}
                     </View>
                     <View flexDirection='column' style={{ justifyContent: 'center', marginLeft: 25 }}>
                         <FontAwesome5 name="chevron-up" size={25} color="#f5c500" />
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 14,
+        borderRadius: 7,
         borderWidth: 1,
         borderColor: '#7a7a7a',
         width: "95%",
@@ -217,9 +220,11 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     subtotal: {
+        fontWeight: 'bold',
         textAlign: 'right',
         textDecorationLine: 'line-through',
-        textDecorationStyle: 'solid'
+        textDecorationStyle: 'solid',
+        fontSize: 14
     }
 });
 export default withNamespaces()(ModalDetails);

@@ -61,6 +61,8 @@ const MapContainer = () => {
             // navigate('HomeNavigator');
             var redirect = await getRedirect();
             removeRedirect();
+            if (redirect == "ManageAddresses") navigate("HomeNavigator");
+            //navigate("HomeCleaningScreen");
             navigate(redirect);
         }).catch(() => {
             setIsLoading(false);

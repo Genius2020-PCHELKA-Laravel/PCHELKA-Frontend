@@ -42,7 +42,7 @@ const ManageAddresses = ({ children, t }) => {
                         </View>
                         <View style={styles.containeritem2}>
                             <TouchableOpacity onPress={async () => {
-                                setRedirect('HomeNavigator');
+                                setRedirect('ManageAddresses');
                                 navigate('MapScreen');
                             }}>
                                 <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
