@@ -4,7 +4,6 @@ import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 
 import { setToken, getToken, removeToken } from '../../api/token';
-const initialstate = { loading: false, token: null, errorMessage: '', responsestatus: null };
 const authreducer = (state, action) => {
     switch (action.type) {
         case 'add_error':
@@ -17,7 +16,7 @@ const authreducer = (state, action) => {
             //console.log(action.payload);
             return { ...state, responsestatus: action.payload };
         case "RESET":
-            return initialState;
+            return { ...state, token: null, errorMessage: '', responsestatus: null };
         default:
             throw new Error(`Not supported action ${action.type}`);
     }
@@ -165,5 +164,5 @@ const getservices=dispach=>{
 }*/
 export const { Context, Provider } = createDataContext(authreducer,
     { sendsms, logout, verifysms, register, login, changemobilesendsms, changemobileverifysms },
-    { loading: false, token: null, errorMessage: '', responsestatus: null }
+    { token: null, errorMessage: '', responsestatus: null }
 );

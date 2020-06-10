@@ -6,12 +6,16 @@ import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
 import { Context as AuthContext } from '../screens/context/AuthContext';
+import { Context as UserContext } from '../screens/context/UserContext';
+import { Context as HCContext } from '../screens/context/HCContext';
 import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
 
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LoginButton = ({ t }) => {
-    const { state, login } = useContext(AuthContext);
+    const { state: astate, login } = useContext(AuthContext);
+    const { state: ustate, dispatch: udispatch } = useContext(UserContext);
+    const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
 
@@ -71,7 +75,7 @@ const LoginButton = ({ t }) => {
                     </Text>
                 </TouchableOpacity>
             }
-            <TouchableOpacity onPress={() => { login(); }}>
+            <TouchableOpacity onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}>
                 {/* <FontBold mystyle={styles.loginButtonStyle} value={t('login')}></FontBold> */}
                 <Text style={styles.loginButtonStyle}>
                     {t('login')} {' '}

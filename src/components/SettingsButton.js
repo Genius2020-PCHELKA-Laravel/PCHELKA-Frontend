@@ -14,7 +14,7 @@ import { getToken } from '../api/token';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const SettingsButton = ({ t }) => {
-    const { state } = useContext(UserContext);
+    const { state: ustate } = useContext(UserContext);
     const [address, setAddress] = useState('');
     const [showAddressesModal, setShowAddressesModal] = useState(false);
     const [shouldShowLang, setShouldShowLang] = useState(true);
@@ -22,9 +22,12 @@ const SettingsButton = ({ t }) => {
     const [changing, setChanging] = useState(false);
 
     useEffect(() => {
-        if (state.addressesloaded && state.addresses != '' && typeof state.addresses != 'undefined')
-            setAddress(state.addresses[0].details + ',' + state.addresses[0].address);
-    }, [state.addresses])
+        // if (ustate.addressesloaded && ustate.addresses != '' && typeof ustate.addresses != 'undefined')
+        if (ustate.addresses.length === 0 || ustate.addresses === undefined)
+            setAddress(t('address'))
+        else
+            setAddress(ustate.addresses[0].details + ',' + ustate.addresses[0].address);
+    }, [ustate.addresses]);
 
     useEffect(() => {
         getLang().then((response) => {
@@ -66,7 +69,7 @@ const SettingsButton = ({ t }) => {
                 </Text>
             </TouchableOpacity >
             <HomeScreenAddresses
-                addresses={state.addresses}
+                addresses={ustate.addresses}
                 showAddressesModal={showAddressesModal}
                 setShowAddressesModal={setShowAddressesModal}
             />

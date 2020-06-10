@@ -31,6 +31,19 @@ const UserReducer = (state, action) => {
             return { ...state, selected_address: action.payload };
         case 'set_selected_address_name':
             return { ...state, selected_address_name: action.payload };
+        case 'RESET':
+            return {
+                ...state,
+                addresses: [],
+                addressesloaded: false,
+                fullname: '',
+                checkname: '',
+                userDetails: "",
+                errorMessage: '',
+                responsestatus: null,
+                selected_address_name: '',
+                selected_address: ''
+            };
         default:
             return state;
     }

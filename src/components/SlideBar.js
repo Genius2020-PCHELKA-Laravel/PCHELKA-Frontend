@@ -24,7 +24,7 @@ export default SlideBar = props => {
                 <Spacer />
                 <View style={styles.profileHeader}>
                     <View style={styles.profileHeaderPicCircle}>
-                        <FontLight mystyle={{ fontSize: 25, color: '#ffd700' }} value={fullName != null ? fullName.charAt(0) : ""} />
+                        <FontLight mystyle={{ fontSize: 25, color: '#ffd700', }} value={fullName != null ? fullName.charAt(0) : ""} />
                     </View>
                     <FontLight mystyle={styles.profileHeaderText} value={fullName} />
                 </View>
@@ -87,6 +87,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     profileHeaderText: {
+        flex: 1,
+        flexWrap: 'wrap',
         color: '#ffffff',
         alignSelf: 'center',
         paddingHorizontal: 10,

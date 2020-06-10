@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, AsyncStorage, ImageBackground, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Avatar } from 'react-native-elements';
-
 import { Context as Authcontext2 } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
 import FontLight from '../../components/FontLight';
@@ -40,19 +39,20 @@ const SettingScreen = ({ navigation, t }) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Image resizeMethod='auto' style={{ opacity: 0.9, backgroundColor: 'black', borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
-        <FontRegular value={fullName} mystyle={styles.name} />
-        <FontRegular value={"+ " + mobile} mystyle={styles.mobile} />
-        <Avatar
-          size="large"
-          rounded
-          icon={{ name: 'user', type: 'font-awesome', color: '#fff' }}
-          onPress={() => console.log("Works!")}
-
-          activeOpacity={0.7}
-          containerStyle={styles.avatar}
-        />
+      <View >
+        <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
+        <FontBold value={fullName} mystyle={styles.name} />
+        <FontLight value={"+ " + mobile} mystyle={styles.mobile} />
+        <View style={{ flex: 1, alignItems: 'center', top: -230 }}>
+          <Avatar
+            size="small"
+            rounded
+            icon={{ name: 'user', type: 'font-awesome', color: '#fff' }}
+            onPress={() => console.log("Works!")}
+            activeOpacity={0.7}
+            containerStyle={styles.avatar}
+          />
+        </View>
       </View>
       <ScrollView style={styles.scrollstyle} showsVerticalScrollIndicator={false}>
         <Spacer />
@@ -120,33 +120,36 @@ const styles = StyleSheet.create({
     right: 15
   },
 
+  // avatar: {
+  //   position: 'absolute',
+  //   backgroundColor: '#f5c500',
+  //   flex: 1,
+  //   marginLeft: 20,
+  //   bottom: -30
+  // },
   avatar: {
     position: 'absolute',
-    backgroundColor: '#f5c500',
-    flex: 1,
-    marginLeft: 20,
-    bottom: -30
+    backgroundColor: '#ddd',
+    top: 50,
+
   },
   name: {
     position: 'absolute',
     fontSize: 35,
-    top: 20,
+    top: 80,
+    left: 0,
+    right: 0,
     textAlign: 'center',
     color: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 30,
-    color: '#fff',
   },
   mobile: {
     position: 'absolute',
     fontSize: 20,
-    top: 120,
+    top: 170,
+    left: 0,
+    right: 0,
     textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 30,
-    color: '#fff',
+    color: '#000',
   },
   listtitle: {
     color: '#aaa',
@@ -156,3 +159,5 @@ const styles = StyleSheet.create({
 });
 
 export default withNamespaces()(SettingScreen);
+
+

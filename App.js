@@ -10,7 +10,6 @@ import HomeScreen from './src/screens/HomeScreen';
 import { setNavigator } from './src/navigationRef';
 import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
 import BookedScreen from './src/components/HomeCleaningSteps/BookedScreen'
-import freecleaning from './src/screens/freecleaning';
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
 import { Provider as UserProvider } from './src/screens/context/UserContext';
 import { Provider as HCProvider } from './src/screens/context/HCContext';

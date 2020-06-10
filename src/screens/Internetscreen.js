@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useContext, useRef } from 'react';
-import { View, Text, StyleSheet, Button, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert, Platform, Image, SafeAreaView } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Permissions } from 'expo';
 
@@ -14,6 +14,7 @@ import { getLang, storeLang } from '../api/userLanguage';
 const InternetScreen = ({ navigation }) => {
   const [testToken, setTestToken] = useState('');
   const [isloading, setIsLoading] = useState(false);
+  const [connected, setConnected] = useState('');
   const ref = useRef(false)
 
   // const [connected, setConnected] = useState(false);
@@ -53,24 +54,29 @@ const InternetScreen = ({ navigation }) => {
     let isCancelled2 = false;
     NetInfo.fetch().then((connection) => {
       console.log(connection)
-      if (connection.isConnected) {
+      if (connection.isInternetReachable) {
         console.log("Connected");
+        setConnected(true);
       }
       else {
         console.log("Not Connected");
+        setConnected(false);
         if (!isCancelled2)
           setIsLoading(false);
         return;
       }
-      if (connection.isConnected && (typeof (testToken) == 'undefined')) {
+      if (connection.isInternetReachable && (typeof (testToken) == 'undefined')) {
         if (!isCancelled2)
           setIsLoading(false);
         navigation.navigate('LoginFlow');
       }
-      else if (connection.isConnected && (typeof (testToken) != 'undefined')) {
+      else if (connection.isInternetReachable && (typeof (testToken) != 'undefined')) {
         if (!isCancelled2)
           setIsLoading(false);
         navigation.navigate('Dashboard');
+      }
+      else {
+        setIsLoading(false);
       }
     });
 
@@ -80,20 +86,28 @@ const InternetScreen = ({ navigation }) => {
   }, [testToken]);
 
 
-  return (<View>
+  return (<View style={styles.container}>
     <Loader loading={isloading} />
 
     {
-      !isloading ? <Text>No Internet</Text> : null
+      !connected ?
+        <Image style={styles.nonet} source={require('../../assets/nonet.png')} />
+        :
+        null
     }
 
   </View>);
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  }
+  container: {
+    flex: 1,
+    backgroundColor: "#f5c500"
+  },
+  nonet: {
+    width: "100%",
+    marginTop: 200
+  },
 });
 
 export default InternetScreen;

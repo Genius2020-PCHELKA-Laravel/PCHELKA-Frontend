@@ -7,12 +7,16 @@ import { withNamespaces } from 'react-i18next';
 import FontBold from './FontBold';
 import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
+import { Context as UserContext } from '../screens/context/UserContext';
+import { Context as HCContext } from '../screens/context/HCContext';
 import { getLang, storeLang } from '../api/userLanguage';
 import ConfirmationDialog from './ConfirmationDialog';
 
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LogoutButton = ({ t }) => {
-    const { state, logout } = useContext(AuthContext);
+    const { state: astate, logout } = useContext(AuthContext);
+    const { state: ustate, dispatch: udispatch } = useContext(UserContext);
+    const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
     const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
     const [isloading, setIsLoading] = useState(false);
@@ -58,7 +62,15 @@ const LogoutButton = ({ t }) => {
                     <FontBold mystyle={styles.languageButtonStyle} value={'English'} />
                 </TouchableOpacity>
             }
-            <TouchableOpacity onPress={() => { setIsLoading(true); logout().then(() => setIsLoading(false)).catch(() => setIsLoading(false)); }}>
+            <TouchableOpacity onPress={async () => {
+
+                setIsLoading(true);
+                logout().then(async () => {
+                    setIsLoading(false);
+                    await hcdispatch({ type: 'RESET' });
+                    await udispatch({ type: 'RESET' });
+                }).catch(() => setIsLoading(false));
+            }}>
                 {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
                 <Text style={styles.logoutButtonStyle}>
                     {t('logout')} {' '}<FontAwesome5 name="user" size={14} color="#7a7a7a" />
