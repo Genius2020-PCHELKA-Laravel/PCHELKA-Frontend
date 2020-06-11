@@ -9,6 +9,7 @@ import FontLight from './src/components/FontLight'
 import HomeScreen from './src/screens/HomeScreen';
 import { setNavigator } from './src/navigationRef';
 import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
+import BabySitterScreen from './src/screens/BabySitterScreen';
 import BookedScreen from './src/components/HomeCleaningSteps/BookedScreen'
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
 import { Provider as UserProvider } from './src/screens/context/UserContext';
@@ -213,6 +214,20 @@ const HomeStackNavigator = createStackNavigator(
       screen: HomeCleaningScreen,
       navigationOptions: {
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('homecleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      }
+    },
+    BabySitterScreen: {
+      screen: BabySitterScreen,
+      navigationOptions: {
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('babysitter')} />,
         headerLeft: ({ navigation }) => (
           <Icon
             style={{ left: 15, color: '#f5c500' }}

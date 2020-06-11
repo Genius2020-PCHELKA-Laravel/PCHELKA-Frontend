@@ -15,9 +15,6 @@ const HomeCleaningDetails = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
     const [hours, setHours] = useState(hcstate.hours);
     const [cleaners, setCleaners] = useState(hcstate.cleaners);
-    const [materials, setMaterials] = useState(hcstate.materials);
-    const [requirematerials, setRequireMaterials] = useState(hcstate.requirematerials);
-    const [isEnabled, setIsEnabled] = hcstate.materials == 0 ? useState(false) : useState(true);
     const [desc, setDesc] = useState(hcstate.desc);
     const toggleSwitch = () => setIsEnabled(previoushcstate => !previoushcstate);
     let subtotal = hcstate.subtotal;
@@ -26,26 +23,12 @@ const HomeCleaningDetails = ({ children, t }) => {
     useEffect(() => {
         console.log("Frequency in Home Cleaning Details: " + hcstate.frequency);
     }, []);
-    useEffect(() => {
-        let isCanceled = false;
-        if (isEnabled == true) {
-            if (!isCanceled) setMaterials(1);
-            if (!isCanceled) setRequireMaterials('Yes');
-        }
-        else if (isEnabled == false) {
-            if (!isCanceled) setMaterials(0);
-            if (!isCanceled) setRequireMaterials('No');
-        }
-        return () => {
-            isCanceled = true;
-        };
-    }, [isEnabled]);
 
     useEffect(() => {
         let isCanceled = false;
         console.log("HHHHHHHHHH " + hours);
-        subtotal = (hcstate.HC.hourPrice * hours * hcstate.cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
-        total = (hcstate.HC.hourPrice * hours * hcstate.cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
+        subtotal = (hcstate.BS.hourPrice * hours * hcstate.cleaners);
+        total = (hcstate.BS.hourPrice * hours * hcstate.cleaners);
         if (hcstate.frequency == 2) {
             total = total * 2;
             discount = total * 0.05;
@@ -74,8 +57,8 @@ const HomeCleaningDetails = ({ children, t }) => {
     useEffect(() => {
         let isCanceled = false;
         console.log("CCCCCCCCC " + cleaners)
-        subtotal = (hcstate.HC.hourPrice * hcstate.hours * cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
-        total = (hcstate.HC.hourPrice * hcstate.hours * cleaners) + (hcstate.materials * hcstate.hours * hcstate.HC.materialPrice);
+        subtotal = (hcstate.BS.hourPrice * hcstate.hours * cleaners);
+        total = (hcstate.BS.hourPrice * hcstate.hours * cleaners);
         if (hcstate.frequency == 2) {
             total = total * 2;
             discount = total * 0.05;
@@ -100,36 +83,7 @@ const HomeCleaningDetails = ({ children, t }) => {
             isCanceled = true;
         };
     }, [cleaners]);
-    useEffect(() => {
-        let isCanceled = false;
-        console.log("MMMMMMMM " + materials)
-        // console.log(hcstate.materials)
-        subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (materials * hcstate.hours * hcstate.HC.materialPrice);
-        total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners) + (materials * hcstate.hours * hcstate.HC.materialPrice);
-        if (hcstate.frequency == 2) {
-            total = total * 2;
-            discount = total * 0.05;
-            discount = parseFloat(discount).toFixed(2);
-            subtotal = total - discount;
-        }
-        else if (hcstate.frequency == 3) {
-            total = total * 4;
-            discount = total * 0.1;
-            discount = parseFloat(discount).toFixed(2);
-            subtotal = total - discount;
-        }
-        subtotal = subtotal - hcstate.VAT;
-        total = parseFloat(total).toFixed(2);
-        subtotal = parseFloat(subtotal).toFixed(2);
-        if (!isCanceled)
-            dispatch({ type: 'set_materials', payload: materials, });
-        if (!isCanceled)
-            dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
-        console.log("Discount: " + discount);
-        return () => {
-            isCanceled = true;
-        };
-    }, [materials]);
+
     useEffect(() => {
         let isCanceled = false;
         if (!isCanceled)
@@ -140,7 +94,7 @@ const HomeCleaningDetails = ({ children, t }) => {
     }, [desc]);
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            <FontBold mystyle={styles.qText} value={t('cleaningq1')} />
+            <FontBold mystyle={styles.qText} value={t('babycleaningq1')} />
             <View style={{ flexDirection: 'row', left: 15 }}>
                 <TouchableOpacity onPress={() => setHours(2)}><Text style={hours == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setHours(3)}><Text style={hours == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
@@ -151,38 +105,21 @@ const HomeCleaningDetails = ({ children, t }) => {
                 {/* <TouchableOpacity onPress={() => setHours(8)}><Text style={hours == 8 ? styles.thumbdown : styles.thumbup}>8</Text></TouchableOpacity> */}
             </View>
             <Spacer />
-            <FontBold mystyle={styles.qText} value={t('cleaningq2')} />
+            <FontBold mystyle={styles.qText} value={t('babycleaningq2')} />
             <View style={{ flexDirection: 'row', left: 15 }}>
                 <TouchableOpacity onPress={() => setCleaners(1)}><Text style={cleaners == 1 ? styles.thumbdown : styles.thumbup}>1</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCleaners(2)}><Text style={cleaners == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCleaners(3)}><Text style={cleaners == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCleaners(4)}><Text style={cleaners == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
             </View>
-            <Spacer />
-            <FontBold mystyle={styles.qText} value={t('cleaningq3')} />
-            <View style={styles.row}>
-                <View style={styles.item}>
-                    <Switch
-                        trackColor={{ false: "#7a7a7a", true: "#f5c500" }}
-                        thumbColor={isEnabled ? "#f5c500" : "#f4f3f4"}
-                        style={styles.switch}
-                        ios_backgroundColor="#7a7a7a"
-                        onValueChange={toggleSwitch}
-                        value={isEnabled}
-                    />
-                </View>
-                <View style={styles.item}>
-                    <FontRegular mystyle={styles.aText} value={requirematerials} />
-                </View>
-            </View>
 
             <Spacer />
-            <FontBold mystyle={styles.qText} value={t('cleaningq4')} />
+            <FontBold mystyle={styles.qText} value={t('babycleaningq4')} />
             <TextInput
                 value={desc}
                 onChangeText={setDesc}
                 style={styles.input}
-                placeholder={t('cleaningdes')}
+                placeholder={t('babycleaningdes')}
                 multiline={true}
                 numberOfLines={2}
             />

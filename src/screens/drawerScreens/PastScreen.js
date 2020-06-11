@@ -83,8 +83,8 @@ const PastScreen = ({ navigation, t }) => {
                                                         <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('completed')} />
                                                     </View>
                                                     : booking.status == 'Confirmed' ?
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
-                                                            <FontBold mystyle={{ marginLeft: 25 }} value={t('confirmed')} />
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#7a7a7a", backgroundColor: "#f5c500" }}>
+                                                            <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('confirmed')} />
                                                         </View>
                                                         : null
                                             }

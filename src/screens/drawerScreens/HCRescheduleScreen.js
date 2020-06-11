@@ -331,11 +331,11 @@ const HCRescheduleScreen = ({ children, t }) => {
                                         setAutoassign(1);
                                         setProviderid('');
                                     }}>
-                                    <View>
-                                        <Image style={styles.imageThumdown} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                                        <Image style={providerid == "" ? styles.imageThumdown : styles.imageThumup} source={require('../../../assets/Splash/SplashScreen1.png')} />
                                     </View>
 
-                                    <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                         <FontBold mystyle={{ fontSize: 10, marginLeft: 5 }} value={t('autoassign')} />
 
                                     </View>
@@ -367,12 +367,19 @@ const HCRescheduleScreen = ({ children, t }) => {
                                         setAutoassign(0);
                                         setProviderid(hcstate.selectedupcomingproviderdata.id);
                                     }}>
-                                    <View>
+                                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
 
                                         <Image
                                             source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }}
                                             style={providerid == hcstate.selectedupcomingproviderdata.id ? styles.imageThumdown : styles.imageThumup}
                                         />
+                                        {
+                                            <Badge
+                                                status="success"
+                                                badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
+                                                containerStyle={{ position: 'absolute', top: 5, right: 22, }}
+                                            />
+                                        }
 
                                         {/* {
                                             u.count < 0 ?
@@ -392,8 +399,8 @@ const HCRescheduleScreen = ({ children, t }) => {
                                                         : null
                                         }  */}
                                     </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={hcstate.selectedupcomingproviderdata.name} />
+                                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                                        <FontBold mystyle={{ fontSize: 12 }} value={hcstate.selectedupcomingproviderdata.name} />
                                         {/* <Text>{' '}</Text>
                                          {
                                             u.evaluation >= 4 ?
@@ -504,6 +511,7 @@ const styles = StyleSheet.create({
     qText: {
         fontSize: 20,
         marginLeft: 15,
+        marginRight: 15,
         marginBottom: 7
     },
     aText: {
@@ -537,7 +545,7 @@ const styles = StyleSheet.create({
         height: 48,
         borderRadius: 48 / 2,
         backgroundColor: '#f5c500aa',
-        borderColor: 'white',
+        borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -575,7 +583,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 65 / 2,
         backgroundColor: '#f5c500aa',
-        borderColor: 'white',
+        borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
@@ -622,7 +630,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5c500aa',
         width: 120,
         height: 170,
-        borderColor: "#fff",
+        borderColor: "#f5c500",
         borderRadius: 2,
         borderWidth: 4,
         marginRight: 10,

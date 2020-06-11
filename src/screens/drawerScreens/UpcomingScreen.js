@@ -107,8 +107,8 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                         //     badgeStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
                                                         //     containerStyle={{ position: 'absolute', top: 60, right: 0, paddingHorizontal: 15 }}
                                                         // /> 
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
-                                                            <FontBold mystyle={{ marginLeft: 25 }} value={t('confirmed')} />
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#7a7a7a", backgroundColor: "#f5c500" }}>
+                                                            <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('confirmed')} />
                                                         </View>
                                                         : null
                                             }

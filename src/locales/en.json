@@ -7,7 +7,6 @@
   "cleaningservicedetailtext": "Your trusted maid service in Ukrain starting from UAH 30 per hour",
   "everthingtext": "EVERY THING YOU NEED",
   "homescreentext": "What other services can we help you with?",
-  "babysitter": "Baby Sitter",
   "disinfectionservices": "Disinfection Services",
   "fulltimemade": "Full Time Maid",
   "laundary": "Laundary & Dry Cleaning",
@@ -169,5 +168,21 @@
   "missedappoitment": "Missed appoitment",
   "freeofcharge": "Free of charge",
   "twentyfivepercent": "25% of appoitment value",
-  "onehandredpercent": "100% of appoitment value"
+  "onehandredpercent": "100% of appoitment value",
+  //BabySitter
+  "babyontimedetails": "Book Babysitter for one time only",
+  "babybiweeklydetails": "Book a recurring Babysitter with the same Babysitter every two-weeks",
+  "babyweeklydetails": "Book a recurring with the same Babysitter every week",
+  "babycleaningq1": "How many hours do you need your Babysitter to stay?",
+  "babycleaningq2": "How many Babysitters do you need?",
+  "babycleaningq4": "Do you have any specific instruction?",
+  "babycleaningdes": "Example: age of Babysitter, etc.",
+  "babydateq0": "Which Babysitter do you prefer?",
+  "babydateq1": "When would you like service to start?",
+  "babywewillassignthebestcleaner": "We will assign the best Babysitter",
+  "service": "Service",
+  "babysitter": "Babysitter",
+  "BabysitterService": "Babysitter Service",
+  "babysitters": "Babysitters",
+  "numberofbabysitters": "Number of Babysitters"
 }

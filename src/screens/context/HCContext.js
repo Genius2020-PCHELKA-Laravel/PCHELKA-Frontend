@@ -24,6 +24,8 @@ const HCreducer = (state, action) => {
             return { ...state, frequency: action.payload };
         case 'set_hc':
             return { ...state, HC: action.payload };
+        case 'set_bs':
+            return { ...state, BS: action.payload };
         case 'set_hours':
             return { ...state, hours: action.payload };
         case 'set_cleaners':
@@ -99,9 +101,9 @@ const HCreducer = (state, action) => {
                 card_exp_year: '',
                 card_cvv: '',
                 valid: '',
-                upcoming: [],
-                past: [],
-                reloadAppointments: '',
+                // upcoming: [],
+                // past: [],
+                // reloadAppointments: '',
                 selectedupcoming: {},
                 selectedupcomingproviderdata: {}
             };
@@ -178,7 +180,16 @@ const setHC = (dispatch) => {
         }
     };
 }
-
+const setBS = (dispatch) => {
+    return async (BSDetails) => {
+        try {
+            dispatch({ type: 'set_bs', payload: BSDetails });
+        } catch (err) {
+            console.log("HCContex::setBS::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
 
 const pay = (dispatch) => {
     return async ({ order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description }) => {
@@ -328,6 +339,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
     {
         getServices,
         setHC,
+        setBS,
         HCBooking,
         getProviders,
         // getSchedulesDays,
@@ -343,6 +355,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
         //schedulesdays: [],
         schedules: [],
         HC: '',
+        BS: '',
         providerid: '',
         autoassign: 1,
         subtotal: 0,

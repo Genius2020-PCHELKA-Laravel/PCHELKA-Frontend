@@ -5,8 +5,9 @@ import FontBold from '../components/FontBold';
 import FontRegular from '../components/FontRegular';
 import FontLight from '../components/FontLight';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import { navigate } from '../navigationRef';
 
-const servicesdetails = ({ navigation, title, imagesource, t }) => {
+const servicesdetails = ({ navigation, nav, redirect, title, imagesource, t }) => {
 
 
   return (<View style={styles.container}>
@@ -16,10 +17,9 @@ const servicesdetails = ({ navigation, title, imagesource, t }) => {
         <Text flexDirection="row" style={styles.servicetext}>
           <FontBold value={title} />
         </Text>
-        <TouchableOpacity activeOpacity={0.5}>
+        <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
           <Text flexDirection="row" style={styles.ButtonStyle}>
             <FontRegular value={t('booknow') + "  "} mystyle={styles.booktext} />
-            {/* <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" /> */}
           </Text>
         </TouchableOpacity>
       </View>

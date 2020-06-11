@@ -62,8 +62,10 @@ const MapContainer = () => {
             var redirect = await getRedirect();
             removeRedirect();
             if (redirect == "ManageAddresses") navigate("HomeNavigator");
+            else if (redirect == "BabySitterScreen") navigate("BabySitterScreen");
+            else if (redirect == "HomeCleaningScreen") navigate("HomeCleaningScreen");
             //navigate("HomeCleaningScreen");
-            navigate(redirect);
+            else navigate(redirect);
         }).catch(() => {
             setIsLoading(false);
             Toast.show(i18n.t('addresscantbesaved'), Toast.LONG);

@@ -76,49 +76,6 @@ const DateandTimeDetails = ({ children, t }) => {
             setIsLoading(false);
         });
     }, [providerid]);
-    // const isInArray = (providerid,schedules , value) => {
-    //     _.filter(schedules, { serviceProviderId:providerid, availableDate:value })
-    //     return (array.find(item => { return item == value }) || []).length > 0;
-    // }    
-    // const providers = [
-    //     {
-    //         providerid: 1,
-    //         name: 'Mailyn',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 2
-    //     },
-    //     {
-    //         providerid: 2,
-    //         name: 'Majd',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    //         evaluation: '3.6',
-    //         desc: '13 Apr',
-    //         count: 0
-    //     }, {
-    //         providerid: 3,
-    //         name: 'Haya',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '2.0',
-    //         desc: '13 Apr',
-    //         count: 3
-    //     }, {
-    //         providerid: 4,
-    //         name: 'Mailyn',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 0
-    //     }, {
-    //         providerid: 5,
-    //         name: 'Samer',
-    //         avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    //         evaluation: '4.6',
-    //         desc: '13 Apr',
-    //         count: 1
-    //     },
-    // ];
     /////////////////////
     //dayes
     ///////////////////
@@ -232,7 +189,7 @@ const DateandTimeDetails = ({ children, t }) => {
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <Loader loading={isloading} />
-            <FontBold mystyle={styles.qText} value={t('dateq0')} />
+            <FontBold mystyle={styles.qText} value={t('babydateq0')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15 }}>
                 {/* redering Auto-Assign */}
                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
@@ -255,12 +212,14 @@ const DateandTimeDetails = ({ children, t }) => {
                         setProviderid('');
                     }}>
                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                        <Image style={providerid != '' ? styles.imageThumdown : styles.imageThumup} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                        <Image style={providerid != "" ? styles.imageThumdown : styles.imageThumup} source={require('../../../assets/Splash/SplashScreen1.png')} />
                     </View>
+
                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                         <FontBold mystyle={{ fontSize: 10 }} value={t('autoassign')} />
+
                     </View>
-                    <FontRegular mystyle={{ color: "#000", fontSize: 12, marginLeft: 5 }} value={t('wewillassignthebestcleaner')} />
+                    <FontRegular mystyle={{ color: "#000", fontSize: 12, marginLeft: 5 }} value={t('babywewillassignthebestcleaner')} />
                 </TouchableOpacity>
 
                 {/* redering the providers */}
@@ -342,7 +301,7 @@ const DateandTimeDetails = ({ children, t }) => {
                 }
             </ScrollView>
             <Spacer />
-            <FontBold mystyle={styles.qText} value={t('dateq1')} />
+            <FontBold mystyle={styles.qText} value={t('babydateq1')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
                 {days}
             </ScrollView>
@@ -352,9 +311,6 @@ const DateandTimeDetails = ({ children, t }) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
                 {starts}
             </ScrollView>
-
-
-
         </ScrollView >
     );
 };

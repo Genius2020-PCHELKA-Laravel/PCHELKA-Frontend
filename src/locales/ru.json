@@ -6,7 +6,6 @@
   "cleaningservicedetailtext": "Ваша доверенная служба горничной в Украине, начиная с 30 грн в час",
   "everthingtext": "ВСЕ ЧТО ТЕБЕ НУЖНО",
   "homescreentext": "С какими еще услугами мы можем вам помочь?",
-  "babysitter": "Няня",
   "disinfectionservices": "Дезинфекционные услуги",
   "fulltimemade": "Полная занятость Горничная",
   "laundary": "Прачечная и химчистка",
@@ -169,5 +168,21 @@
   "missedappoitment": "Пропущенная встреча",
   "freeofcharge": "Бесплатно",
   "twentyfivepercent": "25% стоимости назначения",
-  "onehandredpercent": "100% стоимости назначения"
+  "onehandredpercent": "100% стоимости назначения",
+  //BabySitter
+  "babyontimedetails": "Закажите няню только один раз",
+  "babybiweeklydetails": "Закажите повторяющуюся няню с той же няней каждые две недели",
+  "babyweeklydetails": "Закажите повторяющуюся с той же самой Няней каждую неделю",
+  "babycleaningq1": "Сколько часов вам нужна няня, чтобы остаться?",
+  "babycleaningq2": "Сколько нянь вам нужно?",
+  "babycleaningq4": "У вас есть какие-то конкретные инструкции?",
+  "babycleaningdes": "Пример: возраст няни и т. Д.",
+  "babydateq0": "Какую няню вы предпочитаете?",
+  "babydateq1": "Когда вы хотите начать обслуживание?",
+  "babywewillassignthebestcleaner": "Мы назначим лучшую няню",
+  "service": "обслуживание",
+  "babysitter": "Няня",
+  "BabysitterService": "Услуги няни",
+  "babysitters": "Няни",
+  "numberofbabysitters": "Количество нянь"
 }
