@@ -321,8 +321,9 @@ const DateandTimeDetails = ({ children, t }) => {
                                     } */}
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                                    <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={u.name} />
-                                    <Text>{' '}</Text>
+                                    <FontBold mystyle={{ fontSize: 10, marginLeft: 5 }} value={u.name} />
+                                </View>
+                                <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                     {
                                         u.evaluation >= 4 ?
                                             <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
@@ -334,7 +335,18 @@ const DateandTimeDetails = ({ children, t }) => {
                                         <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
                                     }
                                 </View>
-                                {/* <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.desc} /> */}
+                                {
+                                    u.lastServiceDate != null ?
+                                        <View>
+                                            <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
+                                                <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={t('lastserved at')} />
+                                            </View>
+                                            <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
+                                                <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.lastServiceDate} />
+                                            </View>
+                                        </View>
+                                        : null
+                                }
                             </TouchableOpacity>
 
                         );

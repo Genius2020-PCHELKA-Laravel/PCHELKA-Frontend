@@ -36,6 +36,12 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     let [mobile, setMobile] = useState('');
     let [fullName, setFullName] = useState('');
     let [email, setEmail] = useState('');
+    let [mobileStyle, setMobileStyle] = useState(styles.inputStyle);
+    let [fullNameStyle, setFullNameStyle] = useState(styles.inputStyle);
+    let [emailStyle, setEmailStyle] = useState(styles.inputStyle);
+    let [mobilePlaceholderStyle, setMobilePlaceholderStyle] = useState(styles.placeholder);
+    let [fullNamePlaceholderStyle, setFullNamePlaceholderStyle] = useState(styles.placeholder);
+    let [emailPlaceholderStyle, setEmailPlaceholderStyle] = useState(styles.placeholder);
     // let [userAddress, setUserAddress] = useState('');
     let [dob, setDob] = useState(new Date());
     let [gender, setGender] = useState('');
@@ -77,14 +83,57 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const handleMobileChange = (mobile) => {
         const filteredmobile = mobile.replace(/\D/gm, '');
         setMobile(filteredmobile);
+        if (mobile.length != 12) {
+            console.log("Mobile is Not Correct");
+            setMobileStyle(styles.inputStyleError);
+            setMobilePlaceholderStyle('#ffcccb');
+            return false;
+        }
+        else {
+            console.log("FullName is Correct");
+            setMobileStyle(styles.inputStyle);
+            setMobilePlaceholderStyle('#aaa');
+            return true;
+        }
+    }
+    const handleFullNameChange = (fullnm) => {
+        setFullName(fullnm);
+        if (fullnm.length < 5) {
+            console.log("FullName is Not Correct");
+            setFullNameStyle(styles.inputStyleError);
+            setFullNamePlaceholderStyle('#ffcccb');
+            return false;
+        }
+        else {
+            console.log("FullName is Correct");
+            setFullNameStyle(styles.inputStyle);
+            setFullNamePlaceholderStyle('#aaa');
+            return true;
+        }
+    }
+    const handleEmailChange = (eml) => {
+        setEmail(eml);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(eml) === false) {
+            console.log("Email is Not Correct");
+            setEmailStyle(styles.inputStyleError);
+            setEmailPlaceholderStyle('#ffcccb');
+            return false;
+        }
+        else {
+            console.log("Email is Correct");
+            setEmailStyle(styles.inputStyle);
+            setEmailPlaceholderStyle('#aaa');
+            return true;
+        }
     }
     const handleSubmitButton = async () => {
         setErrortext('');
-        if (!mobile) {
+        if (!mobile || !handleMobileChange(mobile)) {
             setErrortext(t('pleasefillmobile'));
             return;
         }
-        if (!fullName) {
+        if (!handleFullNameChange(fullName)) {
             setErrortext(t('pleasefillname'));
             return;
         }
@@ -92,7 +141,10 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
             setErrortext(t('pleasefillemail'));
             return;
         }
-
+        if (!handleEmailChange(email)) {
+            setErrortext(t('pleasecheckemail'));
+            return;
+        }
         if (!gender) {
             setErrortext(t('pleasefillgender'));
             return;
@@ -202,10 +254,10 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                         <KeyboardAvoidingView enabled>
                             <View style={styles.SectionStyle}>
                                 <TextInput
-                                    style={styles.inputStyle}
+                                    style={mobileStyle}
                                     onChangeText={(mobile) => { setErrortext(''); handleMobileChange(mobile); }}
                                     placeholder={t('entermobile')}
-                                    placeholderTextColor="#aaa"
+                                    placeholderTextColor={mobilePlaceholderStyle}
                                     value={mobile}
                                     maxLength={12}
                                     keyboardType='numeric'
@@ -219,13 +271,13 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                             </View>
                             <View style={styles.SectionStyle}>
                                 <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(fullName) => { setErrortext(''); setFullName(fullName); }}
+                                    style={fullNameStyle}
+                                    onChangeText={(fullName) => { setErrortext(''); handleFullNameChange(fullName); }}
                                     placeholder={t('entername')}
-                                    placeholderTextColor="#aaa"
+                                    placeholderTextColor={fullNamePlaceholderStyle}
                                     autoCapitalize="sentences"
                                     value={fullName}
-                                    maxLength={20}
+                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._fullnameinput = ref;
                                     // }}
@@ -236,13 +288,13 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                             </View>
                             <View style={styles.SectionStyle}>
                                 <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(email) => { setErrortext(''); setEmail(email); }}
+                                    style={emailStyle}
+                                    onChangeText={(email) => { setErrortext(''); handleEmailChange(email); }}
                                     value={email}
-                                    maxLength={25}
+                                    maxLength={30}
                                     // underlineColorAndroid="#F6F6F7"
                                     placeholder={t('enteremail')}
-                                    placeholderTextColor="#aaa"
+                                    placeholderTextColor={emailPlaceholderStyle}
                                     autoCapitalize="none"
                                     keyboardType="email-address"
                                     // ref={ref => {
@@ -378,15 +430,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         height: 50
     },
-    errorTextStyle: {
+    inputStyleError: {
+        flex: 1,
         color: 'red',
-        textAlign: 'center',
-        fontSize: 14,
-    },
-    successTextStyle: {
-        color: 'green',
-        textAlign: 'center',
-        fontSize: 18,
-        padding: 30,
-    },
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderWidth: 1,
+        borderRadius: 7,
+        borderColor: 'red',
+        fontSize: 20,
+        height: 50,
+
+    }
 });

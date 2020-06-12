@@ -48,8 +48,9 @@
   "enteremail": "Введите адрес электронной почты",
   "enteraddress": "Введите адрес",
   "pleasefillmobile": "Пожалуйста, заполните мобильный",
-  "pleasefillname": "Пожалуйста, заполните Имя",
+  "pleasefillname": "Пожалуйста, заполните Имя, минимальное количество букв - 5 букв",
   "pleasefillemail": "Пожалуйста, заполните электронную почту",
+  "pleasecheckemail": "Пожалуйста, проверьте электронную почту",
   "pleasefilladdress": "Пожалуйста, заполните адрес",
   "pleaseuseanotheremail": "Пожалуйста, используйте другой адрес электронной почты",
   "pleaseuseanothermobile": "Пожалуйста, используйте другой мобильный",
@@ -85,6 +86,7 @@
   "dateq1": "Когда бы вы хотели уборку?",
   "dateq2": "во сколько вы хотели бы, чтобы мы начали?",
   "addressq1": "Ваши сохраненные адреса",
+  "lastservedat": "Последний раз служил в",
   "addnew": "Добавить новое",
   "save": "Сохранить",
   "edit": "редактировать",
@@ -107,6 +109,8 @@
   "booked": "забронированы",
   "notbooked": "Бронирование не завершено",
   "homepage": "Домашняя страница",
+  "rescheduled": "Перенесенные",
+  "notrescheduled": "Бронирование не перенесено",
   //Modal
   "servicetype": "ТИП ОБСЛУЖИВАНИЯ",
   "details": "подробности",
@@ -130,6 +134,7 @@
   //locations
   "youraddresses": "Ваши Адреса",
   "addresses": "Адреса",
+  "noaddresses": "Там еще нет адресов.",
   "confirm": "Подтверждение",
   "addnewaddress": "Добавить новый адрес",
   "street": "улица",
@@ -145,7 +150,9 @@
   "refcode": "Ссылка Код",
   "upcoming": "предстоящий",
   "past": "прошлое",
+  "nopastappoitments": "Там нет прошлых назначений еще.",
   "upcomingappoitment": "Предстоящая встреча",
+  "noupcomingappoitment": "Там нет предстоящих назначений еще.",
   "reschedule": "Перепланирование",
   "schedule": "График",
   "confirmed": "подтвердил",
@@ -158,6 +165,8 @@
   "ourpolicydoc": "Вы можете перенести бронирование бесплатно, если вы перенесете его через 10 минут после того, как вы разместили запрос на бронирование.",
   "viewourpolicy": "Посмотреть нашу политику",
   "cancel": "Отмена",
+  "restart": "Запустить снова",
+  "changinglanguagerequirerestartingtheapp": "Изменение языка требует перезапуска приложения",
   "reschedulepolicy": "Перепланировать политику",
   "type": "Тип",
   "reschedulefee": "Перенести плату",
@@ -184,5 +193,10 @@
   "babysitter": "Няня",
   "BabysitterService": "Услуги няни",
   "babysitters": "Няни",
-  "numberofbabysitters": "Количество нянь"
+  "numberofbabysitters": "Количество нянь",
+  //Disinfection
+  "disinfection": "Дезинфекционные услуги",
+  "DisinfectionService": "Дезинфекционная служба",
+  //deepCleaning
+  "deepcleaning": "Глубокая чистка"
 }

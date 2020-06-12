@@ -69,8 +69,8 @@ const Payment = ({ children, t }) => {
         let isCanceled = false;
         if (!isCanceled)
             dispatch({ type: 'set_method', payload: method, });
-        var subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners);
-        var total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners);
+        var subtotal = (hcstate.DE.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.DE.materialPrice);
+        var total = (hcstate.DE.hourPrice * hcstate.hours * hcstate.cleaners) + (hcstate.hours * hcstate.materials * hcstate.DE.materialPrice);
         var discount = hcstate.discount;
         if (hcstate.frequency == 2) {
             total = parseFloat(total * 2).toFixed(2);
@@ -84,6 +84,8 @@ const Payment = ({ children, t }) => {
             discount = parseFloat(discount).toFixed(2);
             subtotal = parseFloat(total - discount).toFixed(2);
         }
+        // var subtotal = hcstate.subtotal;
+        // var total = hcstate.total;
         // var total = hcstate.total;
         if (method == -1)
             return;

@@ -11,8 +11,16 @@ import Spacer from '../../components/Spacer';
 const UpcomingDetailsScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, getProviders, dispatch: hcdispatch } = useContext(HCContext);
     const paymentWaysStr = hcstate.selectedupcoming.paymentWays == 0 ? t('Liqpay') : t('cash');
-    const cleanersStr = hcstate.selectedupcoming.cleanerCount > 1 ? t('cleaners') : t('cleaner');
-    const materialsStr = hcstate.selectedupcoming.requireMaterial == 1 ? t('withmaterials') : t('withoutmaterials');
+    const cleanersStr = hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+        hcstate.selectedupcoming.cleanerCount > 1 ? t('cleaners') : t('cleaner') :
+        hcstate.selectedupcoming.serviceType == "BabysitterService" ?
+            hcstate.selectedupcoming.cleanerCount > 1 ? t('babysitters') : t('babysitter') : null;
+
+    const materialsStr = hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+        hcstate.selectedupcoming.requireMaterial == 1 ? t('withmaterials') : t('withoutmaterials') :
+        hcstate.selectedupcoming.serviceType == "BabysitterService" ?
+            "" : "";
+
 
 
     return (
@@ -54,7 +62,7 @@ const UpcomingDetailsScreen = ({ navigation, t }) => {
                     }
                 />
             </View>
-            <View flexDirection="column">
+            <View flexDirection="row" style={{ justifyContent: "center" }}>
                 <FontBold mystyle={styles.totalAmount} value={
                     "UAH " + hcstate.selectedupcoming.totalAmount + " (" +
                     paymentWaysStr
@@ -76,7 +84,7 @@ const UpcomingDetailsScreen = ({ navigation, t }) => {
                 onPress={() => {
                     navigate('HCReschedule');
                 }}>
-                <FontBold mystyle={styles.buttonTextStyle} value={t('reschedule')} />
+                <FontBold mystyle={styles.buttonTextStyle} value={t('next')} />
             </TouchableOpacity>
         </View >
     );
@@ -87,9 +95,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 
-    title: { marginLeft: 15, marginTop: 15 },
-    subtitle: { marginLeft: 15, marginTop: 0, fontSize: 18, marginBottom: 5, },
-    totalAmount: { color: '#f5c500ff', marginLeft: 15, marginTop: 50, fontSize: 18, },
+    title: { marginLeft: 15, marginTop: 15, marginRight: 10, fontSize: 18 },
+    subtitle: { marginLeft: 15, marginTop: 0, fontSize: 20, marginBottom: 5, marginRight: 10 },
+    totalAmount: { color: '#ff9800', marginTop: 50, fontSize: 24 },
     // reschedulebuttonStyle: {
     //     position: 'absolute',
     //     bottom: 15,

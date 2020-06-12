@@ -90,6 +90,11 @@ const Payment = ({ children, t }) => {
             return;
         if (method == 0) {
             if (!isCanceled)
+                setCashPressed(false);
+            subtotal = (parseFloat(subtotal) + 0.0).toFixed(2);
+            total = (parseFloat(total) + 0.0).toFixed(2);
+            discount = (parseFloat(discount)).toFixed(2);
+            if (!isCanceled)
                 dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
         }
         if (method == 1) {
@@ -97,6 +102,7 @@ const Payment = ({ children, t }) => {
                 setCashPressed(true);
             subtotal = (parseFloat(subtotal) + 5.0).toFixed(2);
             total = (parseFloat(total) + 5.0).toFixed(2);
+            discount = (parseFloat(discount)).toFixed(2);
             if (!isCanceled)
                 dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
         }

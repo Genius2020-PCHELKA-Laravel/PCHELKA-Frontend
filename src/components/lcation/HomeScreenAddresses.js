@@ -72,8 +72,10 @@ export default class HomeScreenAddresses extends React.Component {
                                 // typeof this.props.authtoken != 'undefined'
                                 //     || this.props.authtoken != ''
                                 //     ?
-                                this.props.addresses.length === 0 || this.props.addresses === undefined ?
-                                    <Image style={styles.noaddresses} source={require('../../../assets/noappoitments.png')} />
+                                // this.props.addresses.length === 0 || this.props.addresses === undefined ?
+                                typeof this.props.addresses === 'undefined' || this.props.addresses.length === 0 ?
+                                    // <Image style={styles.noaddresses} source={require('../../../assets/noappoitments.png')} />
+                                    <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
                                     :
                                     <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
                                         {

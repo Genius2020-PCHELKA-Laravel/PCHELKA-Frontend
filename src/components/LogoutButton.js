@@ -17,7 +17,7 @@ const LogoutButton = ({ t }) => {
     const { state: astate, logout } = useContext(AuthContext);
     const { state: ustate, dispatch: udispatch } = useContext(UserContext);
     const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
-    const [shouldShow, setShouldShow] = useState(true);
+    // const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
     const [isloading, setIsLoading] = useState(false);
     const [changing, setChanging] = useState(false);
@@ -27,7 +27,7 @@ const LogoutButton = ({ t }) => {
             setLang(lng);
             storeLang(lng);
             i18n.changeLanguage(lng);
-            shouldShow ? setShouldShow(false) : setShouldShow(true);
+            // shouldShow ? setShouldShow(false) : setShouldShow(true);
         } catch (e) { "Error:: " + e }
     }
     useEffect(() => {
@@ -35,13 +35,13 @@ const LogoutButton = ({ t }) => {
             console.log("logoutbutton selected Lang in Use Effect:  " + response);
             setLang(response);
             i18n.changeLanguage(response);
-            shouldShow ? setShouldShow(false) : setShouldShow(true);
-            if (response == 'en') {
-                setShouldShow(true);
-            }
-            else {
-                setShouldShow(false);
-            }
+            // shouldShow ? setShouldShow(false) : setShouldShow(true);
+            // if (response == 'en') {
+            //     setShouldShow(true);
+            // }
+            // else {
+            //     setShouldShow(false);
+            // }
         }).catch((err) => {
             console.log("logoutbutton Screen Can not get lang");
         });
@@ -49,18 +49,19 @@ const LogoutButton = ({ t }) => {
     return (
         <View style={styles.container}>
             <Loader loading={isloading} />
-            <ConfirmationDialog lang={lang} changing={changing} setChanging={setChanging} />
-
-            {shouldShow ?
-                // <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
-                <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
-                    <FontBold mystyle={styles.languageButtonStyle} value={'русский'} />
-                    {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
-                </TouchableOpacity>
-                :
-                <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('en'); setChanging(true) }}>
-                    <FontBold mystyle={styles.languageButtonStyle} value={'English'} />
-                </TouchableOpacity>
+            <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
+            {
+                lang === 'en' ?
+                    <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                        <FontBold mystyle={styles.languageButtonStyle} value="русский" />
+                    </TouchableOpacity>
+                    :
+                    lang === 'ru' ?
+                        <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('en'); setChanging(true) }}>
+                            <FontBold mystyle={styles.languageButtonStyle} value="English" />
+                        </TouchableOpacity>
+                        :
+                        null
             }
             <TouchableOpacity onPress={async () => {
 

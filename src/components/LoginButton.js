@@ -10,14 +10,16 @@ import { Context as UserContext } from '../screens/context/UserContext';
 import { Context as HCContext } from '../screens/context/HCContext';
 import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
+import ConfirmationDialog from './ConfirmationDialog';
 
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LoginButton = ({ t }) => {
     const { state: astate, login } = useContext(AuthContext);
     const { state: ustate, dispatch: udispatch } = useContext(UserContext);
     const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
-    const [shouldShow, setShouldShow] = useState(true);
+    // const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
+    const [changing, setChanging] = useState(false);
 
 
     function Effect(props) {
@@ -40,40 +42,41 @@ const LoginButton = ({ t }) => {
             setLang(lng);
             storeLang(lng);
             i18n.changeLanguage(lng);
-            shouldShow ? setShouldShow(false) : setShouldShow(true);
+            // shouldShow ? setShouldShow(false) : setShouldShow(true);
         } catch (e) { "Error:: " + e }
         // RNRestart.Restart();
     }
-    Effect(() => {
+    useEffect(() => {
         getLang().then((response) => {
             console.log("SettingScreen selected Lang in Use Effect:  " + response);
             setLang(response);
             i18n.changeLanguage(response);
-            shouldShow ? setShouldShow(false) : setShouldShow(true);
-            if (response == 'en') {
-                setShouldShow(true);
-            }
-            else {
-                setShouldShow(false);
-            }
+            // shouldShow ? setShouldShow(false) : setShouldShow(true);
+            // if (response == 'en') {
+            //     setShouldShow(true);
+            // }
+            // else {
+            //     setShouldShow(false);
+            // }
         }).catch((err) => {
             console.log("Settings Screen Can not get lang");
         });
-    });
+    }, []);
     return (
         <View style={styles.container}>
-            {shouldShow ?
-                <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('ru')}>
-                    <Text style={styles.languageButtonStyle}>русский {' '}
-                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
-                    </Text>
-                </TouchableOpacity>
-                :
-                <TouchableOpacity activeOpacity={.5} onPress={() => changeLanguage('en')}>
-                    <Text style={styles.languageButtonStyle}>English{' '}
-                        {/* <FontAwesome5 name="exchange-alt" size={20} color="white" /> */}
-                    </Text>
-                </TouchableOpacity>
+            <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
+            {
+                lang === 'en' ?
+                    <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                        <FontBold mystyle={styles.languageButtonStyle} value="русский" />
+                    </TouchableOpacity>
+                    :
+                    lang === 'ru' ?
+                        <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('en'); setChanging(true) }}>
+                            <FontBold mystyle={styles.languageButtonStyle} value="English" />
+                        </TouchableOpacity>
+                        :
+                        null
             }
             <TouchableOpacity onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}>
                 {/* <FontBold mystyle={styles.loginButtonStyle} value={t('login')}></FontBold> */}

@@ -9,12 +9,12 @@ import {
     ScrollView
 } from 'react-native';
 import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
-import { Context as HCContext } from '../../screens/context/HCContext';
-import { Context as UserContext } from '../../screens/context/UserContext';
-import Spacer from '../Spacer';
-import FontBold from '../FontBold';
-import FontLight from '../FontLight';
-import FontRegular from '../FontRegular';
+import { Context as HCContext } from '../context/HCContext';
+import { Context as UserContext } from '../context/UserContext';
+import Spacer from '../../components/Spacer';
+import FontBold from '../../components/FontBold';
+import FontLight from '../../components/FontLight';
+import FontRegular from '../../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
 
 const ModalDetails = ({ children, t }) => {
@@ -25,10 +25,12 @@ const ModalDetails = ({ children, t }) => {
     if (hcstate.frequency == 1) modalfrequency = t('onetime');
     else if (hcstate.frequency == 2) modalfrequency = t('biweekly');
     else if (hcstate.frequency == 3) modalfrequency = t('weekly');
-    // let modalmaterials = hcstate.hours * hcstate.materials * hcstate.HC.materialPrice;
-    let modalmaterials = hcstate.frequency == 1 ? hcstate.hours * hcstate.materials * hcstate.HC.materialPrice :
-        hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * hcstate.HC.materialPrice * 2 :
-            hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * hcstate.HC.materialPrice * 4 : 0;
+    let materialprice = hcstate.selectedupcoming.serviceType == "HomeCleaning" ? hcstate.HC.materialPrice :
+        hcstate.selectedupcoming.serviceType == "DisinfectionService" ? hcstate.DI.materialPrice :
+            hcstate.selectedupcoming.serviceType == "DeepCleaning" ? hcstate.DE.materialPrice : 0;
+    let modalmaterials = hcstate.frequency == 1 ? hcstate.hours * hcstate.materials * materialprice :
+        hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * materialprice * 2 :
+            hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * materialprice * 4 : 0;
     return (
         <View style={{ marginTop: 22 }}>
             <Modal
@@ -50,7 +52,7 @@ const ModalDetails = ({ children, t }) => {
                 <View style={{ marginTop: 22 }}>
                     <ScrollView style={styles.container} >
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('homecleaning')}></FontBold>
+                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t(hcstate.selectedupcoming.serviceType)}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
                         <View style={styles.row}>
@@ -77,14 +79,20 @@ const ModalDetails = ({ children, t }) => {
                                 <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.cleaners + ' ' + t('cleaners')}></FontBold>
                             </View>
                         </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('materials')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalmaterials + ' UAH'}></FontBold>
-                            </View>
-                        </View>
+                        {
+                            hcstate.selectedupcoming.serviceType == "HomeCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "DisinfectionService" ||
+                                hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+                                <View style={styles.row}>
+                                    <View style={styles.item}>
+                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('materials')}></FontBold>
+                                    </View>
+                                    <View style={styles.item}>
+                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalmaterials + ' UAH'}></FontBold>
+                                    </View>
+                                </View>
+                                : null
+                        }
 
                         <Spacer />
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('dateandtime')}></FontBold>

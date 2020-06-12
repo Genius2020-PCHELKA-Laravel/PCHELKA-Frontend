@@ -25,10 +25,10 @@ const ModalDetails = ({ children, t }) => {
     if (hcstate.frequency == 1) modalfrequency = t('onetime');
     else if (hcstate.frequency == 2) modalfrequency = t('biweekly');
     else if (hcstate.frequency == 3) modalfrequency = t('weekly');
-    // let modalmaterials = hcstate.hours * hcstate.materials * hcstate.HC.materialPrice;
-    let modalmaterials = hcstate.frequency == 1 ? hcstate.hours * hcstate.materials * hcstate.HC.materialPrice :
-        hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * hcstate.HC.materialPrice * 2 :
-            hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * hcstate.HC.materialPrice * 4 : 0;
+    // let modalmaterials = hcstate.hours * hcstate.materials * hcstate.DI.materialPrice;
+    let modalmaterials = hcstate.frequency == 1 ? hcstate.hours * hcstate.materials * hcstate.DI.materialPrice :
+        hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * hcstate.DI.materialPrice * 2 :
+            hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * hcstate.DI.materialPrice * 4 : 0;
     return (
         <View style={{ marginTop: 22 }}>
             <Modal
@@ -50,7 +50,7 @@ const ModalDetails = ({ children, t }) => {
                 <View style={{ marginTop: 22 }}>
                     <ScrollView style={styles.container} >
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('homecleaning')}></FontBold>
+                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('disinfection')}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
                         <View style={styles.row}>

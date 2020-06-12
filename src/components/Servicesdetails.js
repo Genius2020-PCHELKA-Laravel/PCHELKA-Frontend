@@ -12,10 +12,12 @@ const servicesdetails = ({ navigation, nav, redirect, title, imagesource, t }) =
 
   return (<View style={styles.container}>
     <View flexDirection="column">
-      <Image flexDirection="row" style={styles.image} source={imagesource} />
+      <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
+        <Image flexDirection="row" style={styles.image} source={imagesource} />
+      </TouchableOpacity>
       <View flexDirection="column" style={styles.text}>
         <Text flexDirection="row" style={styles.servicetext}>
-          <FontBold value={title} />
+          <FontBold mystyle={{ fontSize: 14 }} value={title} />
         </Text>
         <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
           <Text flexDirection="row" style={styles.ButtonStyle}>
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
   servicetext: {
     fontSize: 16,
     position: "absolute",
-    bottom: 75,
+    bottom: 65,
     fontSize: 18,
     color: '#fff',
     textAlign: "center"

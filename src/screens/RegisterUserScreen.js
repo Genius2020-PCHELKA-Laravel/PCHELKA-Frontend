@@ -31,8 +31,12 @@ const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
     const { state, register } = useContext(AuthContext);
     const { state: ustate } = useContext(UserContext);
-    let [fullName, setfullName] = useState('');
-    let [email, setemail] = useState('');
+    let [fullName, setFullName] = useState('');
+    let [email, setEmail] = useState('');
+    let [fullNameStyle, setFullNameStyle] = useState(styles.inputStyleError);
+    let [emailStyle, setEmailStyle] = useState(styles.inputStyleError);
+    let [fullNamePlaceholderStyle, setFullNamePlaceholderStyle] = useState('#ffcccb');
+    let [emailPlaceholderStyle, setEmailPlaceholderStyle] = useState('#ffcccb');
     // let [userAddress, setUserAddress] = useState("");
     let [loading, setLoading] = useState(false);
     let [errortext, setErrortext] = useState('');
@@ -42,15 +46,53 @@ const RegisterUserScreen = ({ navigation, t }) => {
     //     if (ustate.addresses != [])
     //         setUserAddress(ustate.addresses[0].address);
     // }, [ustate.addresses]);
-
+    const handleFullNameChange = (fullnm) => {
+        setFullName(fullnm);
+        if (fullnm.length < 5) {
+            console.log("FullName is Not Correct");
+            setFullNameStyle(styles.inputStyleError);
+            setFullNamePlaceholderStyle('#ffcccb');
+            return false;
+        }
+        else {
+            console.log("FullName is Correct");
+            setFullNameStyle(styles.inputStyle);
+            setFullNamePlaceholderStyle('#aaa');
+            return true;
+        }
+    }
+    const handleEmailChange = (eml) => {
+        setEmail(eml);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(eml) === false) {
+            console.log("Email is Not Correct");
+            setEmailStyle(styles.inputStyleError);
+            setEmailPlaceholderStyle('#ffcccb');
+            return false;
+        }
+        else {
+            console.log("Email is Correct");
+            setEmailStyle(styles.inputStyle);
+            setEmailPlaceholderStyle('#aaa');
+            return true;
+        }
+    }
     const handleSubmitButton = async () => {
         setErrortext('');
         if (!fullName) {
             setErrortext(t('pleasefillname'));
             return;
         }
+        if (!handleFullNameChange(fullName)) {
+            setErrortext(t('pleasefillname'));
+            return;
+        }
         if (!email) {
             setErrortext(t('pleasefillemail'));
+            return;
+        }
+        if (!handleEmailChange(email)) {
+            setErrortext(t('pleasecheckemail'));
             return;
         }
         // if (!userAddress) {
@@ -145,12 +187,13 @@ const RegisterUserScreen = ({ navigation, t }) => {
                         <KeyboardAvoidingView enabled>
                             <View style={styles.SectionStyle}>
                                 <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(fullName) => { setErrortext(''); setfullName(fullName); }}
+                                    style={fullNameStyle}
+                                    onChangeText={(fullName) => { setErrortext(''); handleFullNameChange(fullName); }}
                                     placeholder={t('entername')}
-                                    placeholderTextColor="#aaa"
+                                    placeholderTextColor={fullNamePlaceholderStyle}
                                     autoCapitalize="sentences"
-                                    maxLength={20}
+                                    value={fullName}
+                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._fullnameinput = ref;
                                     // }}
@@ -161,14 +204,15 @@ const RegisterUserScreen = ({ navigation, t }) => {
                             </View>
                             <View style={styles.SectionStyle}>
                                 <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(email) => { setErrortext(''); setemail(email); }}
+                                    style={emailStyle}
+                                    onChangeText={(email) => { setErrortext(''); handleEmailChange(email); }}
+                                    value={email}
+                                    maxLength={30}
                                     // underlineColorAndroid="#F6F6F7"
                                     placeholder={t('enteremail')}
-                                    placeholderTextColor="#aaa"
+                                    placeholderTextColor={emailPlaceholderStyle}
                                     autoCapitalize="none"
                                     keyboardType="email-address"
-                                    maxLength={25}
                                     // ref={ref => {
                                     //     this._emailinput = ref;
                                     // }}
@@ -277,26 +321,17 @@ const styles = StyleSheet.create({
         padding: 10,
         height: 50
     },
-    addressinputStyle: {
+    inputStyleError: {
         flex: 1,
-        color: 'black',
+        color: 'red',
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: '#f5c500',
+        borderColor: 'red',
         fontSize: 20,
-        height: 50
-    },
-    errorTextStyle: {
-        color: 'red',
-        textAlign: 'center',
-        fontSize: 14,
-    },
-    successTextStyle: {
-        color: 'green',
-        textAlign: 'center',
-        fontSize: 18,
-        padding: 30,
-    },
+        height: 50,
+
+    }
+
 });

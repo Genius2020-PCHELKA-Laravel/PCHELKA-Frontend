@@ -16,7 +16,7 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
-import ModalDetails from '../../components/HomeCleaningSteps/ModalDetails'
+import ModalDetails from './ModalDetails'
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch: hcdispatch, state: hcstate, getSchedules } = useContext(HCContext);
     const { dispatch: udispatch, state: ustate } = useContext(UserContext);
@@ -309,7 +309,14 @@ const HCRescheduleScreen = ({ children, t }) => {
 
                         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
                             <Loader loading={isloading} />
-                            <FontBold mystyle={styles.qText} value={t('dateq0')} />
+                            {
+                                hcstate.selectedupcoming.serviceType == "HomeCleaning" ?
+                                    <FontBold mystyle={styles.qText} value={t('dateq0')} /> :
+                                    hcstate.selectedupcoming.serviceType == "BabysitterService" ?
+                                        <FontBold mystyle={styles.qText} value={t('babydateq0')} /> : null
+
+                            }
+
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15 }}>
                                 {/* redering Auto-Assign */}
                                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
@@ -400,24 +407,42 @@ const HCRescheduleScreen = ({ children, t }) => {
                                         }  */}
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                                        <FontBold mystyle={{ fontSize: 12 }} value={hcstate.selectedupcomingproviderdata.name} />
-                                        {/* <Text>{' '}</Text>
-                                         {
-                                            u.evaluation >= 4 ?
+                                        <FontBold mystyle={{ fontSize: 10 }} value={hcstate.selectedupcomingproviderdata.name} />
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                                        {
+                                            hcstate.selectedupcomingproviderdata.evaluation >= 4 ?
                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
                                                 :
                                                 <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
-                                        } 
-                                         <Text>{' '}</Text>
+                                        }
+                                        <Text>{' '}</Text>
                                         {
-                                            <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
-                                        }  */}
+                                            <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={hcstate.selectedupcomingproviderdata.evaluation} />
+                                        }
                                     </View>
-                                    {/* <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.desc} /> */}
+                                    {
+                                        hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
+                                            <View>
+                                                <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
+                                                    <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                                </View>
+                                                <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
+                                                    <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
+                                                </View>
+                                            </View>
+                                            : null
+                                    }
                                 </TouchableOpacity>
                             </ScrollView>
                             <Spacer />
-                            <FontBold mystyle={styles.qText} value={t('dateq1')} />
+                            {
+                                hcstate.selectedupcoming.serviceType == "HomeCleaning" ?
+                                    <FontBold mystyle={styles.qText} value={t('dateq1')} /> :
+                                    hcstate.selectedupcoming.serviceType == "BabysitterService" ?
+                                        <FontBold mystyle={styles.qText} value={t('babydateq1')} /> : null
+
+                            }
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
                                 {days}
                             </ScrollView>

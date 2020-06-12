@@ -17,32 +17,32 @@ const UpcomingScreen = ({ navigation, t }) => {
     const [isLoading, setIsLoading] = useState(false);
 
 
-    useEffect(() => {
-        let isCancelled1 = false;
-        if (!isCancelled1)
-            setIsLoading(true);
-        getUpcoming().then((response) => {
-            //console.log("Upcoming::useffect::getUpcoming::response:: ");
-            //console.log("######################" + JSON.stringify(response));
-            if (!isCancelled1)
-                setIsLoading(false);
-        }).catch((error) => {
-            console.log(error);
-            if (!isCancelled1)
-                setIsLoading(false);
-        });
-        return () => {
-            isCancelled1 = true;
-        };
-    }, []);
-    useEffect(() => {
-        getUpcoming().then((response) => {
-            console.log("Upcoming::useffect::getUpcoming::response:: ");
-            console.log("######################" + JSON.stringify(response));
-        }).catch((error) => {
-            console.log(error);
-        });
-    }, [hcstate.reloadAppointments]);
+    // useEffect(() => {
+    //     let isCancelled1 = false;
+    //     if (!isCancelled1)
+    //         setIsLoading(true);
+    //     getUpcoming().then((response) => {
+    //         //console.log("Upcoming::useffect::getUpcoming::response:: ");
+    //         //console.log("######################" + JSON.stringify(response));
+    //         if (!isCancelled1)
+    //             setIsLoading(false);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //         if (!isCancelled1)
+    //             setIsLoading(false);
+    //     });
+    //     return () => {
+    //         isCancelled1 = true;
+    //     };
+    // }, []);
+    // useEffect(() => {
+    //     getUpcoming().then((response) => {
+    //         console.log("Upcoming::useffect::getUpcoming::response:: ");
+    //         console.log("######################" + JSON.stringify(response));
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // }, [hcstate.reloadAppointments]);
 
 
     return (
@@ -51,7 +51,8 @@ const UpcomingScreen = ({ navigation, t }) => {
             {/* <Text style={{ left: 30, fontSize: 35 }}>{JSON.stringify(hcstate.upcoming)}</Text> */}
             {
                 hcstate.upcoming.length === 0 || hcstate.upcoming === undefined ?
-                    <Image style={styles.noappoitments} source={require('../../../assets/noappoitments.png')} />
+                    // <Image style={styles.noappoitments} source={require('../../../assets/noappoitments.png')} />
+                    <FontBold value={t('noupcomingappoitment')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
                     :
                     hcstate.upcoming.sort((a, b) => a.duoDate > b.duoDate ? 1 : -1).map((booking, i) => {
                         return (
@@ -79,7 +80,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                                             <FontBold value={t(booking.serviceType)} />
                                             <FontLight value={booking.duoDate + ' ' + booking.duoTime} />
                                             {/* <Image source={{ uri: booking.providerData.imageUrl }} /> */}
-                                            <View style={{ marginTop: 15 }}>
+                                            <View style={{ marginTop: 15, width: 200 }}>
                                                 {
                                                     booking.providerData != null ?
                                                         <View style={{ borderWidth: 1, borderRadius: 14 }}>

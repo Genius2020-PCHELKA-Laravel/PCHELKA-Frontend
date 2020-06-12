@@ -54,7 +54,7 @@ const InternetScreen = ({ navigation }) => {
     let isCancelled2 = false;
     NetInfo.fetch().then((connection) => {
       console.log(connection)
-      if (connection.isInternetReachable) {
+      if (connection.isConnected) {
         console.log("Connected");
         setConnected(true);
       }
@@ -65,12 +65,12 @@ const InternetScreen = ({ navigation }) => {
           setIsLoading(false);
         return;
       }
-      if (connection.isInternetReachable && (typeof (testToken) == 'undefined')) {
+      if (connection.isConnected && (typeof (testToken) == 'undefined')) {
         if (!isCancelled2)
           setIsLoading(false);
         navigation.navigate('LoginFlow');
       }
-      else if (connection.isInternetReachable && (typeof (testToken) != 'undefined')) {
+      else if (connection.isConnected && (typeof (testToken) != 'undefined')) {
         if (!isCancelled2)
           setIsLoading(false);
         navigation.navigate('Dashboard');
@@ -91,9 +91,9 @@ const InternetScreen = ({ navigation }) => {
 
     {
       !connected ?
-        <Image style={styles.nonet} source={require('../../assets/nonet.png')} />
+        <Image style={styles.net} source={require('../../assets/nonet.png')} />
         :
-        null
+        <Image style={styles.nonet} source={require('../../assets/nonet.png')} />
     }
 
   </View>);
@@ -104,7 +104,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5c500"
   },
+  net: {
+    width: "100%",
+    marginTop: 200
+  },
   nonet: {
+    display: "none",
     width: "100%",
     marginTop: 200
   },

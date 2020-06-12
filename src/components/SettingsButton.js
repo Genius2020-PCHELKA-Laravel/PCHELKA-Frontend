@@ -23,9 +23,10 @@ const SettingsButton = ({ t }) => {
 
     useEffect(() => {
         // if (ustate.addressesloaded && ustate.addresses != '' && typeof ustate.addresses != 'undefined')
-        if (ustate.addresses.length === 0 || ustate.addresses === undefined)
+        // if (ustate.addresses.length === 0 || ustate.addresses === undefined)
+        if (ustate.addresses === undefined)
             setAddress(t('address'))
-        else
+        else if (ustate.addresses[0] != undefined)
             setAddress(ustate.addresses[0].details + ',' + ustate.addresses[0].address);
     }, [ustate.addresses]);
 

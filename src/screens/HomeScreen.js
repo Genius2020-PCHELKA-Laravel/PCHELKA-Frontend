@@ -20,7 +20,7 @@ import { Context as HCContext } from './context/HCContext';
 import { navigate } from '../navigationRef';
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
-  const { state: hcstate, setHC, setBS, getServices, getUpcoming, dispatch: hcdispatch } = useContext(HCContext);
+  const { state: hcstate, setHC, setBS, setDI, setDE, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
@@ -39,6 +39,8 @@ const HomeScreen = ({ navigation, t }) => {
     //hcdispatch({ type: 'RESET' });
     getServices().then((response) => {
       setHC(response[0]);
+      setDI(response[10]);
+      setDE(response[6]);
       setBS(response[11]);
       console.log("HomeScreen::UseEffect::getServices::response::");
       console.log(response);
@@ -62,8 +64,33 @@ const HomeScreen = ({ navigation, t }) => {
       console.log("HomeScreen::getUserDetails#1 " + error);
     });
 
+    getUpcoming().then((response) => {
+      //console.log("Upcoming::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+    getPast().then((response) => {
+      //console.log("Upcoming::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
   }, []);
-
+  useEffect(() => {
+    getUpcoming().then((response) => {
+      console.log("Upcoming::useffect::getUpcoming::response:: ");
+      console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+    getPast().then((response) => {
+      //console.log("Upcoming::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, [hcstate.reloadAppointments]);
   // useEffect(() => {
   //   getUpcoming().then((response) => {
   //     console.log("HomeScreen::useffect::getUpcoming::response:: ");
@@ -118,11 +145,11 @@ const HomeScreen = ({ navigation, t }) => {
         <View style={styles.bottomcontainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DisinfectionScreen"} title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DeepCleaningScreen"} title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('matresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />

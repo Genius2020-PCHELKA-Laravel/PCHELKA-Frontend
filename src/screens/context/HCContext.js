@@ -26,6 +26,10 @@ const HCreducer = (state, action) => {
             return { ...state, HC: action.payload };
         case 'set_bs':
             return { ...state, BS: action.payload };
+        case 'set_di':
+            return { ...state, DI: action.payload };
+        case 'set_de':
+            return { ...state, DE: action.payload };
         case 'set_hours':
             return { ...state, hours: action.payload };
         case 'set_cleaners':
@@ -190,7 +194,26 @@ const setBS = (dispatch) => {
         }
     };
 }
-
+const setDI = (dispatch) => {
+    return async (DIDetails) => {
+        try {
+            dispatch({ type: 'set_di', payload: DIDetails });
+        } catch (err) {
+            console.log("HCContex::setDI::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+const setDE = (dispatch) => {
+    return async (DEDetails) => {
+        try {
+            dispatch({ type: 'set_de', payload: DEDetails });
+        } catch (err) {
+            console.log("HCContex::setDE::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
 const pay = (dispatch) => {
     return async ({ order_id, card, card_exp_month, card_exp_year, card_cvv, amount, description }) => {
         try {
@@ -260,7 +283,8 @@ const HCBooking = dispatch => {
                 frequency,
                 answers
             }).then((response) => {
-                dispatch({ type: 'set_reloadappoitments', payload: 1 })
+                let rand = Math.floor(1000 + Math.random() * 9000).toString();
+                dispatch({ type: 'set_reloadappoitments', payload: rand })
                 console.log("HCBooking::HCCContext" + response.data);
                 if (response.data.status == true)
                     console.log("Booked");
@@ -335,15 +359,37 @@ const getSelectedUpcoming = (dispatch) => {
         }
     };
 }
+const rescheduleBook = (dispatch) => {
+    return async ({ id, duoDate, duoTime, providerId, hourId }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var result = await requestApi.post('/rescheduleBook', { id, duoDate, duoTime, providerId, hourId });
+            //console.log("getselectedUpcoming::HCCContext:  " + JSON.stringify(result.data.data));
+            if (result.data.status) {
+                // dispatch({ type: 'set_selected_upcoming', payload: result.data.data });
+                return result.data.data;
+            }
+            else
+                Toast.show(result.data.error, Toast.LONG);
+        } catch (err) {
+            console.log("Error::HCContex::rescheduleBook::" + err);
+            dispatch({ type: 'add_error', payload: err });
+        }
+    };
+}
 export const { Context, Provider } = createDataContext(HCreducer,
     {
         getServices,
         setHC,
         setBS,
+        setDI,
+        setDE,
         HCBooking,
         getProviders,
         // getSchedulesDays,
         getSchedules,
+        rescheduleBook,
         pay,
         getUpcoming,
         getPast,
@@ -356,6 +402,8 @@ export const { Context, Provider } = createDataContext(HCreducer,
         schedules: [],
         HC: '',
         BS: '',
+        DI: '',
+        DE: '',
         providerid: '',
         autoassign: 1,
         subtotal: 0,

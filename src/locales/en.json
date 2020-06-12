@@ -49,8 +49,9 @@
   "enteremail": "Enter Email",
   "enteraddress": "Enter Address",
   "pleasefillmobile": "Please fill mobile",
-  "pleasefillname": "Please fill Name",
+  "pleasefillname": "Please fill Name, minimum letters count is 5 letters",
   "pleasefillemail": "Please fill Email",
+  "pleasecheckemail": "Please check Email",
   "pleasefilladdress": "Please fill Address",
   "pleaseuseanotheremail": "Please use another email",
   "pleaseuseanothermobile": "Please use another mobile",
@@ -86,6 +87,7 @@
   "dateq1": "When would you like cleaning?",
   "dateq2": "what time would you like us to start?",
   "addressq1": "Your saved addresses",
+  "lastservedat": "Last served at ",
   "addnew": "Add new >",
   "save": "Save",
   "edit": "Edit",
@@ -108,6 +110,8 @@
   "booked": "Booked",
   "notbooked": "Booking does not completed",
   "homepage": "Home Page",
+  "rescheduled": "Rescheduled",
+  "notrescheduled": "Booking does not rescheduled",
   //Modal
   "servicetype": "SERVICE TYPE",
   "details": "Details",
@@ -131,6 +135,7 @@
   //locations
   "youraddresses": "Your Addresses",
   "addresses": "Addresses",
+  "noaddresses": "There are no addresses yet.",
   "confirm": "Confirm",
   "addnewaddress": "Add New Address",
   "street": "Street",
@@ -146,7 +151,9 @@
   "refcode": "Ref. Code",
   "upcoming": "Upcoming",
   "past": "Past",
+  "nopastappoitments": "There are no past appoitments yet.",
   "upcomingappoitment": "Upcoming Appoitment",
+  "noupcomingappoitment": "There are no upcoming appoitments yet.",
   "reschedule": "Reschedule",
   "schedule": "Schedule",
   "confirmed": "Confirmed",
@@ -158,6 +165,8 @@
   "ourpolicydoc": "You can reschedule the booking for free as long as you reschedule it witin 10 minutes after you have placed your booking request.",
   "viewourpolicy": "View our policy",
   "cancel": "Cancel",
+  "restart": "Restart",
+  "changinglanguagerequirerestartingtheapp": "Changing language require restarting the App",
   "reschedulepolicy": "Reschedule Policy",
   "type": "Type",
   "reschedulefee": "Reschedule Fee",
@@ -170,6 +179,7 @@
   "twentyfivepercent": "25% of appoitment value",
   "onehandredpercent": "100% of appoitment value",
   //BabySitter
+  "babysitter": "Babysitter",
   "babyontimedetails": "Book Babysitter for one time only",
   "babybiweeklydetails": "Book a recurring Babysitter with the same Babysitter every two-weeks",
   "babyweeklydetails": "Book a recurring with the same Babysitter every week",
@@ -181,8 +191,12 @@
   "babydateq1": "When would you like service to start?",
   "babywewillassignthebestcleaner": "We will assign the best Babysitter",
   "service": "Service",
-  "babysitter": "Babysitter",
   "BabysitterService": "Babysitter Service",
   "babysitters": "Babysitters",
-  "numberofbabysitters": "Number of Babysitters"
+  "numberofbabysitters": "Number of Babysitters",
+  //Disinfection
+  "disinfection": "Disinfection Services",
+  "DisinfectionService": "Disinfection Service",
+  //deepCleaning
+  "deepcleaning": "Deep Cleaning"
 }

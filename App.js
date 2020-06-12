@@ -10,6 +10,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import { setNavigator } from './src/navigationRef';
 import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
 import BabySitterScreen from './src/screens/BabySitterScreen';
+import DisinfectionScreen from './src/screens/DisinfectionScreen';
+import DeepCleaningScreen from './src/screens/DeepCleaningScreen';
 import BookedScreen from './src/components/HomeCleaningSteps/BookedScreen'
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
 import { Provider as UserProvider } from './src/screens/context/UserContext';
@@ -95,7 +97,7 @@ const VerifyStack = createStackNavigator(
   {
     LoginPhoneScreen: {
       screen: LoginPhoneScreen,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('login')} />,
         headerLeft: ({ navigation }) => (
           <Icon
@@ -105,11 +107,11 @@ const VerifyStack = createStackNavigator(
             size={35}
           />
         ),
-      }
+      })
     },
     VerifyScreen: {
       screen: VerifyScreen,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('verify')} />,
         headerLeft: ({ navigation }) => (
           <Icon
@@ -119,11 +121,11 @@ const VerifyStack = createStackNavigator(
             size={35}
           />
         ),
-      }
+      })
     },
     RegisterUserScreen: {
       screen: RegisterUserScreen,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('register')} />,
         headerLeft: ({ navigation }) => (
           <Icon
@@ -133,14 +135,14 @@ const VerifyStack = createStackNavigator(
             size={35}
           />
         ),
-      }
+      })
     },
   },
   {
     initialRouteName: 'LoginPhoneScreen',
-    defaultNavigationOptions: {
+    defaultNavigationOptions: () => ({
       headerShown: true
-    }
+    })
   });
 
 // const RegisterFlow = createSwitchNavigator({
@@ -163,7 +165,7 @@ const HomeLoginStackNavigator = createStackNavigator(
   {
     HomeScreenLogIn: {
       screen: HomeScreenLogIn,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: '',
         headerRight: () => (
           <LoginButton />),
@@ -171,15 +173,15 @@ const HomeLoginStackNavigator = createStackNavigator(
           // backgroundColor: '#f5c500',
         },
         // headerTintColor: '#fff',
-      }
+      })
     },
     RegisterFlow: { screen: VerifyStack, navigationOptions: { headerShown: false } },
   },
   {
     initialRouteName: 'HomeScreenLogIn',
-    defaultNavigationOptions: {
+    defaultNavigationOptions: () => ({
       headerShown: true
-    }
+    })
   });
 
 
@@ -212,7 +214,7 @@ const HomeStackNavigator = createStackNavigator(
     },
     HomeCleaningScreen: {
       screen: HomeCleaningScreen,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('homecleaning')} />,
         headerLeft: ({ navigation }) => (
           <Icon
@@ -222,11 +224,11 @@ const HomeStackNavigator = createStackNavigator(
             size={35}
           />
         ),
-      }
+      })
     },
     BabySitterScreen: {
       screen: BabySitterScreen,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('babysitter')} />,
         headerLeft: ({ navigation }) => (
           <Icon
@@ -236,14 +238,42 @@ const HomeStackNavigator = createStackNavigator(
             size={35}
           />
         ),
-      }
+      })
+    },
+    DisinfectionScreen: {
+      screen: DisinfectionScreen,
+      navigationOptions: () => ({
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('disinfection')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      })
+    },
+    DeepCleaningScreen: {
+      screen: DeepCleaningScreen,
+      navigationOptions: () => ({
+        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('deepcleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <Icon
+            style={{ left: 15, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="md-arrow-back"
+            size={35}
+          />
+        ),
+      })
     },
     MapScreen: {
       screen: MapScreen,
-      navigationOptions: {
+      navigationOptions: () => ({
         title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('mapScreen')} />,
         headerShown: false,
-      }
+      })
     },
     BookedScreen: {
       screen: BookedScreen,
@@ -344,21 +374,21 @@ const SettingStackNavigator = createStackNavigator(
 const TabNavigator = createMaterialTopTabNavigator({
   Upcoming: {
     screen: UpcomingScreen,
-    navigationOptions: {
+    navigationOptions: () => ({
       tabBarLabel: i18n.t('upcoming'),
       tabBarIcon: ({ tintColor }) => (
         <MaterialCommunityIcons name='update' color={tintColor} size={24} />
       )
-    }
+    })
   },
   Past: {
     screen: PastScreen,
-    navigationOptions: {
+    navigationOptions: () => ({
       tabBarLabel: i18n.t('past'),
       tabBarIcon: ({ tintColor }) => (
         <FontAwesome5 name='history' color={tintColor} size={18} />
       )
-    }
+    })
   }
 },
   {
@@ -494,47 +524,47 @@ const SupportStackNavigator = createStackNavigator(
 const AppDrawerNavigator = createDrawerNavigator({
   HomeDrawerNavigator: {
     screen: HomeStackNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('home')} />,
       drawerIcon: <FontAwesome5 name="home" size={20} color="#fff" />
-    },
+    }),
   },
   SettingDrawerNavigator: {
     screen: SettingStackNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('draweraccountsettings')} />,
       drawerIcon: <MaterialCommunityIcons name="account-settings" size={25} color="#fff" />
-    },
+    }),
   },
   AppointmentDrawerNavigator: {
     screen: AppoitmentStackNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('appoitments')} />,
       drawerIcon: <Fontisto name="date" size={20} color="#fff" />
-    },
+    }),
   },
   FreeDrawerNavigator: {
     screen: FreeStackNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('freecleaning')} />,
       drawerIcon: <MaterialCommunityIcons name="ticket-percent" size={20} color="#fff" />
-    },
+    }),
   },
   SupportDrawerNavigator: {
     screen: SupportStackNavigator,
-    navigationOptions: {
+    navigationOptions: () => ({
       drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('support')} />,
       drawerIcon: <AntDesign name="message1" size={20} color="#fff" />
-    },
+    }),
   }
 },
   // { edgeWidth: 20, drawerType: 'slide', overlayColor: 'red', },
 
   {
-    navigationOptions: {
+    navigationOptions: () => ({
       gestureEnabled: true,
       mode: 'modal',
-    },
+    }),
     initialRouteName: "HomeDrawerNavigator",
     contentOptions: {
       // activeTintColor: "#e91e63"
