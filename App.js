@@ -26,6 +26,7 @@ import UpcomingDetailsScreen from './src/screens/drawerScreens/UpcomingDetailsSc
 import HCRescheduleScreen from './src/screens/drawerScreens/HCRescheduleScreen';
 import HCRescheduleReducedScreen from './src/screens/drawerScreens/HCRescheduleReducedScreen';
 import ReschedulePolicyScreen from './src/screens/drawerScreens/ReschedulePolicyScreen';
+import RescheduledScreen from './src/screens/drawerScreens/RescheduledScreen';
 import FreeScreen from './src/screens/drawerScreens/FreeScreen';
 import SupportScreen from './src/screens/drawerScreens/SupportScreen';
 import HomeScreenLogIn from './src/screens/HomeScreenLogIn';
@@ -470,6 +471,25 @@ const AppoitmentStackNavigator = createStackNavigator(
         },
         headerTintColor: '#fff',
       }),
+    },
+    RescheduledScreen: {
+      screen: RescheduledScreen,
+      navigationOptions: ({ navigation }) => {
+        return {
+          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('rescheduled')} />,
+          headerLeft: () =>
+            <Icon
+              style={{ left: 15, color: '#f5c500' }}
+              onPress={() => navigate('Upcoming')}
+              name="md-arrow-back"
+              size={35}
+            />,
+          headerStyle: {
+            // backgroundColor: '#f5c500',
+          },
+          // headerTintColor: '#fff',
+        };
+      },
     },
   });
 const FreeStackNavigator = createStackNavigator(

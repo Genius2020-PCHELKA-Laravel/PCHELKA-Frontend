@@ -634,7 +634,7 @@ const styles = StyleSheet.create({
         width: 65,
         height: 40,
         borderRadius: 65 / 2,
-        backgroundColor: 'red',
+        backgroundColor: '#ffcccb',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
@@ -707,7 +707,7 @@ const styles = StyleSheet.create({
         right: 2,
         top: 22,
         width: 80,
-        borderBottomColor: 'red',
+        borderBottomColor: '#ffcccb',
         borderBottomWidth: 2,
     },
     ourpolicycontainer: {

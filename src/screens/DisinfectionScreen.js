@@ -236,6 +236,7 @@ const DisinfectionScreen = ({ navigation, t }) => {
         scheduleId: "1",
         paymentWays: paymentWays,
         frequency: frequency,
+        materialPrice: hcstate.hours * hcstate.materials * hcstate.DI.materialPrice,
         answers: [
           {
             questionId: 1,

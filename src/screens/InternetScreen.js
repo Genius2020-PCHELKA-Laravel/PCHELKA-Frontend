@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useContext, useRef } from 'react';
-import { View, Text, StyleSheet, Button, Alert, Platform, Image, SafeAreaView } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, Button, Alert, Platform, Image, SafeAreaView, ImageBackground } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Permissions } from 'expo';
 
@@ -7,15 +7,16 @@ import NetInfo from '@react-native-community/netinfo';
 import { getToken } from '../api/token';
 import { Context as HCContext } from './context/HCContext';
 import { Context as UserContext } from './context/UserContext';
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
 import { getLang, storeLang } from '../api/userLanguage';
 
 
 const InternetScreen = ({ navigation }) => {
   const [testToken, setTestToken] = useState('');
-  const [isloading, setIsLoading] = useState(false);
-  const [connected, setConnected] = useState('');
+  // const [isloading, setIsLoading] = useState(false);
+  const [connected, setConnected] = useState(true);
   const ref = useRef(false)
+  const { width, height } = Dimensions.get('window');
 
   // const [connected, setConnected] = useState(false);
 
@@ -28,7 +29,7 @@ const InternetScreen = ({ navigation }) => {
       console.log(typeof testToken);
       console.log(testToken);
     } catch (error) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log("Error::InternetScreen::testInternetConnection");
     }
 
@@ -37,7 +38,7 @@ const InternetScreen = ({ navigation }) => {
     let isCancelled1 = false;
     if (!isCancelled1) {
 
-      setIsLoading(true);
+      // setIsLoading(true);
       testLogin();
     }
     getLang().then((response) => {
@@ -52,33 +53,35 @@ const InternetScreen = ({ navigation }) => {
   }, [])
   useEffect(() => {
     let isCancelled2 = false;
-    NetInfo.fetch().then((connection) => {
-      console.log(connection)
-      if (connection.isConnected) {
-        console.log("Connected");
-        setConnected(true);
-      }
-      else {
-        console.log("Not Connected");
-        setConnected(false);
-        if (!isCancelled2)
-          setIsLoading(false);
-        return;
-      }
-      if (connection.isConnected && (typeof (testToken) == 'undefined')) {
-        if (!isCancelled2)
-          setIsLoading(false);
-        navigation.navigate('LoginFlow');
-      }
-      else if (connection.isConnected && (typeof (testToken) != 'undefined')) {
-        if (!isCancelled2)
-          setIsLoading(false);
-        navigation.navigate('Dashboard');
-      }
-      else {
-        setIsLoading(false);
-      }
-    });
+    setTimeout(() => {
+      NetInfo.fetch().then((connection) => {
+        console.log(connection)
+        if (connection.isConnected) {
+          console.log("Connected");
+          setConnected(true);
+        }
+        else {
+          console.log("Not Connected");
+          setConnected(false);
+          if (!isCancelled2)
+            // setIsLoading(false);
+            return;
+        }
+        if (connected && (typeof (testToken) == 'undefined')) {
+          if (!isCancelled2)
+            // setIsLoading(false);
+            navigation.navigate('LoginFlow');
+        }
+        else if (connected && (typeof (testToken) != 'undefined')) {
+          if (!isCancelled2)
+            // setIsLoading(false);
+            navigation.navigate('Dashboard');
+        }
+        else {
+          // setIsLoading(false);
+        }
+      })
+    }, 3000);
 
     return () => {
       isCancelled2 = true;
@@ -87,15 +90,32 @@ const InternetScreen = ({ navigation }) => {
 
 
   return (<View style={styles.container}>
-    <Loader loading={isloading} />
-
+    {/* <Loader loading={isloading} /> */}
     {
-      !connected ?
-        <Image style={styles.net} source={require('../../assets/nonet.png')} />
+      connected ?
+        <ImageBackground
+          source={require('../../assets/Splash/Splash.png')}
+          style={{ width: '100%', height: '100%' }}
+          resizeMode="cover"
+        >
+          <View style={styles.biglogo}>
+            <Image resizeMode="contain" style={{ width: width * 0.7, height: (width * 0.7) / 1.8 }} source={require('../../assets/Splash/biglogo.png')} />
+          </View>
+        </ImageBackground>
         :
-        <Image style={styles.nonet} source={require('../../assets/nonet.png')} />
-    }
+        <View style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Image resizeMode="contain" style={{ width: width * 0.6, height: (width * 0.6) / 1.8 }} source={require('../../assets/nonet.png')} />
+          </View>
+        </View>
+      // <View>
+      //   <Image style={{ width: width, height: height }} source={require('../../assets/Splash/Splash.png')} />
+      //   <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      //     <Image style={styles.biglogo} source={require('../../assets/Splash/biglogo.png')} />
+      //   </View>
+      // </View>
 
+    }
   </View>);
 };
 
@@ -104,15 +124,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5c500"
   },
-  net: {
-    width: "100%",
-    marginTop: 200
+
+  splash: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
   },
-  nonet: {
-    display: "none",
-    width: "100%",
-    marginTop: 200
-  },
+  biglogo: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    position: 'absolute',
+    bottom: 100,
+    left: 0,
+    right: 0
+  }
+
 });
 
 export default InternetScreen;

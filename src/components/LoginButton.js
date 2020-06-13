@@ -76,7 +76,9 @@ const LoginButton = ({ t }) => {
                             <FontBold mystyle={styles.languageButtonStyle} value="English" />
                         </TouchableOpacity>
                         :
-                        null
+                        <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                            <FontBold mystyle={styles.languageButtonStyle} value="русский" />
+                        </TouchableOpacity>
             }
             <TouchableOpacity onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}>
                 {/* <FontBold mystyle={styles.loginButtonStyle} value={t('login')}></FontBold> */}

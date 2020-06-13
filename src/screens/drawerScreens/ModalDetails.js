@@ -25,12 +25,12 @@ const ModalDetails = ({ children, t }) => {
     if (hcstate.frequency == 1) modalfrequency = t('onetime');
     else if (hcstate.frequency == 2) modalfrequency = t('biweekly');
     else if (hcstate.frequency == 3) modalfrequency = t('weekly');
-    let materialprice = hcstate.selectedupcoming.serviceType == "HomeCleaning" ? hcstate.HC.materialPrice :
-        hcstate.selectedupcoming.serviceType == "DisinfectionService" ? hcstate.DI.materialPrice :
-            hcstate.selectedupcoming.serviceType == "DeepCleaning" ? hcstate.DE.materialPrice : 0;
-    let modalmaterials = hcstate.frequency == 1 ? hcstate.hours * hcstate.materials * materialprice :
-        hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * materialprice * 2 :
-            hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * materialprice * 4 : 0;
+    // let materialprice = hcstate.selectedupcoming.serviceType == "HomeCleaning" ? hcstate.HC.materialPrice :
+    //     hcstate.selectedupcoming.serviceType == "DisinfectionService" ? hcstate.DI.materialPrice :
+    //         hcstate.selectedupcoming.serviceType == "DeepCleaning" ? hcstate.DE.materialPrice : 0;
+    // let modalmaterials = hcstate.frequency == 1 ? hcstate.hours * hcstate.materials * materialprice :
+    //     hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * materialprice * 2 :
+    //         hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * materialprice * 4 : 0;
     return (
         <View style={{ marginTop: 22 }}>
             <Modal
@@ -88,7 +88,7 @@ const ModalDetails = ({ children, t }) => {
                                         <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('materials')}></FontBold>
                                     </View>
                                     <View style={styles.item}>
-                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalmaterials + ' UAH'}></FontBold>
+                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.materialPrice + ' UAH'}></FontBold>
                                     </View>
                                 </View>
                                 : null

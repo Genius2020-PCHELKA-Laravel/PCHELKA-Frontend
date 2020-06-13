@@ -87,7 +87,11 @@ const SettingScreen = ({ navigation, t }) => {
         <Spacer />
         <LogoutButton />
       </ScrollView>
-
+      <TouchableOpacity onPress={() => { navigate('HomeNavigator') }}>
+        <Spacer>
+          <FontBold value={t('homepage')} mystyle={{ textAlign: "center", fontSize: 12, color: 'blue' }}></FontBold>
+        </Spacer>
+      </TouchableOpacity>
     </View>);
 };
 

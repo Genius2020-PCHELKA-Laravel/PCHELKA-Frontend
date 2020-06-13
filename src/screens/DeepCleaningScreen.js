@@ -236,6 +236,7 @@ const DeepCleaningScreen = ({ navigation, t }) => {
         scheduleId: "1",
         paymentWays: paymentWays,
         frequency: frequency,
+        materialPrice: hcstate.hours * hcstate.materials * hcstate.DE.materialPrice,
         answers: [
           {
             questionId: 1,

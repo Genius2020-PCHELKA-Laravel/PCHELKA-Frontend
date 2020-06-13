@@ -219,6 +219,7 @@ const BabySitterScreen = ({ navigation, t }) => {
         scheduleId: "1",
         paymentWays: paymentWays,
         frequency: frequency,
+        materialPrice: 0,
         answers: [
           {
             questionId: 1,

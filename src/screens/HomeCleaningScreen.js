@@ -236,6 +236,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         scheduleId: "1",
         paymentWays: paymentWays,
         frequency: frequency,
+        materialPrice: hcstate.hours * hcstate.materials * hcstate.HC.materialPrice,
         answers: [
           {
             questionId: 1,

@@ -102,6 +102,7 @@
   "selectpaymentmethodplease": "Пожалуйста, выберите способ оплаты",
   "yourcardnumbernotvalid": "Номер вашей карты недействителен",
   "thankyouforyourorder": "Спасибо за ваш заказ",
+  "thankyou": "Спасибо",
   "paymentresult": "Результат оплаты",
   "paymentstatus": "Статус платежа",
   "error": "ошибка",
@@ -198,5 +199,5 @@
   "disinfection": "Дезинфекционные услуги",
   "DisinfectionService": "Дезинфекционная служба",
   //deepCleaning
-  "deepcleaning": "Глубокая чистка"
+  "DeepCleaning": "Глубокая чистка"
 }

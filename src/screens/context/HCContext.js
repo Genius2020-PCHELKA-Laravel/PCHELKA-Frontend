@@ -108,8 +108,8 @@ const HCreducer = (state, action) => {
                 // upcoming: [],
                 // past: [],
                 // reloadAppointments: '',
-                selectedupcoming: {},
-                selectedupcomingproviderdata: {}
+                // selectedupcoming: {},
+                // selectedupcomingproviderdata: {}
             };
         default:
             return state;
@@ -264,6 +264,7 @@ const HCBooking = dispatch => {
         scheduleId,
         paymentWays,
         frequency,
+        materialPrice,
         answers
     }) => {
         try {
@@ -281,6 +282,7 @@ const HCBooking = dispatch => {
                 scheduleId,
                 paymentWays,
                 frequency,
+                materialPrice,
                 answers
             }).then((response) => {
                 let rand = Math.floor(1000 + Math.random() * 9000).toString();
@@ -360,14 +362,16 @@ const getSelectedUpcoming = (dispatch) => {
     };
 }
 const rescheduleBook = (dispatch) => {
-    return async ({ id, duoDate, duoTime, providerId, hourId }) => {
+    return async ({ id, duoDate, duoTime, providerId }) => {
         try {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            var result = await requestApi.post('/rescheduleBook', { id, duoDate, duoTime, providerId, hourId });
+            var result = await requestApi.post('/rescheduleBook', { id, duoDate, duoTime, providerId });
             //console.log("getselectedUpcoming::HCCContext:  " + JSON.stringify(result.data.data));
             if (result.data.status) {
                 // dispatch({ type: 'set_selected_upcoming', payload: result.data.data });
+                let rand = Math.floor(1000 + Math.random() * 9000).toString();
+                dispatch({ type: 'set_reloadappoitments', payload: rand })
                 return result.data.data;
             }
             else

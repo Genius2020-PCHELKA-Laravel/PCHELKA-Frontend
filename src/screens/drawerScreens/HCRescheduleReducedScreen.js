@@ -291,20 +291,29 @@ const HCRescheduleScreen = ({ children, t }) => {
                 style={styles.reschedulebuttonStyle}
                 activeOpacity={0.5}
                 onPress={async () => {
+                    if (selectedDay == '') {
+                        Toast.show(t('selectdateplease'), Toast.LONG);
+                        setIsLoading(false);
+                        return;
+                    }
+                    if (start == '' || (start == hcstate.selectedupcoming.duoTime && selectedDay == hcstate.selectedupcoming.duoDate)) {
+                        Toast.show(t('selecttimeplease'), Toast.LONG);
+                        setIsLoading(false);
+                        return;
+                    }
                     setIsLoading(true);
                     await rescheduleBook({
                         id: hcstate.selectedupcoming.id,
                         duoDate: selectedDay,
                         duoTime: start,
-                        providerId: providerid,
-                        hourId: 4
+                        providerId: providerid
                     }).then(() => {
                         setIsLoading(false);
                         hcdispatch({
                             type: 'RESET'
                         });
                         Toast.show(t('rescheduled'), Toast.LONG);
-                        navigate('BookedScreen')
+                        navigate('RescheduledScreen')
                     }).catch((error) => {
                         console.log(error);
                         setIsLoading(false);
@@ -430,7 +439,7 @@ const styles = StyleSheet.create({
         width: 65,
         height: 40,
         borderRadius: 65 / 2,
-        backgroundColor: '#d21404',
+        backgroundColor: '#ffcccb',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
@@ -503,7 +512,7 @@ const styles = StyleSheet.create({
         right: 2,
         top: 22,
         width: 80,
-        borderBottomColor: '#d21404',
+        borderBottomColor: '#ffcccb',
         borderBottomWidth: 2,
     },
     ourpolicycontainer: {

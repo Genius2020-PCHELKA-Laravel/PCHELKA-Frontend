@@ -20,7 +20,7 @@ const RescheduledScreen = ({ children, t }) => {
     return (
         <View style={styles.container}>
             <Spacer>
-                <FontBold value={t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: 20 }} />
+                <FontBold value={t('thankyou')} mystyle={{ textAlign: "center", fontSize: 20 }} />
             </Spacer>
             <Spacer>
                 <FontLight value={t('rescheduled')} mystyle={{ textAlign: "center", color: 'gray', fontSize: 20 }} />
@@ -28,9 +28,9 @@ const RescheduledScreen = ({ children, t }) => {
             <View style={styles.imagecontainer} >
                 <Image style={styles.image} source={require('../../../assets/correct.png')} />
             </View>
-            <TouchableOpacity onPress={() => { navigate('HomeNavigator') }}>
+            <TouchableOpacity onPress={() => { navigate('Upcoming') }}>
                 <Spacer>
-                    <FontBold value={t('homepage')} mystyle={{ textAlign: "center", fontSize: 12, color: 'blue' }}></FontBold>
+                    <FontBold value={t('appoitments')} mystyle={{ textAlign: "center", fontSize: 12, color: 'blue' }}></FontBold>
                 </Spacer>
             </TouchableOpacity>
         </View>

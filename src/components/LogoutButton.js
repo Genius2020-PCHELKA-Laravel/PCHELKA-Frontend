@@ -61,7 +61,9 @@ const LogoutButton = ({ t }) => {
                             <FontBold mystyle={styles.languageButtonStyle} value="English" />
                         </TouchableOpacity>
                         :
-                        null
+                        <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                            <FontBold mystyle={styles.languageButtonStyle} value="русский" />
+                        </TouchableOpacity>
             }
             <TouchableOpacity onPress={async () => {
 

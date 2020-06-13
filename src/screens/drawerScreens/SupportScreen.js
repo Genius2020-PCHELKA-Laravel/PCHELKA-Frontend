@@ -7,7 +7,9 @@ import Spacer from '../../components/Spacer';
 import { withNamespaces } from 'react-i18next';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Linking } from 'react-native'
+import { Linking } from 'react-native';
+import { navigate } from "../../navigationRef";
+
 const SupportScreen = ({ navigation, t }) => {
   const phoneNumber = "0934515020";
   return (
@@ -40,7 +42,11 @@ const SupportScreen = ({ navigation, t }) => {
         </TouchableOpacity> */}
       </ScrollView>
 
-
+      <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
+        <Spacer>
+          <FontBold value={t('homepage')} mystyle={{ textAlign: "center", fontSize: 12, color: 'blue' }}></FontBold>
+        </Spacer>
+      </TouchableOpacity>
     </View >
   );
 };

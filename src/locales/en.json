@@ -103,6 +103,7 @@
   "selectpaymentmethodplease": "Select payment method please",
   "yourcardnumbernotvalid": "Your card number not valid",
   "thankyouforyourorder": "Thank you for your order",
+  "thankyou": "Thank you",
   "paymentresult": "Payment result",
   "paymentstatus": "Payment status",
   "error": "Error",
@@ -198,5 +199,5 @@
   "disinfection": "Disinfection Services",
   "DisinfectionService": "Disinfection Service",
   //deepCleaning
-  "deepcleaning": "Deep Cleaning"
+  "DeepCleaning": "Deep Cleaning"
 }
