@@ -134,9 +134,9 @@ const MapContainer = () => {
 
             {
                 latitude != 0 ?
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', }}>
                         <MapView
-                            style={{ flex: 1, width: width, height: height }}
+                            style={styles.mapStyle}
                             region={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
                             loadingEnabled
                             showsUserLocation={true}
@@ -173,5 +173,9 @@ const styles = StyleSheet.create({
     item2: {
         left: 20,
         width: '87%' // is 50% of container width
-    }
+    },
+    mapStyle: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    },
 });
