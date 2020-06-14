@@ -12,6 +12,7 @@ import { Context as UserContext } from '../../screens/context/UserContext';
 import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
 import Loader from '../Loader';
 import i18n from '../../locales/i18n';
+import { Dimensions } from 'react-native';
 
 const MapContainer = () => {
     const [latitude, setLatitude] = useState(0);
@@ -20,6 +21,7 @@ const MapContainer = () => {
     const [longitudeDelta, setLongitudeDelta] = useState(0.003);
     const [isloading, setIsLoading] = useState(false);
     const { state, addNewAddress, } = useContext(UserContext);
+    const { width, height } = Dimensions.get('window');
 
 
     useEffect(() => {
@@ -134,7 +136,7 @@ const MapContainer = () => {
                 latitude != 0 ?
                     <View style={{ flex: 1 }}>
                         <MapView
-                            style={{ flex: 1 }}
+                            style={{ flex: 1, width: width, height: height }}
                             region={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
                             loadingEnabled
                             showsUserLocation={true}
