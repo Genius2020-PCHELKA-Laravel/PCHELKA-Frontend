@@ -9,12 +9,12 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    // "icon": "./assets/icon.png",
-    // "splash": {
-    //   "image": "./assets/splash.png",
-    //   "resizeMode": "cover",
-    //   "backgroundColor": "#ffffff"
-    // },
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -22,7 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.genius.pchelka"
+    },
+    "android": {
+      "package": "com.genius.pchelka"
     }
   }
+}
 }

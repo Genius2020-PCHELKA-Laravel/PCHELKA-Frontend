@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import MapInput from './MapInput';
-import MyMapView from './MyMapView';
+// import MyMapView from './MyMapView';
 import { getLocation, geocodeLocationByName, geocodeLocationByCoords } from './LocationService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { navigate } from '../../navigationRef';

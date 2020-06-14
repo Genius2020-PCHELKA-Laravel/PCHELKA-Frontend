@@ -67,16 +67,17 @@ const LoginButton = ({ t }) => {
             <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
             {
                 lang === 'en' ?
-                    <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                    // <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                    <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('ru') }}>
                         <FontBold mystyle={styles.languageButtonStyle} value="русский" />
                     </TouchableOpacity>
                     :
                     lang === 'ru' ?
-                        <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('en'); setChanging(true) }}>
+                        <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('en') }}>
                             <FontBold mystyle={styles.languageButtonStyle} value="English" />
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
+                        <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('ru') }}>
                             <FontBold mystyle={styles.languageButtonStyle} value="русский" />
                         </TouchableOpacity>
             }
