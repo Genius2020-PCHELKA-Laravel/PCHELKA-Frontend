@@ -24,22 +24,23 @@ export default SlideBar = props => {
                 <Spacer />
                 <View style={styles.profileHeader}>
                     <View style={styles.profileHeaderPicCircle}>
-                        <FontLight mystyle={{ fontSize: 25, color: '#ffd700', }} value={fullName != null ? fullName.charAt(0) : ""} />
+                        <FontBold mystyle={{ fontSize: 25, color: '#6b695a', fontWeight: "bold" }} value={fullName != null ? fullName.charAt(0) : ""} />
                     </View>
-                    <FontLight mystyle={styles.profileHeaderText} value={fullName} />
                 </View>
+                <FontLight mystyle={styles.profileHeaderText} value={fullName} />
                 <View style={styles.profileHeaderLine} />
                 <View>
                     <DrawerNavigatorItems
-                        activeBackgroundColor="#f5c500"
-                        activeTintColor="#ffd700"
+                        activeBackgroundColor="#353626"
+                        activeTintColor="#6b695a"
 
                         activeLabelStyle={{}}
-                        inactiveBackgroundColor="#ffd700"
-                        inactiveTintColor="#f5c500"
-                        iconContainerStyle=""
-                        iconContainerStyle={{ position: 'absolute', right: 15 }}
+                        inactiveBackgroundColor="#6b695a"
+                        inactiveTintColor="#353626"
+                        iconContainerStyle={{ position: 'absolute', right: 0 }}
                         itemStyle={{
+                            borderBottomWidth: 1,
+                            borderBottomColor: "#7a7a7a"
                             // alignItems: 'center',
                             // color: 'blue',
                             // fontSize: 20,
@@ -49,8 +50,9 @@ export default SlideBar = props => {
                             // marginVertical: 2,
                             // marginHorizontal: 2,
                         }}
+
                         itemsContainerStyle={{
-                            backgroundColor: '#ffd700',
+                            backgroundColor: '#6b695a',
                         }}
                         {...props} />
                 </View>
@@ -60,19 +62,19 @@ export default SlideBar = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffd700',
+        backgroundColor: '#6b695a',
     },
 
     sideMenuContainer: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#ffd700',
+        backgroundColor: '#6b695a',
         paddingTop: 0,
         color: 'white',
     },
     profileHeader: {
         flexDirection: 'row',
-        backgroundColor: '#ffd700',
+        backgroundColor: '#6b695a',
         padding: 15,
         textAlign: 'center',
     },
@@ -90,17 +92,17 @@ const styles = StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         color: '#ffffff',
-        alignSelf: 'center',
-        paddingHorizontal: 10,
+        marginLeft: 20,
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 24
     },
     profileHeaderLine: {
         height: 3,
         marginHorizontal: 20,
-        backgroundColor: '#f5c500',
+        backgroundColor: '#6b695a',
         marginTop: 15,
         marginBottom: 30,
+        marginLeft: 15,
     },
 
 });

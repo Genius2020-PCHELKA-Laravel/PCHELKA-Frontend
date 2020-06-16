@@ -13,16 +13,12 @@ const servicesdetails = ({ navigation, nav, redirect, title, imagesource, t }) =
   return (<View style={styles.container}>
     <View flexDirection="column">
       <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
-        <Image flexDirection="row" style={styles.image} source={imagesource} />
+        <Image style={styles.image} source={imagesource} />
       </TouchableOpacity>
       <View flexDirection="column" style={styles.text}>
-        <Text flexDirection="row" style={styles.servicetext}>
-          <FontBold mystyle={{ fontSize: 14 }} value={title} />
-        </Text>
+        <FontBold mystyle={styles.servicetext} value={title} />
         <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
-          <Text flexDirection="row" style={styles.ButtonStyle}>
-            <FontRegular value={t('booknow') + "  "} mystyle={styles.booktext} />
-          </Text>
+          <FontRegular value={t('booknow') + "  "} mystyle={styles.ButtonStyle} />
         </TouchableOpacity>
       </View>
     </View>
@@ -48,27 +44,30 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     borderTopLeftRadius: 7,
-    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
     height: 120,
     opacity: 0.6,
     backgroundColor: 'black',
 
   },
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
     marginHorizontal: 5,
-    borderColor: '#fff',
-    borderWidth: 1,
     backgroundColor: '#fff',
     borderRadius: 7,
-    borderWidth: 1,
-    borderColor: '#7a7a7a'
+    borderWidth: 0,
+    borderColor: '#7a7a7a',
+    shadowOffset: { width: 15, height: 15 },
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    elevation: 2,
+    marginBottom: 10
+
   },
   ButtonStyle: {
-    marginTop: 10,
-    padding: 5,
+    padding: 10,
     marginLeft: 30,
     marginRight: 30,
     borderWidth: 1,

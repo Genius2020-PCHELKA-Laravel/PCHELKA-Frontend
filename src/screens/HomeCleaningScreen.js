@@ -377,28 +377,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   nextButtonStyle: {
-    top: 0,
+    top: 85,
     right: -50,
-    backgroundColor: '#fff',
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: '#7a7a7a',
-    // fontFamily: 'Comfortaa-Bold',
+    backgroundColor: '#f5c500',
+    borderRadius: 4,
     width: '100%'
   },
   previousButtonStyle: {
-    top: 0,
+    top: 85,
     left: -50,
-    backgroundColor: '#fff',
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: '#7a7a7a',
+    backgroundColor: '#f5c500',
+    borderRadius: 4,
     // fontFamily: 'Comfortaa-Bold',
     width: '100%'
 
   },
   ButtonTextStyle: {
-    color: '#7a7a7a',
+    color: '#fff',
     fontSize: 14,
   },
 });

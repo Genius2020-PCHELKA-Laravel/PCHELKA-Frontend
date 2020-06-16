@@ -1,5 +1,7 @@
 {
   //Home Screen
+  "noconnection": "No connection",
+  "pleasecheckyourinternetconnectionandtryagain": "Please check your internet connection and try again",
   "logout": "logout",
   "login": "login",
   "booknow": "Book Now",
@@ -19,6 +21,7 @@
   "accleaning": "AC Cleaning",
   "fullname": "Full Name",
   "mobile": "Mobile",
+  "mobileno": "Mobile number",
   //Settings Screen
   "accountsettings": "ACCOUNT SETTINGS",
   "editpersonaldetails": "Edit personal details",
@@ -48,6 +51,8 @@
   "entername": "Enter Name",
   "enteremail": "Enter Email",
   "enteraddress": "Enter Address",
+  "name": "Name",
+  "email": "Email",
   "pleasefillmobile": "Please fill mobile",
   "pleasefillname": "Please fill Name, minimum letters count is 5 letters",
   "pleasefillemail": "Please fill Email",
@@ -59,6 +64,7 @@
   "editunsuccessful": "Edit personal details Unsuccessful",
   //Edit person details
   "selectdate": "Select Date",
+  "gender": "Gender",
   "male": "Male",
   "female": "Female",
   "entermobile": "Enter Mobile",
@@ -68,6 +74,7 @@
   "frequency": "Frequency",
   "cleaning": "Cleaning",
   "date": "Date",
+  "dob": "Date of Birth",
   "address": "Address",
   "payment": "Payment",
   "onetime": "One-time",

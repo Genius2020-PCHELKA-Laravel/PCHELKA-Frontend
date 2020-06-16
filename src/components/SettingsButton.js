@@ -58,17 +58,20 @@ const SettingsButton = ({ t }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-                style={{ marginRight: 25 }}
-                activeOpacity={.5}
-                onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
-                <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
-                    {
-                        address == '' ? t('addresses') : address
-                    }
-                    {' '}<Entypo name="chevron-down" size={14} color="#f5c500" />
-                </Text>
-            </TouchableOpacity >
+
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <TouchableOpacity
+                    style={{ marginRight: 25 }}
+                    activeOpacity={.5}
+                    onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
+                    <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
+                        {
+                            address == '' ? t('addresses') : address
+                        }
+                        {' '}<Entypo name="chevron-down" size={14} color="#f5c500" />
+                    </Text>
+                </TouchableOpacity >
+            </View>
             <HomeScreenAddresses
                 addresses={ustate.addresses}
                 showAddressesModal={showAddressesModal}
@@ -97,7 +100,6 @@ const SettingsButton = ({ t }) => {
                 activeOpacity={0.7}
                 containerStyle={styles.avatar}
             />
-
         </View >
     )
 };
@@ -147,7 +149,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#7a7a7a',
         flex: 1,
         right: 20,
-        top: 15,
+        top: 20,
+        width: 25,
+        height: 25,
     },
 });
 

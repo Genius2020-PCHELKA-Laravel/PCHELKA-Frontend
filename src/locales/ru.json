@@ -1,4 +1,6 @@
 {
+  "noconnection": "Нет соединения",
+  "pleasecheckyourinternetconnectionandtryagain": "Пожалуйста, проверьте ваше интернет-соединение и попробуйте снова",
   "logout": "выйти",
   "login": "авторизоваться",
   "booknow": "Забронируйте сейчас",
@@ -18,6 +20,7 @@
   "accleaning": "Очистка кондиционера",
   "fullname": "Полное имя",
   "mobile": "мобильный",
+  "mobileno": "Номер мобильного",
   //Settings Screen
   "accountsettings": "НАСТРОЙКИ УЧЕТНОЙ ЗАПИСИ",
   "editpersonaldetails": "Изменить личные данные",
@@ -47,6 +50,8 @@
   "entername": "Введите имя",
   "enteremail": "Введите адрес электронной почты",
   "enteraddress": "Введите адрес",
+  "name": "имя",
+  "email": "Электронное письмо",
   "pleasefillmobile": "Пожалуйста, заполните мобильный",
   "pleasefillname": "Пожалуйста, заполните Имя, минимальное количество букв - 5 букв",
   "pleasefillemail": "Пожалуйста, заполните электронную почту",
@@ -58,6 +63,7 @@
   "editunsuccessful": "Изменить личные данные Не удалось",
   //Edit person details
   "selectdate": "Выберите дату",
+  "gender": "Пол",
   "male": "мужчина",
   "female": "женский пол",
   "entermobile": "Войти мобильный",
@@ -67,6 +73,7 @@
   "frequency": "частота",
   "cleaning": "уборка",
   "date": "Свидание",
+  "dob": "Дата рождения",
   "address": "Адрес",
   "payment": "Оплата",
   "onetime": "Один раз",

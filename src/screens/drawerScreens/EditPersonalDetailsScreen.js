@@ -43,6 +43,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     let [fullNamePlaceholderStyle, setFullNamePlaceholderStyle] = useState(styles.placeholder);
     let [emailPlaceholderStyle, setEmailPlaceholderStyle] = useState(styles.placeholder);
     // let [userAddress, setUserAddress] = useState('');
+    // let [dob, setDob] = useState(new Date());
     let [dob, setDob] = useState(new Date());
     let [gender, setGender] = useState('');
     let [loading, setLoading] = useState(false);
@@ -86,7 +87,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         if (mobile.length != 12) {
             console.log("Mobile is Not Correct");
             setMobileStyle(styles.inputStyleError);
-            setMobilePlaceholderStyle('#ffcccb');
+            setMobilePlaceholderStyle('#aaa');
             return false;
         }
         else {
@@ -101,7 +102,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         if (fullnm.length < 5) {
             console.log("FullName is Not Correct");
             setFullNameStyle(styles.inputStyleError);
-            setFullNamePlaceholderStyle('#ffcccb');
+            setFullNamePlaceholderStyle('#aaa');
             return false;
         }
         else {
@@ -117,7 +118,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         if (reg.test(eml) === false) {
             console.log("Email is Not Correct");
             setEmailStyle(styles.inputStyleError);
-            setEmailPlaceholderStyle('#ffcccb');
+            setEmailPlaceholderStyle('#aaa');
             return false;
         }
         else {
@@ -145,10 +146,15 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
             setErrortext(t('pleasecheckemail'));
             return;
         }
-        if (!gender) {
-            setErrortext(t('pleasefillgender'));
-            return;
-        }
+        // if (!gender) {
+        //     setErrortext(t('pleasefillgender'));
+        //     return;
+        // }
+        // alert(Moment(dob).format('YYYY-MM-DD') + "   " + Moment(new Date()).format('YYYY-MM-DD'));
+        // if (dob.toString() === Moment(new Date()).format('YYYY-MM-DD').toString()) {
+        //     setErrortext('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx');
+        //     return;
+        // }
         setLoading(true);
 
         if (previousMobile != mobile) {
@@ -252,6 +258,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                 <ScrollView keyboardShouldPersistTaps="handled">
                     <View style={{ marginTop: 15 }}>
                         <KeyboardAvoidingView enabled>
+                            <FontLight value={t('mobileno')} mystyle={{ left: 15, marginBottom: -5 }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={mobileStyle}
@@ -269,6 +276,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                     blurOnSubmit={false}
                                 />
                             </View>
+                            <FontLight value={t('name')} mystyle={{ left: 15, marginBottom: -5 }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={fullNameStyle}
@@ -286,6 +294,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                     blurOnSubmit={false}
                                 />
                             </View>
+                            <FontLight value={t('email')} mystyle={{ left: 15, marginBottom: -5 }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={emailStyle}
@@ -322,12 +331,13 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                 />
                             </View> */}
                             <View>
+                                <FontLight value={t('dob')} mystyle={{ left: 15, marginBottom: -5 }} />
                                 <View style={styles.SectionStyle}>
-                                    <TouchableOpacity onPress={showDatepicker} >
-                                        <FontBold mystyle={styles.inputStyle} value={Moment(dob).format('YYYY-MM-DD')} />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={showDatepicker} >
-                                        <Fontisto name="date" size={24} color="#f5c500" style={{ left: 9, top: 9 }} />
+                                    <TouchableOpacity onPress={showDatepicker} style={styles.inputStyle}>
+                                        <View style={{ flexDirection: "row", }}>
+                                            <FontBold mystyle={{ fontSize: 20 }} value={Moment(dob).format('YYYY-MM-DD')} />
+                                            <Fontisto name="date" size={24} color="#aaa" style={{ position: "absolute", right: 0, top: 5 }} />
+                                        </View>
                                     </TouchableOpacity>
                                 </View>
 
@@ -338,21 +348,22 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                         value={dob}
                                         mode={mode}
                                         is24Hour={true}
-                                        display="default"
+                                        display="spinner"
                                         onChange={onChange}
                                         androidMode={"default"}
-                                        datePickerBg={{ backgroundColor: 'red' }}
+                                        datePickerBg={{ backgroundColor: 'white' }}
 
                                     />
                                 )}
                             </View>
+                            <FontLight value={t('gender')} mystyle={{ left: 15, marginBottom: -15 }} />
                             <View style={styles.SectionStyle}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <TouchableOpacity onPress={() => { setGender('Male') }}>
                                         <View style={{ flexDirection: 'column' }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <RadioButton value='Male' status={gender == 'Male' ? 'checked' : 'unchecked'} />
-                                                <FontBold value={t('male')} mystyle={{ fontSize: 24 }}></FontBold>
+                                                <FontBold value={t('male')} mystyle={{ fontSize: 18 }}></FontBold>
                                             </View>
                                         </View>
                                     </TouchableOpacity>
@@ -363,7 +374,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                         <View style={{ flexDirection: 'column' }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <RadioButton value='Female' status={gender == 'Female' ? 'checked' : 'unchecked'} />
-                                                <FontBold value={t('female')} mystyle={{ fontSize: 24 }}></FontBold>
+                                                <FontBold value={t('female')} mystyle={{ fontSize: 18 }}></FontBold>
                                             </View>
                                         </View>
                                     </TouchableOpacity>
@@ -373,16 +384,17 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                 errortext != '' ? Toast.show(errortext, Toast.LONG) : null
                                 // (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
                             }
-                            <TouchableOpacity
-                                style={styles.buttonStyle}
-                                activeOpacity={0.5}
-                                onPress={handleSubmitButton}>
-                                <Text style={styles.buttonTextStyle}>{t('save')}</Text>
-                            </TouchableOpacity>
+
                         </KeyboardAvoidingView>
                     </View>
                 </ScrollView>
             </View>
+            <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={handleSubmitButton}>
+                <FontBold mystyle={styles.buttonTextStyle} value={t('save')} />
+            </TouchableOpacity>
         </>
     );
 };
@@ -402,21 +414,15 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#fff',
-        borderWidth: 1,
-        borderColor: '#7a7a7a',
+        backgroundColor: '#f5c500',
+        borderRadius: 4,
         alignItems: 'center',
-        borderRadius: 7,
         marginLeft: 15,
         marginRight: 15,
-        marginTop: 15,
-        marginBottom: 2150,
-        height: 50,
-        textAlign: 'center'
+        height: 45,
     },
     buttonTextStyle: {
-        color: '#7a7a7a',
-        paddingVertical: 10,
+        color: '#fff',
         fontSize: 22,
     },
     inputStyle: {
@@ -426,18 +432,18 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: '#f5c500',
+        borderColor: '#aaa',
         fontSize: 20,
-        height: 50
+        height: 40
     },
     inputStyleError: {
         flex: 1,
-        color: 'red',
+        color: '#aaa',
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: 'red',
+        borderColor: '#aaa',
         fontSize: 20,
         height: 50,
 

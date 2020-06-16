@@ -9,9 +9,13 @@ import { Context as HCContext } from './context/HCContext';
 import { Context as UserContext } from './context/UserContext';
 // import Loader from '../components/Loader';
 import { getLang, storeLang } from '../api/userLanguage';
+import FontBold from '../components/FontBold';
+import FontLight from '../components/FontLight';
+import FontRegular from '../components/FontRegular';
+import { withNamespaces } from 'react-i18next';
 
 
-const InternetScreen = ({ navigation }) => {
+const InternetScreen = ({ navigation, t }) => {
   const [testToken, setTestToken] = useState('');
   // const [isloading, setIsLoading] = useState(false);
   const [connected, setConnected] = useState(true);
@@ -67,12 +71,12 @@ const InternetScreen = ({ navigation }) => {
             // setIsLoading(false);
             return;
         }
-        if (connected && (typeof (testToken) == 'undefined')) {
+        if (!connected && (typeof (testToken) == 'undefined')) {
           if (!isCancelled2)
             // setIsLoading(false);
             navigation.navigate('LoginFlow');
         }
-        else if (connected && (typeof (testToken) != 'undefined')) {
+        else if (!connected && (typeof (testToken) != 'undefined')) {
           if (!isCancelled2)
             // setIsLoading(false);
             navigation.navigate('Dashboard');
@@ -92,9 +96,9 @@ const InternetScreen = ({ navigation }) => {
   return (<View style={styles.container}>
     {/* <Loader loading={isloading} /> */}
     {
-      connected ?
+      !connected ?
         <ImageBackground
-          source={require('../../assets/Splash/Splash.png')}
+          source={require('../../assets/Splash/newSplash.png')}
           style={{ width: '100%', height: '100%' }}
           resizeMode="cover"
         >
@@ -105,7 +109,13 @@ const InternetScreen = ({ navigation }) => {
         :
         <View style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Image resizeMode="contain" style={{ width: width * 0.6, height: (width * 0.6) / 1.8 }} source={require('../../assets/nonet.png')} />
+            <Image resizeMode="contain" style={{ width: width * 0.8, height: (width * 0.8) / 1.8 }} source={require('../../assets/nonet.png')} />
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <FontBold mystyle={{ color: "#fff", fontSize: 22 }} value={t('noconnection')} />
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <FontLight mystyle={{ width: "75%", color: "#fff", fontSize: 14, left: 5, textAlign: "center" }} value={t('pleasecheckyourinternetconnectionandtryagain')} />
           </View>
         </View>
       // <View>
@@ -145,4 +155,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default InternetScreen;
+export default withNamespaces()(InternetScreen);

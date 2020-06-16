@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation, t }) => {
   const { state: hcstate, setHC, setBS, setDI, setDE, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
-  const imageHeight = Math.round(dimensions.width * 9 / 16);
+  const imageHeight = Math.round(dimensions.width * 12 / 16);
   const imageWidth = dimensions.width;
   // const [testToken, setTestToken] = useState('');
 
@@ -120,12 +120,8 @@ const HomeScreen = ({ navigation, t }) => {
               </FontBold>{' '}
               <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
             </Text>
-            <Text style={styles.cleaningservicetext}>
-              <FontBold value={t('cleaningservicetext')} />
-            </Text>
-            <Text style={styles.cleaningservicedetailtext}>
-              <FontRegular value={t('cleaningservicedetailtext')} />
-            </Text>
+            <FontBold value={t('cleaningservicetext')} mystyle={styles.cleaningservicetext} />
+            <FontRegular value={t('cleaningservicedetailtext')} mystyle={styles.cleaningservicedetailtext} />
           </TouchableOpacity>
         </View>
       </Spacer>
@@ -231,7 +227,7 @@ const styles = StyleSheet.create({
     color: '#7a7a7a'
   },
   cleaningservicetext: {
-    margin: 5,
+    marginTop: 55,
     position: "absolute",
     top: 45,
     left: 10,
@@ -246,7 +242,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   cleaningservicedetailtext: {
-    margin: 5,
+    marginTop: 70,
     position: "absolute",
     top: 85,
     left: 10,
@@ -256,7 +252,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     // fontFamily: 'Comfortaa-Regular',
     padding: 5,
-    color: '#fff'
+    color: '#fff',
+    lineHeight: 25
   }
 
 });

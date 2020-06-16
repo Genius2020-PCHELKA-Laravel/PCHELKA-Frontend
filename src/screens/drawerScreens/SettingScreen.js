@@ -57,12 +57,14 @@ const SettingScreen = ({ navigation, t }) => {
       <ScrollView style={styles.scrollstyle} showsVerticalScrollIndicator={false}>
         <Spacer />
         <FontLight mystyle={styles.listtitle} value={t('accountsettings')}></FontLight>
+        <Spacer />
         <TouchableOpacity onPress={() => { navigate('EditPersonalDetailsScreen') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('editpersonaldetails')}></FontBold>
             <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
+        <Spacer />
         <TouchableOpacity onPress={() => { navigate('ManageAddresses') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('manageaddresses')} ></FontBold>
@@ -105,13 +107,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   row: {
-    padding: 10,
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    borderBottomColor: '#7a7a7a',
+    borderBottomColor: '#aaa',
     borderBottomWidth: 1,
+    paddingBottom: 20,
   },
   item1: {
     fontSize: 16,

@@ -99,7 +99,7 @@ const VerifyStack = createStackNavigator(
     LoginPhoneScreen: {
       screen: LoginPhoneScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('login')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('login')} />,
         headerLeft: ({ navigation }) => (
           <Icon
             style={{ left: 15, color: '#f5c500' }}
@@ -113,7 +113,7 @@ const VerifyStack = createStackNavigator(
     VerifyScreen: {
       screen: VerifyScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('verify')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('verify')} />,
         headerLeft: ({ navigation }) => (
           <Icon
             style={{ left: 15, color: '#f5c500' }}
@@ -127,7 +127,7 @@ const VerifyStack = createStackNavigator(
     RegisterUserScreen: {
       screen: RegisterUserScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('register')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('register')} />,
         headerLeft: ({ navigation }) => (
           <Icon
             style={{ left: 15, color: '#f5c500' }}
@@ -200,7 +200,7 @@ const HomeStackNavigator = createStackNavigator(
             <Ionicons
               style={{ left: 15, color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
-              name="ios-menu" size={40} color="black" />
+              name="ios-menu" size={35} />
           ,
           headerRight: () => (
             <SettingsButton />
@@ -216,10 +216,10 @@ const HomeStackNavigator = createStackNavigator(
     HomeCleaningScreen: {
       screen: HomeCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('homecleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('homecleaning')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: 15, top: 5, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="md-arrow-back"
             size={35}
@@ -230,10 +230,10 @@ const HomeStackNavigator = createStackNavigator(
     BabySitterScreen: {
       screen: BabySitterScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('babysitter')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('babysitter')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: 15, top: 5, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="md-arrow-back"
             size={35}
@@ -244,10 +244,10 @@ const HomeStackNavigator = createStackNavigator(
     DisinfectionScreen: {
       screen: DisinfectionScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('disinfection')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('disinfection')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: 15, top: 5, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="md-arrow-back"
             size={35}
@@ -258,10 +258,10 @@ const HomeStackNavigator = createStackNavigator(
     DeepCleaningScreen: {
       screen: DeepCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('deepcleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('deepcleaning')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: 15, top: 5, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="md-arrow-back"
             size={35}
@@ -272,22 +272,22 @@ const HomeStackNavigator = createStackNavigator(
     MapScreen: {
       screen: MapScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('mapScreen')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mapScreen')} />,
         headerShown: false,
       })
     },
     BookedScreen: {
       screen: BookedScreen,
       // navigationOptions: {
-      //   title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('booked')} />,
+      //   title: <FontBold mystyle={{  color: '#f5c500', fontSize: 20 }} value={i18n.t('booked')} />,
       //   headerShown: false,
       // },
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('booked')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('booked')} />,
           headerLeft: () =>
             <Icon
-              style={{ left: 15, color: '#f5c500' }}
+              style={{ left: 15, top: 5, color: '#f5c500' }}
               onPress={() => navigate('HomeNavigator')}
               name="md-arrow-back"
               size={35}
@@ -306,13 +306,13 @@ const SettingStackNavigator = createStackNavigator(
       screen: SettingScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('settings')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('settings')} />,
           headerLeft: () =>
             <Ionicons
-              style={{ left: 15, color: '#f5c500' }}
+              style={{ left: 15, top: 5, color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
               name="ios-menu"
-              size={40}
+              size={35}
             />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -325,10 +325,13 @@ const SettingStackNavigator = createStackNavigator(
       screen: EditPersonalDetailsScreen,
       navigationOptions: ({ navigation }) => ({
         // title: i18n.t('editpersonaldetails'),
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('editpersonaldetails')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('editpersonaldetails')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -337,7 +340,7 @@ const SettingStackNavigator = createStackNavigator(
       screen: ChangeMobileVerifyScreen,
       navigationOptions: ({ navigation }) => ({
         // title: i18n.t('editpersonaldetails'),
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('verify')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('verify')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
@@ -349,10 +352,13 @@ const SettingStackNavigator = createStackNavigator(
       screen: ManageAddresses,
       navigationOptions: ({ navigation }) => ({
         // title: 'Manage Addresses',
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('manageaddresses')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('manageaddresses')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -361,10 +367,13 @@ const SettingStackNavigator = createStackNavigator(
       screen: ManageCreditCards,
       navigationOptions: ({ navigation }) => ({
         // title: i18n.t('managecreditcards'),
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('managecreditcards')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('managecreditcards')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -417,13 +426,13 @@ const AppoitmentStackNavigator = createStackNavigator(
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('appoitments')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('appoitments')} />,
           headerLeft: () =>
             <Ionicons
-              style={{ left: 15, color: '#f5c500' }}
+              style={{ left: 15, top: 5, color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
               name="ios-menu"
-              size={40}
+              size={35}
             />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -435,9 +444,12 @@ const AppoitmentStackNavigator = createStackNavigator(
     HCUpcomingDetails: {
       screen: UpcomingDetailsScreen,
       navigationOptions: ({ navigation }) => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('upcomingappoitment')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('upcomingappoitment')} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -445,9 +457,12 @@ const AppoitmentStackNavigator = createStackNavigator(
     HCReschedule: {
       screen: HCRescheduleScreen,
       navigationOptions: ({ navigation }) => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -455,9 +470,12 @@ const AppoitmentStackNavigator = createStackNavigator(
     HCRescheduleReduced: {
       screen: HCRescheduleReducedScreen,
       navigationOptions: ({ navigation }) => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -465,9 +483,12 @@ const AppoitmentStackNavigator = createStackNavigator(
     ReschedulePolicy: {
       screen: ReschedulePolicyScreen,
       navigationOptions: ({ navigation }) => ({
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#fff', fontSize: 20 }} value={i18n.t('ourpolicy')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('ourpolicy')} />,
         headerStyle: {
           backgroundColor: '#f5c500',
+        },
+        headerLeftContainerStyle: {
+          top: 5
         },
         headerTintColor: '#fff',
       }),
@@ -476,10 +497,10 @@ const AppoitmentStackNavigator = createStackNavigator(
       screen: RescheduledScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('rescheduled')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('rescheduled')} />,
           headerLeft: () =>
             <Icon
-              style={{ left: 15, color: '#f5c500' }}
+              style={{ left: 15, top: 5, color: '#f5c500' }}
               onPress={() => navigate('Upcoming')}
               name="md-arrow-back"
               size={35}
@@ -499,14 +520,14 @@ const FreeStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('freecleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('freecleaning')} />,
 
         headerLeft: () =>
           <Ionicons
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: 15, top: 5, color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
             name="ios-menu"
-            size={40}
+            size={35}
           />,
 
         headerStyle: {
@@ -524,13 +545,13 @@ const SupportStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ left: 10, padding: 15, color: '#f5c500', fontSize: 20 }} value={i18n.t('support')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('support')} />,
         headerLeft: () =>
           <Ionicons
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: 15, top: 5, color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
             name="ios-menu"
-            size={40}
+            size={35}
           />,
 
         headerStyle: {
@@ -545,38 +566,38 @@ const AppDrawerNavigator = createDrawerNavigator({
   HomeDrawerNavigator: {
     screen: HomeStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('home')} />,
+      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('home')} />,
       drawerIcon: <FontAwesome5 name="home" size={20} color="#fff" />
     }),
   },
   SettingDrawerNavigator: {
     screen: SettingStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('draweraccountsettings')} />,
+      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16, }} value={i18n.t('draweraccountsettings')} />,
       drawerIcon: <MaterialCommunityIcons name="account-settings" size={25} color="#fff" />
     }),
   },
   AppointmentDrawerNavigator: {
     screen: AppoitmentStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('appoitments')} />,
+      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('appoitments')} />,
       drawerIcon: <Fontisto name="date" size={20} color="#fff" />
     }),
   },
   FreeDrawerNavigator: {
     screen: FreeStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('freecleaning')} />,
+      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('freecleaning')} />,
       drawerIcon: <MaterialCommunityIcons name="ticket-percent" size={20} color="#fff" />
     }),
   },
   SupportDrawerNavigator: {
     screen: SupportStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 10, color: '#fff', fontSize: 16 }} value={i18n.t('support')} />,
+      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16, }} value={i18n.t('support')} />,
       drawerIcon: <AntDesign name="message1" size={20} color="#fff" />
     }),
-  }
+  },
 },
   // { edgeWidth: 20, drawerType: 'slide', overlayColor: 'red', },
 

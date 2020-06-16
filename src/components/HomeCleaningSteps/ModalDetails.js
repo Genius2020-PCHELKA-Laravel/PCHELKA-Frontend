@@ -147,38 +147,36 @@ const ModalDetails = ({ children, t }) => {
                     </ScrollView>
                 </View>
             </Modal>
-
-            <TouchableOpacity
-                onPress={() => {
-                    setModalVisible(true);
-                }} style={styles.modalButtonStyle}>
-                <View flexDirection='row'>
-
-                    <View flexDirection='column'>
-                        {/* <Text style={styles.total}>{t('total')} */}
-                        <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <TouchableOpacity
+                    onPress={() => {
+                        setModalVisible(true);
+                    }} style={styles.modalButtonStyle}>
+                    <View flexDirection='row'>
+                        <View flexDirection='column'>
+                            {/* <Text style={styles.total}>{t('total')} */}
                             <View style={{ flexDirection: "column" }}>
-                                <FontBold mystyle={styles.modalText} value={t('total') + ": "} />
-                                <FontBold mystyle={styles.modalText} value={t('subtotal') + ": "} />
+                                <View style={{ flexDirection: "row" }}>
+                                    <FontBold mystyle={styles.modalText} value={t('total') + ": "} />
+                                    <FontBold mystyle={styles.subtotal}
+                                        value={hcstate.frequency == 1 ? "" : "UAH " + hcstate.total} />
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <FontBold mystyle={styles.modalText}
+                                        value={"UAH " + hcstate.subtotal} />
+                                </View>
                             </View>
-                            <View style={{ flexDirection: "column" }}>
-                                <FontBold mystyle={styles.subtotal}
-                                    value={hcstate.frequency == 1 ? "" : "UAH " + hcstate.total} />
-                                <FontBold mystyle={styles.modalText}
-                                    value={"UAH " + hcstate.subtotal} />
-                            </View>
-
                         </View>
 
                         {/* </Text> */}
+                        <View flexDirection='column' style={{ justifyContent: 'center' }}>
+                            <FontAwesome5 name="chevron-up" size={15} color="#f5c500" />
+                        </View>
                     </View>
-                    <View flexDirection='column' style={{ justifyContent: 'center', marginLeft: 25 }}>
-                        <FontAwesome5 name="chevron-up" size={25} color="#f5c500" />
 
-                    </View>
-                </View>
+                </TouchableOpacity>
+            </View>
 
-            </TouchableOpacity>
         </View >
     );
 
@@ -201,21 +199,18 @@ const styles = StyleSheet.create({
     modalText: {
         color: '#000',
         fontWeight: 'bold',
-        fontSize: 14,
+        fontSize: 12,
         padding: 0,
     },
     modalButtonStyle: {
-        position: 'absolute',
-        left: 10,
-        marginRight: 10,
-        bottom: 10,
+        bottom: 15,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 7,
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: '#7a7a7a',
-        width: "95%",
+        width: "40%",
         color: '#7a7a7a'
         // fontFamily: 'Comfortaa-Bold',
     },
@@ -227,7 +222,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         textDecorationLine: 'line-through',
         textDecorationStyle: 'solid',
-        fontSize: 14
+        fontSize: 12
     }
 });
 export default withNamespaces()(ModalDetails);

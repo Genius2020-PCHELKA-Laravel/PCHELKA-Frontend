@@ -35,8 +35,8 @@ const RegisterUserScreen = ({ navigation, t }) => {
     let [email, setEmail] = useState('');
     let [fullNameStyle, setFullNameStyle] = useState(styles.inputStyleError);
     let [emailStyle, setEmailStyle] = useState(styles.inputStyleError);
-    let [fullNamePlaceholderStyle, setFullNamePlaceholderStyle] = useState('#ffcccb');
-    let [emailPlaceholderStyle, setEmailPlaceholderStyle] = useState('#ffcccb');
+    let [fullNamePlaceholderStyle, setFullNamePlaceholderStyle] = useState('#aaa');
+    let [emailPlaceholderStyle, setEmailPlaceholderStyle] = useState('#aaa');
     // let [userAddress, setUserAddress] = useState("");
     let [loading, setLoading] = useState(false);
     let [errortext, setErrortext] = useState('');
@@ -51,7 +51,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
         if (fullnm.length < 5) {
             console.log("FullName is Not Correct");
             setFullNameStyle(styles.inputStyleError);
-            setFullNamePlaceholderStyle('#ffcccb');
+            setFullNamePlaceholderStyle('#aaa');
             return false;
         }
         else {
@@ -67,7 +67,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
         if (reg.test(eml) === false) {
             console.log("Email is Not Correct");
             setEmailStyle(styles.inputStyleError);
-            setEmailPlaceholderStyle('#ffcccb');
+            setEmailPlaceholderStyle('#aaa');
             return false;
         }
         else {
@@ -164,6 +164,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
 
             <View style={styles.container}>
                 <Loader loading={loading} />
+                <Spacer />
                 <ScrollView keyboardShouldPersistTaps="handled">
                     {/* <View style={{ alignItems: 'center' }}>
                         <Image
@@ -185,6 +186,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                     </View> */}
                     <View >
                         <KeyboardAvoidingView enabled>
+                            <FontLight value={t('name')} mystyle={{ left: 15, marginBottom: -10 }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={fullNameStyle}
@@ -202,6 +204,8 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                     blurOnSubmit={false}
                                 />
                             </View>
+                            <Spacer />
+                            <FontLight value={t('email')} mystyle={{ left: 15, marginBottom: -10 }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={emailStyle}
@@ -254,16 +258,17 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                 errortext != '' ? Toast.show(errortext, Toast.SHORT) : null
                                 // (<Text style={styles.errorTextStyle}> {errortext} </Text>) : null
                             }
-                            <TouchableOpacity
-                                style={styles.buttonStyle}
-                                activeOpacity={0.5}
-                                onPress={handleSubmitButton}>
-                                <FontBold mystyle={styles.buttonTextStyle} value={t('register')} />
-                            </TouchableOpacity>
+
                         </KeyboardAvoidingView>
                     </View>
                 </ScrollView>
             </View>
+            <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={handleSubmitButton}>
+                <FontBold mystyle={styles.buttonTextStyle} value={t('register')} />
+            </TouchableOpacity>
         </>
     );
 };
@@ -290,24 +295,17 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     buttonStyle: {
-        backgroundColor: '#fff',
-        borderWidth: 0,
-        borderColor: '#7a7a7a',
-        borderWidth: 1,
+        backgroundColor: '#f5c500',
+        borderRadius: 4,
         alignItems: 'center',
-        borderRadius: 7,
         marginLeft: 15,
         marginRight: 15,
-        marginTop: 15,
-        marginBottom: 20,
-        fontSize: 20,
-        height: 50,
-        textAlign: 'center'
+        marginBottom: 15,
+        height: 45,
     },
     buttonTextStyle: {
-        color: '#7a7a7a',
-        paddingVertical: 10,
-        fontSize: 20,
+        color: '#fff',
+        fontSize: 22,
     },
     inputStyle: {
         flex: 1,
@@ -316,19 +314,19 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: '#f5c500',
+        borderColor: '#aaa',
         fontSize: 20,
         padding: 10,
         height: 50
     },
     inputStyleError: {
         flex: 1,
-        color: 'red',
+        color: '#aaa',
         paddingLeft: 15,
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: 'red',
+        borderColor: '#aaa',
         fontSize: 20,
         height: 50,
 

@@ -490,7 +490,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                     onPress={() => {
                         navigate('HCRescheduleReduced');
                     }}>
-                    <FontBold mystyle={styles.mybuttonTextStyle} value={t('next')} />
+                    <FontBold mystyle={{ color: "#fff" }} value={t('next')} />
                 </TouchableOpacity>
                 <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
             </View>
@@ -739,19 +739,19 @@ const styles = StyleSheet.create({
     },
     mynextButtonStyle: {
         position: 'absolute',
-        bottom: 58,
+        bottom: 15,
         right: 15,
-        backgroundColor: '#fff',
-        borderRadius: 7,
-        borderWidth: 1,
+        backgroundColor: '#f5c500',
+        borderRadius: 4,
+        borderWidth: 0,
         borderColor: '#7a7a7a',
         // fontFamily: 'Comfortaa-Bold',
         width: '25%',
-        paddingVertical: 10,
-        alignItems: "center"
+        padding: 8,
+        alignItems: "center",
     },
     myButtonTextStyle: {
-        color: '#7a7a7a',
+        color: '#fff',
         fontSize: 20,
         textAlign: "center"
     },
