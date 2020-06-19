@@ -55,34 +55,106 @@ const ModalDetails = ({ children, t }) => {
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t(hcstate.selectedupcoming.serviceType)}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('frequency')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalfrequency}></FontBold>
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('duration')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.hours + ' ' + t('hours')}></FontBold>
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('numberofcleaners')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.cleaners + ' ' + t('cleaners')}></FontBold>
-                            </View>
-                        </View>
                         {
                             hcstate.selectedupcoming.serviceType == "HomeCleaning" ||
                                 hcstate.selectedupcoming.serviceType == "DisinfectionService" ||
-                                hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+                                hcstate.selectedupcoming.serviceType == "DeepCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "BabysitterService" ?
+                                <View>
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('frequency')}></FontBold>
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalfrequency}></FontBold>
+                                        </View>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('duration')}></FontBold>
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.hours + ' ' + t('hours')}></FontBold>
+                                        </View>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('numberofcleaners')}></FontBold>
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.cleaners + ' ' + t('cleaners')}></FontBold>
+                                        </View>
+                                    </View>
+                                </View> :
+                                hcstate.selectedupcoming.serviceType == "SofaCleaning" ?
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('quantity')}></FontBold>
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.quantity + ' ' + t('seaters')}></FontBold>
+                                        </View>
+                                    </View>
+                                    :
+                                    hcstate.selectedupcoming.serviceType == "MattressCleaning" ?
+                                        <View style={styles.row}>
+                                            <View style={styles.item}>
+                                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('quantity')}></FontBold>
+                                            </View>
+                                            <View style={styles.item}>
+                                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.quantity + ' ' + t('mattresses')}></FontBold>
+                                            </View>
+                                        </View>
+                                        :
+                                        hcstate.selectedupcoming.serviceType == "CarpetCleaning" ?
+                                            <View>
+                                                <View style={styles.row}>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('quantity')}></FontBold>
+                                                    </View>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.quantity + ' ' + t('carpets')}></FontBold>
+                                                    </View>
+                                                </View>
+                                                <View style={styles.row}>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('squaremeters')}></FontBold>
+                                                    </View>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.squareMeters + ' ' + t('squaremeters')}></FontBold>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                            :
+                                            hcstate.selectedupcoming.serviceType == "CurtainCleaning" ?
+                                                <View>
+                                                    <View style={styles.row}>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('quantity')}></FontBold>
+                                                        </View>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.quantity + ' ' + t('curtains')}></FontBold>
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.row}>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('squaremeters')}></FontBold>
+                                                        </View>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.squareMeters + ' ' + t('squaremeters')}></FontBold>
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                                : null
+                        }
+                        {
+                            hcstate.selectedupcoming.serviceType == "HomeCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "DisinfectionService" ||
+                                hcstate.selectedupcoming.serviceType == "DeepCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "SofaCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "MattressCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "CarpetCleaning" ||
+                                hcstate.selectedupcoming.serviceType == "CurtainCleaning" ?
                                 <View style={styles.row}>
                                     <View style={styles.item}>
                                         <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('materials')}></FontBold>

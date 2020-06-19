@@ -184,7 +184,7 @@ const DisinfectionDetails = ({ children, t }) => {
                 style={styles.input}
                 placeholder={t('cleaningdes')}
                 multiline={true}
-                numberOfLines={2}
+                numberOfLines={4}
             />
         </ScrollView>);
 };
@@ -217,14 +217,16 @@ const styles = StyleSheet.create({
     input: {
         marginLeft: 15,
         marginRight: 15,
-        height: 60,
-        borderColor: '#f5c500',
+        height: 100,
+        borderColor: '#aaa',
         borderRadius: 7,
-        borderWidth: 2,
+        borderWidth: 1,
         fontSize: 18,
         textAlign: 'left',
+        textAlignVertical: 'top',
         paddingLeft: 10,
         paddingRight: 10,
+        paddingTop: 10
     },
 
     thumbup: {

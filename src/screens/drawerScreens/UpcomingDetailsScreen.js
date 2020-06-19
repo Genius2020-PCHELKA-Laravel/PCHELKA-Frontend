@@ -16,7 +16,7 @@ const UpcomingDetailsScreen = ({ navigation, t }) => {
         hcstate.selectedupcoming.serviceType == "BabysitterService" ?
             hcstate.selectedupcoming.cleanerCount > 1 ? t('babysitters') : t('babysitter') : null;
 
-    const materialsStr = hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+    const materialsStr = hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" || hcstate.selectedupcoming.serviceType == "SofaCleaning" || hcstate.selectedupcoming.serviceType == "MattressCleaning" || hcstate.selectedupcoming.serviceType == "CarpetCleaning" || hcstate.selectedupcoming.serviceType == "CurtainCleaning" ?
         hcstate.selectedupcoming.requireMaterial == 1 ? t('withmaterials') : t('withoutmaterials') :
         hcstate.selectedupcoming.serviceType == "BabysitterService" ?
             "" : "";
@@ -56,9 +56,30 @@ const UpcomingDetailsScreen = ({ navigation, t }) => {
                 <FontLight mystyle={styles.title} value={t('details')} />
                 <FontBold mystyle={styles.subtitle}
                     value={
-                        hcstate.selectedupcoming.hoursNeeded + " " + t('hours') + ", " +
-                        hcstate.selectedupcoming.cleanerCount + " " + cleanersStr + ", " +
-                        materialsStr
+                        hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+                            hcstate.selectedupcoming.hoursNeeded + " " + t('hours') + ", " +
+                            hcstate.selectedupcoming.cleanerCount + " " + cleanersStr + ", " +
+                            materialsStr
+                            :
+                            hcstate.selectedupcoming.serviceType == "SofaCleaning" ?
+                                hcstate.selectedupcoming.quantity + " " + t('seaters') + ", " +
+                                materialsStr
+                                :
+                                hcstate.selectedupcoming.serviceType == "MattressCleaning" ?
+                                    hcstate.selectedupcoming.quantity + " " + t('mattresses') + ", " +
+                                    materialsStr
+                                    :
+                                    hcstate.selectedupcoming.serviceType == "CarpetCleaning" ?
+                                        hcstate.selectedupcoming.quantity + " " + t('carpets') + ", " +
+                                        hcstate.selectedupcoming.squareMeters + " " + t('squaremeters') + ", " +
+                                        materialsStr
+                                        :
+                                        hcstate.selectedupcoming.serviceType == "CurtainCleaning" ?
+                                            hcstate.selectedupcoming.quantity + " " + t('curtains') + ", " +
+                                            hcstate.selectedupcoming.squareMeters + " " + t('squaremeters') + ", " +
+                                            materialsStr
+                                            : ""
+
                     }
                 />
             </View>

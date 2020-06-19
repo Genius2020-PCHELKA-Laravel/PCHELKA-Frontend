@@ -12,6 +12,10 @@ import HomeCleaningScreen from './src/screens/HomeCleaningScreen';
 import BabySitterScreen from './src/screens/BabySitterScreen';
 import DisinfectionScreen from './src/screens/DisinfectionScreen';
 import DeepCleaningScreen from './src/screens/DeepCleaningScreen';
+import SofaCleaningScreen from './src/screens/SofaCleaningScreen';
+import MattressCleaningScreen from './src/screens/MattressCleaningScreen';
+import CarpetCleaningScreen from './src/screens/CarpetCleaningScreen';
+import CurtainCleaningScreen from './src/screens/CurtainCleaningScreen';
 import BookedScreen from './src/components/HomeCleaningSteps/BookedScreen'
 import { Provider as AuthProvider } from './src/screens/context/AuthContext';
 import { Provider as UserProvider } from './src/screens/context/UserContext';
@@ -19,7 +23,7 @@ import { Provider as HCProvider } from './src/screens/context/HCContext';
 import { exp } from 'react-native-reanimated';
 import InternetScreen from './src/screens/InternetScreen';
 import SettingScreen from './src/screens/drawerScreens/SettingScreen';
-import AppoitmentScreen from './src/screens/drawerScreens/AppoitmentScreen';
+// import AppoitmentScreen from './src/screens/drawerScreens/AppoitmentScreen';
 import UpcomingScreen from './src/screens/drawerScreens/UpcomingScreen';
 import PastScreen from './src/screens/drawerScreens/PastScreen';
 import UpcomingDetailsScreen from './src/screens/drawerScreens/UpcomingDetailsScreen';
@@ -218,11 +222,11 @@ const HomeStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('homecleaning')} />,
         headerLeft: ({ navigation }) => (
-          <Icon
-            style={{ left: 15, top: 5, color: '#f5c500' }}
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
-            name="md-arrow-back"
-            size={35}
+            name="home"
+            size={25}
           />
         ),
       })
@@ -232,11 +236,11 @@ const HomeStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('babysitter')} />,
         headerLeft: ({ navigation }) => (
-          <Icon
-            style={{ left: 15, top: 5, color: '#f5c500' }}
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
-            name="md-arrow-back"
-            size={35}
+            name="home"
+            size={25}
           />
         ),
       })
@@ -246,11 +250,11 @@ const HomeStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('disinfection')} />,
         headerLeft: ({ navigation }) => (
-          <Icon
-            style={{ left: 15, top: 5, color: '#f5c500' }}
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
-            name="md-arrow-back"
-            size={35}
+            name="home"
+            size={25}
           />
         ),
       })
@@ -260,11 +264,67 @@ const HomeStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('deepcleaning')} />,
         headerLeft: ({ navigation }) => (
-          <Icon
-            style={{ left: 15, top: 5, color: '#f5c500' }}
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
-            name="md-arrow-back"
-            size={35}
+            name="home"
+            size={25}
+          />
+        ),
+      })
+    },
+    SofaCleaningScreen: {
+      screen: SofaCleaningScreen,
+      navigationOptions: () => ({
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('sofacleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={25}
+          />
+        ),
+      })
+    },
+    MattressCleaningScreen: {
+      screen: MattressCleaningScreen,
+      navigationOptions: () => ({
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mattresscleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={25}
+          />
+        ),
+      })
+    },
+    CarpetCleaningScreen: {
+      screen: CarpetCleaningScreen,
+      navigationOptions: () => ({
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('carpetcleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={25}
+          />
+        ),
+      })
+    },
+    CurtainCleaningScreen: {
+      screen: CurtainCleaningScreen,
+      navigationOptions: () => ({
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('curtaincleaning')} />,
+        headerLeft: ({ navigation }) => (
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={25}
           />
         ),
       })
@@ -286,11 +346,11 @@ const HomeStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('booked')} />,
           headerLeft: () =>
-            <Icon
-              style={{ left: 15, top: 5, color: '#f5c500' }}
+            <FontAwesome5
+              style={{ left: 15, top: 3, color: '#f5c500' }}
               onPress={() => navigate('HomeNavigator')}
-              name="md-arrow-back"
-              size={35}
+              name="home"
+              size={25}
             />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -499,11 +559,11 @@ const AppoitmentStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('rescheduled')} />,
           headerLeft: () =>
-            <Icon
-              style={{ left: 15, top: 5, color: '#f5c500' }}
+            <FontAwesome5
+              style={{ left: 15, top: 3, color: '#f5c500' }}
               onPress={() => navigate('Upcoming')}
-              name="md-arrow-back"
-              size={35}
+              name="home"
+              size={25}
             />,
           headerStyle: {
             // backgroundColor: '#f5c500',

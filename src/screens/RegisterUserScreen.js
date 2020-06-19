@@ -26,6 +26,7 @@ import Toast from 'react-native-simple-toast';
 import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons';
 import { setRedirect } from '../api/redirect';
 import MapContainer from '../components/lcation/MapContainer';
+import { BackHandler } from 'react-native';
 
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
@@ -41,7 +42,12 @@ const RegisterUserScreen = ({ navigation, t }) => {
     let [loading, setLoading] = useState(false);
     let [errortext, setErrortext] = useState('');
     let [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
-
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => { return true });
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', () => { return true });
+        };
+    }, []);
     // useEffect(() => {
     //     if (ustate.addresses != [])
     //         setUserAddress(ustate.addresses[0].address);

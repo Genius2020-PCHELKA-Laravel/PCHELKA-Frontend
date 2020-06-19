@@ -71,12 +71,12 @@ const InternetScreen = ({ navigation, t }) => {
             // setIsLoading(false);
             return;
         }
-        if (!connected && (typeof (testToken) == 'undefined')) {
+        if (connected && (typeof (testToken) == 'undefined')) {
           if (!isCancelled2)
             // setIsLoading(false);
             navigation.navigate('LoginFlow');
         }
-        else if (!connected && (typeof (testToken) != 'undefined')) {
+        else if (connected && (typeof (testToken) != 'undefined')) {
           if (!isCancelled2)
             // setIsLoading(false);
             navigation.navigate('Dashboard');
@@ -96,7 +96,7 @@ const InternetScreen = ({ navigation, t }) => {
   return (<View style={styles.container}>
     {/* <Loader loading={isloading} /> */}
     {
-      !connected ?
+      connected ?
         <ImageBackground
           source={require('../../assets/Splash/newSplash.png')}
           style={{ width: '100%', height: '100%' }}

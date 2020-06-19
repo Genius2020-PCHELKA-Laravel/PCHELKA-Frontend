@@ -18,14 +18,27 @@ import { Context as AuthContext } from './context/AuthContext';
 import { getToken } from '../api/token';
 import NetInfo from '@react-native-community/netinfo';
 import { navigate } from '../navigationRef';
+import { BackHandler } from 'react-native';
+import ExitDialog from '../components/ExitDialog';
 
 const HomeScreenLogIn = ({ navigation, t }) => {
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 12 / 16);
   const imageWidth = dimensions.width;
+  const [changing, setChanging] = useState(false);
+  const unsubscribe = navigation.addListener('didFocus', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => { setChanging(true); return true; });
+  });
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { setChanging(true); return true; });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { setChanging(false); return true; });
+    };
+  }, []);
   return (<>
     <ScrollView style={styles.container}>
+      <ExitDialog changing={changing} setChanging={setChanging} />
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
@@ -56,17 +69,17 @@ const HomeScreenLogIn = ({ navigation, t }) => {
       <Spacer>
         <View style={styles.bottomcontainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"BabySitterScreen"} title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DeepCleaningScreen"} title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('matresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"BabySitterScreen"} comming="no" title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"CarpetCleaningScreen"} comming="no" title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"CurtainCleaningScreen"} comming="no" title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DeepCleaningScreen"} comming="no" title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"DisinfectionScreen"} comming="no" title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"MattressCleaningScreen"} comming="no" title={t('mattresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={"SofaCleaningScreen"} comming="no" title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={""} comming="yes" title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={""} comming="yes" title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={""} comming="yes" title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"LoginPhoneScreen"} redirect={""} comming="yes" title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
           </ScrollView>
         </View>
       </Spacer>

@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import LogoutButton from '../../components/LogoutButton';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
+import { BackHandler } from 'react-native';
 
 const SettingScreen = ({ navigation, t }) => {
   //After Update Get the updatetd info
@@ -32,6 +33,16 @@ const SettingScreen = ({ navigation, t }) => {
   //     console.log("SettingScreen didfocus:: " + err);
   //   });
   // });
+  const unsubscribe = navigation.addListener('didFocus', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+  });
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { return true; });
+      // navigation.removeListener('didFocus', () => { })
+    };
+  }, []);
   useEffect(() => {
     setFullName(state.userDetails.fullName);
     setMobile(state.userDetails.mobile);

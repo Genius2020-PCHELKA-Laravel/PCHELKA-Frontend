@@ -9,6 +9,7 @@ import FontLight from '../components/FontLight';
 import FontRegular from '../components/FontRegular';
 import Spacer from '../components/Spacer';
 import { withNamespaces } from 'react-i18next';
+import { BackHandler } from 'react-native';
 
 
 const LoginPhoneScreen = ({ navigation, t }) => {
@@ -19,7 +20,12 @@ const LoginPhoneScreen = ({ navigation, t }) => {
   const [mobile, setMobile] = useState('');
   const [otp, setOtp] = useState('');
 
-
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { return true });
+    };
+  }, []);
   // useEffect(() => {
   // }, []);
   useEffect(() => {
@@ -28,11 +34,11 @@ const LoginPhoneScreen = ({ navigation, t }) => {
       //setOtp(Math.floor(1000 + Math.random() * 9000).toString());
       console.log("OTP  " + otp);
       console.log("Mobile  " + mobile);
-      sendsms({ mobile: "963" + mobile, otp });
-      navigation.navigate('VerifyScreen', { mobile: "963" + mobile, otp: otp, redirect: navigation.getParam('redirect') });
+      sendsms({ mobile: "380" + mobile, otp });
+      navigation.navigate('VerifyScreen', { mobile: "380" + mobile, otp: otp, redirect: navigation.getParam('redirect') });
       dispatch({
         type: 'update_mobile',
-        payload: "+963 " + mobile
+        payload: "+380 " + mobile
       });
       console.log({ mobile, otp })
       console.log("Finish Enter Mobile Phone>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -50,7 +56,7 @@ const LoginPhoneScreen = ({ navigation, t }) => {
       <View style={styles.phoneParts}>
         <TextInput
           keyboardType='phone-pad'
-          placeholder='+963'
+          placeholder='+380'
           placeholderTextColor={"#aaaaaa"}
           style={styles.input}
           editable={false}

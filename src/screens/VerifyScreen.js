@@ -12,6 +12,7 @@ import OtpInputs from "react-native-otp-inputs";
 import Axios from '../api/axiosapi';
 import { Context as UserContext } from '../screens/context/UserContext';
 import { withNamespaces } from 'react-i18next';
+import { BackHandler } from 'react-native';
 
 const VerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, redirect } = navigation.state.params;
@@ -23,6 +24,12 @@ const VerifyScreen = ({ navigation, t }) => {
         setResendotp(Math.floor(1000 + Math.random() * 9000).toString());
     }
     //const [selectedmobile, setSelectedMobile] = useState(state.mobile);
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => { return true });
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', () => { return true });
+        };
+    }, []);
     useEffect(() => {
         verifyMountedRef.current = true;
 
@@ -38,12 +45,12 @@ const VerifyScreen = ({ navigation, t }) => {
         <View style={styles.container}>
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value={t('enterthecodethatwassentto')}></FontBold>
-                <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
-                <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
-                <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold>
+                <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                    <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
+                </View>
+                {/* <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
+                <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold> */}
             </Spacer>
-            <Spacer />
-            <Spacer />
             <Spacer />
             <OtpInputs style={styles.inputsection}
                 //handleChange={code => console.log(code)}

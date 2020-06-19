@@ -18,6 +18,7 @@ import Toast from 'react-native-simple-toast';
 import { navigate } from '../navigationRef';
 import Loader from '../components/Loader';
 import i18n from '../locales/i18n';
+import { BackHandler } from 'react-native';
 
 const DisinfectionScreen = ({ navigation, t }) => {
   // static navigationOptions = {
@@ -41,18 +42,22 @@ const DisinfectionScreen = ({ navigation, t }) => {
 
   // });
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true });
     let isCanceled = false;
-    if (!isCanceled)
-      hcdispatch({ type: 'RESET' });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_frequency', payload: 1 });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_hours', payload: 2 });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_cleaners', payload: 1 });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_materials', payload: 0 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'RESET' });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_frequency', payload: 1 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_hours', payload: 2 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_quantity', payload: 2 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_cleaners', payload: 1 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_materials', payload: 0 });
     return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { return true });
       isCanceled = true;
     };
   }, []);
@@ -218,8 +223,8 @@ const DisinfectionScreen = ({ navigation, t }) => {
       if (hcstate.cleaners == 3) cleaners = 25;
       if (hcstate.cleaners == 4) cleaners = 26;
       var materials = -1;
-      if (hcstate.materials == 0) materials = 27;
-      if (hcstate.materials == 1) materials = 28;
+      if (hcstate.materials == 0) materials = 14;
+      if (hcstate.materials == 1) materials = 15;
       var paymentWays = -1;
       if (hcstate.method == 0) paymentWays = 0;
       if (hcstate.method == 1) paymentWays = 1;
@@ -254,7 +259,7 @@ const DisinfectionScreen = ({ navigation, t }) => {
             answerValue: null
           },
           {
-            questionId: 8,
+            questionId: 4,
             answerId: materials,
             answerValue: null
           },

@@ -1,4 +1,11 @@
 {
+  //AlertDialog
+  "alert": "бдительный",
+  "ok": "Хорошо",
+  "notpermittedyourescheduledbefore": "Не разрешено, Вы перенесли это назначение раньше.",
+  "exit": "Выход",
+  "doyouwanttoexit": "Вы хотите выйти?",
+  //Home Screen
   "noconnection": "Нет соединения",
   "pleasecheckyourinternetconnectionandtryagain": "Пожалуйста, проверьте ваше интернет-соединение и попробуйте снова",
   "logout": "выйти",
@@ -14,7 +21,7 @@
   "carwash": "Автомойка",
   "deepcleaning": "Глубокая чистка",
   "sofacleaning": "Чистка диванов",
-  "matresscleaning": "Чистка матраса",
+  "mattresscleaning": "Чистка матраса",
   "carpetcleaning": "Очистка ковров",
   "curtaincleaning": "Очистка Cutrain",
   "accleaning": "Очистка кондиционера",
@@ -49,7 +56,6 @@
   "seconds": "секунд",
   "entername": "Введите имя",
   "enteremail": "Введите адрес электронной почты",
-  "enteraddress": "Введите адрес",
   "name": "имя",
   "email": "Электронное письмо",
   "pleasefillmobile": "Пожалуйста, заполните мобильный",
@@ -118,6 +124,7 @@
   "notbooked": "Бронирование не завершено",
   "homepage": "Домашняя страница",
   "rescheduled": "Перенесенные",
+  "canceled": "отменен",
   "notrescheduled": "Бронирование не перенесено",
   //Modal
   "servicetype": "ТИП ОБСЛУЖИВАНИЯ",
@@ -206,5 +213,30 @@
   "disinfection": "Дезинфекционные услуги",
   "DisinfectionService": "Дезинфекционная служба",
   //deepCleaning
-  "DeepCleaning": "Глубокая чистка"
+  "DeepCleaning": "Глубокая чистка",
+  //sofacleaning
+  "SofaCleaning": "Чистка диванов",
+  "sofacleaningq1": "Количество диванов (50 грн за место)",
+  "youselected": "Вы выбрали",
+  "quantity": "количество",
+  "selectanothertimeplease": "Пожалуйста, выберите другое время",
+  "seaters": "местные самолеты",
+  //mattresscleaning
+  "MattressCleaning": "Чистка матраса",
+  "mattresses": "матрасы",
+  "mattresscleaningq1": "Количество матрасов (40 грн за матрас)",
+  "commingsoon": "Скоро будет",
+  //mattresscleaning
+  "CarpetCleaning": "Очистка ковров",
+  "carpets": "Ковры",
+  "carpetcleaningq1": "Количество ковров",
+  "carpetcleaningq2": "Общая площадь квадратных метров всех ковров (30 грн за один квадратный метр)",
+  "meters": "метры",
+  "squaremeters": "Квадратные метры",
+  "entersquaremeters": "Пожалуйста, введите квадратные метры",
+  //curtaincleaning
+  "CurtainCleaning": "Чистка штор",
+  "curtains": "Шторы",
+  "curtaincleaningq1": "Количество штор",
+  "curtaincleaningq2": "Общая площадь всех штор (30 грн за квадратный метр)"
 }

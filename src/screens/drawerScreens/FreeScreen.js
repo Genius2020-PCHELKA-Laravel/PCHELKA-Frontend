@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { Context as Authcontext2 } from '../context/AuthContext';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -8,17 +8,20 @@ import FontLight from '../../components/FontLight';
 import FonrRegular from '../../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from "../../navigationRef";
+import { BackHandler } from 'react-native';
+
 const FreeScreen = ({ navigation, t }) => {
   const { logout } = useContext(Authcontext2);
-  getData = async () => {
-    try {
-      const value = await AsyncStorage.removeItem('token')
-
-
-    } catch (e) {
-      // error reading value
-    }
-  }
+  const unsubscribe = navigation.addListener('didFocus', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+  });
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { return true; });
+      // navigation.removeListener('didFocus', () => { })
+    };
+  }, []);
 
   return (
     <View style={styles.container}>

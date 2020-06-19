@@ -7,15 +7,21 @@ import FontLight from '../components/FontLight';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { navigate } from '../navigationRef';
 
-const servicesdetails = ({ navigation, nav, redirect, title, imagesource, t }) => {
-
-
+const servicesdetails = ({ navigation, nav, redirect, comming, title, imagesource, t }) => {
   return (<View style={styles.container}>
     <View flexDirection="column">
       <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
+        {
+          comming == "yes" ?
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <FontRegular value={t('commingsoon')} mystyle={styles.comming} />
+            </View>
+            : null
+        }
         <Image style={styles.image} source={imagesource} />
       </TouchableOpacity>
       <View flexDirection="column" style={styles.text}>
+
         <FontBold mystyle={styles.servicetext} value={title} />
         <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
           <FontRegular value={t('booknow') + "  "} mystyle={styles.ButtonStyle} />
@@ -75,6 +81,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: '#7a7a7a',
+  },
+  comming: {
+    position: "absolute",
+    top: 20,
+    backgroundColor: '#2a9df4dd',
+    borderRadius: 7,
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 11,
+    // fontFamily: 'Comfortaa-Bold',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    justifyContent: "center",
+    zIndex: 16
   },
 });
 

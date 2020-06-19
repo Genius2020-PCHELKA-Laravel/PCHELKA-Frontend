@@ -228,7 +228,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                             limit = j + ':' + selectedminute + ':' + '00';
                         console.log(j + " limit: " + limit);
                         if (isInArray(timeStarts, limit) ? false : true) {
-                            Toast.show('You selected ' + hcstate.hours + ' hours' + '\n select Another time please', Toast.LONG);
+                            Toast.show(t('youselected') + ' ' + hcstate.hours + ' ' + t('hours') + '\n' + t('selectanothertimeplease'), Toast.LONG);
                             return;
                         }
                     }

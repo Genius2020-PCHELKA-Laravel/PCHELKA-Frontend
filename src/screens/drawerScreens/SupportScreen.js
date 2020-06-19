@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity } from 'react-native';
 import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
@@ -9,9 +9,20 @@ import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Linking } from 'react-native';
 import { navigate } from "../../navigationRef";
+import { BackHandler } from 'react-native';
 
 const SupportScreen = ({ navigation, t }) => {
-  const phoneNumber = "0934515020";
+  const phoneNumber = "380677665544";
+  const unsubscribe = navigation.addListener('didFocus', () => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+  });
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { return true; });
+      // navigation.removeListener('didFocus', () => { })
+    };
+  }, []);
   return (
     <View style={styles.container}>
       <Spacer>

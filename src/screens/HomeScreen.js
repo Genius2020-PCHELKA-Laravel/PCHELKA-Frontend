@@ -18,13 +18,19 @@ import { Context as AuthContext } from './context/AuthContext';
 import { Context as UserContext } from './context/UserContext';
 import { Context as HCContext } from './context/HCContext';
 import { navigate } from '../navigationRef';
+import NotificationsComponent from '../components/NotificationsComponent';
+import { BackHandler } from 'react-native';
+import ExitDialog from '../components/ExitDialog';
+
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
-  const { state: hcstate, setHC, setBS, setDI, setDE, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
+  const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 12 / 16);
   const imageWidth = dimensions.width;
+  const [changing, setChanging] = useState(false);
+
   // const [testToken, setTestToken] = useState('');
 
   // getData = async () => {
@@ -42,6 +48,10 @@ const HomeScreen = ({ navigation, t }) => {
       setDI(response[10]);
       setDE(response[6]);
       setBS(response[11]);
+      setSF(response[5]);
+      setMA(response[4]);
+      setCA(response[3]);
+      setCU(response[2]);
       console.log("HomeScreen::UseEffect::getServices::response::");
       console.log(response);
     }).catch((error) => {
@@ -76,6 +86,18 @@ const HomeScreen = ({ navigation, t }) => {
     }).catch((error) => {
       console.log(error);
     });
+
+  }, []);
+  const unsubscribe = navigation.addListener('didFocus', () => {
+    console.log("HomeScreen::didFocus");
+    hcdispatch({ type: 'RESET' });
+    BackHandler.addEventListener('hardwareBackPress', () => { setChanging(true); return true; });
+  });
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { setChanging(true); return true; });
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { setChanging(false); return true; });
+    };
   }, []);
   useEffect(() => {
     getUpcoming().then((response) => {
@@ -110,6 +132,7 @@ const HomeScreen = ({ navigation, t }) => {
   //const [dropdownContents, setDropdownContents] = useState('');
   return (<>
     <ScrollView style={styles.container}>
+      <ExitDialog changing={changing} setChanging={setChanging} />
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
@@ -125,6 +148,9 @@ const HomeScreen = ({ navigation, t }) => {
           </TouchableOpacity>
         </View>
       </Spacer>
+      <View>
+        {/* <NotificationsComponent /> */}
+      </View>
       <Spacer>
         <View style={styles.everthingtext}>
           <Text style={styles.everthingtext}>
@@ -140,17 +166,17 @@ const HomeScreen = ({ navigation, t }) => {
       <Spacer>
         <View style={styles.bottomcontainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DisinfectionScreen"} title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DeepCleaningScreen"} title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('matresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
-            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} comming="no" title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"CarpetCleaningScreen"} comming="no" title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"CurtainCleaningScreen"} comming="no" title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DeepCleaningScreen"} comming="no" title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DisinfectionScreen"} comming="no" title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"MattressCleaningScreen"} comming="no" title={t('mattresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"SofaCleaningScreen"} comming="no" title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} comming="yes" title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} comming="yes" title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} comming="yes" title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
+            <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} comming="yes" title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
           </ScrollView>
         </View>
       </Spacer>

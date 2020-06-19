@@ -1,4 +1,10 @@
 {
+  //AlertDialog
+  "alert": "Alert",
+  "ok": "OK",
+  "notpermittedyourescheduledbefore": "Not permitted, You rescheduled this appoitment before.",
+  "exit": "Exit",
+  "doyouwanttoexit": "Do you want to exit?",
   //Home Screen
   "noconnection": "No connection",
   "pleasecheckyourinternetconnectionandtryagain": "Please check your internet connection and try again",
@@ -15,7 +21,7 @@
   "carwash": "Car Wash",
   "deepcleaning": "Deep cleaning",
   "sofacleaning": "Sofa Cleaning",
-  "matresscleaning": "Matress Cleaning",
+  "mattresscleaning": "Mattress Cleaning",
   "carpetcleaning": "Carpet Cleaning",
   "curtaincleaning": "Cutrain Cleaning",
   "accleaning": "AC Cleaning",
@@ -50,7 +56,6 @@
   "seconds": "seconds",
   "entername": "Enter Name",
   "enteremail": "Enter Email",
-  "enteraddress": "Enter Address",
   "name": "Name",
   "email": "Email",
   "pleasefillmobile": "Please fill mobile",
@@ -119,6 +124,7 @@
   "notbooked": "Booking does not completed",
   "homepage": "Home Page",
   "rescheduled": "Rescheduled",
+  "canceled": "Canceled",
   "notrescheduled": "Booking does not rescheduled",
   //Modal
   "servicetype": "SERVICE TYPE",
@@ -206,5 +212,30 @@
   "disinfection": "Disinfection Services",
   "DisinfectionService": "Disinfection Service",
   //deepCleaning
-  "DeepCleaning": "Deep Cleaning"
+  "DeepCleaning": "Deep Cleaning",
+  //sofacleaning
+  "SofaCleaning": "Sofa Cleaning",
+  "sofacleaningq1": "Number of seater sofas (UAH 50 per seater)",
+  "youselected": "You selected",
+  "quantity": "Quantity",
+  "selectanothertimeplease": "Select another time please",
+  "seaters": "Seaters",
+  //mattresscleaning
+  "MattressCleaning": "Mattress Cleaning",
+  "mattresses": "Mattresses",
+  "mattresscleaningq1": "Number of mattresses (UAH 40 per mattress)",
+  "commingsoon": "Comming Soon",
+  //carpetcleaning
+  "CarpetCleaning": "Carpet Cleaning",
+  "carpets": "Carpets",
+  "carpetcleaningq1": "Number of carpets",
+  "carpetcleaningq2": "Total square meters for all carpets (UAH 30 per one square meter)",
+  "meters": "Meters",
+  "squaremeters": "Square Meters",
+  "entersquaremeters": "Enter square meters please",
+  //curtaincleaning
+  "CurtainCleaning": "Curtain Cleaning",
+  "curtains": "Curtains",
+  "curtaincleaningq1": "Number of curtains",
+  "curtaincleaningq2": "Total square meters for all curtains (UAH 30 per one square meter)"
 }

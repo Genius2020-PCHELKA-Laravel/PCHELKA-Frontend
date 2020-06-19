@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useContext, useState } from 'react';
-import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image, Alert } from 'react-native';
 import { Context as HCContext } from '../context/HCContext';
 import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
@@ -11,42 +11,29 @@ import Loader from '../../components/Loader';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
+import AlertDialog from '../../components/AlertDialog';
+import { BackHandler } from 'react-native';
 
 const UpcomingScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, dispatch: hcdispatch } = useContext(HCContext);
     const [isLoading, setIsLoading] = useState(false);
+    const [changing, setChanging] = useState(false);
 
 
-    // useEffect(() => {
-    //     let isCancelled1 = false;
-    //     if (!isCancelled1)
-    //         setIsLoading(true);
-    //     getUpcoming().then((response) => {
-    //         //console.log("Upcoming::useffect::getUpcoming::response:: ");
-    //         //console.log("######################" + JSON.stringify(response));
-    //         if (!isCancelled1)
-    //             setIsLoading(false);
-    //     }).catch((error) => {
-    //         console.log(error);
-    //         if (!isCancelled1)
-    //             setIsLoading(false);
-    //     });
-    //     return () => {
-    //         isCancelled1 = true;
-    //     };
-    // }, []);
-    // useEffect(() => {
-    //     getUpcoming().then((response) => {
-    //         console.log("Upcoming::useffect::getUpcoming::response:: ");
-    //         console.log("######################" + JSON.stringify(response));
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
-    // }, [hcstate.reloadAppointments]);
-
+    const unsubscribe = navigation.addListener('didFocus', () => {
+        BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+    });
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => { return true; });
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', () => { return true; });
+            // navigation.removeListener('didFocus', () => { })
+        };
+    }, []);
 
     return (
         <View style={{ flex: 1 }}>
+            <AlertDialog changing={changing} setChanging={setChanging} />
             <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#fff' }}>
                 <Loader loading={isLoading} />
                 {/* <Text style={{ left: 30, fontSize: 35 }}>{JSON.stringify(hcstate.upcoming)}</Text> */}
@@ -61,11 +48,15 @@ const UpcomingScreen = ({ navigation, t }) => {
                                     key={booking.id}
                                     activeOpacity={0.5}
                                     onPress={async () => {
-                                        hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
+                                        if (booking.status == 'Rescheduled') {
+                                            setChanging(true);
+                                            return;
+                                        }
                                         setIsLoading(true);
+                                        await hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
                                         await getSelectedUpcoming({
                                             id: booking.id,
-                                            providerData: booking.providerData
+                                            // providerData: booking.providerData
                                         }).then((response) => {
                                             console.log("####SelectedUpcoming####" + JSON.stringify(response));
                                         });
@@ -99,20 +90,22 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                 <FontLight mystyle={{ top: 10, right: 10 }} value={t('refcode') + ': ' + booking.refCode} />
                                                 {
                                                     booking.status == 'Completed' ?
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#7a7a7a", backgroundColor: "lightgreen" }}>
-                                                            <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('completed')} />
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#7a7a7a", backgroundColor: "lightgreen" }}>
+                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('completed')} />
                                                         </View>
                                                         : booking.status == 'Confirmed' ?
-                                                            // <Badge
-                                                            //     status="warning"
-                                                            //     value={t('confirmed')}
-                                                            //     badgeStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}
-                                                            //     containerStyle={{ position: 'absolute', top: 60, right: 0, paddingHorizontal: 15 }}
-                                                            // /> 
-                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#7a7a7a", backgroundColor: "#f5c500" }}>
-                                                                <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('confirmed')} />
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
+                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
                                                             </View>
-                                                            : null
+                                                            : booking.status == 'Rescheduled' ?
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ff9800", backgroundColor: "#ff9800" }}>
+                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                                </View> :
+                                                                booking.status == 'Canceled  ' ?
+                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ffcccb", backgroundColor: "#ffcccb" }}>
+                                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                    </View>
+                                                                    : null
                                                 }
                                             </View>
 

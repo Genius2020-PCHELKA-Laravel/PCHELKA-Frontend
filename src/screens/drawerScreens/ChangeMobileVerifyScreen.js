@@ -36,12 +36,12 @@ const ChangeMobileVerifyScreen = ({ navigation, t }) => {
             <Loader loading={loading} />
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value={t('enterthecodethatwassentto')}></FontBold>
-                <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
-                <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
-                <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold>
+                <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                    <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
+                </View>
+                {/* <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
+                <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold> */}
             </Spacer>
-            <Spacer />
-            <Spacer />
             <Spacer />
             <OtpInputs style={styles.inputsection}
                 handleChange={async (enteredotp) => {

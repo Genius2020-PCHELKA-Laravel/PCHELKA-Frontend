@@ -30,8 +30,20 @@ const HCreducer = (state, action) => {
             return { ...state, DI: action.payload };
         case 'set_de':
             return { ...state, DE: action.payload };
+        case 'set_sf':
+            return { ...state, SF: action.payload };
+        case 'set_ma':
+            return { ...state, MA: action.payload };
+        case 'set_cu':
+            return { ...state, CU: action.payload };
+        case 'set_ca':
+            return { ...state, CA: action.payload };
         case 'set_hours':
             return { ...state, hours: action.payload };
+        case 'set_quantity':
+            return { ...state, quantity: action.payload };
+        case 'set_square_meters':
+            return { ...state, squaremeters: action.payload };
         case 'set_cleaners':
             return { ...state, cleaners: action.payload };
         case 'set_materials':
@@ -91,6 +103,8 @@ const HCreducer = (state, action) => {
                 errorMessage: '',
                 frequency: 1,
                 hours: 2,
+                quantity: 2,
+                squaremeters: 0,
                 cleaners: 1,
                 materials: 0,
                 requirematerials: 'No',
@@ -210,6 +224,46 @@ const setDE = (dispatch) => {
             dispatch({ type: 'set_de', payload: DEDetails });
         } catch (err) {
             console.log("HCContex::setDE::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+const setSF = (dispatch) => {
+    return async (SFDetails) => {
+        try {
+            dispatch({ type: 'set_sf', payload: SFDetails });
+        } catch (err) {
+            console.log("HCContex::setSF::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+const setMA = (dispatch) => {
+    return async (MADetails) => {
+        try {
+            dispatch({ type: 'set_ma', payload: MADetails });
+        } catch (err) {
+            console.log("HCContex::setMA::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+const setCU = (dispatch) => {
+    return async (CUDetails) => {
+        try {
+            dispatch({ type: 'set_cu', payload: CUDetails });
+        } catch (err) {
+            console.log("HCContex::setCU::" + err);
+            dispatch({ type: 'add_error', payload: err })
+        }
+    };
+}
+const setCA = (dispatch) => {
+    return async (CADetails) => {
+        try {
+            dispatch({ type: 'set_ca', payload: CADetails });
+        } catch (err) {
+            console.log("HCContex::setCA::" + err);
             dispatch({ type: 'add_error', payload: err })
         }
     };
@@ -389,6 +443,10 @@ export const { Context, Provider } = createDataContext(HCreducer,
         setBS,
         setDI,
         setDE,
+        setSF,
+        setMA,
+        setCU,
+        setCA,
         HCBooking,
         getProviders,
         // getSchedulesDays,
@@ -408,6 +466,10 @@ export const { Context, Provider } = createDataContext(HCreducer,
         BS: '',
         DI: '',
         DE: '',
+        SF: '',
+        MA: '',
+        CU: '',
+        CA: '',
         providerid: '',
         autoassign: 1,
         subtotal: 0,
@@ -417,6 +479,8 @@ export const { Context, Provider } = createDataContext(HCreducer,
         errorMessage: '',
         frequency: 1,
         hours: 2,
+        quantity: 2,
+        squaremeters: 0,
         cleaners: 1,
         materials: 0,
         requirematerials: 'No',

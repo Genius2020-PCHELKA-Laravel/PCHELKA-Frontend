@@ -18,6 +18,7 @@ import Toast from 'react-native-simple-toast';
 import { navigate } from '../navigationRef';
 import Loader from '../components/Loader';
 import i18n from '../locales/i18n';
+import { BackHandler } from 'react-native';
 
 const BabySitterScreen = ({ navigation, t }) => {
   // static navigationOptions = {
@@ -41,18 +42,22 @@ const BabySitterScreen = ({ navigation, t }) => {
 
   // });
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true });
     let isCanceled = false;
-    if (!isCanceled)
-      hcdispatch({ type: 'RESET' });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_frequency', payload: 1 });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_hours', payload: 2 });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_cleaners', payload: 1 });
-    if (!isCanceled)
-      hcdispatch({ type: 'set_materials', payload: 0 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'RESET' });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_frequency', payload: 1 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_hours', payload: 2 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_quantity', payload: 2 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_cleaners', payload: 1 });
+    // if (!isCanceled)
+    //   hcdispatch({ type: 'set_materials', payload: 0 });
     return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => { return true });
       isCanceled = true;
     };
   }, []);
