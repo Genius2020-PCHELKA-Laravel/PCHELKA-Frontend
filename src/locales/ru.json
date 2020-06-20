@@ -1,4 +1,6 @@
 {
+  //location
+  "notservedinthisarea": "Не обслуживается в этом регионе",
   //AlertDialog
   "alert": "бдительный",
   "ok": "Хорошо",
@@ -158,6 +160,7 @@
   "addresscorrectlysaved": "Правильно сохраненный адрес",
   "addresscantbesaved": "Адрес не может быть сохранен",
   "enteraddress": "Введите адрес",
+  "enterstreet": "Введите улицу",
   "enterbuildingnumber": "Введите номер здания",
   "enterapartment": "Введите квартиру",
   //Appoitments

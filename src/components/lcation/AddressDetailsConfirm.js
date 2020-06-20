@@ -4,6 +4,7 @@ import {
     Text,
     TouchableHighlight,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     View,
     StyleSheet,
     ScrollView,
@@ -20,9 +21,77 @@ import Toast from 'react-native-simple-toast';
 import i18n from '../../locales/i18n';
 
 export default class AddressDetailsConfirm extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = { modalVisible: false, street: '', buildingnumber: '', apartment: '' };
+        this.state = {
+            modalVisible: false,
+            street: '',
+            buildingnumber: '',
+            apartment: '',
+            streetStyle: styles.inputStyleError,
+            buildingnumberStyle: styles.inputStyleError,
+            apartmentStyle: styles.inputStyleError,
+            saveButtonStyle: styles.saveButtonStyleError,
+            saveButtonTextStyle: styles.saveButtonTextStyleError
+        };
+    }
+    handleStreetChange(text) {
+        this.setState({ street: text.trim() });
+        if (text.trim() != '') {
+            this.setState({ streetStyle: styles.inputStyle });
+            if (this.state.buildingnumber.trim() == '' || this.state.apartment.trim() == '') {
+                this.setState({ saveButtonStyle: styles.saveButtonStyleError });
+                this.setState({ saveButtonTextStyle: styles.saveButtonTextStyleError });
+            }
+            else {
+                this.setState({ saveButtonStyle: styles.saveButtonStyle });
+                this.setState({ saveButtonTextStyle: styles.saveButtonTextStyle });
+            }
+        }
+        else {
+            this.setState({ streetStyle: styles.inputStyleError });
+            this.setState({ saveButtonStyle: styles.saveButtonStyleError });
+            this.setState({ saveButtonTextStyle: styles.saveButtonTextStyleError });
+        }
+    }
+    handleBuildingnumberChange(text) {
+        this.setState({ buildingnumber: text.trim() });
+        if (text.trim() != '') {
+            this.setState({ buildingnumberStyle: styles.inputStyle });
+            if (this.state.street.trim() == '' || this.state.apartment.trim() == '') {
+                this.setState({ saveButtonStyle: styles.saveButtonStyleError });
+                this.setState({ saveButtonTextStyle: styles.saveButtonTextStyleError });
+            }
+            else {
+                this.setState({ saveButtonStyle: styles.saveButtonStyle });
+                this.setState({ saveButtonTextStyle: styles.saveButtonTextStyle });
+            }
+        }
+        else {
+            this.setState({ buildingnumberStyle: styles.inputStyleError });
+            this.setState({ saveButtonStyle: styles.saveButtonStyleError });
+            this.setState({ saveButtonTextStyle: styles.saveButtonTextStyleError });
+        }
+    }
+    handleapartmentChange(text) {
+        this.setState({ apartment: text.trim() });
+        if (text.trim() != '') {
+            this.setState({ apartmentStyle: styles.inputStyle });
+            if (this.state.street.trim() == '' || this.state.buildingnumber.trim() == '') {
+                this.setState({ saveButtonStyle: styles.saveButtonStyleError });
+                this.setState({ saveButtonTextStyle: styles.saveButtonTextStyleError });
+            }
+            else {
+                this.setState({ saveButtonStyle: styles.saveButtonStyle });
+                this.setState({ saveButtonTextStyle: styles.saveButtonTextStyle });
+            }
+        }
+        else {
+            this.setState({ apartmentStyle: styles.inputStyleError });
+            this.setState({ saveButtonStyle: styles.saveButtonStyleError });
+            this.setState({ saveButtonTextStyle: styles.saveButtonTextStyleError });
+        }
     }
     handleSubmitButton() {
         console.log("Passed Latitude to AddressDetailsConfir::");
@@ -33,11 +102,20 @@ export default class AddressDetailsConfirm extends React.Component {
             this.props.longitude > 42 || this.props.longitude < 34) {
             this.setState({ modalVisible: false });
             this.setState({ street: '', buildingnumber: '', apartment: '' });
-            Toast.show("Not served in this region", Toast.LONG);
+            Toast.show(i18n.t('notservedinthisarea'), Toast.LONG);
             return;
         }
         else {
-            this.setState({ street: '', buildingnumber: '', apartment: '' });
+            this.setState({
+                street: '',
+                buildingnumber: '',
+                apartment: '',
+                streetStyle: styles.inputStyleError,
+                buildingnumberStyle: styles.inputStyleError,
+                apartmentStyle: styles.inputStyleError,
+                saveButtonStyle: styles.saveButtonStyleError,
+                saveButtonTextStyle: styles.saveButtonTextStyleError
+            });
             this.setState({ modalVisible: true });
         }
     }
@@ -49,110 +127,115 @@ export default class AddressDetailsConfirm extends React.Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        alert('Modal has been closed.');
+                        // alert('Modal has been closed.');
+                        this.setState({ modalVisible: false });
                     }} >
-                    <View style={styles.wrapper}>
+                    <TouchableOpacity onPress={() => this.setState({ modalVisible: false })} style={styles.wrapper}>
+                        <TouchableWithoutFeedback>
 
-                        <View style={styles.container}>
-                            <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
+                            <View style={styles.container}>
+                                <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
+                                    <TouchableOpacity
+                                        activeOpacity={0.5}
+                                        onPress={() => {
+                                            this.setState({ modalVisible: false })
+                                        }}
+                                        style={{
+                                            backgroundColor: '#fff',
+                                            width: 35,
+                                            height: 35
+                                        }}>
+                                        <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                    </TouchableOpacity>
+                                </View>
+                                <FontRegular mystyle={{ color: '#000', fontSize: 21, left: 15 }} value={i18n.t('addnewaddress')}></FontRegular>
+                                <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginLeft: 15, marginRight: 15 }} />
+                                <Spacer />
+                                <View style={styles.SectionStyle}>
+
+                                    <TextInput
+                                        style={this.state.streetStyle}
+                                        onChangeText={(text) => this.handleStreetChange(text)}
+                                        value={this.state.street}
+                                        // underlineColorAndroid="#F6F6F7"
+                                        placeholder={i18n.t('street')}
+                                        placeholderTextColor="#aaa"
+                                        autoCapitalize="sentences"
+                                        keyboardType="default"
+                                        maxLength={25}
+                                        // ref={ref => {
+                                        //     this._emailinput = ref;
+                                        // }}
+                                        returnKeyType="next"
+                                        // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
+                                        blurOnSubmit={false}
+                                    />
+                                </View>
+                                <View style={styles.SectionStyle}>
+
+                                    <TextInput
+                                        style={this.state.buildingnumberStyle}
+                                        onChangeText={(text) => this.handleBuildingnumberChange(text)}
+                                        value={this.state.buildingnumber}
+                                        // underlineColorAndroid="#F6F6F7"
+                                        placeholder={i18n.t('buildingnumber')}
+                                        placeholderTextColor="#aaa"
+                                        autoCapitalize="sentences"
+                                        keyboardType="default"
+                                        maxLength={25}
+                                        // ref={ref => {
+                                        //     this._emailinput = ref;
+                                        // }}
+                                        returnKeyType="next"
+                                        // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
+                                        blurOnSubmit={false}
+                                    />
+                                </View>
+                                <View style={styles.SectionStyle}>
+
+                                    <TextInput
+                                        style={this.state.apartmentStyle}
+                                        onChangeText={(text) => this.handleapartmentChange(text)}
+                                        value={this.state.apartment}
+                                        // underlineColorAndroid="#F6F6F7"
+                                        placeholder={i18n.t('apartment')}
+                                        placeholderTextColor="#aaa"
+                                        autoCapitalize="sentences"
+                                        keyboardType="default"
+                                        maxLength={25}
+                                        // ref={ref => {
+                                        //     this._emailinput = ref;
+                                        // }}
+                                        returnKeyType="next"
+                                        // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
+                                        blurOnSubmit={false}
+                                    />
+                                </View>
                                 <TouchableOpacity
+                                    style={this.state.saveButtonStyle}
                                     activeOpacity={0.5}
                                     onPress={() => {
-                                        this.setState({ modalVisible: false })
-                                    }}
-                                    style={{
-                                        backgroundColor: '#fff',
+                                        if (this.state.street.trim() == '') {
+                                            Toast.show(i18n.t('enterstreet'), Toast.LONG);
+                                            return;
+                                        }
+                                        if (this.state.buildingnumber.trim() == '') {
+                                            Toast.show(i18n.t('enterbuildingnumber'), Toast.LONG);
+                                            return;
+                                        }
+                                        if (this.state.apartment.trim() == '') {
+                                            Toast.show(i18n.t('enterapartment'), Toast.LONG);
+                                            return;
+                                        }
+                                        this.props.onclick(this.state.street, this.state.buildingnumber, this.state.apartment);
+                                        this.setState({ modalVisible: false });
                                     }}>
-                                    <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                    <FontBold mystyle={this.state.saveButtonTextStyle} value={i18n.t('save')} />
+
                                 </TouchableOpacity>
                             </View>
-                            <FontRegular mystyle={{ color: '#000', fontSize: 21, left: 15 }} value={i18n.t('addnewaddress')}></FontRegular>
-                            <View style={{ borderBottomColor: '#ff9800', borderBottomWidth: 1, marginTop: 5, marginLeft: 15, marginRight: 15 }} />
-                            <Spacer />
-                            <View style={styles.SectionStyle}>
-
-                                <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(text) => this.setState({ street: text })}
-                                    value={this.state.street}
-                                    // underlineColorAndroid="#F6F6F7"
-                                    placeholder={i18n.t('street')}
-                                    placeholderTextColor="#aaa"
-                                    autoCapitalize="none"
-                                    keyboardType="default"
-                                    maxLength={25}
-                                    // ref={ref => {
-                                    //     this._emailinput = ref;
-                                    // }}
-                                    returnKeyType="next"
-                                    // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
-                                    blurOnSubmit={false}
-                                />
-                            </View>
-                            <View style={styles.SectionStyle}>
-
-                                <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(text) => this.setState({ buildingnumber: text })}
-                                    value={this.state.buildinnumber}
-                                    // underlineColorAndroid="#F6F6F7"
-                                    placeholder={i18n.t('buildingnumber')}
-                                    placeholderTextColor="#aaa"
-                                    autoCapitalize="none"
-                                    keyboardType="default"
-                                    maxLength={25}
-                                    // ref={ref => {
-                                    //     this._emailinput = ref;
-                                    // }}
-                                    returnKeyType="next"
-                                    // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
-                                    blurOnSubmit={false}
-                                />
-                            </View>
-                            <View style={styles.SectionStyle}>
-
-                                <TextInput
-                                    style={styles.inputStyle}
-                                    onChangeText={(text) => this.setState({ apartment: text })}
-                                    value={this.state.apartment}
-                                    // underlineColorAndroid="#F6F6F7"
-                                    placeholder={i18n.t('apartment')}
-                                    placeholderTextColor="#aaa"
-                                    autoCapitalize="none"
-                                    keyboardType="default"
-                                    maxLength={25}
-                                    // ref={ref => {
-                                    //     this._emailinput = ref;
-                                    // }}
-                                    returnKeyType="next"
-                                    // onSubmitEditing={() => this._addressinput && this._addressinput.focus()}
-                                    blurOnSubmit={false}
-                                />
-                            </View>
-                            <TouchableOpacity
-                                style={styles.confirmbuttonStyle}
-                                activeOpacity={0.5}
-                                onPress={() => {
-                                    if (this.state.street.trim() == '') {
-                                        Toast.show(i18n.t('enteraddress'), Toast.LONG);
-                                        return;
-                                    }
-                                    if (this.state.buildingnumber.trim() == '') {
-                                        Toast.show(i18n.t('enterbuildingnumber'), Toast.LONG);
-                                        return;
-                                    }
-                                    if (this.state.apartment.trim() == '') {
-                                        Toast.show(i18n.t('enterapartment'), Toast.LONG);
-                                        return;
-                                    }
-                                    this.props.onclick(this.state.street, this.state.buildingnumber, this.state.apartment);
-                                    this.setState({ modalVisible: false });
-                                }}>
-                                <FontBold mystyle={styles.buttonTextStyle} value={i18n.t('save')} />
-
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                        </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </Modal>
 
 
@@ -163,12 +246,11 @@ export default class AddressDetailsConfirm extends React.Component {
                     onPress={() => {
                         this.handleSubmitButton();
                     }}>
-                    <FontBold mystyle={styles.buttonTextStyle} value={i18n.t('confirm')} />
+                    <FontBold mystyle={styles.confirmButtonTextStyle} value={i18n.t('confirm')} />
                 </TouchableOpacity>
             </View >
         );
     }
-
 
 }
 
@@ -180,15 +262,48 @@ const styles = StyleSheet.create({
         height: 360,
         width: '100%',
         bottom: 0,
-        borderRadius: 14
+        borderTopLeftRadius: 14,
+        borderTopRightRadius: 14,
     },
     wrapper: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: "#444444aa"
     },
     confirmbuttonStyle: {
+        position: 'absolute',
+        bottom: 15,
+        left: 10,
+        right: 10,
+        backgroundColor: '#f5c500',
+        borderWidth: 1,
+        borderColor: '#f5c500',
+        alignItems: 'center',
+        borderRadius: 7,
+        marginTop: 20,
+        marginBottom: 20,
+        height: 50,
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+    saveButtonStyle: {
+        position: 'absolute',
+        bottom: 15,
+        left: 10,
+        right: 10,
+        backgroundColor: '#f5c500',
+        borderWidth: 1,
+        borderColor: '#f5c500',
+        alignItems: 'center',
+        borderRadius: 7,
+        marginTop: 20,
+        marginBottom: 20,
+        height: 50,
+        justifyContent: 'center',
+    },
+    saveButtonStyleError: {
         position: 'absolute',
         bottom: 15,
         left: 10,
@@ -204,20 +319,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center'
     },
-    savebuttonStyle: {
-        position: 'absolute',
-        bottom: 35,
-        left: 10,
-        right: 10,
-        backgroundColor: '#dcdcd0',
-        borderWidth: 0,
-        borderColor: '#dcdcdc',
-        alignItems: 'center',
-        borderRadius: 30,
-        height: 50,
-        textAlign: 'center',
-        justifyContent: 'center'
-    },
     SectionStyle: {
         flexDirection: 'row',
         height: 50,
@@ -226,17 +327,37 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignItems: 'center',
     },
-    buttonTextStyle: {
+    saveButtonTextStyle: {
+        color: '#fff',
+        paddingVertical: 10,
+        fontSize: 22,
+    },
+    saveButtonTextStyleError: {
         color: '#7a7a7a',
         paddingVertical: 10,
         fontSize: 22,
     },
+    confirmButtonTextStyle: {
+        color: '#fff',
+        fontSize: 22,
+        textAlign: 'center',
+        textAlignVertical: "center"
+    },
     inputStyle: {
         flex: 1,
-        color: 'black',
+        color: '#000',
         borderWidth: 1,
         borderRadius: 7,
-        borderColor: '#f5c500',
+        borderColor: '#000',
+        fontSize: 20,
+        padding: 15,
+    },
+    inputStyleError: {
+        flex: 1,
+        color: '#aaa',
+        borderWidth: 1,
+        borderRadius: 7,
+        borderColor: '#aaa',
         fontSize: 20,
         padding: 15,
     },

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
 import MapInput from './MapInput';
 // import MyMapView from './MyMapView';
 import { getLocation, geocodeLocationByName, geocodeLocationByCoords } from './LocationService';
@@ -135,6 +135,20 @@ const MapContainer = () => {
             {
                 latitude != 0 ?
                     <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', }}>
+                        <View style={{
+                            left: '50%',
+                            marginLeft: -24,
+                            marginTop: -48,
+                            position: 'absolute',
+                            top: '50%',
+                            zIndex: 16
+                        }}>
+                            <Image
+                                style={{
+                                    resizeMode: 'contain',
+                                    height: 45, width: 45,
+                                }} source={require('../../../assets/marker3.png')} />
+                        </View>
                         <MapView
                             style={styles.mapStyle}
                             region={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
@@ -142,9 +156,9 @@ const MapContainer = () => {
                             showsUserLocation={true}
                             onRegionChangeComplete={(reg) => onMapRegionChange(reg)}
                         >
-                            <Marker
+                            {/* <Marker
                                 coordinate={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
-                                pinColor="#d21404" />
+                                pinColor="#d21404" /> */}
                         </MapView>
                     </View> : null
             }

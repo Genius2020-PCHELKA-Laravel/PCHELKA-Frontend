@@ -1,4 +1,6 @@
 {
+  //location
+  "notservedinthisarea": "Not served in this region",
   //AlertDialog
   "alert": "Alert",
   "ok": "OK",
@@ -158,6 +160,7 @@
   "addresscorrectlysaved": "Address Correctly Saved",
   "addresscantbesaved": "Address can't be Saved",
   "enteraddress": "Enter Address",
+  "enterstreet": "Enter street",
   "enterbuildingnumber": "Enter Building Number",
   "enterapartment": "Enter Apartment",
   //Appoitments
