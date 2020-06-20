@@ -48,8 +48,7 @@ const VerifyScreen = ({ navigation, t }) => {
                 <View style={{ flexDirection: "row", justifyContent: "center" }}>
                     <FontBold mystyle={styles.mobileText} value={state.mobile}></FontBold>
                 </View>
-                {/* <Text>OTP: </Text><FontBold mystyle={styles.mobileText} value={otp}></FontBold>
-                <Text>Resend OTP: </Text><FontBold mystyle={styles.mobileText} value={resendotp}></FontBold> */}
+
             </Spacer>
             <Spacer />
             <OtpInputs style={styles.inputsection}
@@ -72,6 +71,11 @@ const VerifyScreen = ({ navigation, t }) => {
             />
             <FontBold mystyle={styles.resendText} value={t('resendcodein')}></FontBold>
             <Timer onclick={resend}></Timer>
+        </View>
+        <View>
+            <FontBold mystyle={{ fontSize: 12 }} value={"if you in ukraine you will receive message"}></FontBold>
+            <FontBold mystyle={{ fontSize: 12 }} value={"OTP: " + otp}></FontBold>
+            <FontBold mystyle={{ fontSize: 12 }} value={"Resend OTP:" + resendotp}></FontBold>
         </View>
     </>
     );

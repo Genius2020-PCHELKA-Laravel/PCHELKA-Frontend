@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         borderColor: '#aaa',
         fontSize: 20,
-        height: 50,
+        height: 40,
 
     }
 });

@@ -7,7 +7,7 @@ import FontLight from '../components/FontLight';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { navigate } from '../navigationRef';
 
-const servicesdetails = ({ navigation, nav, redirect, comming, title, imagesource, t }) => {
+const servicesdetails = ({ navigation, nav, redirect, biosafe, trending, comming, title, imagesource, t }) => {
   return (<View style={styles.container}>
     <View flexDirection="column">
       <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
@@ -15,6 +15,21 @@ const servicesdetails = ({ navigation, nav, redirect, comming, title, imagesourc
           comming == "yes" ?
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <FontRegular value={t('commingsoon')} mystyle={styles.comming} />
+            </View>
+            : null
+
+        }
+        {
+          biosafe == "yes" ?
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <FontRegular value={t('biosafe')} mystyle={styles.biosafe} />
+            </View>
+            : null
+        }
+        {
+          trending == "yes" ?
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <FontRegular value={t('trending')} mystyle={styles.trending} />
             </View>
             : null
         }
@@ -36,10 +51,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   servicetext: {
-    fontSize: 16,
+    fontSize: 14,
     position: "absolute",
-    bottom: 65,
-    fontSize: 18,
+    bottom: 60,
     color: '#fff',
     textAlign: "center"
   },
@@ -84,15 +98,40 @@ const styles = StyleSheet.create({
   },
   comming: {
     position: "absolute",
-    top: 20,
+    top: 30,
     backgroundColor: '#2a9df4dd',
-    borderRadius: 7,
+    borderRadius: 4,
     color: '#fff',
     textAlign: 'center',
-    fontSize: 11,
+    fontSize: 12,
     // fontFamily: 'Comfortaa-Bold',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 5,
+    justifyContent: "center",
+    zIndex: 16
+  },
+  biosafe: {
+    position: "absolute",
+    top: 30,
+    backgroundColor: 'purple',
+    borderRadius: 4,
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 12,
+    // fontFamily: 'Comfortaa-Bold',
+    paddingHorizontal: 5,
+    justifyContent: "center",
+    zIndex: 16
+  },
+  trending: {
+    position: "absolute",
+    top: 30,
+    backgroundColor: 'blue',
+    borderRadius: 4,
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 12,
+    // fontFamily: 'Comfortaa-Bold',
+    paddingHorizontal: 5,
     justifyContent: "center",
     zIndex: 16
   },

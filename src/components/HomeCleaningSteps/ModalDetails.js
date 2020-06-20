@@ -46,7 +46,7 @@ const ModalDetails = ({ children, t }) => {
                     <FontAwesome name="times" size={35} color="#7a7a7a" />
                 </TouchableOpacity>
                 <View style={{ marginTop: 60 }}>
-                    <ScrollView style={styles.container} >
+                    <ScrollView showsVerticalScrollIndicator={false} style={styles.container} >
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('homecleaning')}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />

@@ -86,6 +86,39 @@ const SofaCleaningDetails = ({ children, t }) => {
     }, [desc]);
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+            <View style={styles.servicedesccontainer}>
+                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
+                <Spacer >
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                </Spacer>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('sofadesc1')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('sofadesc2')} />
+                </View>
+                {/* <View style={styles.container}>
+                    <TouchableOpacity
+                        style={styles.policybuttonStyle}
+                        activeOpacity={0.5}
+                        onPress={() => {
+                            // navigate('whatsincluded');
+                        }}>
+                        <Spacer />
+                        <FontLight mystyle={{
+                            textDecorationLine: 'underline',
+                            textDecorationStyle: "solid",
+                            textDecorationColor: "blue",
+                            textAlign: "center",
+                            color: "blue"
+                        }}
+                            value={t('viewmore')}
+                        />
+                    </TouchableOpacity>
+                </View> */}
+            </View>
             <FontBold mystyle={styles.qText} value={t('sofacleaningq1')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
                 <TouchableOpacity onPress={() => setQuantity(2)}><Text style={quantity == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
@@ -130,39 +163,7 @@ const SofaCleaningDetails = ({ children, t }) => {
                 multiline={true}
                 numberOfLines={4}
             />
-            <View style={styles.servicedesccontainer}>
-                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
-                <Spacer >
-                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
-                </Spacer>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('sofadesc1')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('sofadesc2')} />
-                </View>
-                <View style={styles.container}>
-                    <TouchableOpacity
-                        style={styles.policybuttonStyle}
-                        activeOpacity={0.5}
-                        onPress={() => {
-                            // navigate('whatsincluded');
-                        }}>
-                        <Spacer />
-                        <FontLight mystyle={{
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: "solid",
-                            textDecorationColor: "blue",
-                            textAlign: "center",
-                            color: "blue"
-                        }}
-                            value={t('viewmore')}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
+
         </ScrollView>);
 };
 

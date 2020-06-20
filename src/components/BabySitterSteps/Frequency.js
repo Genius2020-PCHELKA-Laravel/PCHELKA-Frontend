@@ -57,6 +57,47 @@ const Frequency = ({ children, t }) => {
     }, [frequency]);
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
+            <View style={styles.servicedesccontainer}>
+                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
+                <Spacer >
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                </Spacer>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc1')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc2')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc3')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc4')} />
+                </View>
+                {/* <View style={styles.container}>
+                    <TouchableOpacity
+                        style={styles.policybuttonStyle}
+                        activeOpacity={0.5}
+                        onPress={() => {
+                            // navigate('whatsincluded');
+                        }}>
+                        <Spacer />
+                        <FontLight mystyle={{
+                            textDecorationLine: 'underline',
+                            textDecorationStyle: "solid",
+                            textDecorationColor: "blue",
+                            textAlign: "center",
+                            color: "blue"
+                        }}
+                            value={t('viewmore')}
+                        />
+                    </TouchableOpacity>
+                </View> */}
+            </View>
             <TouchableOpacity onPress={() => { setFrequency(1) }}>
                 <Spacer>
                     <View>
@@ -89,47 +130,7 @@ const Frequency = ({ children, t }) => {
                     <FontLight mystyle={styles.DiscountStyle} value={t('10off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
-            <View style={styles.servicedesccontainer}>
-                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
-                <Spacer >
-                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
-                </Spacer>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc1')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc2')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc3')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc4')} />
-                </View>
-                <View style={styles.container}>
-                    <TouchableOpacity
-                        style={styles.policybuttonStyle}
-                        activeOpacity={0.5}
-                        onPress={() => {
-                            // navigate('whatsincluded');
-                        }}>
-                        <Spacer />
-                        <FontLight mystyle={{
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: "solid",
-                            textDecorationColor: "blue",
-                            textAlign: "center",
-                            color: "blue"
-                        }}
-                            value={t('viewmore')}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
+
         </ScrollView>);
 };
 

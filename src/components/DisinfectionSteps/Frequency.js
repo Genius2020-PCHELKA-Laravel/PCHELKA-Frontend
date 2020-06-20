@@ -10,10 +10,12 @@ import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { withNamespaces } from 'react-i18next';
 import { FontAwesome5, FontAwesome, Octicons } from '@expo/vector-icons';
+import ModalDisinfectionDesc from './ModalDisinfectionDesc';
 
 const Frequency = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
     const [frequency, setFrequency] = useState(hcstate.frequency);
+    const [showDisinfectionModal, setShowDisinfectionModal] = useState(false);
     let subtotal = hcstate.subtotal;
     let discount = hcstate.discount;
     let total = hcstate.total;
@@ -59,6 +61,54 @@ const Frequency = ({ children, t }) => {
     }, [frequency]);
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
+            <ModalDisinfectionDesc showDisinfectionModal={showDisinfectionModal} setShowDisinfectionModal={setShowDisinfectionModal} />
+            <View style={styles.servicedesccontainer}>
+                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
+                <Spacer >
+                    <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                        <View style={{ width: "70%" }}>
+                            <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                        </View>
+                        <View style={{ width: "30%" }}>
+                            <TouchableOpacity
+                                activeOpacity={0.5}
+                                onPress={() => {
+                                    // navigate('whatsincluded');
+                                    setShowDisinfectionModal(true);
+                                }}>
+                                <FontLight
+                                    mystyle={{
+                                        textDecorationLine: 'underline',
+                                        textDecorationStyle: "solid",
+                                        textDecorationColor: "blue",
+                                        textAlign: "center",
+                                        textAlignVertical: "center",
+                                        color: "blue",
+                                        justifyContent: "center",
+                                    }}
+                                    value={t('viewmore')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Spacer>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc1')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc2')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc3')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc4')} />
+                </View>
+            </View>
             {/* <Text>{frequency}</Text>
             <Text>Frequency:{hcstate.frequency}</Text>
             <Text>Price:{hcstate.price}</Text>
@@ -99,47 +149,7 @@ const Frequency = ({ children, t }) => {
                     <FontLight mystyle={styles.DiscountStyle} value={t('10off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
-            <View style={styles.servicedesccontainer}>
-                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
-                <Spacer >
-                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
-                </Spacer>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc1')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc2')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc3')} />
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc4')} />
-                </View>
-                <View style={styles.container}>
-                    <TouchableOpacity
-                        style={styles.policybuttonStyle}
-                        activeOpacity={0.5}
-                        onPress={() => {
-                            // navigate('whatsincluded');
-                        }}>
-                        <Spacer />
-                        <FontLight mystyle={{
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: "solid",
-                            textDecorationColor: "blue",
-                            textAlign: "center",
-                            color: "blue"
-                        }}
-                            value={t('viewmore')}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
+
         </ScrollView>);
 };
 
@@ -186,6 +196,7 @@ const styles = StyleSheet.create({
         elevation: 2,
         shadowRadius: 10,
     },
+
 });
 
 export default withNamespaces()(Frequency);

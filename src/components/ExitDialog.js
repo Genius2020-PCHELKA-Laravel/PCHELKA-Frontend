@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Modal, Text, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, View, Modal, Text, TouchableOpacity, Button, TouchableWithoutFeedback } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Dialog from "react-native-dialog";
 import RNRestart from 'react-native-restart';
@@ -45,23 +45,27 @@ const ExitDialog = props => {
             onRequestClose={() => {
                 console.log('close modal');
             }}>
-            <View style={styles.wrapper}>
-                <View style={styles.container}>
-                    <View flexDirection="row" style={{ marginBottom: 5 }}>
-                        <FontBold mystyle={{ fontSize: 20 }} value={i18n.t('exit')} />
-                        {/* <AntDesign style={{ position: "absolute", right: 15, top: 0 }} name="warning" size={45} color="#d21404" /> */}
+            <TouchableOpacity onPress={() => setChanging(false)} style={styles.wrapper}>
+
+                <TouchableWithoutFeedback>
+                    <View style={styles.container}>
+                        <View flexDirection="row" style={{ marginBottom: 5 }}>
+                            <FontBold mystyle={{ fontSize: 20 }} value={i18n.t('exit')} />
+                            {/* <AntDesign style={{ position: "absolute", right: 15, top: 0 }} name="warning" size={45} color="#d21404" /> */}
+                        </View>
+                        <FontRegular mystyle={{ fontSize: 16 }} value={i18n.t('doyouwanttoexit')} />
+                        <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: 20 }}>
+                            <TouchableOpacity style={styles.btn} onPress={handleCancel} >
+                                <FontBold value={i18n.t('cancel')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btn} onPress={handleChange} >
+                                <FontBold mystyle={{ color: "#d21404" }} value={i18n.t('ok')} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <FontRegular mystyle={{ fontSize: 16 }} value={i18n.t('doyouwanttoexit')} />
-                    <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: 20 }}>
-                        <TouchableOpacity style={styles.btn} onPress={handleCancel} >
-                            <FontBold value={i18n.t('cancel')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.btn} onPress={handleChange} >
-                            <FontBold mystyle={{ color: "#d21404" }} value={i18n.t('ok')} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
+                </TouchableWithoutFeedback>
+
+            </TouchableOpacity>
         </Modal>
     );
 };
@@ -83,7 +87,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: "#444444aa"
+
     },
     btn: {
         backgroundColor: '#f5c500',
