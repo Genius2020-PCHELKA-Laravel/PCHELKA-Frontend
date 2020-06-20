@@ -10,6 +10,7 @@ import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
+import { FontAwesome5, FontAwesome, Octicons } from '@expo/vector-icons';
 
 const SofaCleaningDetails = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
@@ -129,6 +130,39 @@ const SofaCleaningDetails = ({ children, t }) => {
                 multiline={true}
                 numberOfLines={4}
             />
+            <View style={styles.servicedesccontainer}>
+                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
+                <Spacer >
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                </Spacer>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('sofadesc1')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('sofadesc2')} />
+                </View>
+                <View style={styles.container}>
+                    <TouchableOpacity
+                        style={styles.policybuttonStyle}
+                        activeOpacity={0.5}
+                        onPress={() => {
+                            // navigate('whatsincluded');
+                        }}>
+                        <Spacer />
+                        <FontLight mystyle={{
+                            textDecorationLine: 'underline',
+                            textDecorationStyle: "solid",
+                            textDecorationColor: "blue",
+                            textAlign: "center",
+                            color: "blue"
+                        }}
+                            value={t('viewmore')}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
         </ScrollView>);
 };
 
@@ -195,7 +229,21 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         textAlign: 'center',
         marginRight: 4
-    }
+    },
+    servicedesccontainer: {
+        margin: 18,
+        padding: 15,
+        borderColor: '#7a7a7a',
+        borderWidth: 0,
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 0
+        },
+        elevation: 2,
+        shadowRadius: 10,
+    },
 });
 
 export default withNamespaces()(SofaCleaningDetails);

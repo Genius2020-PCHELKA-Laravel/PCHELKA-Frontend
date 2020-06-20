@@ -13,7 +13,7 @@ import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
 import Loader from '../Loader';
 import i18n from '../../locales/i18n';
 import { Dimensions } from 'react-native';
-
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 const MapContainer = () => {
     const [country, setCountry] = useState('');
     const [latitude, setLatitude] = useState(0);
@@ -23,7 +23,6 @@ const MapContainer = () => {
     const [isloading, setIsLoading] = useState(false);
     const { state, addNewAddress, } = useContext(UserContext);
     const { width, height } = Dimensions.get('window');
-
 
     useEffect(() => {
         getInitialState();
@@ -173,12 +172,28 @@ const MapContainer = () => {
                             top: '50%',
                             zIndex: 16
                         }}>
-                            <Image
+                            {/* <Image
                                 style={{
                                     resizeMode: 'contain',
                                     height: 45, width: 45,
-                                }} source={require('../../../assets/marker.png')} />
+                                }} source={require('../../../assets/marker.png')} /> */}
+                            <MaterialIcons name="location-on" size={45} color="#d21404" />
                         </View>
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            style={{
+                                right: 25,
+                                bottom: 100,
+                                marginLeft: -24,
+                                marginTop: -48,
+                                position: 'absolute',
+                                zIndex: 16
+                            }}
+                            onPress={() => {
+                                getInitialState();
+                            }}>
+                            <FontAwesome name="location-arrow" size={45} color="#999" />
+                        </TouchableOpacity>
                         <MapView
                             style={styles.mapStyle}
                             region={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}

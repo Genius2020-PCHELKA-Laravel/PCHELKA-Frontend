@@ -266,7 +266,13 @@ const HCRescheduleScreen = ({ children, t }) => {
                                 navigate('ReschedulePolicy');
                             }}>
                             <Spacer />
-                            <FontLight mystyle={{ textAlign: "center", color: "blue" }} value={t('viewourpolicy')} />
+                            <FontLight mystyle={{
+                                textDecorationLine: 'underline',
+                                textDecorationStyle: "solid",
+                                textDecorationColor: "blue",
+                                textAlign: "center",
+                                color: "blue"
+                            }} value={t('viewourpolicy')} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -517,9 +523,17 @@ const styles = StyleSheet.create({
     },
     ourpolicycontainer: {
         margin: 18,
-        borderWidth: 1,
-        borderColor: "#7a7a7a",
         padding: 15,
+        borderColor: '#7a7a7a',
+        borderWidth: 0,
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 0
+        },
+        elevation: 2,
+        shadowRadius: 10,
     },
 
     mynextButtonStyle: {

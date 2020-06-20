@@ -102,7 +102,16 @@ const SettingScreen = ({ navigation, t }) => {
       </ScrollView>
       <TouchableOpacity onPress={() => { navigate('HomeNavigator') }}>
         <Spacer>
-          <FontBold value={t('homepage')} mystyle={{ textAlign: "center", fontSize: 12, color: 'blue' }}></FontBold>
+          <FontBold
+            value={t('homepage')}
+            mystyle={{
+              textDecorationLine: 'underline',
+              textDecorationStyle: "solid",
+              textDecorationColor: "blue",
+              textAlign: "center",
+              fontSize: 12,
+              color: 'blue'
+            }} />
         </Spacer>
       </TouchableOpacity>
     </View>);

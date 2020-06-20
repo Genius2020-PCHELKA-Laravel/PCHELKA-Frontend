@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Footer, FooterTab, Button, } from 'native-base';
 import { CheckBox, Icon } from 'react-native-elements'
 import { RadioButton, Text } from 'react-native-paper';
@@ -9,6 +9,7 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { withNamespaces } from 'react-i18next';
+import { FontAwesome5, FontAwesome, Octicons } from '@expo/vector-icons';
 
 const Frequency = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
@@ -55,7 +56,7 @@ const Frequency = ({ children, t }) => {
         console.log("Discount: " + discount)
     }, [frequency]);
     return (
-        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
             <TouchableOpacity onPress={() => { setFrequency(1) }}>
                 <Spacer>
                     <View>
@@ -88,11 +89,53 @@ const Frequency = ({ children, t }) => {
                     <FontLight mystyle={styles.DiscountStyle} value={t('10off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
-        </View>);
+            <View style={styles.servicedesccontainer}>
+                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
+                <Spacer >
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                </Spacer>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc1')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc2')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc3')} />
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
+                    <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc4')} />
+                </View>
+                <View style={styles.container}>
+                    <TouchableOpacity
+                        style={styles.policybuttonStyle}
+                        activeOpacity={0.5}
+                        onPress={() => {
+                            // navigate('whatsincluded');
+                        }}>
+                        <Spacer />
+                        <FontLight mystyle={{
+                            textDecorationLine: 'underline',
+                            textDecorationStyle: "solid",
+                            textDecorationColor: "blue",
+                            textAlign: "center",
+                            color: "blue"
+                        }}
+                            value={t('viewmore')}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </ScrollView>);
 };
 
 const styles = StyleSheet.create({
     DiscountStyle: {
+        textAlignVertical: "center",
         margin: 5,
         position: "absolute",
         top: 0,
@@ -101,7 +144,7 @@ const styles = StyleSheet.create({
         width: 75,
         backgroundColor: '#f5c500',
         borderRadius: 14,
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: '#7a7a7a',
         color: '#7a7a7a',
         alignItems: 'center',
@@ -109,15 +152,29 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 11,
         // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
+        shadowColor: '#7a7a7a',
         fontWeight: 'bold',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 10
+        },
+        elevation: 2,
+        shadowRadius: 25,
+    },
+    servicedesccontainer: {
+        margin: 18,
+        padding: 15,
+        borderColor: '#7a7a7a',
+        borderWidth: 0,
+        shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
             height: 10,
             width: 0
         },
-        shadowRadius: 25,
+        elevation: 2,
+        shadowRadius: 10,
     },
 });
 
