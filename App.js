@@ -55,6 +55,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { withNamespaces } from 'react-i18next';
 import i18n from './src/locales/i18n';
 import MapScreen from './src/screens/MapScreen';
+import MapScreenShowAddress from './src/screens/MapScreenShowAddress';
 import MapInput from './src/components/lcation/MapInput'
 
 const theme = {
@@ -332,6 +333,13 @@ const HomeStackNavigator = createStackNavigator(
     MapScreen: {
       screen: MapScreen,
       navigationOptions: () => ({
+        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mapScreen')} />,
+        headerShown: false,
+      })
+    },
+    MapScreenShowAddress: {
+      screen: MapScreenShowAddress,
+      navigationOptions: ({ navigation }) => ({
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mapScreen')} />,
         headerShown: false,
       })

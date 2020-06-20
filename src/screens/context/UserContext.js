@@ -113,7 +113,26 @@ const addNewAddress = dispatch => {
         }
     };
 }
+//save from Map after confirm and select location
+const updateAddress = dispatch => {
+    return async ({ id, address, lat, lon, details, area, street, buildingNumber, apartment }) => {
+        //console.log({ address, lat, lon, details, area, street, buildingNumber, apartment });
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            const response = await requestApi.post('/locationUpdate', { id, address, lat, lon, details, area, street, buildingNumber, apartment });
+            // dispatch({ type: 'update_address', payload: { id, address, lat, lon, details, area, street, buildingNumber, apartment } });
+            dispatch({ type: 'set_selected_address_name', payload: address });
+            dispatch({ type: 'set_selected_address', payload: id });
+            console.log("User Context::updateAddress::response");
+            console.log(response);
 
+            return response.data.status;
+        } catch (error) {
+            console.error("Error::UserContext::updateAddress:: " + error);
+        }
+    };
+}
 const checkFullName = dispatch => {
     return async (mobile, redirect) => {
         const senttoken = await getToken();
@@ -137,6 +156,7 @@ export const { Context, Provider } = createDataContext(UserReducer,
         editUserDetails,
         checkFullName,
         addNewAddress,
+        updateAddress,
         getUserAddresses
     },
     {

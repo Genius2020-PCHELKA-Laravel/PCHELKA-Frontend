@@ -34,15 +34,13 @@ const ModalDetails = ({ children, t }) => {
                     // alert('Modal has been closed.');
                 }}>
                 <TouchableOpacity
+                    style={{ position: "absolute", right: 0, padding: 15 }}
                     onPress={() => {
                         setModalVisible(!modalVisible);
                     }}>
-                    <View style={{ marginLeft: 15, marginTop: 5 }}>
-
-                        <FontAwesome name="times" size={35} color="#7a7a7a" />
-                    </View>
+                    <FontAwesome name="times" size={35} color="#7a7a7a" />
                 </TouchableOpacity>
-                <View style={{ marginTop: 22 }}>
+                <View style={{ marginTop: 60 }}>
                     <ScrollView style={styles.container} >
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('CarpetCleaning')}></FontBold>

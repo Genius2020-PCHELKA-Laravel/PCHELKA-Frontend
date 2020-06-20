@@ -1,5 +1,6 @@
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import i18n from '../../locales/i18n';
 
 class MapInput extends React.Component {
 
@@ -10,7 +11,7 @@ class MapInput extends React.Component {
                 styles={{
                     container: {
                         borderWidth: 1,
-                        borderColor: '#f5c500',
+                        borderColor: '#aaa',
                         top: 15,
                         right: 10,
 
@@ -18,6 +19,7 @@ class MapInput extends React.Component {
                     textInputContainer: {
                         width: '100%',
                         backgroundColor: "#fff",
+                        paddingLeft: 30,
 
                     },
                     description: {
@@ -34,16 +36,16 @@ class MapInput extends React.Component {
                         opacity: 0
                     },
                     predefinedPlacesDescription: {
-                        color: '#1faadb',
+                        color: '#aaa',
                     }
                 }}
-                placeholder='Search'
+                placeholder={i18n.t('search')}
                 minLength={2} // minimum length of text to search
                 autoFocus={true}
                 returnKeyType={'search'} // Can be left out for default return key 
                 listViewDisplayed={false}    // true/false/undefined
                 fetchDetails={true}
-                placeholderTextColor="#f5c500"
+                placeholderTextColor="#aaa"
                 onPress={
                     (data, details = null) => { // 'details' is provided when fetchDetails = true
                         this.props.notifyChange(details.geometry.location);
@@ -57,7 +59,7 @@ class MapInput extends React.Component {
                     language: 'en',
                     // types: '(country)', // default: 'geocode'
                     // componentRestrictions: { country: "sy" }
-                    components: 'country:sy'
+                    components: 'country:ua'
 
                 }}
 

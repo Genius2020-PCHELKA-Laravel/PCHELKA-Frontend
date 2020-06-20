@@ -1,6 +1,7 @@
 {
   //location
   "notservedinthisarea": "Not served in this region",
+  "search": "Search",
   //AlertDialog
   "alert": "Alert",
   "ok": "OK",
@@ -154,6 +155,7 @@
   "noaddresses": "There are no addresses yet.",
   "confirm": "Confirm",
   "addnewaddress": "Add New Address",
+  "newaddress": "New Address",
   "street": "Street",
   "buildingnumber": "Building Number",
   "apartment": "Apartment",

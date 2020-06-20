@@ -14,6 +14,7 @@ import Loader from '../../components/Loader';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { getRedirect, setRedirect, removeRedirect } from '../../api/redirect';
+import i18n from '../../locales/i18n';
 
 const ManageAddresses = ({ children, t }) => {
     const { state, getUserAddresses, dispatch } = useContext(UserContext);
@@ -40,51 +41,73 @@ const ManageAddresses = ({ children, t }) => {
                         <View style={styles.containeritem1}>
                             <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('addressq1')}></FontBold>
                         </View>
-                        <View style={styles.containeritem2}>
-                            <TouchableOpacity onPress={async () => {
-                                setRedirect('ManageAddresses');
-                                navigate('MapScreen');
-                            }}>
-                                <FontLight mystyle={styles.textAddressStyle} value={t('addnew')}></FontLight>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity style={styles.containeritem2} activeOpacity={0.5} onPress={() => {
+                            setRedirect('ManageAddresses');
+                            navigate('MapScreen');
+                        }}>
+                            <FontBold mystyle={styles.btnAddressStyle} value={t('addnew')} />
+                        </TouchableOpacity>
                     </View>
+                    <Spacer />
 
                     {
-                        state.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((add, i) => {
+                        state.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
                             return (
-                                <TouchableOpacity
-                                    key={add.id}
-                                    onPress={() => {
-                                        setSelectedAddress(add.id);
-                                        setSelectedAddressName(add.address);
-                                        dispatch({ type: 'set_selected_address', payload: add.id, });
-                                        dispatch({ type: 'set_selected_address_name', payload: add.address, });
-                                    }}>
-                                    <View flexDirection='row' style={{ marginBottom: 5 }}>
-                                        <View flexDirection='column'>
-                                            <RadioButton value={add.id} name={add.address} status={selectedAddress == add.id ? 'checked' : 'unchecked'} />
+                                <View key={u.id}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            setSelectedAddress(u.id);
+                                            setSelectedAddressName(u.address);
+                                            dispatch({ type: 'set_selected_address', payload: u.id, });
+                                            dispatch({ type: 'set_selected_address_name', payload: u.address, });
+                                        }}>
+                                        <View flexDirection='row' style={{ marginBottom: 5 }}>
+                                            <View flexDirection='column'>
+                                                <RadioButton value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                            </View>
+                                            <View flexDirection='column' style={{ paddingRight: 50, flexWrap: "wrap" }}>
+                                                {/* <Text>{u.id}</Text> */}
+                                                <View style={{ flexDirection: "row" }}>
+                                                    <FontBold value={u.address} mystyle={{ fontSize: 18 }}></FontBold>
+                                                </View>
+                                                <View style={{ flexDirection: "row" }}>
+                                                    <FontLight value={u.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                </View>
+                                                <View flexDirection='row' >
+                                                    <FontBold value={i18n.t('street') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
+                                                    <FontLight value={u.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                </View>
+                                                <View flexDirection='row' >
+                                                    <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
+                                                    <FontLight value={u.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                </View>
+                                                <View flexDirection='row' >
+                                                    <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
+                                                    <FontLight value={u.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                </View>
+
+                                            </View>
                                         </View>
-                                        <View flexDirection='column'>
-                                            {/* <Text>{add.id}</Text> */}
-                                            <View flexDirection='row'>
-                                                <FontBold value={add.address} mystyle={{ fontSize: 18 }}></FontBold>
-                                            </View>
-                                            <View flexDirection='row'>
-                                                <FontLight value={add.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                            </View>
-                                            <View flexDirection='row'>
-                                                <FontLight value={add.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                            </View>
-                                            <View flexDirection='row'>
-                                                <FontLight value={add.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                            </View>
-                                            <View flexDirection='row'>
-                                                <FontLight value={add.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                            </View>
-                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+                                        <TouchableOpacity
+                                            style={styles.editButton}
+                                            activeOpacity={0.5}
+                                            onPress={() => {
+                                                setRedirect('ManageAddresses');
+                                                navigate('MapScreenShowAddress', {
+                                                    uid: u.id,
+                                                    ustreet: u.street,
+                                                    ubuildingnumber: u.buildingNumber,
+                                                    uapartment: u.apartment,
+                                                    ulatitude: u.lat,
+                                                    ulongitude: u.lon
+                                                });
+                                            }}>
+                                            <FontBold value={t('edit')} />
+                                        </TouchableOpacity>
                                     </View>
-                                </TouchableOpacity>
+                                </View>
                             );
                         })
                     }
@@ -97,6 +120,7 @@ const ManageAddresses = ({ children, t }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#fff",
     },
     containerrow: {
         flex: 1,
@@ -105,11 +129,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start' // if you want to fill rows left to right
     },
     containeritem1: {
-        width: '70%' // is 50% of container width
+        left: 10,
+        width: '60%' // is 50% of container width
     },
     containeritem2: {
-        paddingHorizontal: 10,
-        width: '30%' // is 50% of container width
+        height: "100%",
+        width: '40%' // is 50% of container width
     },
     addresscolumn: {
         flex: 5,
@@ -133,54 +158,37 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30
     },
-    textAddressStyle: {
-        margin: 5,
-        backgroundColor: '#ddd',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#000',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 11,
-        fontWeight: "500",
-        // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            height: 10,
-            width: 0
-        },
-        shadowRadius: 25,
-    },
     btnAddressStyle: {
-        margin: 5,
-        position: "absolute",
-        height: 30,
-        backgroundColor: '#ff9800',
-        borderRadius: 10,
+        marginTop: 5,
+        backgroundColor: '#fff',
+        color: "#000",
+        borderColor: "#7a7a7a",
         borderWidth: 1,
-        borderColor: '#DAA520',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 14,
-        fontWeight: "500",
-        // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            height: 10,
-            width: 0
-        },
-        shadowRadius: 25,
+        fontSize: 12,
+        paddingHorizontal: 5,
+        paddingVertical: 3,
+        textAlignVertical: "center",
+        zIndex: 17,
+        paddingHorizontal: 10
     },
     editButton: {
-        fontSize: 16,
-        color: '#aaa',
-        padding: 10,
+        marginTop: 5,
+        backgroundColor: '#fff',
+        color: "#000",
+        borderColor: "#7a7a7a",
+        borderWidth: 1,
+        alignItems: 'center',
+        alignContent: 'center',
+        textAlign: 'center',
+        fontSize: 12,
+        paddingHorizontal: 5,
+        paddingVertical: 3,
+        textAlignVertical: "center",
+        zIndex: 17,
+        paddingHorizontal: 10
     },
 });
 

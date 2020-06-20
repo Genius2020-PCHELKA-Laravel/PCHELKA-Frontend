@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
 import MapInput from './MapInput';
-// import MyMapView from './MyMapView';
 import { getLocation, geocodeLocationByName, geocodeLocationByCoords, geocodeCountryByCoords, geocodeFormattedAddressByCoords } from './LocationService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { navigate } from '../../navigationRef';
 import MapView, { Marker } from 'react-native-maps';
-import AddressDetailsConfirm from './AddressDetailsConfirm';
+import AddressDetailsConfirmShowAddress from './AddressDetailsConfirmShowAddress';
 import Toast from 'react-native-simple-toast';
 import { Context as UserContext } from '../../screens/context/UserContext';
 import { setRediret, getRedirect, removeRedirect } from '../../api/redirect'
@@ -14,43 +13,27 @@ import Loader from '../Loader';
 import i18n from '../../locales/i18n';
 import { Dimensions } from 'react-native';
 
-const MapContainer = () => {
+const MapContainerShowAddress = ({ navigation, ulatitude, ulongitude, uid, ustreet, ubuildingnumber, uapartment }) => {
     const [country, setCountry] = useState('');
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const [latitudeDelta, setLatitudeDelta] = useState(0.003);
     const [longitudeDelta, setLongitudeDelta] = useState(0.003);
     const [isloading, setIsLoading] = useState(false);
-    const { state, addNewAddress, } = useContext(UserContext);
+    const { state, updateAddress, dispatch } = useContext(UserContext);
     const { width, height } = Dimensions.get('window');
 
 
     useEffect(() => {
+        // console.log("navigation::" + JSON.stringify(navigation));
         getInitialState();
     }, [])
 
-    const saveUserAddress = async (street, buildingnumber, apartment) => {
+    const updateUserAddress = async (street, buildingnumber, apartment) => {
         setIsLoading(true);
-
-        // var locname = await geocodeLocationByCoords(latitude, longitude);
         var add = await geocodeFormattedAddressByCoords(latitude, longitude);
-        // var shortname = await geocodeShortByCoords(latitude, longitude).short_name;
-        // console.log("Location Name");
-        // console.log(locname);
-        // console.log(sbf);
-        // const parts = sbf.split('@');
-        // console.log("parts" + parts[0])
-        // var long_name = locname.long_name;
-        // var short_name = locname.short_name;
-        // console.log("long_name: " + long_name)
-        // console.log("short_name: " + short_name)
-        // console.log("Entered Street");
-        // console.log(parts[0]);
-        // console.log("Entered Building");
-        // console.log(parts[1]);
-        // console.log("Entered Apartment");
-        // console.log(parts[2]);
-        addNewAddress({
+        updateAddress({
+            id: uid,
             address: add.address_components[1].long_name,
             lat: latitude,
             lon: longitude,
@@ -60,7 +43,28 @@ const MapContainer = () => {
             buildingNumber: buildingnumber,
             apartment: apartment
         }).then(async (status) => {
-            //for Adding new Address to the list
+            //to update address in state
+            var updated_addresses = state.addresses.slice();
+            var address = updated_addresses.find((add) => add.id === uid);
+            var addressindex = updated_addresses.findIndex((add) => add.id === uid);
+            // alert(addressindex)
+            updated_addresses[addressindex] = {
+                ...address,
+                id: uid,
+                address: add.address_components[1].long_name,
+                lat: latitude,
+                lon: longitude,
+                details: add.formatted_address,
+                area: "area",
+                street: street,
+                buildingNumber: buildingnumber,
+                apartment: apartment
+            };
+            //TODO
+            /////update address
+            dispatch({ type: 'set_user_addresses', payload: updated_addresses });
+            // alert(JSON.stringify(address))
+
             setIsLoading(false);
             Toast.show(i18n.t('addresscorrectlysaved'), Toast.LONG);
             // navigate('HomeNavigator');
@@ -77,42 +81,38 @@ const MapContainer = () => {
         });
     }
     const getInitialState = async () => {
-        getLocation().then(
-            async (data) => {
-                console.log("MapContainer::getinitialState");
-                console.log(data);
-                setLatitude(data.latitude);
-                setLongitude(data.longitude);
-                setLatitudeDelta(0.003);
-                setLongitudeDelta(0.003);
-                var name = await geocodeFormattedAddressByCoords(data.latitude, data.longitude);
-                if (name != undefined && (name.formatted_address.indexOf('Ukraine') > -1)) {
-                    console.log("##################" + name.formatted_address);
-                    setCountry('Ukraine');
-                }
-                else {
-                    setCountry('')
-                }
-            }
-        );
+        // getLocation().then(
+        //     (data) => {
+        console.log("MapContainerShowAddress::getinitialState");
+        // console.log(data);
+        // console.log("ShowAddressLatitude" + navigation)
+        setLatitude(ulatitude);
+        setLongitude(ulongitude);
+        setLatitudeDelta(0.003);
+        setLongitudeDelta(0.003);
+
+        var name = await geocodeFormattedAddressByCoords(ulatitude, ulongitude);
+        if (name != undefined && (name.formatted_address.indexOf('Ukraine') > -1)) {
+            console.log("##################" + name.formatted_address);
+            setCountry('Ukraine');
+        }
+        else {
+            setCountry('')
+        }
+
+
+        //     }
+        // );
     }
 
     const getCoordsFromName = async (loc) => {
-        // this.setState({
-        //     region: {
-        //         latitude: loc.lat,
-        //         longitude: loc.lng,
-        //         latitudeDelta: 0.003,
-        //         longitudeDelta: 0.003
-        //     }
-        // });
-        console.log("MapContainer::getCoordsFromName");
+        console.log("MapContainerShowAddress::getCoordsFromName");
         console.log(loc);
         setLatitude(loc.lat);
         setLongitude(loc.lng);
         setLatitudeDelta(0.003);
         setLongitudeDelta(0.003);
-        var name = await geocodeFormattedAddressByCoords(loc.lat, loc.lng);
+        var name = await geocodeFormattedAddressByCoords(ulatitude, ulongitude);
         if (name != undefined && (name.formatted_address.indexOf('Ukraine') > -1)) {
             console.log("##################" + name.formatted_address);
             setCountry('Ukraine');
@@ -123,8 +123,7 @@ const MapContainer = () => {
     }
 
     const onMapRegionChange = async (region) => {
-        // this.setState({ region });
-        console.log("MapContainer::onMapRegionChange");
+        console.log("MapContainerShowAddress::onMapRegionChange");
         console.log(region);
         setLatitude(region.latitude);
         setLongitude(region.longitude);
@@ -186,20 +185,24 @@ const MapContainer = () => {
                             showsUserLocation={true}
                             onRegionChangeComplete={(reg) => onMapRegionChange(reg)}
                         >
-                            {/* <Marker
-                                coordinate={{ latitude: latitude, longitude: longitude, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta }}
-                                pinColor="#d21404" /> */}
                         </MapView>
                     </View> : null
             }
-            {/* <TouchableOpacity
-                    onPress={() => this.handleSubmitButton()}> */}
-            <AddressDetailsConfirm country={country} latitude={latitude} longitude={longitude} onclick={(street, buildingnumber, apartment) => { saveUserAddress(street, buildingnumber, apartment); }} />
-            {/* </TouchableOpacity> */}
+            <AddressDetailsConfirmShowAddress
+                country={country}
+                latitude={latitude}
+                longitude={longitude}
+                uid={uid}
+                ustreet={ustreet}
+                ubuildingnumber={ubuildingnumber}
+                uapartment={uapartment}
+                onclick={(street, buildingnumber, apartment) => {
+                    updateUserAddress(street, buildingnumber, apartment);
+                }} />
         </View >
     );
 }
-export default MapContainer;
+export default MapContainerShowAddress;
 const styles = StyleSheet.create({
     container: {
         flex: 1,

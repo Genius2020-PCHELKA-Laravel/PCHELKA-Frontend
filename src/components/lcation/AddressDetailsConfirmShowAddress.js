@@ -20,7 +20,7 @@ import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
 import i18n from '../../locales/i18n';
 
-export default class AddressDetailsConfirm extends React.Component {
+export default class AddressDetailsConfirmShowAddress extends React.Component {
 
     constructor(props) {
         super(props);
@@ -113,14 +113,15 @@ export default class AddressDetailsConfirm extends React.Component {
         }
         else {
             this.setState({
-                street: '',
-                buildingnumber: '',
-                apartment: '',
-                streetStyle: styles.inputStyleError,
-                buildingnumberStyle: styles.inputStyleError,
-                apartmentStyle: styles.inputStyleError,
-                saveButtonStyle: styles.saveButtonStyleError,
-                saveButtonTextStyle: styles.saveButtonTextStyleError
+                id: this.props.uid,
+                street: this.props.ustreet,
+                buildingnumber: this.props.ubuildingnumber,
+                apartment: this.props.uapartment,
+                streetStyle: styles.inputStyle,
+                buildingnumberStyle: styles.inputStyle,
+                apartmentStyle: styles.inputStyle,
+                saveButtonStyle: styles.saveButtonStyle,
+                saveButtonTextStyle: styles.saveButtonTextStyle
             });
             this.setState({ modalVisible: true });
         }
@@ -255,7 +256,7 @@ export default class AddressDetailsConfirm extends React.Component {
                     onPress={() => {
                         this.handleSubmitButton();
                     }}>
-                    <FontBold mystyle={styles.confirmButtonTextStyle} value={i18n.t('confirm')} />
+                    <FontBold mystyle={styles.confirmButtonTextStyle} value={i18n.t('edit')} />
                 </TouchableOpacity>
             </View >
         );

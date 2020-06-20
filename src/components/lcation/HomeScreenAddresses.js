@@ -12,6 +12,7 @@ import {
     Image
 } from 'react-native';
 import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 // import { Context as HCContext } from '../screens/context/HCContext';
 import Spacer from '../Spacer';
 import FontBold from '../FontBold';
@@ -50,30 +51,43 @@ export default class HomeScreenAddresses extends React.Component {
                                             this.props.setShowAddressesModal(false);
                                         }}
                                         style={{
+                                            position: "absolute",
+                                            right: 0,
                                             backgroundColor: '#fff',
                                             width: 35,
-                                            height: 35
+                                            height: 35,
+                                            right: 15,
+                                            top: 5
                                         }}>
                                         <FontAwesome name="times" size={35} color="#7a7a7a" />
                                     </TouchableOpacity>
                                 </View>
                                 <View flexDirection='row'>
                                     <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: 20, left: 15, top: 15, }} />
-                                    <TouchableOpacity
-                                        activeOpacity={0.5}
-                                        onPress={async () => {
-                                            setRedirect('HomeNavigator');
-                                            navigate('MapScreen');
-                                            this.props.setShowAddressesModal(false);
-                                        }}
-                                        style={{
-                                            position: 'absolute', right: 15,
-                                        }}>
-                                        <Entypo name="plus" size={45} color="#7a7a7a" />
-                                    </TouchableOpacity>
+
                                 </View>
                                 <Spacer />
                                 <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginLeft: 15, marginRight: 15 }} />
+                                <TouchableOpacity
+                                    activeOpacity={0.5}
+                                    onPress={async () => {
+                                        setRedirect('HomeNavigator');
+                                        navigate('MapScreen');
+                                        this.props.setShowAddressesModal(false);
+                                    }}
+                                    style={{
+                                        top: 15,
+                                        left: 15,
+                                        marginBottom: 15
+                                    }}>
+                                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                        <MaterialIcons name="my-location" size={30} color="#7a7a7a" />
+                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                            <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: 18 }} />
+                                        </View>
+                                    </View>
+
+                                </TouchableOpacity>
                                 {
                                     // typeof this.props.authtoken != 'undefined'
                                     //     || this.props.authtoken != ''
@@ -87,10 +101,21 @@ export default class HomeScreenAddresses extends React.Component {
                                             {
                                                 this.props.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
                                                     return (
-                                                        <TouchableOpacity key={i} onPress={() => { }}>
+                                                        <TouchableOpacity key={i} onPress={() => {
+                                                            this.props.setShowAddressesModal(false);
+                                                            setRedirect('HomeNavigator');
+                                                            navigate('MapScreenShowAddress', {
+                                                                uid: u.id,
+                                                                ustreet: u.street,
+                                                                ubuildingnumber: u.buildingNumber,
+                                                                uapartment: u.apartment,
+                                                                ulatitude: u.lat,
+                                                                ulongitude: u.lon
+                                                            });
+                                                        }}>
                                                             <Spacer>
                                                                 <View flexDirection='row'>
-                                                                    <View flexDirection='column' style={{ width: '10%' }}>
+                                                                    <View flexDirection='column' style={{ width: '10%', left: 10 }}>
                                                                         <Entypo name="location" size={25} color="#d21404" />
                                                                     </View>
                                                                     <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
