@@ -193,7 +193,7 @@ const MapContainerShowAddress = ({ navigation, ulatitude, ulongitude, uid, ustre
                             onPress={() => {
                                 getInitialState();
                             }}>
-                            <FontAwesome name="location-arrow" size={45} color="#999" />
+                            <FontAwesome style={styles.locationArrow} name="location-arrow" size={30} color="#999" />
                         </TouchableOpacity>
                         <MapView
                             style={styles.mapStyle}
@@ -238,4 +238,14 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
+    locationArrow: {
+        borderRadius: 50,
+        borderWidth: 0,
+        width: 50,
+        height: 50,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        backgroundColor: '#e7e7e7',
+
+    }
 });

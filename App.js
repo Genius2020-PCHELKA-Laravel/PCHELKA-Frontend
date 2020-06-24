@@ -370,7 +370,7 @@ const HomeStackNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      ...TransitionPresets.ScaleFromCenterAndroid,
+      ...TransitionPresets.ModalSlideFromBottomIOS,
       cardOverlayEnabled: true,
       gestureEnabled: true,
     },
