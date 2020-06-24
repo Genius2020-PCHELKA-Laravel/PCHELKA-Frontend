@@ -130,7 +130,7 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
         return (
             <View >
                 <Modal
-                    animationType="slide"
+                    animationType="fade"
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {

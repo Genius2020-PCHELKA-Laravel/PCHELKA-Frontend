@@ -13,6 +13,7 @@ import FontBold from '../components/FontBold';
 import FontLight from '../components/FontLight';
 import FontRegular from '../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
+import registerForPushNotifications from '../api/registerForPushNotifications';
 
 
 const InternetScreen = ({ navigation, t }) => {
@@ -22,6 +23,14 @@ const InternetScreen = ({ navigation, t }) => {
   const ref = useRef(false)
   const { width, height } = Dimensions.get('window');
 
+  useEffect(() => {
+    let isCancelled = false;
+    if (!isCancelled)
+      registerForPushNotifications();
+    return () => {
+      isCancelled = true;
+    };
+  }, [])
   // const [connected, setConnected] = useState(false);
 
   // const { getUserDetails, getUserAddresses } = useContext(UserContext);

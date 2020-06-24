@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Dimensions, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import FontBold from './src/components/FontBold'
 import FontRegular from './src/components/FontRegular'
@@ -367,7 +367,15 @@ const HomeStackNavigator = createStackNavigator(
         };
       },
     },
-  });
+  },
+  {
+    defaultNavigationOptions: {
+      ...TransitionPresets.ScaleFromCenterAndroid,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  }
+);
 const SettingStackNavigator = createStackNavigator(
   {
     SettingNavigator: {
@@ -381,12 +389,20 @@ const SettingStackNavigator = createStackNavigator(
               onPress={() => navigation.openDrawer()}
               name="ios-menu"
               size={35}
-            />,
+            />
+          // <Icon
+          //   style={{ left: 15, top: 3, color: '#f5c500' }}
+          //   onPress={() => navigate('HomeNavigator')}
+          //   name="md-arrow-back"
+          //   size={35}
+          // />
+          ,
           headerStyle: {
             // backgroundColor: '#f5c500',
           },
           // headerTintColor: '#fff',
         };
+
       },
     },
     EditPersonalDetailsScreen: {
@@ -446,7 +462,15 @@ const SettingStackNavigator = createStackNavigator(
         headerTintColor: '#fff',
       }),
     },
-  });
+  },
+  {
+    defaultNavigationOptions: {
+      ...TransitionPresets.ModalSlideFromBottomIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  }
+);
 
 
 const TabNavigator = createMaterialTopTabNavigator({
@@ -501,7 +525,14 @@ const AppoitmentStackNavigator = createStackNavigator(
               onPress={() => navigation.openDrawer()}
               name="ios-menu"
               size={35}
-            />,
+            />
+          // <Icon
+          //   style={{ left: 15, top: 3, color: '#f5c500' }}
+          //   onPress={() => navigate('HomeNavigator')}
+          //   name="md-arrow-back"
+          //   size={35}
+          // />
+          ,
           headerStyle: {
             // backgroundColor: '#f5c500',
           },
@@ -580,7 +611,15 @@ const AppoitmentStackNavigator = createStackNavigator(
         };
       },
     },
-  });
+  },
+  {
+    defaultNavigationOptions: {
+      ...TransitionPresets.ModalSlideFromBottomIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  }
+);
 const FreeStackNavigator = createStackNavigator(
   {
     FreeNavigator: FreeScreen
@@ -596,7 +635,14 @@ const FreeStackNavigator = createStackNavigator(
             onPress={() => navigation.openDrawer()}
             name="ios-menu"
             size={35}
-          />,
+          />
+        // <Icon
+        //   style={{ left: 15, top: 3, color: '#f5c500' }}
+        //   onPress={() => navigate('HomeNavigator')}
+        //   name="md-arrow-back"
+        //   size={35}
+        // />
+        ,
 
         headerStyle: {
           // backgroundColor: '#f5c500',
@@ -620,7 +666,14 @@ const SupportStackNavigator = createStackNavigator(
             onPress={() => navigation.openDrawer()}
             name="ios-menu"
             size={35}
-          />,
+          />
+        // <Icon
+        //   style={{ left: 15, top: 3, color: '#f5c500' }}
+        //   onPress={() => navigate('HomeNavigator')}
+        //   name="md-arrow-back"
+        //   size={35}
+        // />
+        ,
 
         headerStyle: {
           // backgroundColor: '#f5c500',
@@ -682,6 +735,7 @@ const AppDrawerNavigator = createDrawerNavigator({
     drawerPosition: 'left',
     drawerType: 'slide',
     edgeWidth: 25,
+    overlayColor: '00FFFFF',
 
     contentComponent: props => <Slidebar {...props} />
   }

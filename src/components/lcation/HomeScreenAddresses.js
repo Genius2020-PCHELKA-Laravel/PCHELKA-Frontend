@@ -32,7 +32,7 @@ export default class HomeScreenAddresses extends React.Component {
         return (
             <View >
                 <Modal
-                    animationType="slide"
+                    animationType="fade"
                     transparent={true}
                     visible={this.props.showAddressesModal}
                     onRequestClose={() => {
