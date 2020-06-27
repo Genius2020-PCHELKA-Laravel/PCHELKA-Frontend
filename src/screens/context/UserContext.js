@@ -3,6 +3,8 @@ import requestApi from '../../api/axiosapi';
 import { AsyncStorage } from 'react-native';
 import { navigate } from '../../navigationRef';
 import { setToken, getToken, removeToken } from '../../api/token';
+import { Text, View, Button, Vibration, Platform } from 'react-native';
+import { Notifications } from 'expo';
 
 const UserReducer = (state, action) => {
     switch (action.type) {
@@ -150,6 +152,46 @@ const checkFullName = dispatch => {
         });
     }
 }
+
+
+const subscribeToNotification = dispatch => {
+    return async ({ expo_token }) => {
+        const senttoken = await getToken();
+        requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+        const response1 = await requestApi.post('/exponent/devices/subscribe', { expo_token }).then((response) => {
+            console.log(response.data);
+            // Vibration.vibrate();
+        }).catch((error) => {
+            console.log("UserContext::getNotificationFromServer::subscribeuser " + error)
+        });
+    }
+}
+
+const unsubscribeToNotification = dispatch => {
+    return async ({ expo_token }) => {
+        const senttoken = await getToken();
+        requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+        const response1 = await requestApi.post('/exponent/devices/unsubscribe', { expo_token }).then((response) => {
+            console.log(response.data);
+            // Vibration.vibrate();
+        }).catch((error) => {
+            console.log("UserContext::getNotificationFromServer::subscribeuser " + error)
+        });
+    }
+}
+
+const getNotificationFromServer = dispatch => {
+    return async () => {
+        const senttoken = await getToken();
+        requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+        const response2 = await requestApi.post('/sendNotification').then((response) => {
+            console.log(response.data);
+            // Vibration.vibrate();
+        }).catch((error) => {
+            console.log("UserContext::getNotificationFromServer::getnotification " + error)
+        });
+    }
+}
 export const { Context, Provider } = createDataContext(UserReducer,
     {
         getUserDetails,
@@ -157,7 +199,10 @@ export const { Context, Provider } = createDataContext(UserReducer,
         checkFullName,
         addNewAddress,
         updateAddress,
-        getUserAddresses
+        getUserAddresses,
+        getNotificationFromServer,
+        subscribeToNotification,
+        unsubscribeToNotification
     },
     {
         addresses: [],

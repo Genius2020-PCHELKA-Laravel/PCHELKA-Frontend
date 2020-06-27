@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, StyleSheet, View, Button, ScrollView, SafeAreaView, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, Button, ScrollView, SafeAreaView, Image, TouchableOpacity, Dimensions, Vibration, Platform } from 'react-native';
 import { Header } from 'react-native-elements';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import Servicesdetails from '../components/Servicesdetails';
@@ -21,16 +21,76 @@ import { navigate } from '../navigationRef';
 import NotificationsComponent from '../components/NotificationsComponent';
 import { BackHandler } from 'react-native';
 import ExitDialog from '../components/ExitDialog';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+import { initnotify, getToken, newChannel, notify } from 'expo-push-notification-helper';
 
 const HomeScreen = ({ navigation, t }) => {
-  const { getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
+  const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
   const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 12 / 16);
   const imageWidth = dimensions.width;
   const [changing, setChanging] = useState(false);
+  const [notification, setNotification] = useState('');
+  const [expoToken, setExpoToken] = useState('');
 
+  const registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+        setNotifications();
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      //token = await Notifications.getExpoPushTokenAsync();
+      //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
+      //alert(token);
+      //setExpoToken(token);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+    if (Platform.OS === 'android') {
+      await Notifications.createChannelAndroidAsync('PCHELKA-CLEANING', {
+        name: 'PCHELKA-CLEANING',
+        sound: true,
+        priority: 'high',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
+
+  };
+
+  const _handleNotification = notification => {
+    Vibration.vibrate();
+    console.log(notification);
+    setNotification(notification);
+  };
+
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+    // initnotify().then(async (data) => {
+    //   if (data) {
+    //     setExpoToken(await getToken());
+    //     console.log("ExpoToken" + expoToken);
+    //     alert(expoToken);
+    //   } else {
+    //     alert('please grant this app notification permission in settings.')
+    //   }
+    // });
+    // newChannel("GroupMessage");
+    // notify(expoToken, "new message", "hello there how are you doing", "default")
+
+    Notifications.addListener(_handleNotification);
+
+  }, []);
   // const [testToken, setTestToken] = useState('');
 
   // getData = async () => {
@@ -149,7 +209,29 @@ const HomeScreen = ({ navigation, t }) => {
         </View>
       </Spacer>
       <View>
-        {/* <NotificationsComponent /> */}
+        <TouchableOpacity onPress={async () => {
+          //await subscribeToNotification({ expo_token: 'ExponentPushToken[rplFsYMBUnIcHy8J-jPsXV]' });
+          await subscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
+          await subscribeToNotification({ expo_token: expoToken });
+          getNotificationFromServer();
+        }}>
+          <Spacer>
+            <Text>subscribe and get notification</Text>
+          </Spacer>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={async () => {
+          ////old android app
+          //await unsubscribeToNotification({ expo_token: 'ExponentPushToken[rplFsYMBUnIcHy8J-jPsXV]' });
+          /////android build
+          //await unsubscribeToNotification({ expo_token: 'ExponentPushToken[FBUTilDBNd-yFQBOHmoy5S]' });
+          //new Android App
+          await unsubscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
+          // await unsubscribeToNotification({ expo_token: expoToken });
+        }}>
+          <Spacer>
+            <Text>unsubscribe</Text>
+          </Spacer>
+        </TouchableOpacity>
       </View>
       <Spacer>
         <View style={styles.everthingtext}>
@@ -163,6 +245,8 @@ const HomeScreen = ({ navigation, t }) => {
           </Text>
         </View>
       </Spacer>
+      {/* <NotificationsComponent /> */}
+
       <Spacer>
         <View style={styles.bottomcontainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>

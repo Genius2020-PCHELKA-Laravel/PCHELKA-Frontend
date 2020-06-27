@@ -342,8 +342,14 @@ const HCBooking = dispatch => {
                 let rand = Math.floor(1000 + Math.random() * 9000).toString();
                 dispatch({ type: 'set_reloadappoitments', payload: rand })
                 console.log("HCBooking::HCCContext" + response.data);
-                if (response.data.status == true)
+                if (response.data.status == true) {
                     console.log("Booked");
+                    // const res = requestApi.post('/sendNotification').then((res) => {
+                    //     console.log(res.data);
+                    // }).catch((error) => {
+                    //     console.log("HCContext::getNotificationFromServer:: " + error.stack)
+                    // });
+                }
                 else
                     console.log(response.data.error);
             }).catch((error) => {

@@ -21,12 +21,27 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#f5c500",
+      "androidMode": "default",
+      "androidCollapsedTitle": "PCHELKA1111111111111"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.genius.pchelka"
     },
     "android": {
       "package": "com.genius.pchelka",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA_u9QcOXJP12w3VksEhaq48FZS-Y3iBHI"
+        },
+        "googleSignIn": {
+          "apiKey": "AIzaSyDvMr_qpKli8GQf1sgh0tOvejlhzuPj4e8"
+        }
+      }
     }
   }
 }

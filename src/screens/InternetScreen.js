@@ -14,6 +14,7 @@ import FontLight from '../components/FontLight';
 import FontRegular from '../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
 import registerForPushNotifications from '../api/registerForPushNotifications';
+import { Notifications } from 'expo';
 
 
 const InternetScreen = ({ navigation, t }) => {
@@ -23,14 +24,24 @@ const InternetScreen = ({ navigation, t }) => {
   const ref = useRef(false)
   const { width, height } = Dimensions.get('window');
 
-  useEffect(() => {
-    let isCancelled = false;
-    if (!isCancelled)
-      registerForPushNotifications();
-    return () => {
-      isCancelled = true;
-    };
-  }, [])
+  // useEffect(() => {
+  //   if (Platform.OS === 'android') {
+  //     Notifications.createChannelAndroidAsync('default', {
+  //       name: 'default',
+  //       sound: true,
+  //       priority: 'max',
+  //       vibrate: [0, 250, 250, 250],
+  //     });
+  //   }
+  // }, [])
+  // useEffect(() => {
+  //   let isCancelled = false;
+  //   if (!isCancelled)
+  //     registerForPushNotifications();
+  //   return () => {
+  //     isCancelled = true;
+  //   };
+  // }, [])
   // const [connected, setConnected] = useState(false);
 
   // const { getUserDetails, getUserAddresses } = useContext(UserContext);
@@ -66,35 +77,35 @@ const InternetScreen = ({ navigation, t }) => {
   }, [])
   useEffect(() => {
     let isCancelled2 = false;
-    setTimeout(() => {
-      NetInfo.fetch().then((connection) => {
-        console.log(connection)
-        if (connection.isConnected) {
-          console.log("Connected");
-          setConnected(true);
-        }
-        else {
-          console.log("Not Connected");
-          setConnected(false);
-          if (!isCancelled2)
-            // setIsLoading(false);
-            return;
-        }
-        if (connected && (typeof (testToken) == 'undefined')) {
-          if (!isCancelled2)
-            // setIsLoading(false);
-            navigation.navigate('LoginFlow');
-        }
-        else if (connected && (typeof (testToken) != 'undefined')) {
-          if (!isCancelled2)
-            // setIsLoading(false);
-            navigation.navigate('Dashboard');
-        }
-        else {
+    // setTimeout(() => {
+    NetInfo.fetch().then((connection) => {
+      console.log(connection)
+      if (connection.isConnected) {
+        console.log("Connected");
+        setConnected(true);
+      }
+      else {
+        console.log("Not Connected");
+        setConnected(false);
+        if (!isCancelled2)
           // setIsLoading(false);
-        }
-      })
-    }, 3000);
+          return;
+      }
+      if (connected && (typeof (testToken) == 'undefined')) {
+        if (!isCancelled2)
+          // setIsLoading(false);
+          navigation.navigate('LoginFlow');
+      }
+      else if (connected && (typeof (testToken) != 'undefined')) {
+        if (!isCancelled2)
+          // setIsLoading(false);
+          navigation.navigate('Dashboard');
+      }
+      else {
+        // setIsLoading(false);
+      }
+    })
+    // }, 3000);
 
     return () => {
       isCancelled2 = true;
