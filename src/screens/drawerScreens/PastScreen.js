@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useContext, useState } from 'react';
-import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import { Context as HCContext } from '../context/HCContext';
 import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
@@ -15,6 +15,7 @@ import { set } from 'react-native-reanimated';
 const PastScreen = ({ navigation, t }) => {
     const { state: hcstate, getPast, dispatch: hcdispatch } = useContext(HCContext);
     const [isLoading, setIsLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
 
     // useEffect(() => {
@@ -35,10 +36,29 @@ const PastScreen = ({ navigation, t }) => {
     //         isCancelled1 = true;
     //     };
     // }, []);
-
+    const _onRefresh = () => {
+        setRefreshing(true);
+        getPast().then((response) => {
+            console.log("UpcomingScreen::onrefresh::getPast::response:: ");
+            console.log("######################" + JSON.stringify(response));
+            setRefreshing(false);
+        }).catch((error) => {
+            setRefreshing(false);
+            console.log(error);
+        });
+    }
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.container}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={_onRefresh}
+                    />
+                }
+            >
                 <Loader loading={isLoading} />
                 {/* <Text style={{ left: 30, fontSize: 35 }}>{JSON.stringify(hcstate.upcoming)}</Text> */}
                 {
@@ -81,14 +101,22 @@ const PastScreen = ({ navigation, t }) => {
                                                 <FontLight mystyle={{ top: 10, right: 10 }} value={t('refcode') + ': ' + booking.refCode} />
                                                 {
                                                     booking.status == 'Completed' ?
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#7a7a7a", backgroundColor: "lightgreen" }}>
-                                                            <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('completed')} />
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "lightgreen", backgroundColor: "lightgreen" }}>
+                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('completed')} />
                                                         </View>
                                                         : booking.status == 'Confirmed' ?
-                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 40, borderColor: "#7a7a7a", backgroundColor: "#f5c500" }}>
-                                                                <FontBold mystyle={{ marginLeft: 25, color: "#7a7a7a" }} value={t('confirmed')} />
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
+                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
                                                             </View>
-                                                            : null
+                                                            : booking.status == 'Rescheduled' ?
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ff9800", backgroundColor: "#ff9800" }}>
+                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                                </View> :
+                                                                booking.status == 'Canceled' ?
+                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "red", backgroundColor: "red" }}>
+                                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                    </View>
+                                                                    : null
                                                 }
                                             </View>
 
@@ -100,7 +128,7 @@ const PastScreen = ({ navigation, t }) => {
                         })
                 }
             </ScrollView >
-            <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
+            {/* <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
                 <Spacer>
                     <FontBold
                         value={t('homepage')}
@@ -113,7 +141,7 @@ const PastScreen = ({ navigation, t }) => {
                             color: 'blue'
                         }} />
                 </Spacer>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 

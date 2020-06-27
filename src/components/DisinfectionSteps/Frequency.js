@@ -121,7 +121,7 @@ const Frequency = ({ children, t }) => {
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row' }}>
-                            <RadioButton value="1" status={hcstate.frequency == 1 ? 'checked' : 'unchecked'} />
+                            <RadioButton onPress={() => { setFrequency(1) }} value="1" status={hcstate.frequency == 1 ? 'checked' : 'unchecked'} />
                             <FontBold value={t('onetime')} mystyle={{ fontSize: 20 }}></FontBold>
                         </View>
                         <FontLight value={t('ontimedetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
@@ -131,7 +131,7 @@ const Frequency = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setFrequency(2) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value='2' status={hcstate.frequency == 2 ? 'checked' : 'unchecked'} />
+                        <RadioButton onPress={() => { setFrequency(2) }} value='2' status={hcstate.frequency == 2 ? 'checked' : 'unchecked'} />
                         <FontBold value={t('biweekly')} mystyle={{ fontSize: 20 }}></FontBold>
                     </View>
                     <FontLight value={t('biweeklydetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
@@ -141,7 +141,7 @@ const Frequency = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setFrequency(3) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value='3' status={hcstate.frequency == 3 ? 'checked' : 'unchecked'} />
+                        <RadioButton onPress={() => { setFrequency(3) }} value='3' status={hcstate.frequency == 3 ? 'checked' : 'unchecked'} />
                         <FontBold value={t('weekly')} mystyle={{ fontSize: 20 }}></FontBold>
 
                     </View>

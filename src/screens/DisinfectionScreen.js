@@ -27,6 +27,8 @@ const DisinfectionScreen = ({ navigation, t }) => {
   const { state: hcstate, HCBooking, dispatch: hcdispatch, getProviders, getSchedules, pay } = useContext(HCContext);
   const { state } = useContext(UserContext);
   const [isloading, setIsLoading] = useState(false);
+  const [dateErrors, setDateErrors] = useState(false);
+  const [addressErrors, setAddressErrors] = useState(false);
   // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
@@ -120,18 +122,29 @@ const DisinfectionScreen = ({ navigation, t }) => {
     console.log('hcstate.selectedday::hcstate.start ' + hcstate.selectedday + '  ' + hcstate.start);
     if (hcstate.selectedday == '') {
       Toast.show(i18n.t('selectdateplease'), Toast.LONG);
+      setDateErrors(true);
       return;
+    } else {
+      setDateErrors(false);
     }
     if (hcstate.start == '') {
       Toast.show(i18n.t('selecttimeplease'), Toast.LONG);
+      setDateErrors(true);
       return;
+    }
+    else {
+      setDateErrors(false);
     }
   };
   const onAddressStepComplete = () => {
     console.log('state.selected_address_name:: ' + state.selected_address_name);
     if (state.selected_address == '') {
       Toast.show(i18n.t('selectaddressplease'), Toast.LONG);
+      setAddressErrors(true);
       return;
+    }
+    else {
+      setAddressErrors(false);
     }
   };
 
@@ -333,7 +346,8 @@ const DisinfectionScreen = ({ navigation, t }) => {
             previousBtnTextStyle={styles.ButtonTextStyle}
             nextBtnText={t('next')}
             previousBtnText={t('previous')}
-            finishBtnText={t('submit')}>
+            finishBtnText={t('submit')}
+            errors={dateErrors}>
             <DateandTimeDetails />
           </ProgressStep>
           <ProgressStep
@@ -348,7 +362,8 @@ const DisinfectionScreen = ({ navigation, t }) => {
             previousBtnTextStyle={styles.ButtonTextStyle}
             nextBtnText={t('next')}
             previousBtnText={t('previous')}
-            finishBtnText={t('submit')}>
+            finishBtnText={t('submit')}
+            errors={addressErrors}>
             <AddressDetails />
           </ProgressStep>
           <ProgressStep
@@ -368,6 +383,16 @@ const DisinfectionScreen = ({ navigation, t }) => {
             <Payment />
           </ProgressStep>
         </ProgressSteps>
+        <View style={{
+          borderWidth: .1,
+          borderColor: '#eee',
+          borderBottomWidth: 0,
+          shadowColor: '#eee',
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.5,
+          shadowRadius: 2,
+          elevation: 1,
+        }} />
         <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
       </View>
 

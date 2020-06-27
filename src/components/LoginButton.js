@@ -65,7 +65,7 @@ const LoginButton = ({ t }) => {
     return (
         <View style={styles.container}>
             <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
-            {
+            {/* {
                 lang === 'en' ?
                     // <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
                     <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('ru') }}>
@@ -80,14 +80,25 @@ const LoginButton = ({ t }) => {
                         <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('ru') }}>
                             <FontBold mystyle={styles.languageButtonStyle} value="русский" />
                         </TouchableOpacity>
-            }
-            <TouchableOpacity onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}>
-                {/* <FontBold mystyle={styles.loginButtonStyle} value={t('login')}></FontBold> */}
+            } */}
+
+
+            {/* <TouchableOpacity onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}>
                 <Text style={styles.loginButtonStyle}>
                     {t('login')} {' '}
                     <FontAwesome5 name="user" size={14} color="#7a7a7a" />
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+
+            <Avatar
+                size="small"
+                rounded
+                icon={{ size: 25, name: 'login', type: 'antdesign', color: '#000' }}
+                onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}
+                activeOpacity={0.7}
+                containerStyle={styles.avatar}
+            />
 
         </View >
     )
@@ -129,7 +140,26 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
 
     },
-
+    avatar: {
+        borderColor: '#aaa',
+        borderWidth: 0,
+        backgroundColor: '#fff',
+        flex: 1,
+        right: 20,
+        top: 7,
+        width: 35,
+        height: 35,
+    },
+    flag: {
+        borderColor: '#000',
+        borderWidth: 0,
+        backgroundColor: '#fff',
+        flex: 1,
+        left: 20,
+        top: 7,
+        width: 25,
+        height: 25,
+    },
 });
 
 export default withNamespaces()(LoginButton);

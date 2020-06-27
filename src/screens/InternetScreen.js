@@ -18,7 +18,10 @@ import { Notifications } from 'expo';
 
 
 const InternetScreen = ({ navigation, t }) => {
-  const [testToken, setTestToken] = useState('');
+  const { getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
+  const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
+
+  const [loginToken, setLoginToken] = useState('');
   // const [isloading, setIsLoading] = useState(false);
   const [connected, setConnected] = useState(true);
   const ref = useRef(false)
@@ -45,13 +48,61 @@ const InternetScreen = ({ navigation, t }) => {
   // const [connected, setConnected] = useState(false);
 
   // const { getUserDetails, getUserAddresses } = useContext(UserContext);
-  const testLogin = async () => {
-
+  const fetchServices = async () => {
+    await getServices().then((response) => {
+      setHC(response[0]);
+      setDI(response[10]);
+      setDE(response[6]);
+      setBS(response[11]);
+      setSF(response[5]);
+      setMA(response[4]);
+      setCA(response[3]);
+      setCU(response[2]);
+      console.log("InterneteScreen::UseEffect::getServices::response::");
+      console.log(response);
+    }).catch((error) => {
+      console.log("Error::InterneteScreen::UseEffect::getServices");
+      console.log(error);
+    });
+  }
+  const fetchAddresses = async () => {
+    await getUserDetails().then((response) => {
+      console.log("InterneteScreen::useffect::getUseDetails::response:: ");
+      console.log(response);
+      getUserAddresses().then((res) => {
+        console.log("InterneteScreen::useffect::getUserAddresses::response:: ");
+        console.log(res);
+        udispatch({ type: 'set_user_addresses_loaded', payload: true });
+        udispatch({ type: 'set_user_addresses', payload: res });
+      }).catch((error) => {
+        console.log("InterneteScreen::useffect::getUserAddresses::error:: ");
+      });
+    }).catch((error) => {
+      console.log("InterneteScreen::getUserDetails#1 " + error);
+    });
+  }
+  const fetchUpcoming = async () => {
+    getUpcoming().then((response) => {
+      //console.log("Upcoming::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  const fetchPast = async () => {
+    getPast().then((response) => {
+      //console.log("Upcoming::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  const fetchLoginToken = async () => {
     try {
-      setTestToken(await getToken());
+      setLoginToken(await getToken());
       console.log("InternetScreen::tstInternetConnection::Saved token: ");
-      console.log(typeof testToken);
-      console.log(testToken);
+      console.log(typeof loginToken);
+      console.log(loginToken);
     } catch (error) {
       // setIsLoading(false);
       console.log("Error::InternetScreen::testInternetConnection");
@@ -61,9 +112,8 @@ const InternetScreen = ({ navigation, t }) => {
   useEffect(() => {
     let isCancelled1 = false;
     if (!isCancelled1) {
-
       // setIsLoading(true);
-      testLogin();
+      fetchLoginToken();
     }
     getLang().then((response) => {
       console.log("logoutbutton selected Lang in Use Effect:  " + response);
@@ -78,7 +128,7 @@ const InternetScreen = ({ navigation, t }) => {
   useEffect(() => {
     let isCancelled2 = false;
     // setTimeout(() => {
-    NetInfo.fetch().then((connection) => {
+    NetInfo.fetch().then(async (connection) => {
       console.log(connection)
       if (connection.isConnected) {
         console.log("Connected");
@@ -91,15 +141,20 @@ const InternetScreen = ({ navigation, t }) => {
           // setIsLoading(false);
           return;
       }
-      if (connected && (typeof (testToken) == 'undefined')) {
+      if (connected && (typeof (loginToken) == 'undefined' || loginToken == '')) {
         if (!isCancelled2)
           // setIsLoading(false);
           navigation.navigate('LoginFlow');
       }
-      else if (connected && (typeof (testToken) != 'undefined')) {
-        if (!isCancelled2)
-          // setIsLoading(false);
-          navigation.navigate('Dashboard');
+      else if (connected && (typeof (loginToken) != 'undefined' || loginToken == '')) {
+        // if (!isCancelled2)
+        // setIsLoading(false);
+        await fetchServices();
+        await fetchAddresses();
+        await fetchUpcoming();
+        await fetchPast();
+
+        navigation.navigate('Dashboard');
       }
       else {
         // setIsLoading(false);
@@ -110,7 +165,7 @@ const InternetScreen = ({ navigation, t }) => {
     return () => {
       isCancelled2 = true;
     };
-  }, [testToken]);
+  }, [loginToken]);
 
 
   return (<View style={styles.container}>

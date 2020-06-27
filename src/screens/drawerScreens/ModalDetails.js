@@ -1,6 +1,5 @@
 import React, { Component, useState, useContext } from 'react';
 import {
-    Modal,
     Text,
     TouchableHighlight,
     TouchableOpacity,
@@ -16,6 +15,7 @@ import FontBold from '../../components/FontBold';
 import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
+import Modal from 'react-native-modal';
 
 const ModalDetails = ({ children, t }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -34,21 +34,34 @@ const ModalDetails = ({ children, t }) => {
     return (
         <View style={{ marginTop: 22 }}>
             <Modal
-                animationType="slide"
-                transparent={false}
-                visible={modalVisible}
+                style={{ flex: 1, margin: 0 }}
+                animationIn="slideInUp"
+                animationOut="slideOutDown"
+                animationInTiming={1200}
+                animationOutTiming={1200}
+                avoidKeyboard={true}
+                backdropColor='transparent'
+                transparent={true}
+                isVisible={modalVisible}
+                hideModalContentWhileAnimating={false}
+                coverScreen={true}
+                onBackButtonPress={() => setModalVisible(false)}
+                onSwipeComplete={() => setModalVisible(false)}
+                swipeThreshold={200}
+                swipeDirection="down"
                 onRequestClose={() => {
                     // alert('Modal has been closed.');
                 }}>
-                <TouchableOpacity
-                    style={{ position: "absolute", right: 0, padding: 15 }}
-                    onPress={() => {
-                        setModalVisible(!modalVisible);
-                    }}>
-                    <FontAwesome name="times" size={35} color="#7a7a7a" />
-                </TouchableOpacity>
-                <View style={{ marginTop: 60 }}>
-                    <ScrollView showsVerticalScrollIndicator={false} style={styles.container} >
+
+                <ScrollView showsVerticalScrollIndicator={false} style={styles.container} >
+                    <TouchableOpacity
+                        style={{ position: "absolute", right: 0, padding: 15 }}
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                        }}>
+                        <FontAwesome name="times" size={35} color="#7a7a7a" />
+                    </TouchableOpacity>
+                    <View style={{ marginHorizontal: 15, marginTop: 60 }}>
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
                         <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t(hcstate.selectedupcoming.serviceType)}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
@@ -222,8 +235,8 @@ const ModalDetails = ({ children, t }) => {
                                 <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.total + ' UAH'}></FontBold>
                             </View>
                         </View>
-                    </ScrollView>
-                </View>
+                    </View>
+                </ScrollView>
             </Modal>
 
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -263,7 +276,8 @@ const ModalDetails = ({ children, t }) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 15,
+        flex: 1,
+        backgroundColor: "#fff",
     },
     row: {
         flex: 1,

@@ -63,7 +63,14 @@ const AddressDetails = ({ children, t }) => {
                                         }}>
                                         <View flexDirection='row' style={{ marginBottom: 5 }}>
                                             <View flexDirection='column'>
-                                                <RadioButton value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                                <RadioButton
+                                                    onPress={() => {
+                                                        setSelectedAddress(u.id);
+                                                        setSelectedAddressName(u.address);
+                                                        dispatch({ type: 'set_selected_address', payload: u.id, });
+                                                        dispatch({ type: 'set_selected_address_name', payload: u.address, });
+                                                    }}
+                                                    value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
                                             </View>
                                             <View flexDirection='column' style={{ paddingRight: 50, flexWrap: "wrap" }}>
                                                 {/* <Text>{u.id}</Text> */}

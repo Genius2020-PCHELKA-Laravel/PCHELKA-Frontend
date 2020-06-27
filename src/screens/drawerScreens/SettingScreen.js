@@ -90,7 +90,7 @@ const SettingScreen = ({ navigation, t }) => {
         </TouchableOpacity> */}
         <Spacer />
         <Spacer />
-        <FontLight mystyle={styles.listtitle} value={t('appsettings')} ></FontLight>
+        {/* <FontLight mystyle={styles.listtitle} value={t('appsettings')} ></FontLight> */}
         {/* <TouchableOpacity onPress={() => { }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value='Language'></FontBold>
@@ -100,9 +100,8 @@ const SettingScreen = ({ navigation, t }) => {
         <Spacer />
         <LogoutButton />
       </ScrollView>
-      <TouchableOpacity onPress={() => { navigate('HomeNavigator') }}>
-        <Spacer>
-          <FontBold
+      {/* <Spacer> */}
+      {/* <FontBold
             value={t('homepage')}
             mystyle={{
               textDecorationLine: 'underline',
@@ -111,9 +110,16 @@ const SettingScreen = ({ navigation, t }) => {
               textAlign: "center",
               fontSize: 12,
               color: 'blue'
-            }} />
-        </Spacer>
-      </TouchableOpacity>
+            }} /> */}
+      {/* <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <FontAwesome5
+            style={{ color: '#000' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={35}
+          />
+        </View>
+      </Spacer> */}
     </View>);
 };
 

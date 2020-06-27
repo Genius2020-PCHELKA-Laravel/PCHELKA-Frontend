@@ -31,7 +31,7 @@ import { BackHandler } from 'react-native';
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
     const { state, register } = useContext(AuthContext);
-    const { state: ustate } = useContext(UserContext);
+    const { state: ustate, getUserDetails } = useContext(UserContext);
     let [fullName, setFullName] = useState('');
     let [email, setEmail] = useState('');
     let [fullNameStyle, setFullNameStyle] = useState(styles.inputStyleError);
@@ -120,6 +120,13 @@ const RegisterUserScreen = ({ navigation, t }) => {
                 setIsRegistraionSuccess(false);
                 setErrortext(t('pleaseuseanotheremail'));
             } else if (result.status == true && result.data == "success") {
+                getUserDetails().then((response) => {
+                    console.log("RegisterUserScreen::useffect::getUseDetails::response:: ");
+                    console.log(response);
+
+                }).catch((error) => {
+                    console.log("RegisterUserScreen::getUserDetails#1 " + error);
+                });
                 setLoading(false);
                 setIsRegistraionSuccess(true);
                 console.log('Registration Successful. Please Login to proceed');

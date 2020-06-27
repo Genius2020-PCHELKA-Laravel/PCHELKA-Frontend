@@ -43,6 +43,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LogoutButton from './src/components/LogoutButton';
 import SettingsButton from './src/components/SettingsButton';
 import LoginButton from './src/components/LoginButton';
+import LanguageButton from './src/components/LanguageButton';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons, Fontisto, Ionicons } from '@expo/vector-icons';
 import EditPersonalDetailsScreen from './src/screens/drawerScreens/EditPersonalDetailsScreen';
@@ -173,13 +174,13 @@ const HomeLoginStackNavigator = createStackNavigator(
       screen: HomeScreenLogIn,
       navigationOptions: () => ({
         title: '',
-        headerRight: () => (
-          <LoginButton />),
+        headerRight: () => (<LoginButton />),
+        headerLeft: () => (<LanguageButton />),
         headerStyle: {
           // backgroundColor: '#f5c500',
         },
         // headerTintColor: '#fff',
-      })
+      }),
     },
     RegisterFlow: { screen: VerifyStack, navigationOptions: { headerShown: false } },
   },
@@ -369,6 +370,7 @@ const HomeStackNavigator = createStackNavigator(
     },
   },
   {
+    initialRouteName: 'HomeNavigator',
     defaultNavigationOptions: {
       ...TransitionPresets.ModalSlideFromBottomIOS,
       cardOverlayEnabled: true,
@@ -384,19 +386,18 @@ const SettingStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('settings')} />,
           headerLeft: () =>
-            <Ionicons
-              style={{ left: 15, top: 5, color: '#f5c500' }}
-              onPress={() => navigation.openDrawer()}
-              name="ios-menu"
-              size={35}
-            />
-          // <Icon
-          //   style={{ left: 15, top: 3, color: '#f5c500' }}
-          //   onPress={() => navigate('HomeNavigator')}
-          //   name="md-arrow-back"
-          //   size={35}
-          // />
-          ,
+            // <Ionicons
+            //   style={{ left: 15, top: 5, color: '#f5c500' }}
+            //   onPress={() => navigation.openDrawer()}
+            //   name="ios-menu"
+            //   size={35}
+            // />
+            <FontAwesome5
+              style={{ left: 15, top: 3, color: '#f5c500' }}
+              onPress={() => navigate('HomeNavigator')}
+              name="home"
+              size={25}
+            />,
           headerStyle: {
             // backgroundColor: '#f5c500',
           },
@@ -497,14 +498,14 @@ const TabNavigator = createMaterialTopTabNavigator({
     initialRouteName: 'Upcoming',
     tabBarPosition: "top",
     tabBarOptions: {
-      activeTintColor: "#f5c500",
+      activeTintColor: "#000",
       inactiveTintColor: 'gray',
       style: {
         backgroundColor: "#fff"
       },
       indicatorStyle: {
         height: 2,
-        backgroundColor: '#f5c500',
+        backgroundColor: '#000',
       },
       showIcon: true
     },
@@ -520,11 +521,11 @@ const AppoitmentStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('appoitments')} />,
           headerLeft: () =>
-            <Ionicons
-              style={{ left: 15, top: 5, color: '#f5c500' }}
-              onPress={() => navigation.openDrawer()}
-              name="ios-menu"
-              size={35}
+            <FontAwesome5
+              style={{ left: 15, top: 3, color: '#f5c500' }}
+              onPress={() => navigate('HomeNavigator')}
+              name="home"
+              size={25}
             />
           // <Icon
           //   style={{ left: 15, top: 3, color: '#f5c500' }}
@@ -630,11 +631,11 @@ const FreeStackNavigator = createStackNavigator(
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('freecleaning')} />,
 
         headerLeft: () =>
-          <Ionicons
-            style={{ left: 15, top: 5, color: '#f5c500' }}
-            onPress={() => navigation.openDrawer()}
-            name="ios-menu"
-            size={35}
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={25}
           />
         // <Icon
         //   style={{ left: 15, top: 3, color: '#f5c500' }}
@@ -661,11 +662,11 @@ const SupportStackNavigator = createStackNavigator(
       return {
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('support')} />,
         headerLeft: () =>
-          <Ionicons
-            style={{ left: 15, top: 5, color: '#f5c500' }}
-            onPress={() => navigation.openDrawer()}
-            name="ios-menu"
-            size={35}
+          <FontAwesome5
+            style={{ left: 15, top: 3, color: '#f5c500' }}
+            onPress={() => navigate('HomeNavigator')}
+            name="home"
+            size={25}
           />
         // <Icon
         //   style={{ left: 15, top: 3, color: '#f5c500' }}
@@ -683,6 +684,23 @@ const SupportStackNavigator = createStackNavigator(
     }
   }
 );
+// const drawerAnimationStackNavigator = createStackNavigator(
+//   {
+//     drawerAnimationHomeStackNavigator: HomeStackNavigator,
+//     drawerAnimationSettingStackNavigator: SettingStackNavigator,
+//     drawerAnimationAppoitmentStackNavigator: AppoitmentStackNavigator,
+//     drawerAnimationFreeStackNavigator: FreeStackNavigator,
+//     drawerAnimationSupportStackNavigator: SupportStackNavigator,
+//   },
+//   {
+//     initialRouteName: 'drawerAnimationHomeStackNavigator',
+//     defaultNavigationOptions: {
+//       ...TransitionPresets.ModalSlideFromBottomIOS,
+//       cardOverlayEnabled: true,
+//       gestureEnabled: true,
+//     },
+//   }
+// );
 const AppDrawerNavigator = createDrawerNavigator({
   HomeDrawerNavigator: {
     screen: HomeStackNavigator,

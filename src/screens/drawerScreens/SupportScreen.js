@@ -53,7 +53,7 @@ const SupportScreen = ({ navigation, t }) => {
         </TouchableOpacity> */}
       </ScrollView>
 
-      <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
+      {/* <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
         <Spacer>
           <FontBold
             value={t('homepage')}
@@ -66,7 +66,7 @@ const SupportScreen = ({ navigation, t }) => {
               color: 'blue'
             }} />
         </Spacer>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View >
   );
 };

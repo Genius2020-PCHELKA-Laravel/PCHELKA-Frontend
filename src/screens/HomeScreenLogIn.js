@@ -138,9 +138,8 @@ const styles = StyleSheet.create({
     // fontFamily: 'Comfortaa-Bold'
   },
   booknowButtonStyle: {
-    margin: 5,
     position: "absolute",
-    bottom: 20,
+    bottom: 60,
     left: 10,
     height: 35,
     backgroundColor: '#f5c500',
@@ -151,13 +150,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
+    textAlignVertical: 'center',
     fontSize: 16,
     fontWeight: "500",
     paddingHorizontal: 25,
     color: '#7a7a7a'
   },
   cleaningservicetext: {
-    margin: 55,
+    marginTop: 20,
     position: "absolute",
     top: 45,
     left: 10,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   cleaningservicedetailtext: {
-    marginTop: 70,
+    marginTop: 40,
     position: "absolute",
     top: 85,
     left: 10,

@@ -12,6 +12,7 @@ import { Context as HCContext } from '../screens/context/HCContext';
 import { getLang, storeLang } from '../api/userLanguage';
 // import ConfirmationDialog from './ConfirmationDialog';
 import { Updates } from 'expo';
+import { Avatar } from 'react-native-elements';
 
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LogoutButton = ({ t }) => {
@@ -51,7 +52,7 @@ const LogoutButton = ({ t }) => {
         <View style={styles.container}>
             <Loader loading={isloading} />
             {/* <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} /> */}
-            {
+            {/* {
                 lang === 'en' ?
                     // <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>
                     <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('ru') }}>
@@ -66,8 +67,38 @@ const LogoutButton = ({ t }) => {
                         <TouchableOpacity activeOpacity={.5} onPress={() => { changeLanguage('ru') }}>
                             <FontBold mystyle={styles.languageButtonStyle} value="русский" />
                         </TouchableOpacity>
+            } */}
+            {
+                lang === 'en' ?
+                    <Avatar
+                        size="small"
+                        rounded
+                        source={require('../../assets/ru.png')}
+                        onPress={() => { changeLanguage('ru') }}
+                        activeOpacity={0.7}
+                        containerStyle={styles.flag}
+                    />
+                    :
+                    lang === 'ru' ?
+                        <Avatar
+                            size="small"
+                            rounded
+                            source={require('../../assets/en.png')}
+                            onPress={async () => { changeLanguage('en') }}
+                            activeOpacity={0.7}
+                            containerStyle={styles.flag}
+                        />
+                        :
+                        <Avatar
+                            size="small"
+                            rounded
+                            source={require('../../assets/ru.png')}
+                            onPress={async () => { changeLanguage('ru') }}
+                            activeOpacity={0.7}
+                            containerStyle={styles.flag}
+                        />
             }
-            <TouchableOpacity onPress={async () => {
+            {/* <TouchableOpacity onPress={async () => {
 
                 setIsLoading(true);
                 logout().then(async () => {
@@ -76,11 +107,26 @@ const LogoutButton = ({ t }) => {
                     await udispatch({ type: 'RESET' });
                 }).catch(() => setIsLoading(false));
             }}>
-                {/* <FontBold mystyle={styles.topButtonStyle} value={t('logout')}></FontBold> */}
                 <Text style={styles.logoutButtonStyle}>
                     {t('logout')} {' '}<FontAwesome5 name="user" size={14} color="#7a7a7a" />
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+            <Avatar
+                size="small"
+                rounded
+                icon={{ size: 25, name: 'logout', type: 'antdesign', color: '#000' }}
+                onPress={async () => {
+                    setIsLoading(true);
+                    logout().then(async () => {
+                        setIsLoading(false);
+                        await hcdispatch({ type: 'RESET' });
+                        await udispatch({ type: 'RESET' });
+                    }).catch(() => setIsLoading(false));
+                }}
+                activeOpacity={0.7}
+                containerStyle={styles.avatar}
+            />
 
         </View >
     )
@@ -122,6 +168,22 @@ const styles = StyleSheet.create({
         fontWeight: "900",
         right: 30,
         color: '#7a7a7a'
+    },
+    flag: {
+        borderColor: '#000',
+        borderWidth: 0,
+        backgroundColor: '#fff',
+        left: 0,
+        width: 35,
+        height: 35,
+    },
+    avatar: {
+        borderColor: '#aaa',
+        borderWidth: 0,
+        backgroundColor: '#fff',
+        left: 20,
+        width: 35,
+        height: 35,
     },
 });
 

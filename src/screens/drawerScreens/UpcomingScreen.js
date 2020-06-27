@@ -12,12 +12,14 @@ import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
 import AlertDialog from '../../components/AlertDialog';
-import { BackHandler } from 'react-native';
+import { BackHandler, RefreshControl } from 'react-native';
 
 const UpcomingScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, dispatch: hcdispatch } = useContext(HCContext);
+
     const [isLoading, setIsLoading] = useState(false);
     const [changing, setChanging] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
 
     const unsubscribe = navigation.addListener('didFocus', () => {
@@ -30,11 +32,30 @@ const UpcomingScreen = ({ navigation, t }) => {
             // navigation.removeListener('didFocus', () => { })
         };
     }, []);
-
+    const _onRefresh = () => {
+        setRefreshing(true);
+        getUpcoming().then((response) => {
+            console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
+            console.log("######################" + JSON.stringify(response));
+            setRefreshing(false);
+        }).catch((error) => {
+            setRefreshing(false);
+            console.log(error);
+        });
+    }
     return (
         <View style={{ flex: 1 }}>
             <AlertDialog changing={changing} setChanging={setChanging} />
-            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#fff' }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{ backgroundColor: '#fff' }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={_onRefresh}
+                    />
+                }
+            >
                 <Loader loading={isLoading} />
                 {/* <Text style={{ left: 30, fontSize: 35 }}>{JSON.stringify(hcstate.upcoming)}</Text> */}
                 {
@@ -90,7 +111,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                 <FontLight mystyle={{ top: 10, right: 10 }} value={t('refcode') + ': ' + booking.refCode} />
                                                 {
                                                     booking.status == 'Completed' ?
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#7a7a7a", backgroundColor: "lightgreen" }}>
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "lightgreen", backgroundColor: "lightgreen" }}>
                                                             <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('completed')} />
                                                         </View>
                                                         : booking.status == 'Confirmed' ?
@@ -101,8 +122,8 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                                 <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ff9800", backgroundColor: "#ff9800" }}>
                                                                     <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
                                                                 </View> :
-                                                                booking.status == 'Canceled  ' ?
-                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ffcccb", backgroundColor: "#ffcccb" }}>
+                                                                booking.status == 'Canceled' ?
+                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "red", backgroundColor: "red" }}>
                                                                         <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
                                                                     </View>
                                                                     : null
@@ -118,7 +139,7 @@ const UpcomingScreen = ({ navigation, t }) => {
 
                 }
             </ScrollView>
-            <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
+            {/* <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
                 <Spacer>
                     <FontBold
                         value={t('homepage')}
@@ -131,7 +152,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                             color: 'blue'
                         }} />
                 </Spacer>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 

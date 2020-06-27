@@ -22,7 +22,7 @@
       "**/*"
     ],
     "notification": {
-      "icon": "./assets/icon.png",
+      "icon": "./assets/notification-96-depth8.png",
       "color": "#f5c500",
       "androidMode": "default",
       "androidCollapsedTitle": "PCHELKA1111111111111"

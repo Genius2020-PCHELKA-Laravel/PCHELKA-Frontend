@@ -31,7 +31,7 @@ const FreeScreen = ({ navigation, t }) => {
 
 
       </View>
-      <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
+      {/* <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
         <Spacer>
           <FontBold
             value={t('homepage')}
@@ -44,7 +44,7 @@ const FreeScreen = ({ navigation, t }) => {
               color: 'blue'
             }} />
         </Spacer>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
     </View>);
 };

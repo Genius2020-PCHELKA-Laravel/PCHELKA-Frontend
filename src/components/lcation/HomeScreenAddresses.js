@@ -1,6 +1,5 @@
 import React, { Component, useState, useContext, useEffect } from 'react';
 import {
-    Modal,
     Text,
     TouchableHighlight,
     TouchableOpacity,
@@ -23,6 +22,7 @@ import { setRedirect } from '../../api/redirect';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../locales/i18n';
+import Modal from 'react-native-modal';
 
 export default class HomeScreenAddresses extends React.Component {
     constructor(props) {
@@ -32,121 +32,129 @@ export default class HomeScreenAddresses extends React.Component {
         return (
             <View >
                 <Modal
-                    animationType="fade"
+                    style={{ flex: 1, margin: 0 }}
+                    animationIn="slideInUp"
+                    animationOut="slideOutDown"
+                    animationInTiming={1200}
+                    animationOutTiming={1200}
+                    avoidKeyboard={true}
+                    backdropColor='transparent'
                     transparent={true}
-                    visible={this.props.showAddressesModal}
+                    isVisible={this.props.showAddressesModal}
+                    hideModalContentWhileAnimating={false}
+                    coverScreen={true}
+                    onBackdropPress={() => this.props.setShowAddressesModal(false)}
+                    onBackButtonPress={() => this.props.setShowAddressesModal(false)}
+                    onSwipeComplete={() => this.props.setShowAddressesModal(false)}
+                    swipeThreshold={200}
+                    swipeDirection="down"
                     onRequestClose={() => {
                         // alert('Modal has been closed.');
-                        this.props.setShowAddressesModal(false);
-                    }}
-                >
-                    <TouchableOpacity onPress={() => this.props.setShowAddressesModal(false)} style={styles.wrapper}>
-                        <TouchableWithoutFeedback>
+                    }}>
+                    {/* <TouchableOpacity style={styles.wrapper}> */}
 
-                            <View style={styles.container}>
-                                <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
-                                    <TouchableOpacity
-                                        activeOpacity={0.5}
-                                        onPress={() => {
-                                            this.props.setShowAddressesModal(false);
-                                        }}
-                                        style={{
-                                            position: "absolute",
-                                            right: 0,
-                                            backgroundColor: '#fff',
-                                            width: 35,
-                                            height: 35,
-                                            right: 15,
-                                            top: 5
-                                        }}>
-                                        <FontAwesome name="times" size={35} color="#7a7a7a" />
-                                    </TouchableOpacity>
+                    <View style={styles.container}>
+                        <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
+                            <TouchableOpacity
+                                activeOpacity={0.5}
+                                onPress={() => {
+                                    this.props.setShowAddressesModal(false);
+                                }}
+                                style={{
+                                    position: "absolute",
+                                    right: 0,
+                                    backgroundColor: '#fff',
+                                    width: 35,
+                                    height: 35,
+                                    right: 15,
+                                    top: 5
+                                }}>
+                                <FontAwesome name="times" size={35} color="#7a7a7a" />
+                            </TouchableOpacity>
+                        </View>
+                        <View flexDirection='row'>
+                            <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: 20, left: 15, top: 15, }} />
+
+                        </View>
+                        <Spacer />
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginLeft: 15, marginRight: 15 }} />
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            onPress={async () => {
+                                setRedirect('HomeNavigator');
+                                navigate('MapScreen');
+                                this.props.setShowAddressesModal(false);
+                            }}
+                            style={{
+                                top: 15,
+                                left: 15,
+                                marginBottom: 15
+                            }}>
+                            <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                                <MaterialIcons name="my-location" size={30} color="#7a7a7a" />
+                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                    <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: 18 }} />
                                 </View>
-                                <View flexDirection='row'>
-                                    <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: 20, left: 15, top: 15, }} />
-
-                                </View>
-                                <Spacer />
-                                <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginLeft: 15, marginRight: 15 }} />
-                                <TouchableOpacity
-                                    activeOpacity={0.5}
-                                    onPress={async () => {
-                                        setRedirect('HomeNavigator');
-                                        navigate('MapScreen');
-                                        this.props.setShowAddressesModal(false);
-                                    }}
-                                    style={{
-                                        top: 15,
-                                        left: 15,
-                                        marginBottom: 15
-                                    }}>
-                                    <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                                        <MaterialIcons name="my-location" size={30} color="#7a7a7a" />
-                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                            <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: 18 }} />
-                                        </View>
-                                    </View>
-
-                                </TouchableOpacity>
-                                {
-                                    // typeof this.props.authtoken != 'undefined'
-                                    //     || this.props.authtoken != ''
-                                    //     ?
-                                    // this.props.addresses.length === 0 || this.props.addresses === undefined ?
-                                    typeof this.props.addresses === 'undefined' || this.props.addresses.length === 0 ?
-                                        // <Image style={styles.noaddresses} source={require('../../../assets/noappoitments.png')} />
-                                        <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
-                                        :
-                                        <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
-                                            {
-                                                this.props.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
-                                                    return (
-                                                        <TouchableOpacity key={i} onPress={() => {
-                                                            this.props.setShowAddressesModal(false);
-                                                            setRedirect('HomeNavigator');
-                                                            navigate('MapScreenShowAddress', {
-                                                                uid: u.id,
-                                                                ustreet: u.street,
-                                                                ubuildingnumber: u.buildingNumber,
-                                                                uapartment: u.apartment,
-                                                                ulatitude: u.lat,
-                                                                ulongitude: u.lon
-                                                            });
-                                                        }}>
-                                                            <Spacer>
-                                                                <View flexDirection='row'>
-                                                                    <View flexDirection='column' style={{ width: '10%', left: 10 }}>
-                                                                        <Entypo name="location" size={25} color="#d21404" />
-                                                                    </View>
-                                                                    <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
-                                                                        <View flexDirection='row' >
-                                                                            <FontBold mystyle={{ fontSize: 18, }} value={u.address + ', '} />
-                                                                        </View>
-                                                                        <View flexDirection='row' >
-                                                                            <FontBold mystyle={{ fontSize: 18, }} value={u.details} />
-                                                                        </View>
-                                                                        <View flexDirection='row'>
-                                                                            <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.street + ', '} />
-                                                                        </View>
-                                                                        <View flexDirection='row'>
-                                                                            <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.buildingNumber + ', '} />
-                                                                        </View>
-                                                                        <View flexDirection='row'>
-                                                                            <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.apartment} />
-                                                                        </View>
-                                                                    </View>
-                                                                </View>
-                                                            </Spacer>
-                                                        </TouchableOpacity>
-                                                    );
-                                                })
-                                            }
-                                        </ScrollView>
-                                }
                             </View>
-                        </TouchableWithoutFeedback>
 
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                        {
+                            // typeof this.props.authtoken != 'undefined'
+                            //     || this.props.authtoken != ''
+                            //     ?
+                            // this.props.addresses.length === 0 || this.props.addresses === undefined ?
+                            typeof this.props.addresses === 'undefined' || this.props.addresses.length === 0 ?
+                                // <Image style={styles.noaddresses} source={require('../../../assets/noappoitments.png')} />
+                                <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
+                                :
+                                <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
+                                    {
+                                        this.props.addresses.sort((a, b) => a.id > b.id ? -1 : 1).map((u, i) => {
+                                            return (
+                                                <TouchableOpacity key={i} onPress={() => {
+                                                    this.props.setShowAddressesModal(false);
+                                                    setRedirect('HomeNavigator');
+                                                    navigate('MapScreenShowAddress', {
+                                                        uid: u.id,
+                                                        ustreet: u.street,
+                                                        ubuildingnumber: u.buildingNumber,
+                                                        uapartment: u.apartment,
+                                                        ulatitude: u.lat,
+                                                        ulongitude: u.lon
+                                                    });
+                                                }}>
+                                                    <Spacer>
+                                                        <View flexDirection='row'>
+                                                            <View flexDirection='column' style={{ width: '10%', left: 10 }}>
+                                                                <Entypo name="location" size={25} color="#d21404" />
+                                                            </View>
+                                                            <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
+                                                                <View flexDirection='row' >
+                                                                    <FontBold mystyle={{ fontSize: 18, }} value={u.address + ', '} />
+                                                                </View>
+                                                                <View flexDirection='row' >
+                                                                    <FontBold mystyle={{ fontSize: 18, }} value={u.details} />
+                                                                </View>
+                                                                <View flexDirection='row'>
+                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.street + ', '} />
+                                                                </View>
+                                                                <View flexDirection='row'>
+                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.buildingNumber + ', '} />
+                                                                </View>
+                                                                <View flexDirection='row'>
+                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.apartment} />
+                                                                </View>
+                                                            </View>
+                                                        </View>
+                                                    </Spacer>
+                                                </TouchableOpacity>
+                                            );
+                                        })
+                                    }
+                                </ScrollView>
+                        }
+                    </View>
+
                 </Modal>
             </View >
         );
@@ -168,7 +176,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#444444aa"
+        // backgroundColor: "#444444aa"
     },
     noaddresses: {
         width: "100%",

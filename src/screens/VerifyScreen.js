@@ -11,15 +11,21 @@ import Timer from '../components/Timer';
 import OtpInputs from "react-native-otp-inputs";
 import Axios from '../api/axiosapi';
 import { Context as UserContext } from '../screens/context/UserContext';
+import { Context as HCContext } from '../screens/context/HCContext';
 import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
+import Loader from '../components/Loader';
 
 const VerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, redirect } = navigation.state.params;
     const { verifysms, sendsms } = useContext(AuthContext);
-    const { state, getUserDetails, checkFullName } = useContext(UserContext);
+    const { state, getUserDetails, checkFullName, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
+    const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
+
     const [resendotp, setResendotp] = useState(otp);
     const verifyMountedRef = useRef(null);
+    const [isloading, setIsLoading] = useState(false);
+
     const resend = () => {
         setResendotp(Math.floor(1000 + Math.random() * 9000).toString());
     }
@@ -41,8 +47,59 @@ const VerifyScreen = ({ navigation, t }) => {
         console.log('SENDED Mobile, OTP >>>>>>' + "Mobile " + mobile + " otp:" + resendotp);
         return () => verifyMountedRef.current = false;
     }, [resendotp]);
+
+    const fetchServices = async () => {
+        await getServices().then((response) => {
+            setHC(response[0]);
+            setDI(response[10]);
+            setDE(response[6]);
+            setBS(response[11]);
+            setSF(response[5]);
+            setMA(response[4]);
+            setCA(response[3]);
+            setCU(response[2]);
+            console.log("HomeScreen::UseEffect::getServices::response::");
+            console.log(response);
+        }).catch((error) => {
+            console.log("Error::HomeScreen::UseEffect::getServices");
+            console.log(error);
+        });
+    }
+    const fetchAddresses = async () => {
+        await getUserDetails().then((response) => {
+            console.log("HomeScreen::useffect::getUseDetails::response:: ");
+            console.log(response);
+            getUserAddresses().then((res) => {
+                console.log("HomeScreen::useffect::getUserAddresses::response:: ");
+                console.log(res);
+                udispatch({ type: 'set_user_addresses_loaded', payload: true });
+                udispatch({ type: 'set_user_addresses', payload: res });
+            }).catch((error) => {
+                console.log("HomeScreen::useffect::getUserAddresses::error:: ");
+            });
+        }).catch((error) => {
+            console.log("HomeScreen::getUserDetails#1 " + error);
+        });
+    }
+    const fetchUpcoming = async () => {
+        getUpcoming().then((response) => {
+            //console.log("Upcoming::useffect::getUpcoming::response:: ");
+            //console.log("######################" + JSON.stringify(response));
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+    const fetchPast = async () => {
+        getPast().then((response) => {
+            //console.log("Upcoming::useffect::getUpcoming::response:: ");
+            //console.log("######################" + JSON.stringify(response));
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
     return (<>
         <View style={styles.container}>
+            <Loader loading={isloading} />
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value={t('enterthecodethatwassentto')}></FontBold>
                 <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -53,13 +110,20 @@ const VerifyScreen = ({ navigation, t }) => {
             <Spacer />
             <OtpInputs style={styles.inputsection}
                 //handleChange={code => console.log(code)}
-                handleChange={(enteredotp) => {
+                handleChange={async (enteredotp) => {
                     if (enteredotp === resendotp) {
+                        setIsLoading(true);
                         try {
-                            verifysms({ mobile: mobile, enteredotp: enteredotp, otp: resendotp });
+                            await verifysms({ mobile: mobile, enteredotp: enteredotp, otp: resendotp });
+                            await fetchServices();
+                            await fetchAddresses();
+                            await fetchUpcoming();
+                            await fetchPast();
                             var res = checkFullName(mobile, redirect);
+                            setIsLoading(false);
                         } catch (err) {
-                            console.log("VerifyScreen::Error>>>>>>>>" + err)
+                            console.log("VerifyScreen::Error>>>>>>>>" + err);
+                            setIsLoading(false);
                         }
 
                     } else

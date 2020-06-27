@@ -25,6 +25,7 @@ import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { initnotify, getToken, newChannel, notify } from 'expo-push-notification-helper';
+import OfflineNotice from '../components/OfflineNotice';
 
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
@@ -103,49 +104,49 @@ const HomeScreen = ({ navigation, t }) => {
   // }
   useEffect(() => {
     //hcdispatch({ type: 'RESET' });
-    getServices().then((response) => {
-      setHC(response[0]);
-      setDI(response[10]);
-      setDE(response[6]);
-      setBS(response[11]);
-      setSF(response[5]);
-      setMA(response[4]);
-      setCA(response[3]);
-      setCU(response[2]);
-      console.log("HomeScreen::UseEffect::getServices::response::");
-      console.log(response);
-    }).catch((error) => {
-      console.log("Error::HomeScreen::UseEffect::getServices");
-      console.log(error);
-    });
+    // getServices().then((response) => {
+    //   setHC(response[0]);
+    //   setDI(response[10]);
+    //   setDE(response[6]);
+    //   setBS(response[11]);
+    //   setSF(response[5]);
+    //   setMA(response[4]);
+    //   setCA(response[3]);
+    //   setCU(response[2]);
+    //   console.log("HomeScreen::UseEffect::getServices::response::");
+    //   console.log(response);
+    // }).catch((error) => {
+    //   console.log("Error::HomeScreen::UseEffect::getServices");
+    //   console.log(error);
+    // });
 
-    getUserDetails().then((response) => {
-      console.log("HomeScreen::useffect::getUseDetails::response:: ");
-      console.log(response);
-      getUserAddresses().then((res) => {
-        console.log("HomeScreen::useffect::getUserAddresses::response:: ");
-        console.log(res);
-        udispatch({ type: 'set_user_addresses_loaded', payload: true });
-        udispatch({ type: 'set_user_addresses', payload: res });
-      }).catch((error) => {
-        console.log("HomeScreen::useffect::getUserAddresses::error:: ");
-      });
-    }).catch((error) => {
-      console.log("HomeScreen::getUserDetails#1 " + error);
-    });
+    // getUserDetails().then((response) => {
+    //   console.log("HomeScreen::useffect::getUseDetails::response:: ");
+    //   console.log(response);
+    //   getUserAddresses().then((res) => {
+    //     console.log("HomeScreen::useffect::getUserAddresses::response:: ");
+    //     console.log(res);
+    //     udispatch({ type: 'set_user_addresses_loaded', payload: true });
+    //     udispatch({ type: 'set_user_addresses', payload: res });
+    //   }).catch((error) => {
+    //     console.log("HomeScreen::useffect::getUserAddresses::error:: ");
+    //   });
+    // }).catch((error) => {
+    //   console.log("HomeScreen::getUserDetails#1 " + error);
+    // });
 
-    getUpcoming().then((response) => {
-      //console.log("Upcoming::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error);
-    });
-    getPast().then((response) => {
-      //console.log("Upcoming::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error);
-    });
+    // getUpcoming().then((response) => {
+    //   //console.log("Upcoming::useffect::getUpcoming::response:: ");
+    //   //console.log("######################" + JSON.stringify(response));
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+    // getPast().then((response) => {
+    //   //console.log("Upcoming::useffect::getUpcoming::response:: ");
+    //   //console.log("######################" + JSON.stringify(response));
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
 
   }, []);
   const unsubscribe = navigation.addListener('didFocus', () => {
@@ -266,6 +267,8 @@ const HomeScreen = ({ navigation, t }) => {
       </Spacer>
       <Spacer />
     </ScrollView>
+    <OfflineNotice />
+
   </>)
 };
 
@@ -318,9 +321,8 @@ const styles = StyleSheet.create({
     // fontFamily: 'Comfortaa-Bold'
   },
   booknowButtonStyle: {
-    margin: 5,
     position: "absolute",
-    bottom: 20,
+    bottom: 60,
     left: 10,
     height: 35,
     backgroundColor: '#f5c500',
@@ -331,13 +333,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
+    textAlignVertical: 'center',
     fontSize: 16,
     fontWeight: "500",
     paddingHorizontal: 25,
     color: '#7a7a7a'
   },
   cleaningservicetext: {
-    marginTop: 55,
+    marginTop: 20,
     position: "absolute",
     top: 45,
     left: 10,
@@ -352,7 +355,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   cleaningservicedetailtext: {
-    marginTop: 70,
+    marginTop: 40,
     position: "absolute",
     top: 85,
     left: 10,

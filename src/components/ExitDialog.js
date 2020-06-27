@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Modal, Text, TouchableOpacity, Button, TouchableWithoutFeedback } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, TouchableOpacity, Button, TouchableWithoutFeedback } from 'react-native';
+import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import Dialog from "react-native-dialog";
 import RNRestart from 'react-native-restart';
 import Spacer from './Spacer';
@@ -12,6 +12,7 @@ import FontRegular from '../components/FontRegular';
 import FontLight from '../components/FontLight';
 import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
 import { BackHandler } from 'react-native';
+import Modal from 'react-native-modal';
 
 const ExitDialog = props => {
     const { changing, setChanging, ...attributes } = props;
@@ -37,17 +38,31 @@ const ExitDialog = props => {
     };
 
     return (
+
         <Modal
+            style={{ flex: 1, margin: 0 }}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            animationInTiming={500}
+            animationOutTiming={500}
+            avoidKeyboard={true}
+            backdropColor='transparent'
             transparent={true}
-            animationType={'none'}
-            style={styles.container}
-            visible={changing}
+            isVisible={changing}
+            hideModalContentWhileAnimating={false}
+            coverScreen={true}
+            onBackButtonPress={() => setChanging(false)}
+            onBackdropPress={() => setChanging(false)}
+            // onSwipeComplete={() => setChanging(false)}
+            // swipeThreshold={200}
+            // swipeDirection="down"
             onRequestClose={() => {
-                console.log('close modal');
+                // alert('Modal has been closed.');
             }}>
             <TouchableOpacity onPress={() => setChanging(false)} style={styles.wrapper}>
 
                 <TouchableWithoutFeedback>
+
                     <View style={styles.container}>
                         <View flexDirection="row" style={{ marginBottom: 5 }}>
                             <FontBold mystyle={{ fontSize: 20 }} value={i18n.t('exit')} />
@@ -64,7 +79,6 @@ const ExitDialog = props => {
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
-
             </TouchableOpacity>
         </Modal>
     );
@@ -88,8 +102,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#444444aa"
-
+        // backgroundColor: "#ffffffaa"
     },
     btn: {
         backgroundColor: '#f5c500',

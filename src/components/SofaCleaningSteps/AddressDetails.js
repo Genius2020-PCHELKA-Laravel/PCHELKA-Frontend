@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, RefreshControl } from 'react-native';
 import { Container, Footer, FooterTab, Button, } from 'native-base';
 import { CheckBox, Icon } from 'react-native-elements'
 import { RadioButton, Text } from 'react-native-paper';
@@ -21,6 +21,7 @@ const AddressDetails = ({ children, t }) => {
     const { state: hcstate } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         dispatch({
@@ -28,13 +29,33 @@ const AddressDetails = ({ children, t }) => {
             payload: selectedAddress,
         });
     }, [selectedAddress]);
-
+    const _onRefresh = () => {
+        setRefreshing(true);
+        getUserAddresses().then((res) => {
+            console.log("ManageAddresses::onrefresh::getUserAddresses::response:: ");
+            console.log(res);
+            dispatch({ type: 'set_user_addresses_loaded', payload: true });
+            dispatch({ type: 'set_user_addresses', payload: res });
+            setRefreshing(false);
+        }).catch((error) => {
+            console.log("HomeScreen::onrefresh::getUserAddresses::error:: ");
+            setRefreshing(false);
+        });
+    }
 
     return (
         <View style={styles.container}>
             {/* <Text>{state.selected_address}</Text>
             <Text>{state.selected_address_name}</Text> */}
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={_onRefresh}
+                    />
+                }
+            >
                 {/* <Loader loading={state.loading} /> */}
                 <Spacer>
                     <View style={styles.containerrow}>
@@ -63,7 +84,14 @@ const AddressDetails = ({ children, t }) => {
                                         }}>
                                         <View flexDirection='row' style={{ marginBottom: 5 }}>
                                             <View flexDirection='column'>
-                                                <RadioButton value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                                <RadioButton
+                                                    onPress={() => {
+                                                        setSelectedAddress(u.id);
+                                                        setSelectedAddressName(u.address);
+                                                        dispatch({ type: 'set_selected_address', payload: u.id, });
+                                                        dispatch({ type: 'set_selected_address_name', payload: u.address, });
+                                                    }}
+                                                    value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
                                             </View>
                                             <View flexDirection='column' style={{ paddingRight: 50, flexWrap: "wrap" }}>
                                                 {/* <Text>{u.id}</Text> */}
