@@ -137,43 +137,43 @@ const InternetScreen = ({ navigation, t }) => {
 
   useEffect(() => {
     let isCancelled2 = false;
-    setTimeout(() => {
-      NetInfo.fetch().then(async (connection) => {
-        console.log(connection)
-        if (connection.isConnected) {
-          console.log("Connected");
-          setConnected(true);
-        }
-        else {
-          console.log("Not Connected");
-          setConnected(false);
-          if (!isCancelled2)
-            // setIsLoading(false);
-            return;
-        }
-        var token = await getToken();
-        if (connected && (typeof (token) == 'undefined' || token == '')) {
-          if (!isCancelled2)
-            // setIsLoading(false);
-            navigation.navigate('LoginFlow');
-        }
-        else if (connected && (typeof (token) != 'undefined')) {
-          // if (!isCancelled2)
+    // setTimeout(() => {
+    NetInfo.fetch().then(async (connection) => {
+      console.log(connection)
+      if (connection.isConnected) {
+        console.log("Connected");
+        setConnected(true);
+      }
+      else {
+        console.log("Not Connected");
+        setConnected(false);
+        if (!isCancelled2)
           // setIsLoading(false);
-          await fetchServices();
-          await fetchUpcoming();
-          await fetchPast();
-          await fetchAddresses();
-          // if (isVerified == 0)
-          //   navigation.navigate('LoginFlow');
-          // else
-          // navigation.navigate('Dashboard');
-        }
-        else {
+          return;
+      }
+      var token = await getToken();
+      if (connected && (typeof (token) == 'undefined' || token == '')) {
+        if (!isCancelled2)
           // setIsLoading(false);
-        }
-      })
-    }, 4000);
+          navigation.navigate('LoginFlow');
+      }
+      else if (connected && (typeof (token) != 'undefined')) {
+        // if (!isCancelled2)
+        // setIsLoading(false);
+        await fetchServices();
+        await fetchUpcoming();
+        await fetchPast();
+        await fetchAddresses();
+        // if (isVerified == 0)
+        //   navigation.navigate('LoginFlow');
+        // else
+        // navigation.navigate('Dashboard');
+      }
+      else {
+        // setIsLoading(false);
+      }
+    })
+    // }, 4000);
 
     return () => {
       isCancelled2 = true;

@@ -15,6 +15,7 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
+import RescheduledScreen from './RescheduledScreen'
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch: hcdispatch, state: hcstate, getSchedules, rescheduleBook } = useContext(HCContext);
     const { dispatch: udispatch, state: ustate } = useContext(UserContext);
@@ -24,6 +25,7 @@ const HCRescheduleScreen = ({ children, t }) => {
     const [providerid, setProviderid] = useState(hcstate.providerid);
     const [autoassign, setAutoassign] = useState(hcstate.autoassign);
     const [isloading, setIsLoading] = useState(false);
+    const [showBookedModal, setShowBookedModal] = useState(false);
 
     let days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -255,6 +257,10 @@ const HCRescheduleScreen = ({ children, t }) => {
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
                 <Loader loading={isloading} />
+                <RescheduledScreen
+                    showBookedModal={showBookedModal}
+                    setShowBookedModal={setShowBookedModal}
+                />
                 <View style={styles.ourpolicycontainer}>
                     <AntDesign style={{ marginBottom: 5 }} name="warning" size={30} color="#d21404" />
                     <FontLight mystyle={{ fontSize: 16 }} value={t('ourpolicydoc')} />
@@ -318,8 +324,10 @@ const HCRescheduleScreen = ({ children, t }) => {
                         hcdispatch({
                             type: 'RESET'
                         });
-                        Toast.show(t('rescheduled'), Toast.LONG);
-                        navigate('RescheduledScreen')
+                        setShowBookedModal(true);
+
+                        // Toast.show(t('rescheduled'), Toast.LONG);
+                        // navigate('RescheduledScreen')
                     }).catch((error) => {
                         console.log(error);
                         setIsLoading(false);
