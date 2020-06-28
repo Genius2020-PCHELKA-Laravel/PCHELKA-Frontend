@@ -16,6 +16,7 @@ import FontLight from '../FontLight';
 import FontRegular from '../FontRegular';
 import { withNamespaces } from 'react-i18next';
 import Modal from 'react-native-modal';
+// import i18n from '../../locales/i18n';
 
 const ModalDetails = ({ children, t }) => {
     const [modalVisible, setModalVisible] = useState(false);

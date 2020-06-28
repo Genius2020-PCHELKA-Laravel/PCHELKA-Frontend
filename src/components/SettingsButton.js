@@ -17,9 +17,9 @@ const SettingsButton = ({ t }) => {
     const { state: ustate } = useContext(UserContext);
     const [address, setAddress] = useState('');
     const [showAddressesModal, setShowAddressesModal] = useState(false);
-    const [shouldShowLang, setShouldShowLang] = useState(true);
-    const [lang, setLang] = useState('en');
-    const [changing, setChanging] = useState(false);
+    // const [shouldShowLang, setShouldShowLang] = useState(true);
+    // const [lang, setLang] = useState('en');
+    // const [changing, setChanging] = useState(false);
 
     useEffect(() => {
         // if (ustate.addressesloaded && ustate.addresses != '' && typeof ustate.addresses != 'undefined')
@@ -30,31 +30,31 @@ const SettingsButton = ({ t }) => {
             setAddress(ustate.addresses[0].details + ',' + ustate.addresses[0].address);
     }, [ustate.addresses]);
 
-    useEffect(() => {
-        getLang().then((response) => {
-            console.log("SettingScreen selected Lang in Use Effect:  " + response);
-            setLang(response);
-            i18n.changeLanguage(response);
-            shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
-            if (response == 'en') {
-                setShouldShowLang(true);
-            }
-            else {
-                setShouldShowLang(false);
-            }
-        }).catch((err) => {
-            console.log("Settings Screen Can not get lang");
-        });
-    }, []);
-    const changeLanguage = (lng) => {
-        try {
-            console.log("Toggle language to:  " + lng);
-            setLang(lng);
-            storeLang(lng);
-            i18n.changeLanguage(lng);
-            shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
-        } catch (e) { "Error:: " + e }
-    }
+    // useEffect(() => {
+    //     getLang().then((response) => {
+    //         console.log("SettingScreen selected Lang in Use Effect:  " + response);
+    //         setLang(response);
+    //         i18n.changeLanguage(response);
+    //         shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
+    //         if (response == 'en') {
+    //             setShouldShowLang(true);
+    //         }
+    //         else {
+    //             setShouldShowLang(false);
+    //         }
+    //     }).catch((err) => {
+    //         console.log("Settings Screen Can not get lang");
+    //     });
+    // }, []);
+    // const changeLanguage = (lng) => {
+    //     try {
+    //         console.log("Toggle language to:  " + lng);
+    //         setLang(lng);
+    //         storeLang(lng);
+    //         i18n.changeLanguage(lng);
+    //         shouldShowLang ? setShouldShowLang(false) : setShouldShowLang(true);
+    //     } catch (e) { "Error:: " + e }
+    // }
 
     return (
         <View style={styles.container}>

@@ -6,22 +6,25 @@ import { withNamespaces } from 'react-i18next';
 import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
 import ConfirmationDialog from './ConfirmationDialog';
+import { Context as UserContext } from '../screens/context/UserContext';
 
 const LanguageButton = ({ t }) => {
+    const { userLanguage } = useContext(UserContext);
+
     const [lang, setLang] = useState('en');
     const [changing, setChanging] = useState(false);
 
-    function Effect(props) {
-        const val = useRef();
-        React.useEffect(() => {
-            val.current = props;
-        }, [props]);
-        React.useEffect(() => {
-            console.log("MOUNT", props);
-            return () => console.log("UNMOUNT", val.current);
-        }, [val]);
-        return null;
-    }
+    // function Effect(props) {
+    //     const val = useRef();
+    //     React.useEffect(() => {
+    //         val.current = props;
+    //     }, [props]);
+    //     React.useEffect(() => {
+    //         console.log("MOUNT", props);
+    //         return () => console.log("UNMOUNT", val.current);
+    //     }, [val]);
+    //     return null;
+    // }
 
     const changeLanguage = (lng) => {
         try {
@@ -29,20 +32,25 @@ const LanguageButton = ({ t }) => {
             setLang(lng);
             storeLang(lng);
             i18n.changeLanguage(lng);
-            // shouldShow ? setShouldShow(false) : setShouldShow(true);
+            // userLanguage({ language: lng })
+            //     .then((resposnse) => {
+            //         console.log("LanguageButton::UserLanguage:: " + resposnse);
+            //     })
+            //     .catch((err) => {
+            //         console.log("LanguageButton::UserLanguage::Error:: " + err.response);
+            //     });
         } catch (e) { "Error:: " + e }
-        // RNRestart.Restart();
     }
-    useEffect(() => {
-        getLang().then((response) => {
-            console.log("SettingScreen selected Lang in Use Effect:  " + response);
-            setLang(response);
-            i18n.changeLanguage(response);
+    // useEffect(() => {
+    //     getLang().then((response) => {
+    //         console.log("SettingScreen selected Lang in Use Effect:  " + response);
+    //         setLang(response);
+    //         i18n.changeLanguage(response);
 
-        }).catch((err) => {
-            console.log("Settings Screen Can not get lang");
-        });
-    }, []);
+    //     }).catch((err) => {
+    //         console.log("Settings Screen Can not get lang");
+    //     });
+    // }, []);
     return (
         <View style={styles.container}>
             <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />

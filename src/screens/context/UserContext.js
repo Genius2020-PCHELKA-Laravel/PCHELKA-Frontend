@@ -193,6 +193,19 @@ const getNotificationFromServer = dispatch => {
         });
     }
 }
+
+const userLanguage = dispatch => {
+    return async ({ language: lng }) => {
+        const senttoken = await getToken();
+        requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+        const response2 = await requestApi.post('/userLanguage', { language: lng }).then((response) => {
+            console.log(response.data);
+            // Vibration.vibrate();
+        }).catch((error) => {
+            console.log("UserContext::userLanguage " + JSON.stringify(error.response))
+        });
+    }
+}
 export const { Context, Provider } = createDataContext(UserReducer,
     {
         getUserDetails,
@@ -203,7 +216,8 @@ export const { Context, Provider } = createDataContext(UserReducer,
         getUserAddresses,
         getNotificationFromServer,
         subscribeToNotification,
-        unsubscribeToNotification
+        unsubscribeToNotification,
+        userLanguage
     },
     {
         addresses: [],

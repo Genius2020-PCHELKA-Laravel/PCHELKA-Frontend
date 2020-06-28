@@ -171,13 +171,13 @@ const HomeScreen = ({ navigation, t }) => {
       console.log("Upcoming::useffect::getUpcoming::response:: ");
       console.log("######################" + JSON.stringify(response));
     }).catch((error) => {
-      console.log(error);
+      console.log(error.response);
     });
     getPast().then((response) => {
       //console.log("Upcoming::useffect::getUpcoming::response:: ");
       //console.log("######################" + JSON.stringify(response));
     }).catch((error) => {
-      console.log(error);
+      console.log(error.response);
     });
   }, [hcstate.reloadAppointments]);
   // useEffect(() => {

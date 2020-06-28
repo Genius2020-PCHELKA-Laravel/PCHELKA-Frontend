@@ -18,7 +18,7 @@ import { navigate } from '../navigationRef';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LogoutButton = ({ t }) => {
     const { state: astate, logout } = useContext(AuthContext);
-    const { state: ustate, dispatch: udispatch, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
+    const { state: ustate, dispatch: udispatch, subscribeToNotification, unsubscribeToNotification, userLanguage } = useContext(UserContext);
     const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
     // const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
@@ -30,24 +30,33 @@ const LogoutButton = ({ t }) => {
             setLang(lng);
             storeLang(lng);
             i18n.changeLanguage(lng);
+            userLanguage({ language: lng })
+                .then((resposnse) => {
+                    //console.log("LogoutButton::UserLanguage" + (resposnse));
+                })
+                .catch((err) => {
+                    console.log("LogoutButton::UserLanguage::error:: " + err);
+                });
             // shouldShow ? setShouldShow(false) : setShouldShow(true);
         } catch (e) { "Error:: " + e }
     }
     useEffect(() => {
-        getLang().then((response) => {
-            console.log("logoutbutton selected Lang in Use Effect:  " + response);
-            setLang(response);
-            i18n.changeLanguage(response);
-            // shouldShow ? setShouldShow(false) : setShouldShow(true);
-            // if (response == 'en') {
-            //     setShouldShow(true);
-            // }
-            // else {
-            //     setShouldShow(false);
-            // }
-        }).catch((err) => {
-            console.log("logoutbutton Screen Can not get lang");
-        });
+        // getLang().then(async (response) => {
+        //     console.log("logoutbutton selected Lang in Use Effect:  " + response);
+
+        //     setLang(response);
+        //     i18n.changeLanguage(response);
+
+        //     userLanguage({ language: response })
+        //         .then((resposnse) => {
+        //             console.log("LogoutButton::UserLanguage" + resposnse);
+        //         })
+        //         .catch((err) => {
+        //             console.log("LogoutButton::UserLanguage::error:: " + err);
+        //         });
+        // }).catch((err) => {
+        //     console.log("LogoutButton::Can not get lang" + err);
+        // });
     }, []);
     return (
         <View style={styles.container}>

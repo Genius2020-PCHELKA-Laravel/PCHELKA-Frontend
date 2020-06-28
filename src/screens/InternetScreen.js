@@ -15,7 +15,7 @@ import FontRegular from '../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
 import registerForPushNotifications from '../api/registerForPushNotifications';
 import { Notifications } from 'expo';
-
+import i18n from '../locales/i18n';
 
 const InternetScreen = ({ navigation, t }) => {
   const { state: ustate, getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
@@ -121,58 +121,64 @@ const InternetScreen = ({ navigation, t }) => {
       fetchLoginToken();
     }
     getLang().then((response) => {
-      console.log("logoutbutton selected Lang in Use Effect:  " + response);
+      console.log("InternetScreen:: selected Lang in Use Effect:  " + response);
       i18n.changeLanguage(response);
-    }).catch((err) => {
-      console.log("logoutbutton Screen Can not get lang");
+    }).catch(async (err) => {
+      console.log("InternetScreen::Can not get lang");
+      storeLang('en');
+      var dlng = await getLang();
+      console.log("InternetScreen::StoreLang::DefualtLang::" + dlng);
+      i18n.changeLanguage('en');
     });
     return () => {
       isCancelled1 = true;
     };
-  }, [])
+  }, []);
+
   useEffect(() => {
     let isCancelled2 = false;
-    // setTimeout(() => {
-    NetInfo.fetch().then(async (connection) => {
-      console.log(connection)
-      if (connection.isConnected) {
-        console.log("Connected");
-        setConnected(true);
-      }
-      else {
-        console.log("Not Connected");
-        setConnected(false);
-        if (!isCancelled2)
+    setTimeout(() => {
+      NetInfo.fetch().then(async (connection) => {
+        console.log(connection)
+        if (connection.isConnected) {
+          console.log("Connected");
+          setConnected(true);
+        }
+        else {
+          console.log("Not Connected");
+          setConnected(false);
+          if (!isCancelled2)
+            // setIsLoading(false);
+            return;
+        }
+        var token = await getToken();
+        if (connected && (typeof (token) == 'undefined' || token == '')) {
+          if (!isCancelled2)
+            // setIsLoading(false);
+            navigation.navigate('LoginFlow');
+        }
+        else if (connected && (typeof (token) != 'undefined')) {
+          // if (!isCancelled2)
           // setIsLoading(false);
-          return;
-      }
-      if (connected && (typeof (loginToken) == 'undefined' || loginToken == '')) {
-        if (!isCancelled2)
+          await fetchServices();
+          await fetchUpcoming();
+          await fetchPast();
+          await fetchAddresses();
+          // if (isVerified == 0)
+          //   navigation.navigate('LoginFlow');
+          // else
+          // navigation.navigate('Dashboard');
+        }
+        else {
           // setIsLoading(false);
-          navigation.navigate('LoginFlow');
-      }
-      else if (connected && (typeof (loginToken) != 'undefined')) {
-        // if (!isCancelled2)
-        // setIsLoading(false);
-        await fetchServices();
-        await fetchUpcoming();
-        await fetchPast();
-        await fetchAddresses();
-        // if (isVerified == 0)
-        //   navigation.navigate('LoginFlow');
-        // else
-        // navigation.navigate('Dashboard');
-      }
-      else {
-        // setIsLoading(false);
-      }
-    })
-    // }, 3000);
+        }
+      })
+    }, 4000);
 
     return () => {
       isCancelled2 = true;
     };
-  }, [loginToken]);
+  }, []);
 
 
   return (<View style={styles.container}>

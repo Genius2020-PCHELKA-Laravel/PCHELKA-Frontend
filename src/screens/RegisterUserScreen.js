@@ -27,6 +27,7 @@ import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons';
 import { setRedirect } from '../api/redirect';
 import MapContainer from '../components/lcation/MapContainer';
 import { BackHandler } from 'react-native';
+import { getLang, storeLang } from '../api/userLanguage';
 
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
@@ -107,8 +108,11 @@ const RegisterUserScreen = ({ navigation, t }) => {
         // }
         //Show Loader
         setLoading(true);
+        var lng = await getLang();
+        if (typeof (lng) == 'undefined')
+            lng = "en";
         var result = await register({
-            fullName: fullName, email: email, language: "En"
+            fullName: fullName, email: email, language: lng
         });
         //setTimeout(function () {
         try {

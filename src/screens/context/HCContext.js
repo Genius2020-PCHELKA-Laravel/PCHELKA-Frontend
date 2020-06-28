@@ -377,7 +377,7 @@ const getUpcoming = (dispatch) => {
                 Toast.show(result.data.error, Toast.LONG);
 
         } catch (err) {
-            console.log("Error::HCContex::upComingBooking::" + err);
+            console.log("Error::HCContex::upComingBooking::" + JSON.stringify(err.response));
             dispatch({ type: 'add_error', payload: err });
         }
     };
@@ -396,7 +396,7 @@ const getPast = (dispatch) => {
             else
                 Toast.show(result.data.error, Toast.LONG);
         } catch (err) {
-            console.log("Error::HCContex::pastBooking::" + err);
+            console.log("Error::HCContex::pastBooking::" + JSON.stringify(err.response));
             dispatch({ type: 'add_error', payload: err })
         }
 
