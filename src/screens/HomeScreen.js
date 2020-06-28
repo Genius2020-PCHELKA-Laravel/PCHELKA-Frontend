@@ -39,13 +39,20 @@ const HomeScreen = ({ navigation, t }) => {
   // const [expoToken, setExpoToken] = useState('');
 
   const registerForPushNotificationsAsync = async () => {
+    if (Platform.OS === 'android') {
+      await Notifications.createChannelAndroidAsync('PCHELKA-CLEANING', {
+        name: 'PCHELKA-CLEANING',
+        sound: true,
+        priority: 'high',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
     if (Constants.isDevice) {
       const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
       let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         finalStatus = status;
-        setNotifications();
       }
       if (finalStatus !== 'granted') {
         alert('Failed to get push token for push notification!');
@@ -63,14 +70,7 @@ const HomeScreen = ({ navigation, t }) => {
     } else {
       alert('Must use physical device for Push Notifications');
     }
-    if (Platform.OS === 'android') {
-      await Notifications.createChannelAndroidAsync('PCHELKA-CLEANING', {
-        name: 'PCHELKA-CLEANING',
-        sound: true,
-        priority: 'high',
-        vibrate: [0, 250, 250, 250],
-      });
-    }
+
 
   };
 

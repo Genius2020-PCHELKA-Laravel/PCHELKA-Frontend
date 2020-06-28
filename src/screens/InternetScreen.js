@@ -78,10 +78,10 @@ const InternetScreen = ({ navigation, t }) => {
         console.log("InterneteScreen::useffect::getUserAddresses::error:: ");
       });
 
-      if (response.isVerified == 0)
-        navigation.navigate('LoginFlow');
-      else
-        navigation.navigate('Dashboard');
+      // if (response.isVerified == 0)
+      //   navigation.navigate('LoginFlow');
+      // else
+      navigation.navigate('Dashboard');
     }).catch((error) => {
       console.log("InterneteScreen::getUserDetails#1 " + error);
     });
