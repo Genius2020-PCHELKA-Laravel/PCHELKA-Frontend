@@ -11,7 +11,7 @@ const authreducer = (state, action) => {
         case 'sendsms':
             return { errorMessage: '', token: action.payload };
         case 'logout':
-            return { token: 'undefined', errorMessage: '' };
+            return { ...state, token: 'undefined', errorMessage: '' };
         case 'register':
             //console.log(action.payload);
             return { ...state, responsestatus: action.payload };
@@ -24,12 +24,20 @@ const authreducer = (state, action) => {
 const sendsms = dispatch => {
     return async ({ mobile, otp }) => {
         //make api request to singup and ask for verify number
+        console.log("{ mobile, otp }");
+        console.log({ mobile, otp });
         try {
-            const response = await requestApi.post('/sendsms', { mobile, otp });
-            console.log(response.data);
+            const response = await requestApi.post('/sendsms', { mobile, otp })
+                .then((res) => {
+                    console.log("AuthContext::sendsms:: " + JSON.stringify(res.data));
+                })
+                .catch((err) => {
+                    console.log("AuthContext::sendsms:: " + JSON.stringify(err.response));
+                });
+            // return response.data;
         }
         catch (err) {
-            console.log(err);
+            console.log("AuthContext::sendsms::trycatch" + err);
             await dispatch({ type: 'add_error', payload: 'something went wrong with sign up' })
         }
 
@@ -112,14 +120,13 @@ const logout = (dispatch) => {
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
 
             const response = await requestApi.post('/logout');
-            console.log(response.data);
-            console.log("Token Before logout>>>>>>>>>>>>>>" + senttoken);
-            await removeToken();
-            await dispatch({ type: 'logout' });
-            console.log("Token After logout>>>>>>>>>>>>>>>>" + await getToken() + "\n");
-            navigate('HomeScreenLogIn');
+            // console.log(response.data);
+            // console.log("Token Before logout>>>>>>>>>>>>>>" + senttoken);
+            // await removeToken();
+            // await dispatch({ type: 'logout' });
+            // console.log("Token After logout>>>>>>>>>>>>>>>>" + await getToken() + "\n");
         } catch (err) {
-            console.log("Logout func: " + err);
+            console.log("Logout func: " + err.response);
             dispatch({ type: 'add_error', payload: err })
         }
     };

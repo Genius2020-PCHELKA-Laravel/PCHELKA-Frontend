@@ -62,7 +62,7 @@ const getUserDetails = dispatch => {
             //setUserDetailsStorage(response.data.data);
             return response.data.data;
         } catch (err) {
-            console.log("Error in UserContext: " + err)
+            console.log("Error in UserContext:getUserDetails " + err)
         }
 
     }
@@ -77,7 +77,7 @@ const getUserAddresses = dispatch => {
             //setUserAddressesStorage(response.data.data);
             return response.data.data;
         } catch (err) {
-            console.log("Error in UserContext: " + err)
+            console.log("Error in UserContext:getUserAddresses " + err)
         }
 
     }
@@ -143,6 +143,7 @@ const checkFullName = dispatch => {
         const response = await requestApi.post('/checkFullName', { mobile }).then((response) => {
             console.log(response.data);
             dispatch({ type: 'check_full_name', payload: response.data.data });
+            // return response.data.data;
             if (response.data.data == false)
                 navigate('RegisterUserScreen', { redirect: redirect });
             else
@@ -175,7 +176,7 @@ const unsubscribeToNotification = dispatch => {
             console.log(response.data);
             // Vibration.vibrate();
         }).catch((error) => {
-            console.log("UserContext::getNotificationFromServer::subscribeuser " + error)
+            console.log("UserContext::getNotificationFromServer::unsubscribeuser " + JSON.stringify(error.response))
         });
     }
 }

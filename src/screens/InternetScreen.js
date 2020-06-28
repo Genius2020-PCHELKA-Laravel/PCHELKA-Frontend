@@ -18,7 +18,7 @@ import { Notifications } from 'expo';
 
 
 const InternetScreen = ({ navigation, t }) => {
-  const { getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
+  const { state: ustate, getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
   const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
 
   const [loginToken, setLoginToken] = useState('');
@@ -77,6 +77,11 @@ const InternetScreen = ({ navigation, t }) => {
       }).catch((error) => {
         console.log("InterneteScreen::useffect::getUserAddresses::error:: ");
       });
+
+      if (response.isVerified == 0)
+        navigation.navigate('LoginFlow');
+      else
+        navigation.navigate('Dashboard');
     }).catch((error) => {
       console.log("InterneteScreen::getUserDetails#1 " + error);
     });
@@ -146,15 +151,17 @@ const InternetScreen = ({ navigation, t }) => {
           // setIsLoading(false);
           navigation.navigate('LoginFlow');
       }
-      else if (connected && (typeof (loginToken) != 'undefined' || loginToken == '')) {
+      else if (connected && (typeof (loginToken) != 'undefined' || loginToken != '')) {
         // if (!isCancelled2)
         // setIsLoading(false);
         await fetchServices();
-        await fetchAddresses();
         await fetchUpcoming();
         await fetchPast();
-
-        navigation.navigate('Dashboard');
+        await fetchAddresses();
+        // if (isVerified == 0)
+        //   navigation.navigate('LoginFlow');
+        // else
+        // navigation.navigate('Dashboard');
       }
       else {
         // setIsLoading(false);

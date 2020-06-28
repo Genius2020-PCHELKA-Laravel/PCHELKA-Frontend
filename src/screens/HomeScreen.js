@@ -26,7 +26,7 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { initnotify, getToken, newChannel, notify } from 'expo-push-notification-helper';
 import OfflineNotice from '../components/OfflineNotice';
-
+import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken } from '../api/token';
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
   const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
@@ -36,7 +36,7 @@ const HomeScreen = ({ navigation, t }) => {
   const imageWidth = dimensions.width;
   const [changing, setChanging] = useState(false);
   const [notification, setNotification] = useState('');
-  const [expoToken, setExpoToken] = useState('');
+  // const [expoToken, setExpoToken] = useState('');
 
   const registerForPushNotificationsAsync = async () => {
     if (Constants.isDevice) {
@@ -51,10 +51,15 @@ const HomeScreen = ({ navigation, t }) => {
         alert('Failed to get push token for push notification!');
         return;
       }
-      //token = await Notifications.getExpoPushTokenAsync();
+      //await setStorageExpoToken('ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]');
+      //await subscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
+
+      token = await Notifications.getExpoPushTokenAsync();
       //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
       //alert(token);
-      //setExpoToken(token);
+      await setStorageExpoToken(token);
+      await subscribeToNotification({ expo_token: token });
+      // setExpoToken(token);
     } else {
       alert('Must use physical device for Push Notifications');
     }
@@ -209,11 +214,10 @@ const HomeScreen = ({ navigation, t }) => {
           </TouchableOpacity>
         </View>
       </Spacer>
-      <View>
+      {/* <View>
         <TouchableOpacity onPress={async () => {
           //await subscribeToNotification({ expo_token: 'ExponentPushToken[rplFsYMBUnIcHy8J-jPsXV]' });
           await subscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
-          await subscribeToNotification({ expo_token: expoToken });
           getNotificationFromServer();
         }}>
           <Spacer>
@@ -233,7 +237,7 @@ const HomeScreen = ({ navigation, t }) => {
             <Text>unsubscribe</Text>
           </Spacer>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <Spacer>
         <View style={styles.everthingtext}>
           <Text style={styles.everthingtext}>

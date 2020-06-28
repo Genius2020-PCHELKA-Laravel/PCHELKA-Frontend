@@ -15,7 +15,7 @@ import { Context as HCContext } from '../screens/context/HCContext';
 import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
 import Loader from '../components/Loader';
-
+import { navigate } from '../navigationRef';
 const VerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, redirect } = navigation.state.params;
     const { verifysms, sendsms } = useContext(AuthContext);
@@ -36,16 +36,22 @@ const VerifyScreen = ({ navigation, t }) => {
             BackHandler.removeEventListener('hardwareBackPress', () => { return true });
         };
     }, []);
+    const fetchSMS = async () => {
+        await sendsms({ mobile: mobile, otp: resendotp });
+    };
     useEffect(() => {
-        verifyMountedRef.current = true;
+        // var isCanceled = false;
 
         console.log("redirect:    " + redirect);
         console.log("resend otp:    " + resendotp);
         console.log("mobile in verify:    " + state.mobile);
-        if (verifyMountedRef.current)
-            sendsms({ mobile: mobile, otp: resendotp });
+        // if (!isCanceled) {
+        fetchSMS();
+        // }
         console.log('SENDED Mobile, OTP >>>>>>' + "Mobile " + mobile + " otp:" + resendotp);
-        return () => verifyMountedRef.current = false;
+        // return () => {
+        //     isCanceled = true
+        // };
     }, [resendotp]);
 
     const fetchServices = async () => {
@@ -119,7 +125,7 @@ const VerifyScreen = ({ navigation, t }) => {
                             await fetchAddresses();
                             await fetchUpcoming();
                             await fetchPast();
-                            var res = checkFullName(mobile, redirect);
+                            await checkFullName(mobile, redirect);
                             setIsLoading(false);
                         } catch (err) {
                             console.log("VerifyScreen::Error>>>>>>>>" + err);

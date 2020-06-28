@@ -13,8 +13,7 @@ import { BackHandler } from 'react-native';
 
 
 const LoginPhoneScreen = ({ navigation, t }) => {
-  console.log('redirect')
-  console.log(navigation.getParam('redirect'))
+
   const { sendsms } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);
   const [mobile, setMobile] = useState('');
@@ -31,10 +30,12 @@ const LoginPhoneScreen = ({ navigation, t }) => {
   useEffect(() => {
     setOtp(Math.floor(1000 + Math.random() * 9000).toString());
     if (mobile.length == 9) {
+      console.log('redirect')
+      console.log(navigation.getParam('redirect'))
       //setOtp(Math.floor(1000 + Math.random() * 9000).toString());
       console.log("OTP  " + otp);
       console.log("Mobile  " + mobile);
-      sendsms({ mobile: "380" + mobile, otp });
+      // sendsms({ mobile: "380" + mobile, otp });
       navigation.navigate('VerifyScreen', { mobile: "380" + mobile, otp: otp, redirect: navigation.getParam('redirect') });
       dispatch({
         type: 'update_mobile',

@@ -19,7 +19,7 @@ export const setToken = async (token) => {
     }
 };
 
-export const removeToken = async (token) => {
+export const removeToken = async () => {
     try {
         await AsyncStorage.removeItem('pchelka.org@auth_token');
     } catch (e) {
@@ -29,9 +29,9 @@ export const removeToken = async (token) => {
 
 
 
-export const getExpoToken = async () => {
+export const getStorageExpoToken = async () => {
     try {
-        const value = await AsyncStorage.getItem('pchelka.org@notification_token');
+        const value = await AsyncStorage.getItem('pchelka.org@expo_token');
         if (value !== null) {
             return value;
         }
@@ -40,17 +40,17 @@ export const getExpoToken = async () => {
     }
 };
 
-export const setExpoToken = async (token) => {
+export const setStorageExpoToken = async (token) => {
     try {
-        await AsyncStorage.setItem('pchelka.org@notification_token', token);
+        await AsyncStorage.setItem('pchelka.org@expo_token', token);
     } catch (e) {
         return null;
     }
 };
 
-export const removeExpoToken = async (token) => {
+export const removeStorageExpoToken = async () => {
     try {
-        await AsyncStorage.removeItem('pchelka.org@notification_token');
+        await AsyncStorage.removeItem('pchelka.org@expo_token');
     } catch (e) {
         return null;
     }

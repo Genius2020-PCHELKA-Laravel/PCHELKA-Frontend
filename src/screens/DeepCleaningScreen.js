@@ -7,6 +7,8 @@ import DeepCleaningDetails from '../components/DeepCleaningSteps/DeepCleaningDet
 import DateandTimeDetails from '../components/DeepCleaningSteps/DateandTimeDetails';
 import AddressDetails from '../components/DeepCleaningSteps/AddressDetails';
 import Payment from '../components/DeepCleaningSteps/Payment';
+import BookedScreen from '../components/DeepCleaningSteps/BookedScreen';
+
 import Spacer from '../components/Spacer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
@@ -29,6 +31,7 @@ const DeepCleaningScreen = ({ navigation, t }) => {
   const [isloading, setIsLoading] = useState(false);
   const [dateErrors, setDateErrors] = useState(false);
   const [addressErrors, setAddressErrors] = useState(false);
+  const [showBookedModal, setShowBookedModal] = useState(false);
   // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
@@ -287,8 +290,9 @@ const DeepCleaningScreen = ({ navigation, t }) => {
         hcdispatch({
           type: 'RESET'
         });
-        Toast.show(i18n.t('booked'), Toast.LONG);
-        navigate('BookedScreen')
+        setShowBookedModal(true);
+        // Toast.show(i18n.t('booked'), Toast.LONG);
+        // navigate('BookedScreen')
       }).catch((error) => {
         console.log(error);
         setIsLoading(false);
@@ -301,6 +305,10 @@ const DeepCleaningScreen = ({ navigation, t }) => {
     <>
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <Loader loading={isloading} />
+        <BookedScreen
+          showBookedModal={showBookedModal}
+          setShowBookedModal={setShowBookedModal}
+        />
         <ProgressSteps
           activeStepIconBorderColor='#f5c500'
           activeLabelColor='#f5c500'

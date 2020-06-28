@@ -6,6 +6,8 @@ import CarpetCleaningDetails from '../components/CarpetCleaningSteps/CarpetClean
 import DateandTimeDetails from '../components/CarpetCleaningSteps/DateandTimeDetails';
 import AddressDetails from '../components/CarpetCleaningSteps/AddressDetails';
 import Payment from '../components/CarpetCleaningSteps/Payment';
+import BookedScreen from '../components/CarpetCleaningSteps/BookedScreen';
+
 import Spacer from '../components/Spacer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
@@ -29,6 +31,7 @@ const CarpetCleaningScreen = ({ navigation, t }) => {
   const [metersErrors, setMetersErrors] = useState(false);
   const [dateErrors, setDateErrors] = useState(false);
   const [addressErrors, setAddressErrors] = useState(false);
+  const [showBookedModal, setShowBookedModal] = useState(false);
   // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
@@ -272,8 +275,9 @@ const CarpetCleaningScreen = ({ navigation, t }) => {
         hcdispatch({
           type: 'RESET'
         });
-        Toast.show(i18n.t('booked'), Toast.LONG);
-        navigate('BookedScreen')
+        setShowBookedModal(true);
+        // Toast.show(i18n.t('booked'), Toast.LONG);
+        // navigate('BookedScreen')
       }).catch((error) => {
         console.log(error);
         setIsLoading(false);
@@ -286,6 +290,10 @@ const CarpetCleaningScreen = ({ navigation, t }) => {
     <>
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <Loader loading={isloading} />
+        <BookedScreen
+          showBookedModal={showBookedModal}
+          setShowBookedModal={setShowBookedModal}
+        />
         <ProgressSteps
           activeStepIconBorderColor='#f5c500'
           activeLabelColor='#f5c500'

@@ -116,7 +116,7 @@ const Payment = ({ children, t }) => {
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row' }}>
-                            <RadioButton value="0" status={hcstate.method == '0' ? 'checked' : 'unchecked'} />
+                            <RadioButton onPress={() => { setShowCard(true); setMethod(0) }} value="0" status={hcstate.method == '0' ? 'checked' : 'unchecked'} />
                             <FontBold value={t('paymentq1')} mystyle={{ fontSize: 20 }}></FontBold>
                         </View>
                         <FontLight value={t('paymentq1details')} mystyle={{ color: 'green', fontSize: 14, marginLeft: 35 }}></FontLight>
@@ -132,7 +132,7 @@ const Payment = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setShowCard(false); setMethod(1) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
+                        <RadioButton onPress={() => { setShowCard(false); setMethod(1) }} value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
                         <FontBold value={t('paymentq2')} mystyle={{ fontSize: 20 }}></FontBold>
                     </View>
                     <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>

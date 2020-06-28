@@ -7,6 +7,7 @@ import HomeCleaningDetails from '../components/HomeCleaningSteps/HomeCleaningDet
 import DateandTimeDetails from '../components/HomeCleaningSteps/DateandTimeDetails';
 import AddressDetails from '../components/HomeCleaningSteps/AddressDetails';
 import Payment from '../components/HomeCleaningSteps/Payment';
+import BookedScreen from '../components/HomeCleaningSteps/BookedScreen';
 import Spacer from '../components/Spacer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
@@ -19,7 +20,6 @@ import { navigate } from '../navigationRef';
 import Loader from '../components/Loader';
 import i18n from '../locales/i18n';
 import { BackHandler } from 'react-native';
-
 const HomeCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
@@ -29,6 +29,7 @@ const HomeCleaningScreen = ({ navigation, t }) => {
   const [isloading, setIsLoading] = useState(false);
   const [dateErrors, setDateErrors] = useState(false);
   const [addressErrors, setAddressErrors] = useState(false);
+  const [showBookedModal, setShowBookedModal] = useState(false);
   // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
@@ -290,8 +291,9 @@ const HomeCleaningScreen = ({ navigation, t }) => {
         hcdispatch({
           type: 'RESET'
         });
-        Toast.show(i18n.t('booked'), Toast.LONG);
-        navigate('BookedScreen')
+        setShowBookedModal(true);
+        //Toast.show(i18n.t('booked'), Toast.LONG);
+        //navigate('HomeNavigator');
       }).catch((error) => {
         console.log(error);
         setIsLoading(false);
@@ -304,6 +306,10 @@ const HomeCleaningScreen = ({ navigation, t }) => {
     <>
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <Loader loading={isloading} />
+        <BookedScreen
+          showBookedModal={showBookedModal}
+          setShowBookedModal={setShowBookedModal}
+        />
         <ProgressSteps
           activeStepIconBorderColor='#f5c500'
           activeLabelColor='#f5c500'

@@ -11,6 +11,8 @@ import Spacer from '../components/Spacer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import ModalDetails from '../components/DisinfectionSteps/ModalDetails';
+import BookedScreen from '../components/DisinfectionSteps/BookedScreen';
+
 import { Context as UserContext } from './context/UserContext';
 import { Context as HCContext } from './context/HCContext';
 import { withNamespaces } from 'react-i18next';
@@ -29,6 +31,8 @@ const DisinfectionScreen = ({ navigation, t }) => {
   const [isloading, setIsLoading] = useState(false);
   const [dateErrors, setDateErrors] = useState(false);
   const [addressErrors, setAddressErrors] = useState(false);
+  const [showBookedModal, setShowBookedModal] = useState(false);
+
   // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
@@ -287,8 +291,9 @@ const DisinfectionScreen = ({ navigation, t }) => {
         hcdispatch({
           type: 'RESET'
         });
-        Toast.show(i18n.t('booked'), Toast.LONG);
-        navigate('BookedScreen')
+        setShowBookedModal(true);
+        //Toast.show(i18n.t('booked'), Toast.LONG);
+        //navigate('BookedScreen')
       }).catch((error) => {
         console.log(error);
         setIsLoading(false);
@@ -301,6 +306,10 @@ const DisinfectionScreen = ({ navigation, t }) => {
     <>
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         <Loader loading={isloading} />
+        <BookedScreen
+          showBookedModal={showBookedModal}
+          setShowBookedModal={setShowBookedModal}
+        />
         <ProgressSteps
           activeStepIconBorderColor='#f5c500'
           activeLabelColor='#f5c500'

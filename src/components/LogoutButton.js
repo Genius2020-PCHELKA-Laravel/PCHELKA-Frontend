@@ -13,11 +13,12 @@ import { getLang, storeLang } from '../api/userLanguage';
 // import ConfirmationDialog from './ConfirmationDialog';
 import { Updates } from 'expo';
 import { Avatar } from 'react-native-elements';
-
+import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken, getToken, setToken, removeToken } from '../api/token';
+import { navigate } from '../navigationRef';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LogoutButton = ({ t }) => {
     const { state: astate, logout } = useContext(AuthContext);
-    const { state: ustate, dispatch: udispatch } = useContext(UserContext);
+    const { state: ustate, dispatch: udispatch, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
     const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
     // const [shouldShow, setShouldShow] = useState(true);
     const [lang, setLang] = useState('en');
@@ -118,11 +119,19 @@ const LogoutButton = ({ t }) => {
                 icon={{ size: 25, name: 'logout', type: 'antdesign', color: '#000' }}
                 onPress={async () => {
                     setIsLoading(true);
+                    var expoToken = await getStorageExpoToken();
+                    await unsubscribeToNotification({ expo_token: expoToken });
                     logout().then(async () => {
-                        setIsLoading(false);
+                        await removeStorageExpoToken();
+                        await removeToken();
                         await hcdispatch({ type: 'RESET' });
                         await udispatch({ type: 'RESET' });
-                    }).catch(() => setIsLoading(false));
+                        setIsLoading(false);
+                        navigate('HomeScreenLogIn');
+                    }).catch((err) => {
+                        console.log("LogoutButton::logout func:error:: " + err);
+                        setIsLoading(false);
+                    });
                 }}
                 activeOpacity={0.7}
                 containerStyle={styles.avatar}
