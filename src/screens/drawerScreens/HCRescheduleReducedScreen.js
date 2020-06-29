@@ -17,6 +17,7 @@ import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
 import RescheduledScreen from './RescheduledScreen';
 import OfflineNotice from '../../components/OfflineNotice';
+import { getLang } from '../../api/userLanguage';
 
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch: hcdispatch, state: hcstate, getSchedules, rescheduleBook } = useContext(HCContext);
@@ -28,8 +29,19 @@ const HCRescheduleScreen = ({ children, t }) => {
     const [autoassign, setAutoassign] = useState(hcstate.autoassign);
     const [isloading, setIsLoading] = useState(false);
     const [showBookedModal, setShowBookedModal] = useState(false);
+    const [days_names, set_days_names] = useState('');
 
-    let days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    // const fetchLang
+    useEffect(() => {
+        let en_days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        let ru_days_names = ['Bc', 'пн', 'вт', 'Cp', 'Чт', 'пт', 'сб'];
+        getLang().then((response) => {
+            if (response === 'en')
+                set_days_names(en_days_names)
+            else
+                set_days_names(ru_days_names)
+        });
+    }, []);
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     const isInArray = (array, value) => {
