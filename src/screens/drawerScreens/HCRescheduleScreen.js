@@ -16,7 +16,9 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
-import ModalDetails from './ModalDetails'
+import ModalDetails from './ModalDetails';
+import OfflineNotice from '../../components/OfflineNotice';
+
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch: hcdispatch, state: hcstate, getSchedules } = useContext(HCContext);
     const { dispatch: udispatch, state: ustate } = useContext(UserContext);
@@ -253,6 +255,8 @@ const HCRescheduleScreen = ({ children, t }) => {
     };
     return (
         <>
+            <OfflineNotice />
+
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 <Loader loading={isloading} />
                 <ProgressSteps

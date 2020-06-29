@@ -11,6 +11,7 @@ import Loader from '../../components/Loader';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const PastScreen = ({ navigation, t }) => {
     const { state: hcstate, getPast, dispatch: hcdispatch } = useContext(HCContext);
@@ -49,6 +50,8 @@ const PastScreen = ({ navigation, t }) => {
     }
     return (
         <View style={{ flex: 1 }}>
+            <OfflineNotice />
+
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.container}

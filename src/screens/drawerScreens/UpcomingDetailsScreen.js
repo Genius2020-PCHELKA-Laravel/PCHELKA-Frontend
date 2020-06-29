@@ -7,6 +7,7 @@ import FontLight from "../../components/FontLight";
 import { withNamespaces } from 'react-i18next';
 import { Context as HCContext } from '../context/HCContext';
 import Spacer from '../../components/Spacer';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const UpcomingDetailsScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, getProviders, dispatch: hcdispatch } = useContext(HCContext);
@@ -25,6 +26,8 @@ const UpcomingDetailsScreen = ({ navigation, t }) => {
 
     return (
         <View style={styles.container}>
+            <OfflineNotice />
+
             <View flexDirection="column">
                 <FontLight mystyle={styles.title} value={t('status')} />
                 <FontBold mystyle={styles.subtitle} value={t(hcstate.selectedupcoming.status)} />

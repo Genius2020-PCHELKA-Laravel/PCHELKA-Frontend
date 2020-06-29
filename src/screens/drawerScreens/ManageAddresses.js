@@ -15,6 +15,7 @@ import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { getRedirect, setRedirect, removeRedirect } from '../../api/redirect';
 import i18n from '../../locales/i18n';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const ManageAddresses = ({ children, t }) => {
     const { state, getUserAddresses, dispatch } = useContext(UserContext);
@@ -45,6 +46,8 @@ const ManageAddresses = ({ children, t }) => {
     }
     return (
         <View style={styles.container}>
+            <OfflineNotice />
+
             {/* <Text>{state.selected_address}</Text>
             <Text>{state.selected_address_name}</Text> */}
             <ScrollView

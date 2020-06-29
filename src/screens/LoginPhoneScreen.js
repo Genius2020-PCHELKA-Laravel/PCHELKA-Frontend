@@ -10,6 +10,7 @@ import FontRegular from '../components/FontRegular';
 import Spacer from '../components/Spacer';
 import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
+import OfflineNotice from '../components/OfflineNotice';
 
 
 const LoginPhoneScreen = ({ navigation, t }) => {
@@ -97,6 +98,7 @@ const LoginPhoneScreen = ({ navigation, t }) => {
       <Text style={styles.Texts}> {mobile}  </Text>
       {state.errorMessage ? <Text style={styles.Texts}> {state.errorMessage}  </Text> : null} */}
     </View>
+    <OfflineNotice />
   </>
   );
 }

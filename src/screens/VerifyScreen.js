@@ -16,6 +16,8 @@ import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
 import Loader from '../components/Loader';
 import { navigate } from '../navigationRef';
+import OfflineNotice from '../components/OfflineNotice';
+
 const VerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, redirect } = navigation.state.params;
     const { verifysms, sendsms } = useContext(AuthContext);
@@ -147,6 +149,7 @@ const VerifyScreen = ({ navigation, t }) => {
             <FontBold mystyle={{ fontSize: 12 }} value={"OTP: " + otp}></FontBold>
             <FontBold mystyle={{ fontSize: 12 }} value={"Resend OTP:" + resendotp}></FontBold>
         </View>
+        <OfflineNotice />
     </>
     );
 }

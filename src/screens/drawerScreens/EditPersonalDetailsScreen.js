@@ -28,6 +28,9 @@ import { Context as UserContext } from '../context/UserContext';
 import { Context as AuthContext } from '../context/AuthContext';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
+import OfflineNotice from '../../components/OfflineNotice';
+
+
 const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const { state, editUserDetails, getUserDetails, dispatch } = useContext(UserContext);
     const { changemobilesendsms, changemobileverifysms } = useContext(AuthContext);
@@ -253,6 +256,8 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     };
     return (
         <>
+            <OfflineNotice />
+
             <View style={styles.container}>
                 <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">

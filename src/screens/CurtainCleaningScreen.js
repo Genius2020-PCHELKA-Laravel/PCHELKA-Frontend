@@ -20,6 +20,7 @@ import { navigate } from '../navigationRef';
 import Loader from '../components/Loader';
 import i18n from '../locales/i18n';
 import { BackHandler } from 'react-native';
+import OfflineNotice from '../components/OfflineNotice';
 
 const CurtainCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
@@ -294,6 +295,8 @@ const CurtainCleaningScreen = ({ navigation, t }) => {
           showBookedModal={showBookedModal}
           setShowBookedModal={setShowBookedModal}
         />
+        <OfflineNotice />
+
         <ProgressSteps
           activeStepIconBorderColor='#f5c500'
           activeLabelColor='#f5c500'

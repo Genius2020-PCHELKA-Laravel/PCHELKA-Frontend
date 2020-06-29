@@ -14,6 +14,7 @@ import LogoutButton from '../../components/LogoutButton';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const SettingScreen = ({ navigation, t }) => {
   //After Update Get the updatetd info
@@ -50,6 +51,8 @@ const SettingScreen = ({ navigation, t }) => {
 
   return (
     <View style={styles.container}>
+      <OfflineNotice />
+
       <View >
         <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
         <FontBold value={fullName} mystyle={styles.name} />

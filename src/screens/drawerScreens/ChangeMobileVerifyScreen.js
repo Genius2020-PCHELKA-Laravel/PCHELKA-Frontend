@@ -11,6 +11,7 @@ import OtpInputs from "react-native-otp-inputs";
 import { Context as UserContext } from '../context/UserContext';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const ChangeMobileVerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, fullName, email, dateOfBirth, gender, language } = navigation.state.params;
@@ -33,6 +34,8 @@ const ChangeMobileVerifyScreen = ({ navigation, t }) => {
     }, [resendotp]);
     return (<>
         <View style={styles.container}>
+            <OfflineNotice />
+
             <Loader loading={loading} />
             <Spacer>
                 <FontBold mystyle={styles.mobileText} value={t('enterthecodethatwassentto')}></FontBold>

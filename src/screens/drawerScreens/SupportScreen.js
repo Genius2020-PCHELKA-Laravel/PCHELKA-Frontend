@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Linking } from 'react-native';
 import { navigate } from "../../navigationRef";
 import { BackHandler } from 'react-native';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const SupportScreen = ({ navigation, t }) => {
   const phoneNumber = "380677665544";
@@ -25,6 +26,8 @@ const SupportScreen = ({ navigation, t }) => {
   }, []);
   return (
     <View style={styles.container}>
+      <OfflineNotice />
+
       <Spacer>
         <FontBold value={t('support')} mystyle={{ fontSize: 24, textAlign: "left" }} />
       </Spacer>

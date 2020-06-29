@@ -15,7 +15,9 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import Loader from '../../components/Loader';
 import { navigate } from '../../navigationRef';
-import RescheduledScreen from './RescheduledScreen'
+import RescheduledScreen from './RescheduledScreen';
+import OfflineNotice from '../../components/OfflineNotice';
+
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch: hcdispatch, state: hcstate, getSchedules, rescheduleBook } = useContext(HCContext);
     const { dispatch: udispatch, state: ustate } = useContext(UserContext);
@@ -255,6 +257,8 @@ const HCRescheduleScreen = ({ children, t }) => {
     };
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <OfflineNotice />
+
             <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
                 <Loader loading={isloading} />
                 <RescheduledScreen

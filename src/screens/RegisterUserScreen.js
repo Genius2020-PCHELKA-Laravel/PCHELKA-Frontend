@@ -28,6 +28,7 @@ import { setRedirect } from '../api/redirect';
 import MapContainer from '../components/lcation/MapContainer';
 import { BackHandler } from 'react-native';
 import { getLang, storeLang } from '../api/userLanguage';
+import OfflineNotice from '../components/OfflineNotice';
 
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
@@ -286,6 +287,8 @@ const RegisterUserScreen = ({ navigation, t }) => {
                 onPress={handleSubmitButton}>
                 <FontBold mystyle={styles.buttonTextStyle} value={t('register')} />
             </TouchableOpacity>
+            <OfflineNotice />
+
         </>
     );
 };

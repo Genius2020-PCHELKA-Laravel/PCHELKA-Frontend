@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import MapContainer from '../components/lcation/MapContainer';
 import { BackHandler } from 'react-native';
+import OfflineNotice from '../components/OfflineNotice';
 
 
 export default class MapScreen extends React.Component {
@@ -16,6 +17,7 @@ export default class MapScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <MapContainer />
+                <OfflineNotice />
             </View>
         );
     }

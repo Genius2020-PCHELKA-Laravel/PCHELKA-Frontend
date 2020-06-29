@@ -13,6 +13,7 @@ import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
 import AlertDialog from '../../components/AlertDialog';
 import { BackHandler, RefreshControl } from 'react-native';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const UpcomingScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, dispatch: hcdispatch } = useContext(HCContext);
@@ -153,6 +154,8 @@ const UpcomingScreen = ({ navigation, t }) => {
                         }} />
                 </Spacer>
             </TouchableOpacity> */}
+            <OfflineNotice />
+
         </View>
     );
 

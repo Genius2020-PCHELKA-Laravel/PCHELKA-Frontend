@@ -72,3 +72,174 @@ const styles = StyleSheet.create({
     },
 });
 export default OfflineNotice;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { PureComponent, Component } from 'react';
+// import { View, Text, Dimensions, StyleSheet } from 'react-native';
+// import NetInfo from '@react-native-community/netinfo';
+// import FontBold from '../components/FontBold';
+// import i18n from '../locales/i18n';
+// const { width } = Dimensions.get('window');
+// import Modal from 'react-native-modal';
+
+
+// export default class OfflineNotice extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             isConnected: true,
+//             showOfflineModal: false,
+//             showOnlineModal: false,
+//         };
+//     }
+//     handleConnectivityChange = (isConnected, showOfflineModal, showOnlineModal) => {
+//         this.setState({ isConnected, showOfflineModal, showOnlineModal });
+//     }
+//     componentDidMount() {
+//         NetInfo.addEventListener((state) => {
+//             this.setState({isConnected: state.isInternetReachable});
+//             if (state.isInternetReachable)
+//                 this.setState({ showOfflineModal: true, showOnlineModal: false });
+//             else
+//                 this.setState({ showOfflineModal: false, showOnlineModal: true });
+//         });
+//     }
+//     componentWillUnmount() {
+//         // NetInfo.removeEventListener();
+//     }
+//     MiniOfflineSign = () => {
+//         return (
+//             <View>
+//                 <Modal
+//                     style={{ flex: 1, margin: 0 }}
+//                     animationIn="slideInUp"
+//                     animationOut="slideOutDown"
+//                     animationInTiming={1200}
+//                     animationOutTiming={1200}
+//                     avoidKeyboard={true}
+//                     backdropColor='transparent'
+//                     transparent={true}
+//                     isVisible={this.state.showOfflineModal}
+//                     hideModalContentWhileAnimating={false}
+//                     coverScreen={true}
+//                     // onBackdropPress={() => this.props.setShowAddressesModal(false)}
+//                     // onBackButtonPress={() => this.props.setShowAddressesModal(false)}
+//                     // onSwipeComplete={() => this.props.setShowAddressesModal(false)}
+//                     // swipeThreshold={200}
+//                     // swipeDirection="down"
+//                     onRequestClose={() => {
+//                         // alert('Modal has been closed.');
+//                     }}>
+//                     <View style={styles.offlineContainer}>
+//                         <FontBold value={i18n.t('noconnection')} mystyle={styles.offlineText} />
+//                     </View>
+//                 </Modal>
+//             </View>
+
+//         );
+//     }
+//     MiniOnlineSign = () => {
+//         return (
+//             <View>
+//                 <Modal
+//                     style={{ flex: 1, margin: 0 }}
+//                     animationIn="slideInUp"
+//                     animationOut="slideOutDown"
+//                     animationInTiming={1200}
+//                     animationOutTiming={1200}
+//                     avoidKeyboard={true}
+//                     backdropColor='transparent'
+//                     transparent={true}
+//                     isVisible={this.state.showOnlineModal}
+//                     hideModalContentWhileAnimating={false}
+//                     coverScreen={true}
+//                     // onBackdropPress={() => this.props.setShowAddressesModal(false)}
+//                     // onBackButtonPress={() => this.props.setShowAddressesModal(false)}
+//                     // onSwipeComplete={() => this.props.setShowAddressesModal(false)}
+//                     // swipeThreshold={200}
+//                     // swipeDirection="down"
+//                     onRequestClose={() => {
+//                         // alert('Modal has been closed.');
+//                     }}>
+//                     <View style={styles.onlineContainer}>
+//                         <FontBold value={i18n.t('noconnection')} mystyle={styles.onlineText} />
+//                     </View>
+//                 </Modal>
+//             </View >
+//         );
+//     }
+//     render() {
+//         if (!this.state.isConnected) {
+//             // this.setState({ showOfflineModal: true, showOnlineModal: false });
+//             return this.MiniOfflineSign();
+//         }
+//         if (this.state.isConnected) {
+//             setTimeout(() => {
+//                 // this.setState({ showOfflineModal: false, showOnlineModal: true });
+//                 return this.MiniOnlineSign();
+//             }, 3000);
+//         }
+//         return null;
+//     }
+// }
+// const styles = StyleSheet.create({
+//     offlineContainer: {
+//         backgroundColor: '#b52424',
+//         height: 30,
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         flexDirection: 'row',
+//         width,
+//         position: 'absolute',
+//         bottom: 0
+//     },
+//     offlineText: {
+//         color: '#fff'
+//     },
+//     onlineContainer: {
+//         backgroundColor: 'green',
+//         height: 30,
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         flexDirection: 'row',
+//         width,
+//         position: 'absolute',
+//         bottom: 0
+//     },
+//     onlineText: {
+//         color: '#fff'
+//     },
+// });

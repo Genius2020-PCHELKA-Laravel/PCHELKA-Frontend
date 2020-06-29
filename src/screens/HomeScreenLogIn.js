@@ -20,6 +20,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { navigate } from '../navigationRef';
 import { BackHandler } from 'react-native';
 import ExitDialog from '../components/ExitDialog';
+import OfflineNotice from '../components/OfflineNotice';
 
 const HomeScreenLogIn = ({ navigation, t }) => {
   const { state, logout } = useContext(AuthContext);
@@ -87,6 +88,7 @@ const HomeScreenLogIn = ({ navigation, t }) => {
       <Spacer />
       <Spacer />
     </ScrollView>
+    <OfflineNotice />
   </>)
 };
 const styles = StyleSheet.create({

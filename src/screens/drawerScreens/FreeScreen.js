@@ -9,6 +9,7 @@ import FonrRegular from '../../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from "../../navigationRef";
 import { BackHandler } from 'react-native';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const FreeScreen = ({ navigation, t }) => {
   const { logout } = useContext(Authcontext2);
@@ -25,6 +26,8 @@ const FreeScreen = ({ navigation, t }) => {
 
   return (
     <View style={styles.container}>
+      <OfflineNotice />
+
       <View style={{ flex: 1 }}>
 
         <Text>Free</Text>

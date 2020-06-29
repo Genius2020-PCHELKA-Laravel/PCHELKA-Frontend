@@ -61,12 +61,20 @@ const HomeScreen = ({ navigation, t }) => {
       //await setStorageExpoToken('ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]');
       //await subscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
 
-      token = await Notifications.getExpoPushTokenAsync();
-      alert(token);
-      //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
-      //alert(token);
-      await setStorageExpoToken(token);
-      await subscribeToNotification({ expo_token: token });
+      token = await Notifications.getExpoPushTokenAsync().then(async (token) => {
+        alert(token);
+        //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
+        //alert(token);
+        await setStorageExpoToken(token);
+        await subscribeToNotification({ expo_token: token });
+      }).catch((err) => {
+        console.log("getExpoPushTokenAsync::Error:: " + err);
+      });
+      // alert(token);
+      // //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
+      // //alert(token);
+      // await setStorageExpoToken(token);
+      // await subscribeToNotification({ expo_token: token });
       // setExpoToken(token);
     } else {
       alert('Must use physical device for Push Notifications');

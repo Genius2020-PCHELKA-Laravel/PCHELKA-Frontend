@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Text, StyleSheet, View, Button, SafeAreaView, AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { Context as Authcontext2 } from '../context/AuthContext';
 import { FontAwesome5 } from '@expo/vector-icons';
+import OfflineNotice from '../../components/OfflineNotice';
 
 const ManageCreditCards = ({ navigation }) => {
     const { logout } = useContext(Authcontext2);
@@ -17,6 +18,8 @@ const ManageCreditCards = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <OfflineNotice />
+
 
             <Text>Manage Credit Cards</Text>
 
