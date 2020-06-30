@@ -58,6 +58,17 @@ const LogoutButton = ({ t }) => {
         //     console.log("LogoutButton::Can not get lang" + err);
         // });
     }, []);
+    useEffect(() => {
+        getLang().then((response) => {
+            console.log("SettingScreen selected Lang in Use Effect:  " + response);
+            setLang(response);
+            i18n.changeLanguage(response);
+        }).catch((err) => {
+            console.log("Settings Screen Can not get lang");
+            storeLang('en');
+            i18n.changeLanguage('en');
+        });
+    }, []);
     return (
         <View style={styles.container}>
             <Loader loading={isloading} />

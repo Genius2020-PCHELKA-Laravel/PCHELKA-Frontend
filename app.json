@@ -42,8 +42,7 @@
           "apiKey": "AIzaSyA_u9QcOXJP12w3VksEhaq48FZS-Y3iBHI"
         },
         "googleSignIn": {
-          "apiKey": "AIzaSyDvMr_qpKli8GQf1sgh0tOvejlhzuPj4e8",
-          "certificateHash": "C730EC75C1926B577B474C960533B21895916955"
+          "apiKey": "AIzaSyDvMr_qpKli8GQf1sgh0tOvejlhzuPj4e8"
         }
       }
     }

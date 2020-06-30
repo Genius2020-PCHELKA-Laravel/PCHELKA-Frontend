@@ -126,8 +126,8 @@ const InternetScreen = ({ navigation, t }) => {
     }).catch(async (err) => {
       console.log("InternetScreen::Can not get lang");
       storeLang('en');
-      var dlng = await getLang();
-      console.log("InternetScreen::StoreLang::DefualtLang::" + dlng);
+      // var dlng = await getLang();
+      // console.log("InternetScreen::StoreLang::DefualtLang::" + dlng);
       i18n.changeLanguage('en');
     });
     return () => {

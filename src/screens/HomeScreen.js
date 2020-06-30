@@ -27,8 +27,11 @@ import Constants from 'expo-constants';
 import { initnotify, getToken, newChannel, notify } from 'expo-push-notification-helper';
 import OfflineNotice from '../components/OfflineNotice';
 import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken } from '../api/token';
+import { getLang, storeLang } from '../api/userLanguage';
+
+
 const HomeScreen = ({ navigation, t }) => {
-  const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
+  const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification, userLanguage } = useContext(UserContext);
   const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
@@ -99,6 +102,21 @@ const HomeScreen = ({ navigation, t }) => {
     // notify(expoToken, "new message", "hello there how are you doing", "default")
 
     Notifications.addListener(_handleNotification);
+
+    getLang().then((response) => {
+      console.log("HomeScreen:: selected Lang in Use Effect:  " + response);
+      i18n.changeLanguage(response);
+      userLanguage({ language: response })
+        .then((resposnse) => {
+          //console.log("LogoutButton::UserLanguage" + (resposnse));
+        })
+        .catch((err) => {
+          console.log("LogoutButton::UserLanguage::error:: " + err);
+        });
+    }).catch(async (err) => {
+      console.log("InternetScreen::Can not get lang");
+
+    });
 
   }, []);
   // const [testToken, setTestToken] = useState('');

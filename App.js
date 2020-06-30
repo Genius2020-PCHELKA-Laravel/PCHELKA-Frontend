@@ -723,13 +723,13 @@ const AppDrawerNavigator = createDrawerNavigator({
       drawerIcon: <Fontisto name="date" size={20} color="#fff" />
     }),
   },
-  FreeDrawerNavigator: {
-    screen: FreeStackNavigator,
-    navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('freecleaning')} />,
-      drawerIcon: <MaterialCommunityIcons name="ticket-percent" size={20} color="#fff" />
-    }),
-  },
+  // FreeDrawerNavigator: {
+  //   screen: FreeStackNavigator,
+  //   navigationOptions: () => ({
+  //     drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('freecleaning')} />,
+  //     drawerIcon: <MaterialCommunityIcons name="ticket-percent" size={20} color="#fff" />
+  //   }),
+  // },
   SupportDrawerNavigator: {
     screen: SupportStackNavigator,
     navigationOptions: () => ({

@@ -23,6 +23,7 @@ export default class NotificationsComponent extends React.Component {
                 return;
             }
             token = await Notifications.getExpoPushTokenAsync();
+            alert(token)
             console.log("#############################" + token);
             this.setState({ expoPushToken: token });
         } else {

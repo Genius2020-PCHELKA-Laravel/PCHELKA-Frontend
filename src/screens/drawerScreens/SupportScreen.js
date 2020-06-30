@@ -42,7 +42,7 @@ const SupportScreen = ({ navigation, t }) => {
             <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { Linking.openURL('mailto:support@example.com') }}>
+        <TouchableOpacity onPress={() => { Linking.openURL('mailto:clean.pchelka@gmail.com') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('emailus')} ></FontBold>
             <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />

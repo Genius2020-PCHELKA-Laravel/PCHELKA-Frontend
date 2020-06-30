@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width,
         position: 'absolute',
-        bottom: 0
+        bottom: 0,
+        zIndex: 20
     },
     onlineText: {
         color: '#fff'
