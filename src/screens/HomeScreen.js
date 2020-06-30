@@ -83,6 +83,7 @@ const HomeScreen = ({ navigation, t }) => {
 
   const _handleNotification = notification => {
     Vibration.vibrate();
+    alert(notification)
     console.log(notification);
     setNotification(notification);
   };
@@ -101,7 +102,7 @@ const HomeScreen = ({ navigation, t }) => {
     // newChannel("GroupMessage");
     // notify(expoToken, "new message", "hello there how are you doing", "default")
 
-    Notifications.addListener(_handleNotification);
+    _notificationSubscription = Notifications.addListener(_handleNotification);
 
     getLang().then((response) => {
       console.log("HomeScreen:: selected Lang in Use Effect:  " + response);
