@@ -12,10 +12,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       images: [
-        "http://pchelka.org/img/slider/IMG-Slider1.jpg",
-        "http://pchelka.org/img/slider/IMG-Slider2.jpg",
-        "http://pchelka.org/img/slider/IMG-Slider3.jpg",
-        "http://pchelka.org/img/slider/IMG-Slider4.jpg"
+        "https://pchelka.org/img/slider/IMG-Slider3.jpg",
+        "https://pchelka.org/img/slider/IMG-Slider2.jpg",
+        "https://pchelka.org/img/slider/IMG-Slider1.jpg",
       ]
     };
   }
@@ -29,6 +28,19 @@ export default class App extends React.Component {
           sliderBoxHeight={200}
           dotColor="#f5c500"
           inactiveDotColor="#b4b4b4"
+          paginationBoxVerticalPadding={20}
+          resizeMethod={'resize'}
+          resizeMode={'contain'}
+          ImageComponentStyle={{ backgroundColor: "#fff", height: 175 }}
+          paginationBoxStyle={{
+            position: "absolute",
+            bottom: 0,
+            padding: 0,
+            alignItems: "center",
+            alignSelf: "center",
+            justifyContent: "center",
+            paddingVertical: 10
+          }}
           dotStyle={{
             width: 13,
             height: 13,
@@ -51,8 +63,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     // paddingTop: Constants.statusBarHeight,
-    paddingTop: 10,
+    paddingTop: 0,
+    paddingHorizontal: 0,
     backgroundColor: 'white',
-    padding: 0,
   }
 });

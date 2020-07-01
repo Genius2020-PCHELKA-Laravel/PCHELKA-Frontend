@@ -37,6 +37,18 @@
       "package": "com.genius.pchelka",
       "versionCode": 1,
       "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "VIBRATE",
+        "com.google.android.c2dm.permission.RECEIVE",
+        "com.majeur.launcher.permission.UPDATE_BADGE",
+        "com.sonyericsson.home.permission.BROADCAST_BADGE"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/Splash/biglogo.png",
+        "backgroundColor": "#FFFFFF"
+      },
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyA_u9QcOXJP12w3VksEhaq48FZS-Y3iBHI"
