@@ -508,6 +508,16 @@ const HCRescheduleScreen = ({ children, t }) => {
                     }}>
                     <FontBold mystyle={{ color: "#fff", fontSize: 12 }} value={t('next')} />
                 </TouchableOpacity>
+                <View style={{
+                    borderWidth: .5,
+                    borderColor: '#eee',
+                    borderBottomWidth: 0,
+                    shadowColor: '#eee',
+                    shadowOffset: { width: 0, height: 10 },
+                    shadowOpacity: 0.5,
+                    shadowRadius: 2,
+                    elevation: 1,
+                }} />
                 <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
             </View>
         </>
