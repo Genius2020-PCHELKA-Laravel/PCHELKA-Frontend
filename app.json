@@ -10,11 +10,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    // "splash": {
+    //   "image": "./assets/splash.png",
+    //   "resizeMode": "contain",
+    //   "backgroundColor": "#ffffff"
+    // },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -22,8 +22,8 @@
       "**/*"
     ],
     "notification": {
-      "icon": "./assets/icon.png",
-      "color": "#f5c500",
+      "icon": "./assets/notification-96-depth32.png",
+      "color": "#ffffff",
       "androidMode": "default",
       "iosDisplayInForeground": true,
       "androidCollapsedTitle": "PCHELKA"

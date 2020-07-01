@@ -12,10 +12,10 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       images: [
-        "https://source.unsplash.com/1024x768/?nature",
-        "https://source.unsplash.com/1024x768/?water",
-        "https://source.unsplash.com/1024x768/?girl",
-        "https://source.unsplash.com/1024x768/?tree"
+        "http://pchelka.org/img/slider/IMG-Slider1.jpg",
+        "http://pchelka.org/img/slider/IMG-Slider2.jpg",
+        "http://pchelka.org/img/slider/IMG-Slider3.jpg",
+        "http://pchelka.org/img/slider/IMG-Slider4.jpg"
       ]
     };
   }
@@ -30,9 +30,9 @@ export default class App extends React.Component {
           dotColor="#f5c500"
           inactiveDotColor="#b4b4b4"
           dotStyle={{
-            width: 15,
-            height: 15,
-            borderRadius: 15,
+            width: 13,
+            height: 13,
+            borderRadius: 13,
             marginHorizontal: 0,
             padding: 0,
             margin: 0

@@ -395,7 +395,7 @@ const DeepCleaningScreen = ({ navigation, t }) => {
           </ProgressStep>
         </ProgressSteps>
         <View style={{
-          borderWidth: .1,
+          borderWidth: .5,
           borderColor: '#eee',
           borderBottomWidth: 0,
           shadowColor: '#eee',
@@ -418,15 +418,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   nextButtonStyle: {
-    top: 85,
-    right: -50,
     backgroundColor: '#f5c500',
     borderRadius: 4,
     width: '100%'
   },
   previousButtonStyle: {
-    top: 85,
-    left: -50,
     backgroundColor: '#f5c500',
     borderRadius: 4,
     // fontFamily: 'Comfortaa-Bold',

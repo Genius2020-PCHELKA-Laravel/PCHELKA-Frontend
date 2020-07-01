@@ -28,7 +28,7 @@ export default SlideBar = props => {
                     </View>
                 </View>
                 <FontLight mystyle={styles.profileHeaderText} value={fullName} />
-                <View style={styles.profileHeaderLine} />
+                {/* <View style={styles.profileHeaderLine} /> */}
                 <View>
                     <DrawerNavigatorItems
                         activeBackgroundColor="#353626"

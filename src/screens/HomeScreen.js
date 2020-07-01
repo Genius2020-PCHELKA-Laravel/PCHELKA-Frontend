@@ -83,7 +83,7 @@ const HomeScreen = ({ navigation, t }) => {
 
   const _handleNotification = notification => {
     Vibration.vibrate();
-    alert(notification)
+    alert(JSON.stringify(notification))
     console.log(notification);
     setNotification(notification);
   };
@@ -277,19 +277,31 @@ const HomeScreen = ({ navigation, t }) => {
 
       <Spacer>
         <View style={styles.bottomcontainer}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DisinfectionScreen"} trending="no" biosafe="yes" comming="no" title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} trending="yes" biosafe="no" comming="no" title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} biosafe="no" trending="no" comming="yes" title={t('fulltimemade')} imagesource={require('../../assets/services/fulltimemaid.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"CarpetCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} biosafe="no" trending="no" comming="yes" title={t('laundary')} imagesource={require('../../assets/services/laundary.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DeepCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"CurtainCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} trending="no" biosafe="no" comming="yes" title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"MattressCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('mattresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"SofaCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('sofacleaning')} imagesource={require('../../assets/services/sofacleaning.jpg')} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} trending="no" biosafe="no" comming="yes" title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
-          </ScrollView>
+          </View>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          </ScrollView> */}
         </View>
       </Spacer>
       <Spacer />
@@ -349,7 +361,7 @@ const styles = StyleSheet.create({
   },
   booknowButtonStyle: {
     position: "absolute",
-    bottom: 60,
+    bottom: 40,
     left: 10,
     height: 35,
     backgroundColor: '#f5c500',

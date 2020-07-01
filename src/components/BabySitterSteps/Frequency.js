@@ -136,7 +136,6 @@ const Frequency = ({ children, t }) => {
 
 const styles = StyleSheet.create({
     DiscountStyle: {
-        textAlignVertical: "center",
         margin: 5,
         position: "absolute",
         top: 0,
@@ -146,21 +145,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5c500',
         borderRadius: 14,
         borderWidth: 0,
+        fontWeight: 'bold',
         borderColor: '#7a7a7a',
-        color: '#7a7a7a',
+        color: '#fff',
+        textAlignVertical: 'center',
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
         fontSize: 11,
         // fontFamily: 'Comfortaa-Bold',
-        shadowColor: '#7a7a7a',
+        padding: 5,
+        shadowColor: '#2AC062',
         fontWeight: 'bold',
         shadowOpacity: 0.5,
         shadowOffset: {
             height: 10,
-            width: 10
+            width: 0
         },
-        elevation: 2,
         shadowRadius: 25,
     },
     servicedesccontainer: {

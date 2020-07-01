@@ -34,9 +34,9 @@ export default class BookedScreen extends React.Component {
                 <Modal
                     style={{ flex: 1, margin: 0 }}
                     animationIn="bounceInDown"
-                    animationOut="bounceOutUp"
+                    animationOut="bounceOutDown"
                     animationInTiming={1200}
-                    animationOutTiming={1200}
+                    animationOutTiming={600}
                     avoidKeyboard={true}
                     backdropColor='transparent'
                     transparent={true}
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#ffffffaa"
+        // backgroundColor: "#ffffffaa"
     },
     imagecontainer: {
         flex: 1,

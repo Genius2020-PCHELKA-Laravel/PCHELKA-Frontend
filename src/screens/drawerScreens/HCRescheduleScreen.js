@@ -762,14 +762,17 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: '#7a7a7a',
         // fontFamily: 'Comfortaa-Bold',
-        width: '25%',
+        width: '18%',
         padding: 8,
         alignItems: "center",
     },
     myButtonTextStyle: {
         color: '#fff',
         fontSize: 20,
-        textAlign: "center"
+        textAlign: "center",
+        position: 'absolute',
+        bottom: 15,
+        right: 15
     },
     nextButtonStyle: {
         display: 'none',

@@ -295,15 +295,16 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     modalButtonStyle: {
+        flex: 0.5,
         bottom: 15,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 7,
-        borderWidth: 0,
+        borderRadius: 4,
+        borderWidth: 1,
         borderColor: '#7a7a7a',
-        width: "40%",
-        color: '#7a7a7a'
+        color: '#7a7a7a',
+        height: 35,
         // fontFamily: 'Comfortaa-Bold',
     },
     total: {

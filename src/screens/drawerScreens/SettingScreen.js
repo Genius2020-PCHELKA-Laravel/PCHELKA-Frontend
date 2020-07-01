@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   name: {
     position: 'absolute',
-    fontSize: 35,
+    fontSize: 22,
     top: 80,
     left: 0,
     right: 0,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   mobile: {
     position: 'absolute',
     fontSize: 20,
-    top: 170,
+    top: 120,
     left: 0,
     right: 0,
     textAlign: 'center',

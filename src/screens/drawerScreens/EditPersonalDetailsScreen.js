@@ -424,6 +424,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 15,
         marginRight: 15,
+        marginBottom: 30,
         height: 45,
     },
     buttonTextStyle: {
