@@ -45,10 +45,10 @@
         "com.majeur.launcher.permission.UPDATE_BADGE",
         "com.sonyericsson.home.permission.BROADCAST_BADGE"
       ],
-      // "adaptiveIcon": {
-      //   "foregroundImage": "./assets/Splash/biglogo.png",
-      //   "backgroundColor": "#FFFFFF"
-      // },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/Splash/biglogo_1024.png",
+        "backgroundColor": "#FFFFFF"
+      },
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyA_u9QcOXJP12w3VksEhaq48FZS-Y3iBHI"

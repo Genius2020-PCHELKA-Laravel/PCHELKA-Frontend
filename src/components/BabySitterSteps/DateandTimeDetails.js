@@ -31,12 +31,13 @@ const DateandTimeDetails = ({ children, t }) => {
         let en_days_names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         let ru_days_names = ['Bc', 'пн', 'вт', 'Cp', 'Чт', 'пт', 'сб'];
         getLang().then((response) => {
-            if (response === 'en')
-                set_days_names(en_days_names)
-            else
+            if (response === 'ru')
                 set_days_names(ru_days_names)
+            else if (response === 'en' || typeof response === 'undefined')
+                set_days_names(en_days_names)
         });
     }, []);
+
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     const isInArray = (array, value) => {

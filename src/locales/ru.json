@@ -277,5 +277,12 @@
   "carpetdesc3": "Полная дезинфекция и санитария с помощью пылесоса и мытья.",
   "curtaindesc1": "Curtain desc 1.",
   "curtaindesc2": "Curtain desc 2.",
-  "curtaindesc3": "Curtain desc 3."
+  "curtaindesc3": "Curtain desc 3.",
+  //after nasib
+  "nointernetconnection": "Ты не в сети",
+  "yesinternetconnection": "Вернуться онлайн",
+  "skip": "Пропускать",
+  "notevaluated": "Не оценивается",
+  "yourorder": "Твоя очередь",
+  "hasbeencompleted": "завершено"
 }

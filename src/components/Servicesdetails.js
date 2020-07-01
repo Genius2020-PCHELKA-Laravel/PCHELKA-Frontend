@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, StyleSheet, View, Image, Button, TouchableOpacity } from 'react-native';
 import { withNamespaces } from 'react-i18next';
 import FontBold from '../components/FontBold';
@@ -6,8 +6,15 @@ import FontRegular from '../components/FontRegular';
 import FontLight from '../components/FontLight';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { navigate } from '../navigationRef';
+import { getLang, storeLang } from '../api/userLanguage';
 
 const servicesdetails = ({ navigation, nav, redirect, biosafe, trending, comming, title, imagesource, t }) => {
+  const [lang, setLang] = useState(false);
+  getLang().then((response) => {
+    setLang(response);
+  }).catch(async (err) => {
+    setLang('en');
+  });
   return (<View style={styles.container}>
     <View flexDirection="column">
       <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
@@ -39,7 +46,7 @@ const servicesdetails = ({ navigation, nav, redirect, biosafe, trending, comming
 
         <FontBold mystyle={styles.servicetext} value={title} />
         <TouchableOpacity onPress={() => navigate(nav, { redirect: redirect })}>
-          <FontRegular value={t('booknow') + "  "} mystyle={styles.ButtonStyle} />
+          <FontRegular value={t('booknow')} mystyle={lang == 'ru' ? styles.ruButtonStyle : styles.enButtonStyle} />
         </TouchableOpacity>
       </View>
     </View>
@@ -86,8 +93,20 @@ const styles = StyleSheet.create({
     marginBottom: 10
 
   },
-  ButtonStyle: {
-    padding: 10,
+  ruButtonStyle: {
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    borderWidth: 1,
+    borderColor: '#fff',
+    fontSize: 16,
+    fontWeight: "500",
+    color: '#7a7a7a',
+  },
+  enButtonStyle: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     marginLeft: 30,
     marginRight: 30,
     borderWidth: 1,

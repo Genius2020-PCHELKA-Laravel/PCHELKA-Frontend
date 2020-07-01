@@ -442,6 +442,21 @@ const rescheduleBook = (dispatch) => {
         }
     };
 }
+
+
+const evaluation = (dispatch) => {
+    return async ({ bookId, starCount }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var result = await requestApi.post('/evaluation', { bookId, starCount });
+        } catch (err) {
+            console.log("Error::HCContex::evaluation::" + err);
+            dispatch({ type: 'add_error', payload: err });
+        }
+    };
+}
+
 export const { Context, Provider } = createDataContext(HCreducer,
     {
         getServices,
@@ -462,6 +477,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
         getUpcoming,
         getPast,
         getSelectedUpcoming,
+        evaluation
     },
     {
         services: [],

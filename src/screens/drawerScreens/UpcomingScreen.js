@@ -112,20 +112,20 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                 <FontLight mystyle={{ top: 10, right: 10 }} value={t('refcode') + ': ' + booking.refCode} />
                                                 {
                                                     booking.status == 'Completed' ?
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "lightgreen", backgroundColor: "lightgreen" }}>
-                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('completed')} />
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#228B22", backgroundColor: "#228B22" }}>
+                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
                                                         </View>
                                                         : booking.status == 'Confirmed' ?
-                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
-                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f5b100", backgroundColor: "#f5b100" }}>
+                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 40, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
                                                             </View>
                                                             : booking.status == 'Rescheduled' ?
-                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ff9800", backgroundColor: "#ff9800" }}>
-                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f58800", backgroundColor: "#f58800" }}>
+                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
                                                                 </View> :
                                                                 booking.status == 'Canceled' ?
-                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "red", backgroundColor: "red" }}>
-                                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#b52424", backgroundColor: "#b52424" }}>
+                                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
                                                                     </View>
                                                                     : null
                                                 }

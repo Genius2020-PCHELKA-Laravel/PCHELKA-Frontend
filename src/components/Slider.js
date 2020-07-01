@@ -12,9 +12,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       images: [
-        "https://pchelka.org/img/slider/IMG-Slider3.jpg",
-        "https://pchelka.org/img/slider/IMG-Slider2.jpg",
         "https://pchelka.org/img/slider/IMG-Slider1.jpg",
+        "https://pchelka.org/img/slider/IMG-Slider2.jpg",
+        "https://pchelka.org/img/slider/IMG-Slider3.jpg",
       ]
     };
   }

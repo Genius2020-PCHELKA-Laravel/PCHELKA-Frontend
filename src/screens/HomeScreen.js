@@ -21,6 +21,7 @@ import { navigate } from '../navigationRef';
 import NotificationsComponent from '../components/NotificationsComponent';
 import { BackHandler } from 'react-native';
 import ExitDialog from '../components/ExitDialog';
+import EvaluationDialog from '../components/EvaluationDialog';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
@@ -28,7 +29,6 @@ import { initnotify, getToken, newChannel, notify } from 'expo-push-notification
 import OfflineNotice from '../components/OfflineNotice';
 import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken } from '../api/token';
 import { getLang, storeLang } from '../api/userLanguage';
-
 
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification, userLanguage } = useContext(UserContext);
@@ -39,6 +39,10 @@ const HomeScreen = ({ navigation, t }) => {
   const imageWidth = dimensions.width;
   const [changing, setChanging] = useState(false);
   const [notification, setNotification] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [bookingID, setBookingID] = useState('');
+  const [bookingRefCode, setBookingRefCode] = useState('');
+  const [providerImageURL, setProviderImageURL] = useState('');
   // const [expoToken, setExpoToken] = useState('');
 
   const registerForPushNotificationsAsync = async () => {
@@ -64,10 +68,10 @@ const HomeScreen = ({ navigation, t }) => {
       //await setStorageExpoToken('ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]');
       //await subscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
       try {
-        alert("before")
+        // alert("before")
         token = await Notifications.getExpoPushTokenAsync();
-        alert("after")
-        alert(token);
+        // alert("after")
+        // alert(token);
         //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
         //alert(token);
         await setStorageExpoToken(token);
@@ -86,9 +90,32 @@ const HomeScreen = ({ navigation, t }) => {
     alert(JSON.stringify(notification))
     console.log(notification);
     setNotification(notification);
+
+    // if (notification.origin == "received" || notification.origin == "selected") {
+    getUpcoming().then((response) => {
+      console.log("HomeScreen::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+    getPast().then((response) => {
+      console.log("HomeScreen::useffect::getUpcoming::response:: ");
+      //console.log("######################" + JSON.stringify(response));
+    }).catch((error) => {
+      console.log(error);
+    });
+    // }
+    setModalVisible(true);
+    setProviderImageURL(notification.data.image);
+    setBookingID(notification.data.bookId);
+    setBookingRefCode(notification.data.refCode);
   };
 
   useEffect(() => {
+    // setModalVisible(true);
+    // setProviderImageURL('https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg');
+    // setBookingID(63);
+    // setBookingRefCode('WL8THF');
     registerForPushNotificationsAsync();
     // initnotify().then(async (data) => {
     //   if (data) {
@@ -222,6 +249,13 @@ const HomeScreen = ({ navigation, t }) => {
   return (<>
     <ScrollView style={styles.container}>
       <ExitDialog changing={changing} setChanging={setChanging} />
+      <EvaluationDialog
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        providerImageURL={providerImageURL}
+        bookingID={bookingID}
+        bookingRefCode={bookingRefCode}
+      />
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>
         <View style={styles.middlecontainer1}>
