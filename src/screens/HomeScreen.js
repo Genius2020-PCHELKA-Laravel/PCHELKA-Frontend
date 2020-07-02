@@ -69,7 +69,8 @@ const HomeScreen = ({ navigation, t }) => {
       //await subscribeToNotification({ expo_token: 'ExponentPushToken[MvcYILJyHS34NhC0vmcMYx]' });
       try {
         // alert("before")
-        token = await Notifications.getExpoPushTokenAsync();
+        // token = await Notifications.getExpoPushTokenAsync();
+        token = await Notifications.getDevicePushTokenAsync();
         // alert("after")
         // alert(token);
         //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + token);
