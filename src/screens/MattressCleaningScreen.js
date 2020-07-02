@@ -25,12 +25,14 @@ const MattressCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
   //   headerShown: false
   // };
-  const { state: hcstate, HCBooking, dispatch: hcdispatch, getProviders, getSchedules, pay } = useContext(HCContext);
+  const { state: hcstate, HCBooking, dispatch: hcdispatch, getProviders, getSchedules, pay, getUpcoming } = useContext(HCContext);
   const { state } = useContext(UserContext);
   const [isloading, setIsLoading] = useState(false);
   const [dateErrors, setDateErrors] = useState(false);
   const [addressErrors, setAddressErrors] = useState(false);
   const [showBookedModal, setShowBookedModal] = useState(false);
+  const [refCode, setRefCode] = useState('');
+
   // const [ispaid, setIspaid] = useState('');
   // const [hourPrice, setHourPrice] = useState(0);
   // const [hourMaterialPrice, setHourMaterialPrice] = useState(0);
@@ -252,10 +254,19 @@ const MattressCleaningScreen = ({ navigation, t }) => {
         ]
       }).then(() => {
         setIsLoading(false);
-        hcdispatch({
-          type: 'RESET'
-        });
         setShowBookedModal(true);
+        getUpcoming().then((response) => {
+          // alert(JSON.stringify(response.reverse()[0].refCode));
+          setRefCode(JSON.stringify(response.sort((a, b) => a.id < b.id ? 1 : -1)[0].refCode));
+          console.log("MattressCleaningScreen::afterBooking::getUpcoming::response:: ");
+          //console.log("######################" + JSON.stringify(response));
+          hcdispatch({
+            type: 'RESET'
+          });
+        }).catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
         // Toast.show(i18n.t('booked'), Toast.LONG);
         // navigate('BookedScreen')
       }).catch((error) => {
@@ -273,6 +284,7 @@ const MattressCleaningScreen = ({ navigation, t }) => {
         <BookedScreen
           showBookedModal={showBookedModal}
           setShowBookedModal={setShowBookedModal}
+          refCode={refCode}
         />
         <OfflineNotice />
 

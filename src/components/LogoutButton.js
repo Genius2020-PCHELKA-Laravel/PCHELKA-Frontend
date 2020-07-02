@@ -9,36 +9,39 @@ import Loader from '../components/Loader';
 import { Context as AuthContext } from '../screens/context/AuthContext';
 import { Context as UserContext } from '../screens/context/UserContext';
 import { Context as HCContext } from '../screens/context/HCContext';
-import { getLang, storeLang } from '../api/userLanguage';
+
 // import ConfirmationDialog from './ConfirmationDialog';
 import { Updates } from 'expo';
 import { Avatar } from 'react-native-elements';
 import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken, getToken, setToken, removeToken } from '../api/token';
 import { navigate } from '../navigationRef';
 import RNRestart from 'react-native-restart'; // Import package from node modules
+import LogoutDialog from '../components/LogoutDialog';
+
 const LogoutButton = ({ t }) => {
     const { state: astate, logout } = useContext(AuthContext);
-    const { state: ustate, dispatch: udispatch, subscribeToNotification, unsubscribeToNotification, userLanguage } = useContext(UserContext);
+    const { state: ustate, dispatch: udispatch, subscribeToNotification, unsubscribeToNotification } = useContext(UserContext);
     const { state: hcstate, dispatch: hcdispatch } = useContext(HCContext);
     // const [shouldShow, setShouldShow] = useState(true);
-    const [lang, setLang] = useState('en');
     const [isloading, setIsLoading] = useState(false);
+    const [showModalVisibleLogout, setShowModalVisibleLogout] = useState(false);
     // const [changing, setChanging] = useState(false);
-    const changeLanguage = (lng) => {
-        try {
-            console.log("Toggle language to:  " + lng);
-            setLang(lng);
-            storeLang(lng);
-            i18n.changeLanguage(lng);
-            userLanguage({ language: lng })
-                .then((resposnse) => {
-                    //console.log("LogoutButton::UserLanguage" + (resposnse));
-                })
-                .catch((err) => {
-                    console.log("LogoutButton::UserLanguage::error:: " + err);
-                });
-            // shouldShow ? setShouldShow(false) : setShouldShow(true);
-        } catch (e) { "Error:: " + e }
+
+    const oklogout = async () => {
+        setIsLoading(true);
+        var expoToken = await getStorageExpoToken();
+        await unsubscribeToNotification({ expo_token: expoToken });
+        logout().then(async () => {
+            await removeStorageExpoToken();
+            await removeToken();
+            await hcdispatch({ type: 'RESET' });
+            await udispatch({ type: 'RESET' });
+            setIsLoading(false);
+            navigate('HomeScreenLogIn');
+        }).catch((err) => {
+            console.log("LogoutButton::logout func:error:: " + err);
+            setIsLoading(false);
+        });
     }
     useEffect(() => {
         // getLang().then(async (response) => {
@@ -58,20 +61,15 @@ const LogoutButton = ({ t }) => {
         //     console.log("LogoutButton::Can not get lang" + err);
         // });
     }, []);
-    useEffect(() => {
-        getLang().then((response) => {
-            console.log("SettingScreen selected Lang in Use Effect:  " + response);
-            setLang(response);
-            i18n.changeLanguage(response);
-        }).catch((err) => {
-            console.log("Settings Screen Can not get lang");
-            storeLang('en');
-            i18n.changeLanguage('en');
-        });
-    }, []);
+
     return (
         <View style={styles.container}>
             <Loader loading={isloading} />
+            <LogoutDialog
+                showModalVisibleLogout={showModalVisibleLogout}
+                setShowModalVisibleLogout={setShowModalVisibleLogout}
+                oklogout={oklogout}
+            />
             {/* <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} /> */}
             {/* {
                 lang === 'en' ?
@@ -89,36 +87,7 @@ const LogoutButton = ({ t }) => {
                             <FontBold mystyle={styles.languageButtonStyle} value="русский" />
                         </TouchableOpacity>
             } */}
-            {
-                lang === 'en' ?
-                    <Avatar
-                        size="small"
-                        rounded
-                        source={require('../../assets/ru.png')}
-                        onPress={() => { changeLanguage('ru') }}
-                        activeOpacity={0.7}
-                        containerStyle={styles.flag}
-                    />
-                    :
-                    lang === 'ru' ?
-                        <Avatar
-                            size="small"
-                            rounded
-                            source={require('../../assets/en.png')}
-                            onPress={async () => { changeLanguage('en') }}
-                            activeOpacity={0.7}
-                            containerStyle={styles.flag}
-                        />
-                        :
-                        <Avatar
-                            size="small"
-                            rounded
-                            source={require('../../assets/ru.png')}
-                            onPress={async () => { changeLanguage('ru') }}
-                            activeOpacity={0.7}
-                            containerStyle={styles.flag}
-                        />
-            }
+
             {/* <TouchableOpacity onPress={async () => {
 
                 setIsLoading(true);
@@ -132,30 +101,22 @@ const LogoutButton = ({ t }) => {
                     {t('logout')} {' '}<FontAwesome5 name="user" size={14} color="#7a7a7a" />
                 </Text>
             </TouchableOpacity> */}
+            <TouchableOpacity onPress={async () => {
+                setShowModalVisibleLogout(true);
+            }}>
+                <View style={{ flexDirection: 'row' }}>
+                    <FontBold value={t('logout')} mystyle={{ color: "#b52424", textAlignVertical: "center" }} />
+                    <Avatar
+                        size="small"
+                        rounded
+                        icon={{ size: 25, name: 'logout', type: 'antdesign', color: '#b52424' }}
+                        activeOpacity={0.7}
+                        containerStyle={styles.avatar}
+                    />
+                </View>
 
-            <Avatar
-                size="small"
-                rounded
-                icon={{ size: 25, name: 'logout', type: 'antdesign', color: '#000' }}
-                onPress={async () => {
-                    setIsLoading(true);
-                    var expoToken = await getStorageExpoToken();
-                    await unsubscribeToNotification({ expo_token: expoToken });
-                    logout().then(async () => {
-                        await removeStorageExpoToken();
-                        await removeToken();
-                        await hcdispatch({ type: 'RESET' });
-                        await udispatch({ type: 'RESET' });
-                        setIsLoading(false);
-                        navigate('HomeScreenLogIn');
-                    }).catch((err) => {
-                        console.log("LogoutButton::logout func:error:: " + err);
-                        setIsLoading(false);
-                    });
-                }}
-                activeOpacity={0.7}
-                containerStyle={styles.avatar}
-            />
+
+            </TouchableOpacity>
 
         </View >
     )

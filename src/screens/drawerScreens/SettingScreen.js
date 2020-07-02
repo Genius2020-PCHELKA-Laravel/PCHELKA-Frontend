@@ -15,12 +15,33 @@ import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
 import OfflineNotice from '../../components/OfflineNotice';
-
+import LanguageDialog from '../../components/LanguageDialog';
+import i18n from '../../locales/i18n';
+import { getLang, storeLang } from '../../api/userLanguage';
 const SettingScreen = ({ navigation, t }) => {
   //After Update Get the updatetd info
-  const { state } = useContext(UserContext);
+  const { state, userLanguage } = useContext(UserContext);
   const [fullName, setFullName] = useState(t('fullname'));
   const [mobile, setMobile] = useState(t('mobile'));
+  const [lang, setLang] = useState('en');
+  const changeLanguage = (lng) => {
+    try {
+      console.log("Toggle language to:  " + lng);
+      setLang(lng);
+      storeLang(lng);
+      i18n.changeLanguage(lng);
+      userLanguage({ language: lng })
+        .then((resposnse) => {
+          //console.log("LogoutButton::UserLanguage" + (resposnse));
+        })
+        .catch((err) => {
+          console.log("LogoutButton::UserLanguage::error:: " + err);
+        });
+      // shouldShow ? setShouldShow(false) : setShouldShow(true);
+    } catch (e) { "Error:: " + e }
+  }
+
+  const [showModalVisibleLanguage, setShowModalVisibleLanguage] = useState(false);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 9 / 16);
   const imageWidth = dimensions.width;
@@ -48,11 +69,26 @@ const SettingScreen = ({ navigation, t }) => {
     setFullName(state.userDetails.fullName);
     setMobile(state.userDetails.mobile);
   }, [state.userDetails]);
-
+  useEffect(() => {
+    getLang().then((response) => {
+      console.log("SettingScreen selected Lang in Use Effect:  " + response);
+      setLang(response);
+      i18n.changeLanguage(response);
+    }).catch((err) => {
+      console.log("Settings Screen Can not get lang");
+      storeLang('en');
+      i18n.changeLanguage('en');
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <OfflineNotice />
-
+      <LanguageDialog
+        lang={lang}
+        setLang={setLang}
+        changeLanguage={changeLanguage}
+        showModalVisibleLanguage={showModalVisibleLanguage}
+        setShowModalVisibleLanguage={setShowModalVisibleLanguage} />
       <View >
         <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
         <FontBold value={fullName} mystyle={styles.name} />
@@ -82,6 +118,43 @@ const SettingScreen = ({ navigation, t }) => {
         <TouchableOpacity onPress={() => { navigate('ManageAddresses') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('manageaddresses')} ></FontBold>
+            <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
+          </View>
+        </TouchableOpacity>
+        <Spacer />
+        <TouchableOpacity onPress={() => { setShowModalVisibleLanguage(true) }}>
+          <View style={styles.row}>
+            <FontBold mystyle={styles.item3} value={t('language')} ></FontBold>
+            {
+              lang === 'en' ?
+                <Avatar
+                  size="small"
+                  rounded
+                  source={require('../../../assets/en.png')}
+                  onPress={() => { setShowModalVisibleLanguage(true) }}
+                  activeOpacity={0.7}
+                  containerStyle={styles.flag}
+                />
+                :
+                lang === 'ru' ?
+                  <Avatar
+                    size="small"
+                    rounded
+                    source={require('../../../assets/ru.png')}
+                    onPress={async () => { setShowModalVisibleLanguage(true) }}
+                    activeOpacity={0.7}
+                    containerStyle={styles.flag}
+                  />
+                  :
+                  <Avatar
+                    size="small"
+                    rounded
+                    source={require('../../../assets/en.png')}
+                    onPress={async () => { setShowModalVisibleLanguage(true) }}
+                    activeOpacity={0.7}
+                    containerStyle={styles.flag}
+                  />
+            }
             <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
@@ -154,7 +227,11 @@ const styles = StyleSheet.create({
     top: 15,
     right: 15
   },
-
+  item3: {
+    fontSize: 16,
+    marginLeft: 15,
+    width: '30%' // is 50% of container width
+  },
   // avatar: {
   //   position: 'absolute',
   //   backgroundColor: '#f5c500',
@@ -190,7 +267,14 @@ const styles = StyleSheet.create({
     color: '#aaa',
     fontSize: 14,
     marginLeft: 15
-  }
+  },
+  flag: {
+    borderColor: '#000',
+    borderWidth: 0,
+    backgroundColor: '#fff',
+    width: 30,
+    height: 30,
+  },
 });
 
 export default withNamespaces()(SettingScreen);

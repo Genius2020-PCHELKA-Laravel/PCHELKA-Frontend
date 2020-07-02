@@ -159,9 +159,9 @@ const styles = StyleSheet.create({
         bottom: 15,
         left: 10,
         right: 10,
-        backgroundColor: '#fff',
+        backgroundColor: '#f5c500',
         borderWidth: 1,
-        borderColor: '#7a7a7a',
+        borderColor: '#f5c500',
         alignItems: 'center',
         borderRadius: 7,
         marginTop: 20,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     buttonTextStyle: {
-        color: '#7a7a7a',
+        color: '#fff',
         paddingVertical: 10,
         fontSize: 22,
     },

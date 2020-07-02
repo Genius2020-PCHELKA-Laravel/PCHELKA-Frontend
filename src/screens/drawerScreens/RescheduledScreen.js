@@ -123,15 +123,20 @@ export default class RescheduledScreen extends React.Component {
 
                         <TouchableWithoutFeedback>
                             <View style={styles.container}>
-                                <Spacer>
-                                    <FontBold value={i18n.t('thankyou')} mystyle={{ textAlign: "center", fontSize: 20 }} />
-                                </Spacer>
-                                {/* <Spacer>
-                                    <FontLight value={i18n.t('booked')} mystyle={{ textAlign: "center", color: 'gray', fontSize: 20 }} />
-                                </Spacer> */}
-                                <View style={styles.imagecontainer} >
-                                    <Image style={styles.image} source={require('../../../assets/correct.png')} />
+                                <View style={{
+                                    flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
+                                }}>
+                                    <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
+                                        <FontBold value={"\"" + this.props.refCode + "\" " + i18n.t('rescheduled')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                    </View>
                                 </View>
+                                <Spacer>
+                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                        <FontAwesome name="calendar-check-o" size={30} color="#228B22" />
+                                        <FontBold value={i18n.t('thankyou')} mystyle={{ textAlign: "center", fontSize: 20, marginLeft: 10 }} />
+                                    </View>
+                                </Spacer>
+
                                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                     <TouchableOpacity onPress={async () => {
                                         await this.props.setShowBookedModal(false);
@@ -157,7 +162,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 150,
+        height: 200,
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -178,17 +183,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    imagecontainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    image: {
-        width: 45,
-        height: 45,
-        borderColor: "#fff",
-        opacity: 1,
     },
     btn: {
         backgroundColor: '#f5c500',

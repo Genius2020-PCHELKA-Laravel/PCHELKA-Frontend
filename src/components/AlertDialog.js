@@ -53,11 +53,19 @@ const AlertDialog = props => {
 
                 <TouchableWithoutFeedback>
                     <View style={styles.container}>
+                        <View style={{
+                            flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
+                        }}>
+                            <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
+                                <FontBold value={i18n.t('alert')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                            </View>
+                        </View>
                         <View flexDirection="row" style={{ marginBottom: 5 }}>
-                            <FontBold mystyle={{ fontSize: 20 }} value={i18n.t('alert')} />
                             {/* <AntDesign style={{ position: "absolute", right: 15, top: 0 }} name="warning" size={45} color="#d21404" /> */}
                         </View>
-                        <FontRegular mystyle={{ fontSize: 16, lineHeight: 25 }} value={i18n.t('notpermittedyourescheduledbefore')} />
+                        <Spacer>
+                            <FontRegular mystyle={{ fontSize: 16, lineHeight: 25 }} value={i18n.t('notpermittedyourescheduledbefore')} />
+                        </Spacer>
                         <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: 15 }}>
                             <TouchableOpacity style={styles.btn} onPress={handleCancel} >
                                 <FontBold mystyle={{ color: 'blue' }} value={i18n.t('ok')} />
@@ -75,13 +83,21 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 165,
+        height: 210,
         width: '90%',
         bottom: "40%",
-        borderRadius: 0,
-        borderWidth: 1,
-        borderColor: "#7a7a7a",
-        padding: 20
+        borderTopLeftRadius: 14,
+        borderTopRightRadius: 14,
+        // borderWidth: 1,
+        // borderColor: "#2Ac062",
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 1.0,
+        shadowOffset: {
+            height: 10,
+            width: 10
+        },
+        shadowRadius: 10,
+        elevation: 10
     },
     wrapper: {
         flex: 1,

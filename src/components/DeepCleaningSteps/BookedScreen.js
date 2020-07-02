@@ -8,7 +8,8 @@ import {
     StyleSheet,
     ScrollView,
     TextInput,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native';
 import { AntDesign, Entypo, FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -55,15 +56,31 @@ export default class BookedScreen extends React.Component {
 
                         <TouchableWithoutFeedback>
                             <View style={styles.container}>
-                                <Spacer>
-                                    <FontBold value={i18n.t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: 20 }} />
-                                </Spacer>
-                                {/* <Spacer>
-                                    <FontLight value={i18n.t('booked')} mystyle={{ textAlign: "center", color: 'gray', fontSize: 20 }} />
-                                </Spacer> */}
-                                <View style={styles.imagecontainer} >
-                                    <Image style={styles.image} source={require('../../../assets/correct.png')} />
+                                <View style={{
+                                    flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
+                                }}>
+                                    <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                            {
+                                                this.props.refCode === '' ?
+                                                    <ActivityIndicator color='#fff' animating={true} />
+                                                    :
+                                                    <FontBold value={this.props.refCode + " "} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                            }
+                                            <FontBold value={i18n.t('booked')} mystyle={{ fontSize: 20, color: "#fff" }} />
+                                        </View>
+
+                                    </View>
                                 </View>
+                                <Spacer>
+                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                        <FontAwesome name="calendar-check-o" size={30} color="#228B22" />
+                                        <FontBold value={i18n.t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: 20, marginLeft: 10 }} />
+                                    </View>
+                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                        <FontLight value={i18n.t('youcanseeyourupcomingappoitmentsunderappoitments')} mystyle={{ textAlign: "center", fontSize: 16, marginLeft: 10 }} />
+                                    </View>
+                                </Spacer>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                     <TouchableOpacity onPress={async () => {
                                         await this.props.setShowBookedModal(false);
@@ -89,7 +106,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 150,
+        height: 225,
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -110,17 +127,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    imagecontainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    image: {
-        width: 45,
-        height: 45,
-        borderColor: "#fff",
-        opacity: 1,
+        // backgroundColor: "#ffffffaa"
     },
     btn: {
         backgroundColor: '#f5c500',

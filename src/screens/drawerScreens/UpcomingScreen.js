@@ -64,7 +64,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                         // <Image style={styles.noappoitments} source={require('../../../assets/noappoitments.png')} />
                         <FontBold value={t('noupcomingappoitment')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
                         :
-                        hcstate.upcoming.sort((a, b) => a.duoDate > b.duoDate ? 1 : -1).map((booking, i) => {
+                        hcstate.upcoming.sort((a, b) => a.id < b.id ? 1 : -1).map((booking, i) => {
                             return (
                                 <TouchableOpacity
                                     key={booking.id}

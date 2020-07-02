@@ -284,5 +284,14 @@
   "skip": "Пропускать",
   "notevaluated": "Не оценивается",
   "yourorder": "Твоя очередь",
-  "hasbeencompleted": "завершено"
+  "hasbeencompleted": "завершено",
+  "english": "English",
+  "russian": "русский",
+  "language": "язык",
+  "applanguage": "Язык приложения",
+  "exitapp": "Выход из приложения",
+  "logoutapp": "Выйти из приложения",
+  "doyouwanttologout": "Вы хотите выйти?",
+  "youcanseeyourupcomingappoitmentsunderappoitments": "Отслеживайте свои предстоящие назначения в соответствии с назначениями",
+  "success": "успех"
 }

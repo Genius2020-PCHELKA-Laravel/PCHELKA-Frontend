@@ -11,8 +11,8 @@
   //Home Screen
   "noconnection": "No connection",
   "pleasecheckyourinternetconnectionandtryagain": "Please check your internet connection and try again",
-  "logout": "logout",
-  "login": "login",
+  "logout": "LOGOUT",
+  "login": "LOGIN",
   "booknow": "Book Now",
   "cleaningservicetext": "Home Cleaning",
   "cleaningservicedetailtext": "Your trusted maid service in Ukrain starting from UAH 30 per hour",
@@ -283,5 +283,14 @@
   "skip": "Skip",
   "notevaluated": "Not evaluated",
   "yourorder": "Your order",
-  "hasbeencompleted": "has been completed"
+  "hasbeencompleted": "has been completed",
+  "english": "English",
+  "russian": "русский",
+  "language": "Language",
+  "applanguage": "App Language",
+  "exitapp": "Exit from App",
+  "logoutapp": "Logout from App",
+  "doyouwanttologout": "Do you want to logout?",
+  "youcanseeyourupcomingappoitmentsunderappoitments": "Track your upcoming appoitments under appoitments",
+  "success": "Success"
 }

@@ -64,17 +64,27 @@ const ExitDialog = props => {
                 <TouchableWithoutFeedback>
 
                     <View style={styles.container}>
-                        <View flexDirection="row" style={{ marginBottom: 5 }}>
-                            <FontBold mystyle={{ fontSize: 20 }} value={i18n.t('exit')} />
-                            {/* <AntDesign style={{ position: "absolute", right: 15, top: 0 }} name="warning" size={45} color="#d21404" /> */}
+                        <View style={{
+                            flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
+                        }}>
+                            <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
+                                <FontBold value={i18n.t('exitapp')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                            </View>
                         </View>
-                        <FontRegular mystyle={{ fontSize: 16 }} value={i18n.t('doyouwanttoexit')} />
+                        <Spacer />
+                        {/* <View flexDirection="row" style={{ marginBottom: 5 }}> */}
+                        {/* <FontBold mystyle={{ fontSize: 20 }} value={i18n.t('exit')} /> */}
+                        {/* <AntDesign style={{ position: "absolute", right: 15, top: 0 }} name="warning" size={45} color="#d21404" /> */}
+                        {/* </View> */}
+                        <Spacer>
+                            <FontRegular mystyle={{ fontSize: 16 }} value={i18n.t('doyouwanttoexit')} />
+                        </Spacer>
                         <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: 20 }}>
                             <TouchableOpacity style={styles.btn} onPress={handleCancel} >
                                 <FontBold value={i18n.t('cancel')} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.btn} onPress={handleChange} >
-                                <FontBold mystyle={{ color: "#d21404" }} value={i18n.t('ok')} />
+                                <FontBold mystyle={{ color: "#b52424" }} value={i18n.t('ok')} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -89,13 +99,21 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 165,
+        height: 210,
         width: '90%',
         bottom: "40%",
-        borderRadius: 0,
-        borderWidth: 1,
-        borderColor: "#7a7a7a",
-        padding: 20
+        borderTopLeftRadius: 14,
+        borderTopRightRadius: 14,
+        // borderWidth: 1,
+        // borderColor: "#2Ac062",
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 1.0,
+        shadowOffset: {
+            height: 10,
+            width: 10
+        },
+        shadowRadius: 10,
+        elevation: 10
     },
     wrapper: {
         flex: 1,

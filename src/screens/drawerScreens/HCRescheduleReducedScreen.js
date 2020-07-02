@@ -277,6 +277,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                 <RescheduledScreen
                     showBookedModal={showBookedModal}
                     setShowBookedModal={setShowBookedModal}
+                    refCode={hcstate.selectedupcoming.refCode}
                 />
                 <View style={styles.ourpolicycontainer}>
                     <AntDesign style={{ marginBottom: 5 }} name="warning" size={30} color="#d21404" />
@@ -600,19 +601,19 @@ const styles = StyleSheet.create({
         bottom: 15,
         left: 10,
         right: 10,
-        backgroundColor: '#fff',
+        backgroundColor: '#f5c500',
         borderWidth: 1,
-        borderColor: '#7a7a7a',
+        borderColor: '#f5c500',
         alignItems: 'center',
         borderRadius: 7,
         marginTop: 20,
         marginBottom: 20,
-        height: 50,
+        height: 45,
         textAlign: 'center',
         justifyContent: 'center'
     },
     buttonTextStyle: {
-        color: '#7a7a7a',
+        color: '#fff',
         paddingVertical: 10,
         fontSize: 22,
     },

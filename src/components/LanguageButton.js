@@ -7,25 +7,14 @@ import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
 import ConfirmationDialog from './ConfirmationDialog';
 import { Context as UserContext } from '../screens/context/UserContext';
+import LanguageDialog from '../components/LanguageDialog';
 
 const LanguageButton = ({ t }) => {
     const { userLanguage } = useContext(UserContext);
 
     const [lang, setLang] = useState('en');
     const [changing, setChanging] = useState(false);
-
-    // function Effect(props) {
-    //     const val = useRef();
-    //     React.useEffect(() => {
-    //         val.current = props;
-    //     }, [props]);
-    //     React.useEffect(() => {
-    //         console.log("MOUNT", props);
-    //         return () => console.log("UNMOUNT", val.current);
-    //     }, [val]);
-    //     return null;
-    // }
-
+    const [showModalVisibleLanguage, setShowModalVisibleLanguage] = useState(false);
     const changeLanguage = (lng) => {
         try {
             console.log("Toggle language to:  " + lng);
@@ -41,6 +30,7 @@ const LanguageButton = ({ t }) => {
             //     });
         } catch (e) { "Error:: " + e }
     }
+
     useEffect(() => {
         getLang().then((response) => {
             console.log("languagebutton selected Lang in Use Effect:  " + response);
@@ -56,13 +46,20 @@ const LanguageButton = ({ t }) => {
     return (
         <View style={styles.container}>
             <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
+            <LanguageDialog
+                lang={lang}
+                setLang={setLang}
+                changeLanguage={changeLanguage}
+                showModalVisibleLanguage={showModalVisibleLanguage}
+                setShowModalVisibleLanguage={setShowModalVisibleLanguage} />
+
             {
                 lang === 'en' ?
                     <Avatar
                         size="small"
                         rounded
-                        source={require('../../assets/ru.png')}
-                        onPress={() => { changeLanguage('ru') }}
+                        source={require('../../assets/en.png')}
+                        onPress={() => { setShowModalVisibleLanguage(true) }}
                         activeOpacity={0.7}
                         containerStyle={styles.flag}
                     />
@@ -71,8 +68,8 @@ const LanguageButton = ({ t }) => {
                         <Avatar
                             size="small"
                             rounded
-                            source={require('../../assets/en.png')}
-                            onPress={async () => { changeLanguage('en') }}
+                            source={require('../../assets/ru.png')}
+                            onPress={async () => { setShowModalVisibleLanguage(true) }}
                             activeOpacity={0.7}
                             containerStyle={styles.flag}
                         />
@@ -80,8 +77,8 @@ const LanguageButton = ({ t }) => {
                         <Avatar
                             size="small"
                             rounded
-                            source={require('../../assets/ru.png')}
-                            onPress={async () => { changeLanguage('ru') }}
+                            source={require('../../assets/en.png')}
+                            onPress={async () => { setShowModalVisibleLanguage(true) }}
                             activeOpacity={0.7}
                             containerStyle={styles.flag}
                         />
