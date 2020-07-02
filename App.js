@@ -204,7 +204,7 @@ const HomeStackNavigator = createStackNavigator(
           title: '',
           headerLeft: () =>
             <Ionicons
-              style={{ left: 15, color: '#f5c500' }}
+              style={{ left: 15, color: '#f5c500', }}
               onPress={() => navigation.openDrawer()}
               name="ios-menu" size={35} />
           ,
@@ -386,18 +386,18 @@ const SettingStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('settings')} />,
           headerLeft: () =>
-            // <Ionicons
-            //   style={{ left: 15, top: 5, color: '#f5c500' }}
-            //   onPress={() => navigation.openDrawer()}
-            //   name="ios-menu"
-            //   size={35}
-            // />
-            <FontAwesome5
-              style={{ left: 15, top: 3, color: '#f5c500' }}
-              onPress={() => navigate('HomeNavigator')}
-              name="home"
-              size={25}
+            <Ionicons
+              style={{ left: 15, top: 5, color: '#f5c500' }}
+              onPress={() => navigation.openDrawer()}
+              name="ios-menu"
+              size={35}
             />,
+          // <FontAwesome5
+          //   style={{ left: 15, top: 3, color: '#f5c500' }}
+          //   onPress={() => navigate('HomeNavigator')}
+          //   name="home"
+          //   size={25}
+          // />,
           headerStyle: {
             // backgroundColor: '#f5c500',
           },
@@ -521,19 +521,18 @@ const AppoitmentStackNavigator = createStackNavigator(
         return {
           title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('appoitments')} />,
           headerLeft: () =>
-            <FontAwesome5
-              style={{ left: 15, top: 3, color: '#f5c500' }}
-              onPress={() => navigate('HomeNavigator')}
-              name="home"
-              size={25}
-            />
-          // <Icon
+            <Ionicons
+              style={{ left: 15, top: 5, color: '#f5c500' }}
+              onPress={() => navigation.openDrawer()}
+              name="ios-menu"
+              size={35}
+            />,
+          // <FontAwesome5
           //   style={{ left: 15, top: 3, color: '#f5c500' }}
           //   onPress={() => navigate('HomeNavigator')}
-          //   name="md-arrow-back"
-          //   size={35}
-          // />
-          ,
+          //   name="home"
+          //   size={25}
+          // />,
           headerStyle: {
             // backgroundColor: '#f5c500',
           },
@@ -631,19 +630,18 @@ const FreeStackNavigator = createStackNavigator(
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('freecleaning')} />,
 
         headerLeft: () =>
-          <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
-            onPress={() => navigate('HomeNavigator')}
-            name="home"
-            size={25}
-          />
-        // <Icon
+          <Ionicons
+            style={{ left: 15, top: 5, color: '#f5c500' }}
+            onPress={() => navigation.openDrawer()}
+            name="ios-menu"
+            size={35}
+          />,
+        // <FontAwesome5
         //   style={{ left: 15, top: 3, color: '#f5c500' }}
         //   onPress={() => navigate('HomeNavigator')}
-        //   name="md-arrow-back"
-        //   size={35}
-        // />
-        ,
+        //   name="home"
+        //   size={25}
+        // />,
 
         headerStyle: {
           // backgroundColor: '#f5c500',
@@ -662,19 +660,18 @@ const SupportStackNavigator = createStackNavigator(
       return {
         title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('support')} />,
         headerLeft: () =>
-          <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
-            onPress={() => navigate('HomeNavigator')}
-            name="home"
-            size={25}
-          />
-        // <Icon
+          <Ionicons
+            style={{ left: 15, top: 5, color: '#f5c500' }}
+            onPress={() => navigation.openDrawer()}
+            name="ios-menu"
+            size={35}
+          />,
+        // <FontAwesome5
         //   style={{ left: 15, top: 3, color: '#f5c500' }}
         //   onPress={() => navigate('HomeNavigator')}
-        //   name="md-arrow-back"
-        //   size={35}
-        // />
-        ,
+        //   name="home"
+        //   size={25}
+        // />,
 
         headerStyle: {
           // backgroundColor: '#f5c500',

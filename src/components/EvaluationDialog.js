@@ -61,7 +61,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
     }
 
     return (
-        <View style={{ marginTop: 22 }}>
+        <View style={{ marginTop: 0 }}>
             <Loader loading={isloading} />
             <Modal
                 style={{ flex: 1, margin: 0 }}

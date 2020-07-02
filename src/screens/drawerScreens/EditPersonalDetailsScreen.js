@@ -29,7 +29,7 @@ import { Context as AuthContext } from '../context/AuthContext';
 import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import OfflineNotice from '../../components/OfflineNotice';
-
+import { getLang } from '../../api/userLanguage';
 
 const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const { state, editUserDetails, getUserDetails, dispatch } = useContext(UserContext);
@@ -49,6 +49,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     // let [dob, setDob] = useState(new Date());
     let [dob, setDob] = useState(new Date());
     let [gender, setGender] = useState('');
+    let [lang, setLang] = useState('');
     let [loading, setLoading] = useState(false);
     let [errortext, setErrortext] = useState('');
     let [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
@@ -56,6 +57,18 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
+    useEffect(() => {
+        getLang().then(async (response) => {
+            console.log("EditPersonalDetailsScreen:: selected Lang in Use Effect:  " + response);
+            let lng = await getLang();
+            setLang(lng);
+        }).catch(async (err) => {
+            console.log("EditPersonalDetailsScreen::Can not get lang");
+            storeLang('en');
+            // var dlng = await getLang();
+            // console.log("InternetScreen::StoreLang::DefualtLang::" + dlng);
+        });
+    });
 
     useEffect(() => {
         setMobile(state.userDetails.mobile.toString());
@@ -186,7 +199,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                 email: email,
                 dateOfBirth: Moment(dob).format('YYYY-MM-DD'),
                 gender: gender,
-                language: "Ar"
+                language: lang
             });
             //return;
         } else {
@@ -196,7 +209,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                 "email": email,
                 "dateOfBirth": Moment(dob).format('YYYY-MM-DD'),
                 "gender": gender,
-                "language": "Ar"
+                "language": lang
             });
             //setTimeout(function () {
             try {

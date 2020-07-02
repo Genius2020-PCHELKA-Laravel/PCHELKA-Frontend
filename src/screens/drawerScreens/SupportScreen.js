@@ -31,8 +31,11 @@ const SupportScreen = ({ navigation, t }) => {
       <Spacer>
         <FontBold value={t('support')} mystyle={{ fontSize: 24, textAlign: "left" }} />
       </Spacer>
+      <Spacer />
+      <Spacer />
       <FontBold value={t('wearealwaysreadytohelp')} mystyle={{ fontSize: 24, textAlign: "left", marginLeft: 15 }} />
-      <FontLight value={t('youcanreach')} mystyle={{ fontSize: 18, textAlign: "left", marginLeft: 15 }} />
+      <Spacer />
+      <FontLight value={t('youcanreach')} mystyle={{ fontSize: 18, textAlign: "left", marginLeft: 15, lineHeight: 30, }} />
 
       <ScrollView style={styles.scrollstyle} showsVerticalScrollIndicator={false}>
         <Spacer />

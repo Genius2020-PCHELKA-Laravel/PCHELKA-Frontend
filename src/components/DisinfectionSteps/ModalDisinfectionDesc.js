@@ -1,6 +1,5 @@
 import React, { Component, useState, useContext } from 'react';
 import {
-    Modal,
     Text,
     TouchableHighlight,
     TouchableOpacity,
@@ -18,6 +17,8 @@ import FontRegular from '../FontRegular';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../locales/i18n';
 import Accordian from './Accordian';
+import Modal from 'react-native-modal';
+
 export default class ModalDisinfectionDesc extends React.Component {
     constructor(props) {
         super(props);
@@ -55,23 +56,35 @@ export default class ModalDisinfectionDesc extends React.Component {
 
     render() {
         return (
-            <View style={{ marginTop: 22 }}>
+            <View style={{ marginTop: 0 }}>
                 <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.props.showDisinfectionModal}
+                    style={{ flex: 1, margin: 0 }}
+                    animationIn="slideInUp"
+                    animationOut="slideOutDown"
+                    animationInTiming={1200}
+                    animationOutTiming={1200}
+                    avoidKeyboard={true}
+                    backdropColor='transparent'
+                    transparent={true}
+                    isVisible={this.props.showDisinfectionModal}
+                    hideModalContentWhileAnimating={false}
+                    coverScreen={true}
+                    // onBackButtonPress={() => this.props.setShowDisinfectionModal(false)}
+                    // onSwipeComplete={() => this.props.setShowDisinfectionModal(false)}
+                    // swipeThreshold={200}
+                    // swipeDirection="down"
                     onRequestClose={() => {
                         // alert('Modal has been closed.');
                     }}>
-                    <TouchableOpacity
-                        style={{ position: "absolute", right: 0, padding: 15 }}
-                        onPress={() => {
-                            this.props.setShowDisinfectionModal(false);
-                        }}>
-                        <FontAwesome name="times" size={35} color="#7a7a7a" />
-                    </TouchableOpacity>
-                    <View style={{ marginTop: 60 }}>
-                        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                    <View style={styles.container} >
+                        <TouchableOpacity
+                            style={{ position: "absolute", right: 0, padding: 15 }}
+                            onPress={() => {
+                                this.props.setShowDisinfectionModal(false);
+                            }}>
+                            <FontAwesome name="times" size={35} color="#7a7a7a" />
+                        </TouchableOpacity>
+                        <ScrollView showsVerticalScrollIndicator={false} style={{ marginHorizontal: 15, marginTop: 60 }}>
                             <View style={styles.servicedesccontainer}>
                                 <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5, marginBottom: 15 }} />
                                 <View style={{ flexDirection: "row" }}>
@@ -92,7 +105,6 @@ export default class ModalDisinfectionDesc extends React.Component {
                                 </View>
                             </View>
                             <FontBold value={i18n.t('whatincluded')} mystyle={{ fontSize: 18, marginBottom: 15 }} />
-
                             <View >
                                 {this.renderAccordians()}
                             </View>
@@ -107,9 +119,9 @@ export default class ModalDisinfectionDesc extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 15,
+        flex: 1,
+        backgroundColor: "#fff",
     },
-
     servicedesccontainer: {
         marginBottom: 15,
         padding: 15,

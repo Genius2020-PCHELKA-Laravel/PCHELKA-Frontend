@@ -91,7 +91,7 @@ const editUserDetails = dispatch => {
             const response = await requestApi.post('/userUpdate', { mobile, fullName, email, dateOfBirth, gender, language });
             return response.data;
         } catch (error) {
-            console.error("error in edit user: " + error);
+            console.error("error in edit user: " + JSON.stringify(error.response));
         }
     };
 }

@@ -87,10 +87,10 @@ const MattressCleaningDetails = ({ children, t }) => {
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <View style={styles.servicedesccontainer}>
-                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
-                <Spacer >
+                <View style={{ flexDirection: "row" }}>
+                    <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ marginRight: 15 }} />
                     <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
-                </Spacer>
+                </View>
                 <View style={{ flexDirection: "row" }}>
                     <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
                     <FontLight mystyle={{ fontSize: 16 }} value={t('mattressdesc1')} />
@@ -236,7 +236,8 @@ const styles = StyleSheet.create({
         marginRight: 4
     },
     servicedesccontainer: {
-        margin: 18,
+        marginHorizontal: 15,
+        marginBottom: 15,
         padding: 15,
         borderColor: '#7a7a7a',
         borderWidth: 0,

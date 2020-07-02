@@ -58,10 +58,10 @@ const Frequency = ({ children, t }) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
             <View style={styles.servicedesccontainer}>
-                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
-                <Spacer >
+                <View style={{ flexDirection: "row" }}>
+                    <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ marginRight: 15 }} />
                     <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
-                </Spacer>
+                </View>
                 <View style={{ flexDirection: "row" }}>
                     <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
                     <FontLight mystyle={{ fontSize: 16 }} value={t('babydesc1')} />
@@ -165,7 +165,8 @@ const styles = StyleSheet.create({
         shadowRadius: 25,
     },
     servicedesccontainer: {
-        margin: 18,
+        marginHorizontal: 15,
+        marginBottom: 15,
         padding: 15,
         borderColor: '#7a7a7a',
         borderWidth: 0,

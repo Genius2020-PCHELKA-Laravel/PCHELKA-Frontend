@@ -107,7 +107,7 @@ const InternetScreen = ({ navigation, t }) => {
       setLoginToken(await getToken());
       console.log("InternetScreen::tstInternetConnection::Saved token: ");
       console.log(typeof loginToken);
-      console.log(loginToken);
+      console.log(await getToken());
     } catch (error) {
       // setIsLoading(false);
       console.log("Error::InternetScreen::testInternetConnection");
@@ -140,7 +140,7 @@ const InternetScreen = ({ navigation, t }) => {
     // setTimeout(() => {
     NetInfo.fetch().then(async (connection) => {
       console.log(connection)
-      if (connection.isConnected) {
+      if (connection.isInternetReachable) {
         console.log("Connected");
         setConnected(true);
       }

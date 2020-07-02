@@ -63,35 +63,33 @@ const Frequency = ({ children, t }) => {
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
             <ModalDisinfectionDesc showDisinfectionModal={showDisinfectionModal} setShowDisinfectionModal={setShowDisinfectionModal} />
             <View style={styles.servicedesccontainer}>
-                <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ left: 5, top: 5 }} />
-                <Spacer >
-                    <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
-                        <View style={{ width: "70%" }}>
-                            <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
-                        </View>
-                        <View style={{ width: "30%" }}>
-                            <TouchableOpacity
-                                activeOpacity={0.5}
-                                onPress={() => {
-                                    // navigate('whatsincluded');
-                                    setShowDisinfectionModal(true);
-                                }}>
-                                <FontLight
-                                    mystyle={{
-                                        textDecorationLine: 'underline',
-                                        textDecorationStyle: "solid",
-                                        textDecorationColor: "blue",
-                                        textAlign: "center",
-                                        textAlignVertical: "center",
-                                        color: "blue",
-                                        justifyContent: "center",
-                                    }}
-                                    value={t('viewmore')}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Spacer>
+                <View style={{ flexDirection: "row" }}>
+                    <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ marginRight: 15 }} />
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                </View>
+
+                <View style={{ width: "30%", position: "absolute", right: 0, top: 15 }}>
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => {
+                            // navigate('whatsincluded');
+                            setShowDisinfectionModal(true);
+                        }}>
+                        <FontLight
+                            mystyle={{
+                                textDecorationLine: 'underline',
+                                textDecorationStyle: "solid",
+                                textDecorationColor: "blue",
+                                textAlign: "center",
+                                textAlignVertical: "center",
+                                color: "blue",
+                                justifyContent: "center",
+                            }}
+                            value={t('viewmore')}
+                        />
+                    </TouchableOpacity>
+                </View>
+
                 <View style={{ flexDirection: "row" }}>
                     <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
                     <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc1')} />
@@ -184,7 +182,8 @@ const styles = StyleSheet.create({
         shadowRadius: 25,
     },
     servicedesccontainer: {
-        margin: 18,
+        marginHorizontal: 15,
+        marginBottom: 15,
         padding: 15,
         borderColor: '#7a7a7a',
         borderWidth: 0,
