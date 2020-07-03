@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 225,
+        height: 250,
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
