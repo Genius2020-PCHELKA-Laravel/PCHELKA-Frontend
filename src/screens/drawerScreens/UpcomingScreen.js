@@ -78,12 +78,13 @@ const UpcomingScreen = ({ navigation, t }) => {
                                         //     setChanging(true);
                                         //     return;
                                         // }
-                                        hcdispatch({ type: 'resetset_selected_upcoming' });
-                                        hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
+                                        hcdispatch({ type: 'reset_selected_upcoming' });
+                                        hcdispatch({ type: 'reset_selected_upcoming_provider_data' });
                                         getSelectedUpcoming({
                                             id: booking.id,
                                             // providerData: booking.providerData
                                         }).then((response) => {
+                                            hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
                                             console.log("####SelectedUpcoming####" + JSON.stringify(response));
                                         });
                                         setSelectedUpcomingModalDetails(true);

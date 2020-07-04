@@ -24,7 +24,7 @@ import { Notifications } from 'expo';
 import Toast from 'react-native-simple-toast';
 import { navigate } from "../navigationRef";
 
-const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, providerImageURL, bookingID, bookingRefCode, origin, notificationId }) => {
+const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, providerImageURL, providerName, bookingID, bookingRefCode, origin, notificationId }) => {
     // const [modalVisible, setModalVisible] = useState(false);
     const { state: hcstate, evaluation } = useContext(HCContext);
     const { state: ustate } = useContext(UserContext);
@@ -53,7 +53,8 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
             starCount: rating
         }).then(() => {
             //remove the notification from statusbar
-            Notifications.dismissNotificationAsync(notificationId);
+            if (notificationId != "")
+                Notifications.dismissNotificationAsync(notificationId);
             console.log("evaluated:: " + rating);
             setModalVisible(false);
             setIsLoading(false);
@@ -105,7 +106,16 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                         <Spacer>
                             <FontRegular
-                                value={t('yourorder') + " \"" + bookingRefCode + "\" " + t('hasbeencompleted')}
+                                value={t('yourorder') + " \"" + bookingRefCode + "\" " + t('completed')}
+                                mystyle={{ fontSize: 20, color: "#fff", textAlign: "center" }}
+                            />
+                        </Spacer>
+
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                        <Spacer>
+                            <FontRegular
+                                value={t('experience') + " \"" + providerName + "\"?"}
                                 mystyle={{ fontSize: 20, color: "#fff", textAlign: "center" }}
                             />
                         </Spacer>

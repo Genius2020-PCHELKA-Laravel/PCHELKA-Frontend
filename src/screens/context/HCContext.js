@@ -87,16 +87,20 @@ const HCreducer = (state, action) => {
             return { ...state, reloadAppointments: action.payload };
         case 'set_selected_upcoming':
             return { ...state, selectedupcoming: action.payload };
-        case 'resetset_selected_upcoming':
+        case 'reset_selected_upcoming':
             return { ...state, selectedupcoming: { addressDetails: { address: '' } } };
         case 'set_selected_upcoming_provider_data':
             return { ...state, selectedupcomingproviderdata: action.payload };
+        case 'reset_selected_upcoming_provider_data':
+            return { ...state, selectedupcomingproviderdata: null };
         case 'set_selected_past':
             return { ...state, selectedpast: action.payload };
-        case 'resetset_selected_past':
+        case 'reset_selected_past':
             return { ...state, selectedpast: { addressDetails: { address: '' } } };
         case 'set_selected_past_provider_data':
             return { ...state, selectedpastproviderdata: action.payload };
+        case 'reset_selected_past_provider_data':
+            return { ...state, selectedpastproviderdata: null };
         case "RESET":
             return {
                 ...state,
@@ -427,6 +431,25 @@ const getSelectedUpcoming = (dispatch) => {
         }
     };
 }
+const getSelectedPast = (dispatch) => {
+    return async ({ id }) => {
+        try {
+            const senttoken = await getToken();
+            requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
+            var result = await requestApi.post('/getHCBookingById', { id });
+            //console.log("getselectedUpcoming::HCCContext:  " + JSON.stringify(result.data.data));
+            if (result.data.status) {
+                dispatch({ type: 'set_selected_past', payload: result.data.data });
+                return result.data.data;
+            }
+            else
+                Toast.show(result.data.error, Toast.LONG);
+        } catch (err) {
+            console.log("Error::HCContex::selectedpast::" + err);
+            dispatch({ type: 'add_error', payload: err });
+        }
+    };
+}
 const rescheduleBook = (dispatch) => {
     return async ({ id, duoDate, duoTime, providerId }) => {
         try {
@@ -483,6 +506,7 @@ export const { Context, Provider } = createDataContext(HCreducer,
         getUpcoming,
         getPast,
         getSelectedUpcoming,
+        getSelectedPast,
         evaluation
     },
     {

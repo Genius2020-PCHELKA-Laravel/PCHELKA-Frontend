@@ -1,5 +1,5 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
-import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { navigate } from '../../navigationRef';
 import FontBold from "../../components/FontBold";
 import FontRegular from "../../components/FontRegular";
@@ -12,6 +12,7 @@ import OfflineNotice from '../../components/OfflineNotice';
 import Modal from 'react-native-modal';
 import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import AlertDialog from '../../components/AlertDialog';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, setSelectedUpcomingModalDetails }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, getProviders, dispatch: hcdispatch } = useContext(HCContext);
@@ -40,6 +41,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
     return (
         <View style={{ marginTop: 0 }}>
             <AlertDialog changing={changing} setChanging={setChanging} />
+            <OfflineNotice />
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="slideInUp"
@@ -78,7 +80,14 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                             </View>
                         </View>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-
+                        <View style={styles.row}>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('refcode')} />
+                            </View>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.refCode} />
+                            </View>
+                        </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
                                 <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('status')} />
@@ -105,14 +114,29 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                 }
                             </View>
                         </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('refcode')} />
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.refCode} />
-                            </View>
-                        </View>
+                        {
+                            hcstate.selectedupcoming.status == 'Confirmed' ?
+                                <View style={styles.row}>
+                                    <View style={styles.item}>
+                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('confirmedat')} />
+                                    </View>
+                                    <View style={styles.item}>
+                                        <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.updatedAt} />
+                                    </View>
+                                </View>
+                                :
+                                hcstate.selectedupcoming.status == 'Rescheduled' ?
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('rescheduledat')} />
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.updatedAt} />
+                                        </View>
+                                    </View>
+                                    :
+                                    null
+                        }
                         <Spacer />
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
@@ -260,40 +284,152 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
 
                         <Spacer /> */}
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('dateandtime')}></FontBold>
+                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('dateandtime')}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('date')}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedupcoming.duoDate}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.duoDate}></FontBold>
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('time')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.duoTime}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedupcoming.duoTime}></FontBold>
                             </View>
                         </View>
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('address')}></FontBold>
+                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('address')}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedupcoming.addressDetails.address}></FontBold>
+                        <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedupcoming.addressDetails.address}></FontBold>
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('price')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                        {/* <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('price')}></FontBold>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} /> */}
                         <View flexDirection="row" style={{ justifyContent: "center" }}>
                             <FontBold mystyle={styles.totalAmount} value={
                                 "UAH " + modalAmount + " (" +
                                 paymentWaysStr
                                 + ")"
                             } />
+                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                {
+                                    paymentWaysStr === "Cash" ?
+                                        <MaterialCommunityIcons name="cash" size={45} color="#228B22" />
+                                        :
+                                        <Image style={styles.liqpayimage} source={require('../../../assets/liqpay.png')} />
+
+                                }
+                            </View>
                         </View>
                     </View>
-
+                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                        {/* <View style={{ marginTop: 15, marginLeft: 15, width: 300, height: 200 }}> */}
+                        {
+                            hcstate.selectedupcomingproviderdata != null ?
+                                <View style={styles.providerThumup}>
+                                    <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                            <Image style={styles.image} source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }} />
+                                        </View>
+                                        <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                                            <View style={{ flexDirection: "row" }}>
+                                                <FontBold value={hcstate.selectedupcomingproviderdata.name} />
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                                <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                                    {
+                                                        hcstate.selectedupcoming.providerEvaluation == 0 ?
+                                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                            :
+                                                            hcstate.selectedupcoming.providerEvaluation == 1 ?
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                :
+                                                                hcstate.selectedupcoming.providerEvaluation == 2 ?
+                                                                    <>
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    </>
+                                                                    :
+                                                                    hcstate.selectedupcoming.providerEvaluation == 3 ?
+                                                                        <>
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                        </>
+                                                                        :
+                                                                        hcstate.selectedupcoming.providerEvaluation == 4 ?
+                                                                            <>
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            </>
+                                                                            :
+                                                                            hcstate.selectedupcoming.providerEvaluation == 5 ?
+                                                                                <>
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                </>
+                                                                                :
+                                                                                hcstate.selectedupcoming.providerEvaluation > 1 && hcstate.selectedupcoming.providerEvaluation < 2 ?
+                                                                                    <>
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    </>
+                                                                                    :
+                                                                                    hcstate.selectedupcoming.providerEvaluation > 2 && hcstate.selectedupcoming.providerEvaluation < 3 ?
+                                                                                        <>
+                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                        </>
+                                                                                        :
+                                                                                        hcstate.selectedupcoming.providerEvaluation > 3 && hcstate.selectedupcoming.providerEvaluation < 4 ?
+                                                                                            <>
+                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                            </>
+                                                                                            :
+                                                                                            hcstate.selectedupcoming.providerEvaluation > 4 && hcstate.selectedupcoming.providerEvaluation < 5 ?
+                                                                                                <>
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                </>
+                                                                                                :
+                                                                                                <>
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                                </>
+                                                    }
+                                                </View>
+                                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                    <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={hcstate.selectedupcoming.providerEvaluation} />
+                                                </View>
+                                                {/* <TouchableOpacity style={{ flexDirection: "row" }}>
+                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                        <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
+                                                    </View>
+                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                        <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
+                                                    </View>
+                                                </TouchableOpacity> */}
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                                :
+                                <View style={{ backgroundColor: "#fff", bottom: 0, flexDirection: 'row', justifyContent: "center" }}>
+                                    <ActivityIndicator size={35} color="#f5c500" animating={true} />
+                                </View>
+                        }
+                    </View>
                 </ScrollView>
                 {
                     modalAmount == 0 ?
@@ -310,9 +446,9 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                     return;
                                 }
                                 setSelectedUpcomingModalDetails(false);
-                                setTimeout(() => {
-                                    navigate('HCReschedule');
-                                }, 100);
+                                // setTimeout(() => {
+                                navigate('HCReschedule');
+                                // }, 100);
                             }}>
                             <FontBold mystyle={styles.buttonTextStyle} value={t('reschedule')} />
                         </TouchableOpacity>
@@ -392,7 +528,7 @@ const styles = StyleSheet.create({
 
     title: { marginLeft: 15, marginTop: 15, marginRight: 10, fontSize: 18 },
     subtitle: { marginLeft: 15, marginTop: 0, fontSize: 20, marginBottom: 5, marginRight: 10 },
-    totalAmount: { color: '#f58800', marginTop: 0, fontSize: 24 },
+    totalAmount: { color: '#000', marginTop: 0, fontSize: 24 },
     // reschedulebuttonStyle: {
     //     position: 'absolute',
     //     bottom: 15,
@@ -425,6 +561,15 @@ const styles = StyleSheet.create({
     //     justifyContent: 'center',
     //     width: "40%"
     // },
+    // bookagainbuttonStyle: {
+    //     alignItems: 'center',
+    //     textAlign: 'center',
+    //     textAlignVertical: "center",
+    //     justifyContent: 'center',
+    //     color: 'blue',
+    //     fontSize: 14,
+    //     marginLeft: 15,
+    // },
     reschedulebuttonStyle: {
         position: 'absolute',
         bottom: 15,
@@ -443,6 +588,46 @@ const styles = StyleSheet.create({
         color: '#fff',
         paddingVertical: 10,
         fontSize: 22,
+    },
+    liqpayimage: {
+        marginLeft: 15,
+        marginTop: 5,
+        width: 75,
+        height: 40,
+        opacity: 1,
+        flexDirection: "column",
+        justifyContent: "center"
+    },
+    image: {
+        width: 80,
+        height: 80,
+        borderRadius: 45,
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 10,
+        marginRight: 10,
+        borderWidth: 2,
+        borderColor: "#fff",
+
+    },
+    providerThumup: {
+        backgroundColor: '#fff',
+        width: 250,
+        height: 90,
+        borderRadius: 2,
+        borderWidth: 0,
+        marginRight: 5,
+        marginLeft: 5,
+        marginTop: 5,
+        marginBottom: 5,
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 10
+        },
+        elevation: 3,
+        shadowRadius: 10,
     },
 });
 export default withNamespaces()(UpcomingModalDetails);

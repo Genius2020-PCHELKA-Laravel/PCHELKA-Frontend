@@ -294,5 +294,14 @@
   "doyouwanttologout": "Вы хотите выйти?",
   "youcanseeyourupcomingappoitmentsunderappoitments": "Отслеживайте свои предстоящие назначения в соответствии с назначениями",
   "success": "успех",
-  "status": "Положение дел"
+  "status": "Положение дел",
+  "bookagain": "Книга снова",
+  "confirmedat": "Подтвердите на",
+  "rescheduledat": "Перенести на",
+  "completedat": "Завершение в",
+  "evaluation": "оценка",
+  "canceledat": "Отмена в",
+  "cancelreason": "причина",
+  "experience": "Как прошел ваш опыт с",
+  "evaluate": "оценивать"
 }

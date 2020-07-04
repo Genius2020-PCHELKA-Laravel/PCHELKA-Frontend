@@ -15,7 +15,7 @@ import OfflineNotice from '../../components/OfflineNotice';
 import PastModalDetails from './PastModalDetails';
 
 const PastScreen = ({ navigation, t }) => {
-    const { state: hcstate, getPast, dispatch: hcdispatch, getSelectedUpcoming, } = useContext(HCContext);
+    const { state: hcstate, getPast, dispatch: hcdispatch, getSelectedPast, } = useContext(HCContext);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedPastModalDetails, setSelectedPastModalDetails] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -42,7 +42,7 @@ const PastScreen = ({ navigation, t }) => {
     const _onRefresh = () => {
         setRefreshing(true);
         getPast().then((response) => {
-            console.log("UpcomingScreen::onrefresh::getPast::response:: ");
+            console.log("PastScreen::onrefresh::getPast::response:: ");
             console.log("######################" + JSON.stringify(response));
             setRefreshing(false);
         }).catch((error) => {
@@ -79,12 +79,13 @@ const PastScreen = ({ navigation, t }) => {
                                     key={booking.id}
                                     activeOpacity={0.5}
                                     onPress={() => {
-                                        hcdispatch({ type: 'resetset_selected_past' });
-                                        hcdispatch({ type: 'set_selected_past_provider_data', payload: booking.providerData });
-                                        getSelectedUpcoming({
+                                        hcdispatch({ type: 'reset_selected_past' });
+                                        hcdispatch({ type: 'reset_selected_past_provider_data' });
+                                        getSelectedPast({
                                             id: booking.id,
                                             // providerData: booking.providerData
                                         }).then((response) => {
+                                            hcdispatch({ type: 'set_selected_past_provider_data', payload: booking.providerData });
                                             console.log("####SelectedPast####" + JSON.stringify(response));
                                         });
                                         setSelectedPastModalDetails(true);

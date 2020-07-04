@@ -43,6 +43,7 @@ const HomeScreen = ({ navigation, t }) => {
   const [bookingID, setBookingID] = useState('');
   const [bookingRefCode, setBookingRefCode] = useState('');
   const [providerImageURL, setProviderImageURL] = useState('');
+  const [providerName, setProviderName] = useState('');
   const [origin, setOrigin] = useState('');
   const [notificationId, setNotificationId] = useState('');
   // const [expoToken, setExpoToken] = useState('');
@@ -111,6 +112,7 @@ const HomeScreen = ({ navigation, t }) => {
     if (notification.data.status === "Completed") {
       setModalVisible(true);
       setProviderImageURL(notification.data.image);
+      setProviderName(notification.data.providerName);
       setBookingID(notification.data.bookId);
       setBookingRefCode(notification.data.refCode);
       setOrigin(notification.origin);
@@ -268,6 +270,7 @@ const HomeScreen = ({ navigation, t }) => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         providerImageURL={providerImageURL}
+        providerName={providerName}
         bookingID={bookingID}
         bookingRefCode={bookingRefCode}
         origin={origin}

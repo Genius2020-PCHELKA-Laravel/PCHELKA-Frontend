@@ -293,5 +293,14 @@
   "doyouwanttologout": "Do you want to logout?",
   "youcanseeyourupcomingappoitmentsunderappoitments": "Track your upcoming appoitments under appoitments",
   "success": "Success",
-  "status": "Status"
+  "status": "Status",
+  "bookagain": "Book Again",
+  "confirmedat": "Confirm at",
+  "rescheduledat": "Reschedule at",
+  "completedat": "Complete",
+  "evaluation": "Your Evaluation",
+  "canceledat": "Cancel at",
+  "cancelreason": "Reason",
+  "experience": "How was your experience with",
+  "evaluate": "Evauate"
 }
