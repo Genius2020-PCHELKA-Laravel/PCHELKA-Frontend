@@ -38,6 +38,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
         modalAmount = 0;
     else
         modalAmount = hcstate.selectedupcoming.totalAmount;
+
     return (
         <View style={{ marginTop: 0 }}>
             <AlertDialog changing={changing} setChanging={setChanging} />
@@ -143,7 +144,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                         <View flexDirection="column">
                             <FontBold mystyle={{ color: '#000', fontSize: 18 }}
                                 value={
-                                    hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" ?
+                                    hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" || hcstate.selectedupcoming.serviceType == "BabysitterService" ?
                                         hcstate.selectedupcoming.hoursNeeded + " " + t('hours') + ", " +
                                         hcstate.selectedupcoming.cleanerCount + " " + cleanersStr + ", " +
                                         materialsStr
@@ -446,9 +447,9 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                     return;
                                 }
                                 setSelectedUpcomingModalDetails(false);
-                                // setTimeout(() => {
-                                navigate('HCReschedule');
-                                // }, 100);
+                                setTimeout(() => {
+                                    navigate('HCReschedule');
+                                }, 10);
                             }}>
                             <FontBold mystyle={styles.buttonTextStyle} value={t('reschedule')} />
                         </TouchableOpacity>

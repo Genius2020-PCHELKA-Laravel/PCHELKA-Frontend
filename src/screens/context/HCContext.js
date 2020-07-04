@@ -373,11 +373,12 @@ const HCBooking = dispatch => {
 
 
 const getUpcoming = (dispatch) => {
-    return async () => {
+    return async ({ page }) => {
         try {
+            // console.log(page);
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            var result = await requestApi.get('/upComingBooking');
+            var result = await requestApi.post('/upComingBooking', { page });
             // console.log("getUpcoming::HCCContext" + result.data.data);
             if (result.data.status) {
                 dispatch({ type: 'set_upcoming', payload: result.data.data });

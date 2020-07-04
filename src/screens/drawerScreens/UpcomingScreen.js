@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useContext, useState } from 'react';
-import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image, Alert } from 'react-native';
+import { Text, StyleSheet, View, Button, SafeAreaView, TouchableOpacity, Image, Alert, FlatList, ActivityIndicator } from 'react-native';
 import { Context as HCContext } from '../context/HCContext';
 import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
@@ -22,6 +22,11 @@ const UpcomingScreen = ({ navigation, t }) => {
     const [changing, setChanging] = useState(false);
     const [selectedUpcomingModalDetails, setSelectedUpcomingModalDetails] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [isListEnd, setIsListEnd] = useState(false);
+    const [serverData, setServerData] = useState([]);
+    const [fetching_from_server, set_fetching_from_server] = useState(false);
+    const [offset, setOffset] = useState(1);
 
 
     const unsubscribe = navigation.addListener('didFocus', () => {
@@ -34,16 +39,59 @@ const UpcomingScreen = ({ navigation, t }) => {
             // navigation.removeListener('didFocus', () => { })
         };
     }, []);
-    const _onRefresh = () => {
-        setRefreshing(true);
-        getUpcoming().then((response) => {
-            console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
-            console.log("######################" + JSON.stringify(response));
-            setRefreshing(false);
-        }).catch((error) => {
-            setRefreshing(false);
-            console.log(error);
-        });
+    // useEffect(() => {
+    //     // if (!selectedUpcomingModalDetails)
+    //     //     alert()
+    // }, [selectedUpcomingModalDetails])
+    // const _onRefresh = () => {
+    //     setRefreshing(true);
+    //     setPage(1);
+    //     getUpcoming({ page: 1 }).then((response) => {
+    //         console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
+    //         console.log("######################" + JSON.stringify(response[0].id));
+    //         setRefreshing(false);
+    //     }).catch((error) => {
+    //         setRefreshing(false);
+    //         console.log(error);
+    //     });
+    // }
+    useEffect(() => {
+        loadMoreData();
+    }, []);
+
+    loadMoreData = () => {
+        if (!fetching_from_server && !isListEnd) {
+            set_fetching_from_server(true);
+            getUpcoming({ page: offset }).then((response) => {
+                console.log("UpcomingScreen::loadMoreData::getUpcoming::response:: ");
+                console.log("######################" + JSON.stringify(response[0].id));
+                if (response.length > 0) {
+                    let newoffset = offset + 1;
+                    setOffset(newoffset);
+                    //After the response increasing the offset for the next API call.
+                    setServerData([...serverData, ...response])
+                    //adding the new data with old one available
+                    set_fetching_from_server(false);
+                    //updating the loading state to false
+                } else {
+                    set_fetching_from_server(false);
+                    setIsListEnd(true);
+                }
+            }).catch((error) => {
+                console.log("Error::UpcomingScree:: " + error);
+            });
+
+
+        }
+    };
+    const renderFooter = () => {
+        return (
+            <View style={styles.footer}>
+                {fetching_from_server ? (
+                    <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
+                ) : null}
+            </View>
+        );
     }
     return (
         <View style={{ flex: 1 }}>
@@ -51,7 +99,94 @@ const UpcomingScreen = ({ navigation, t }) => {
             <UpcomingModalDetails
                 selectedUpcomingModalDetails={selectedUpcomingModalDetails}
                 setSelectedUpcomingModalDetails={setSelectedUpcomingModalDetails} />
-            <ScrollView
+            <View style={styles.container}>
+                {loading ? (
+                    <ActivityIndicator size="large" color="#f5c500" />
+                ) : (
+                        <FlatList
+                            style={{ width: '100%', flex: 1 }}
+                            keyExtractor={(item, index) => index.toString()}
+                            data={serverData}
+                            onEndReached={() => loadMoreData()}
+                            onEndReachedThreshold={0.5}
+                            renderItem={({ item, index }) => (
+                                <TouchableOpacity
+                                    key={item.id}
+                                    activeOpacity={0.5}
+                                    onPress={() => {
+                                        hcdispatch({ type: 'reset_selected_upcoming' });
+                                        hcdispatch({ type: 'reset_selected_upcoming_provider_data' });
+                                        getSelectedUpcoming({
+                                            id: item.id,
+                                        }).then((response) => {
+                                            hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: item.providerData });
+                                            console.log("####SelectedUpcoming####" + JSON.stringify(response));
+                                        });
+                                        setSelectedUpcomingModalDetails(true);
+                                    }}
+                                    style={{
+                                        backgroundColor: '#fff',
+                                    }}>
+                                    <Spacer >
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={{ flexDirection: 'column' }}>
+                                                <FontBold value={t(item.serviceType)} />
+                                                <FontLight value={item.duoDate + ' ' + item.duoTime} />
+                                                <View style={{ marginTop: 15, width: 200 }}>
+                                                    {
+                                                        item.providerData != null ?
+                                                            <View style={{ borderWidth: 1, borderRadius: 14 }}>
+                                                                <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
+                                                                <FontBold mystyle={{ position: 'absolute', marginLeft: 25 }} value={item.providerData.name} />
+                                                            </View>
+                                                            : <View style={{ borderWidth: 1, borderRadius: 14 }}>
+                                                                <Image style={styles.image} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                                                <FontBold mystyle={{ position: 'absolute', marginLeft: 25 }} value={'Auto-Assign'} />
+                                                            </View>
+                                                    }
+                                                </View>
+                                            </View>
+                                            <View style={{ flexDirection: 'column', position: 'absolute', right: 0 }}>
+                                                <FontLight mystyle={{ top: 10, right: 10 }} value={t('refcode') + ': ' + item.refCode} />
+                                                {
+                                                    item.status == 'Completed' ?
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#228B22", backgroundColor: "#228B22" }}>
+                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
+                                                        </View>
+                                                        : item.status == 'Confirmed' ?
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f5b100", backgroundColor: "#f5b100" }}>
+                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 40, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
+                                                            </View>
+                                                            : item.status == 'Rescheduled' ?
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f58800", backgroundColor: "#f58800" }}>
+                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                                </View> :
+                                                                item.status == 'Canceled' ?
+                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#b52424", backgroundColor: "#b52424" }}>
+                                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                    </View>
+                                                                    : null
+                                                }
+                                            </View>
+
+                                        </View>
+                                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 10 }} />
+                                    </Spacer>
+                                </TouchableOpacity>
+                            )}
+                            ItemSeparatorComponent={() => <View style={styles.separator} />}
+                            ListFooterComponent={renderFooter}
+                        //Adding Load More button as footer component
+                        />
+                    )}
+            </View>
+
+
+
+
+
+
+            {/* <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={{ backgroundColor: '#fff' }}
                 refreshControl={
@@ -60,12 +195,22 @@ const UpcomingScreen = ({ navigation, t }) => {
                         onRefresh={_onRefresh}
                     />
                 }
+                onScroll={({ nativeEvent }) => {
+                    if (isCloseToBottom(nativeEvent)) {
+                        setPage(page + 1);
+                        console.log(page)
+                        getUpcoming({ page: page }).then((response) => {
+                            // console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
+                            console.log("######################" + JSON.stringify(response[0].id));
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    }
+                }}
+                scrollEventThrottle={400}
             >
-                {/* <Loader loading={isLoading} /> */}
-                {/* <Text style={{ left: 30, fontSize: 35 }}>{JSON.stringify(hcstate.upcoming)}</Text> */}
                 {
                     hcstate.upcoming.length === 0 || hcstate.upcoming === undefined ?
-                        // <Image style={styles.noappoitments} source={require('../../../assets/noappoitments.png')} />
                         <FontBold value={t('noupcomingappoitment')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
                         :
                         hcstate.upcoming.sort((a, b) => a.id < b.id ? 1 : -1).map((booking, i) => {
@@ -74,15 +219,10 @@ const UpcomingScreen = ({ navigation, t }) => {
                                     key={booking.id}
                                     activeOpacity={0.5}
                                     onPress={() => {
-                                        // if (booking.status == 'Rescheduled') {
-                                        //     setChanging(true);
-                                        //     return;
-                                        // }
                                         hcdispatch({ type: 'reset_selected_upcoming' });
                                         hcdispatch({ type: 'reset_selected_upcoming_provider_data' });
                                         getSelectedUpcoming({
                                             id: booking.id,
-                                            // providerData: booking.providerData
                                         }).then((response) => {
                                             hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
                                             console.log("####SelectedUpcoming####" + JSON.stringify(response));
@@ -97,7 +237,6 @@ const UpcomingScreen = ({ navigation, t }) => {
                                             <View style={{ flexDirection: 'column' }}>
                                                 <FontBold value={t(booking.serviceType)} />
                                                 <FontLight value={booking.duoDate + ' ' + booking.duoTime} />
-                                                {/* <Image source={{ uri: booking.providerData.imageUrl }} /> */}
                                                 <View style={{ marginTop: 15, width: 200 }}>
                                                     {
                                                         booking.providerData != null ?
@@ -143,21 +282,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                         })
 
                 }
-            </ScrollView>
-            {/* <TouchableOpacity style={{ backgroundColor: "#fff" }} onPress={() => { navigate('HomeNavigator') }}>
-                <Spacer>
-                    <FontBold
-                        value={t('homepage')}
-                        mystyle={{
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: "solid",
-                            textDecorationColor: "blue",
-                            textAlign: "center",
-                            fontSize: 12,
-                            color: 'blue'
-                        }} />
-                </Spacer>
-            </TouchableOpacity> */}
+            </ScrollView> */}
             <OfflineNotice />
 
         </View>
@@ -188,6 +313,16 @@ const styles = StyleSheet.create({
     noappoitments: {
         width: "100%",
         marginTop: 0
+    },
+    separator: {
+        height: 0.5,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+    },
+    footer: {
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
 });
 export default withNamespaces()(UpcomingScreen);

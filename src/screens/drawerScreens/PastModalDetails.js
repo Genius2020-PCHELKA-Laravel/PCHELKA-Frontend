@@ -50,6 +50,65 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
             setSelectedPastModalDetails(false);
             navigate("HomeCleaningScreen");
         }
+        else if (hcstate.selectedpast.serviceType === "DisinfectionService") {
+            hcdispatch({ type: 'set_frequency', payload: hcstate.selectedpast.frequency });
+            hcdispatch({ type: 'set_hours', payload: hcstate.selectedpast.hoursNeeded });
+            hcdispatch({ type: 'set_cleaners', payload: hcstate.selectedpast.cleanerCount });
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedpast.requireMaterial });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("DisinfectionScreen");
+        }
+        else if (hcstate.selectedpast.serviceType === "DeepCleaning") {
+            hcdispatch({ type: 'set_frequency', payload: hcstate.selectedpast.frequency });
+            hcdispatch({ type: 'set_hours', payload: hcstate.selectedpast.hoursNeeded });
+            hcdispatch({ type: 'set_cleaners', payload: hcstate.selectedpast.cleanerCount });
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedpast.requireMaterial });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("DeepCleaningScreen");
+        }
+        else if (hcstate.selectedpast.serviceType === "BabysitterService") {
+            hcdispatch({ type: 'set_frequency', payload: hcstate.selectedpast.frequency });
+            hcdispatch({ type: 'set_hours', payload: hcstate.selectedpast.hoursNeeded });
+            hcdispatch({ type: 'set_cleaners', payload: hcstate.selectedpast.cleanerCount });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("BabySitterScreen");
+        } else if (hcstate.selectedpast.serviceType === "CarpetCleaning") {
+            hcdispatch({ type: 'set_quantity', payload: hcstate.selectedpast.quantity, });
+            hcdispatch({ type: 'set_square_meters', payload: hcstate.selectedpast.squareMeters });
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedpast.requireMaterial });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("CarpetCleaningScreen");
+        } else if (hcstate.selectedpast.serviceType === "CurtainCleaning") {
+            hcdispatch({ type: 'set_quantity', payload: hcstate.selectedpast.quantity, });
+            hcdispatch({ type: 'set_square_meters', payload: hcstate.selectedpast.squareMeters });
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedpast.requireMaterial });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("CurtainCleaningScreen");
+        } else if (hcstate.selectedpast.serviceType === "MattressCleaning") {
+            hcdispatch({ type: 'set_quantity', payload: hcstate.selectedpast.quantity, });
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedpast.requireMaterial });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("MattressCleaningScreen");
+        } else if (hcstate.selectedpast.serviceType === "SofaCleaning") {
+            hcdispatch({ type: 'set_quantity', payload: hcstate.selectedpast.quantity, });
+            hcdispatch({ type: 'set_materials', payload: hcstate.selectedpast.requireMaterial });
+            udispatch({ type: 'set_selected_address', payload: hcstate.selectedpast.addressDetails.locationId });
+            udispatch({ type: 'set_selected_address_name', payload: hcstate.selectedpast.addressDetails.address });
+            setSelectedPastModalDetails(false);
+            navigate("SofaCleaningScreen");
+        }
     }
     return (
         <View style={{ marginTop: 0 }}>
@@ -167,11 +226,11 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                                                             style={{ flexDirection: "row" }}
                                                             onPress={() => { setModalVisible(true); setSelectedPastModalDetails(false); }}
                                                         >
-                                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                            <View style={{ flexDirection: "column", justifyContent: "center", marginTop: 5 }}>
                                                                 <FontBold mystyle={styles.bookagainbuttonStyle} value={t('evaluate')} />
                                                             </View>
                                                             <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                                <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
+                                                                <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 10, marginLeft: 2, marginRight: 15 }} />
                                                             </View>
                                                         </TouchableOpacity>
 
@@ -286,7 +345,7 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                         <View flexDirection="column">
                             <FontBold mystyle={{ color: '#000', fontSize: 18 }}
                                 value={
-                                    hcstate.selectedpast.serviceType == "HomeCleaning" || hcstate.selectedpast.serviceType == "DisinfectionService" || hcstate.selectedpast.serviceType == "DeepCleaning" ?
+                                    hcstate.selectedpast.serviceType == "HomeCleaning" || hcstate.selectedpast.serviceType == "DisinfectionService" || hcstate.selectedpast.serviceType == "DeepCleaning" || hcstate.selectedpast.serviceType == "BabysitterService'" ?
                                         hcstate.selectedpast.hoursNeeded + " " + t('hours') + ", " +
                                         hcstate.selectedpast.cleanerCount + " " + cleanersStr + ", " +
                                         materialsStr
@@ -344,7 +403,6 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                                         <MaterialCommunityIcons name="cash" size={45} color="#228B22" />
                                         :
                                         <Image style={styles.liqpayimage} source={require('../../../assets/liqpay.png')} />
-
                                 }
                             </View>
                         </View>

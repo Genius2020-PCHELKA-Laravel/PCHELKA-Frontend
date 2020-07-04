@@ -293,7 +293,16 @@ const DisinfectionScreen = ({ navigation, t }) => {
         setShowBookedModal(true);
         getUpcoming().then((response) => {
           // alert(JSON.stringify(response.reverse()[0].refCode));
-          setRefCode(JSON.stringify(response.sort((a, b) => a.id < b.id ? 1 : -1)[0].refCode));
+          if (hcstate.frequency == 1)
+            setRefCode("\"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[0].refCode + "\"");
+          else if (hcstate.frequency == 2)
+            setRefCode("\"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[0].refCode + "\" " +
+              " \"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[1].refCode + "\"");
+          else if (hcstate.frequency == 3)
+            setRefCode("\"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[0].refCode + "\" " +
+              " \"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[1].refCode + "\"\n" +
+              "\"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[2].refCode + "\" " +
+              " \"" + response.sort((a, b) => a.id < b.id ? 1 : -1)[3].refCode + "\"");
           console.log("DisinfectionScreen::afterBooking::getUpcoming::response:: ");
           //console.log("######################" + JSON.stringify(response));
           hcdispatch({

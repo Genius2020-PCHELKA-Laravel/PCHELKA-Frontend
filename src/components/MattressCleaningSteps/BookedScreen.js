@@ -65,9 +65,9 @@ export default class BookedScreen extends React.Component {
                                                 this.props.refCode === '' ?
                                                     <ActivityIndicator color='#fff' animating={true} />
                                                     :
-                                                    <FontBold value={this.props.refCode + " "} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                                    <FontBold value={this.props.refCode + " "} mystyle={{ fontSize: 18, color: "#fff" }}></FontBold>
                                             }
-                                            <FontBold value={i18n.t('booked')} mystyle={{ fontSize: 20, color: "#fff" }} />
+                                            <FontBold value={i18n.t('booked')} mystyle={{ fontSize: 18, color: "#fff" }} />
                                         </View>
 
                                     </View>
