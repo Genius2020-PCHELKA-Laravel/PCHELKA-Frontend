@@ -11,7 +11,7 @@ import { navigate } from '../navigationRef';
 import { getLang, storeLang } from '../api/userLanguage';
 import HomeScreenAddresses from './lcation/HomeScreenAddresses';
 import { getToken } from '../api/token';
-import ConfirmationDialog from '../components/ConfirmationDialog';
+// import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const SettingsButton = ({ t }) => {
     const { state: ustate } = useContext(UserContext);

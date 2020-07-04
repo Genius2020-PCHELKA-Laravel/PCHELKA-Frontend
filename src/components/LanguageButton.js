@@ -5,7 +5,7 @@ import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
 import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
-import ConfirmationDialog from './ConfirmationDialog';
+// import ConfirmationDialog from './ConfirmationDialog';
 import { Context as UserContext } from '../screens/context/UserContext';
 import LanguageDialog from '../components/LanguageDialog';
 
@@ -45,7 +45,7 @@ const LanguageButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
+            {/* <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} /> */}
             <LanguageDialog
                 lang={lang}
                 setLang={setLang}

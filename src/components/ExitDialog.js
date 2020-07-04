@@ -43,8 +43,8 @@ const ExitDialog = props => {
             style={{ flex: 1, margin: 0 }}
             animationIn="zoomIn"
             animationOut="zoomOut"
-            animationInTiming={500}
-            animationOutTiming={500}
+            animationInTiming={1200}
+            animationOutTiming={600}
             avoidKeyboard={true}
             backdropColor='transparent'
             transparent={true}

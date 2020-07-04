@@ -293,5 +293,6 @@
   "logoutapp": "Выйти из приложения",
   "doyouwanttologout": "Вы хотите выйти?",
   "youcanseeyourupcomingappoitmentsunderappoitments": "Отслеживайте свои предстоящие назначения в соответствии с назначениями",
-  "success": "успех"
+  "success": "успех",
+  "status": "Положение дел"
 }

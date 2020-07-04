@@ -87,10 +87,16 @@ const HCreducer = (state, action) => {
             return { ...state, reloadAppointments: action.payload };
         case 'set_selected_upcoming':
             return { ...state, selectedupcoming: action.payload };
-
+        case 'resetset_selected_upcoming':
+            return { ...state, selectedupcoming: { addressDetails: { address: '' } } };
         case 'set_selected_upcoming_provider_data':
             return { ...state, selectedupcomingproviderdata: action.payload };
-
+        case 'set_selected_past':
+            return { ...state, selectedpast: action.payload };
+        case 'resetset_selected_past':
+            return { ...state, selectedpast: { addressDetails: { address: '' } } };
+        case 'set_selected_past_provider_data':
+            return { ...state, selectedpastproviderdata: action.payload };
         case "RESET":
             return {
                 ...state,
@@ -520,7 +526,9 @@ export const { Context, Provider } = createDataContext(HCreducer,
         upcoming: [],
         past: [],
         reloadAppointments: '',
-        selectedupcoming: {},
+        selectedupcoming: { addressDetails: { address: '' } },
         selectedupcomingproviderdata: {},
+        selectedpast: { addressDetails: { address: '' } },
+        selectedpastproviderdata: {},
     }
 );

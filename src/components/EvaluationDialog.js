@@ -20,8 +20,11 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 import { getLang } from '../api/userLanguage';
 import Loader from '../components/Loader';
 import { Avatar } from 'react-native-elements';
+import { Notifications } from 'expo';
+import Toast from 'react-native-simple-toast';
+import { navigate } from "../navigationRef";
 
-const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, providerImageURL, bookingID, bookingRefCode }) => {
+const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, providerImageURL, bookingID, bookingRefCode, origin, notificationId }) => {
     // const [modalVisible, setModalVisible] = useState(false);
     const { state: hcstate, evaluation } = useContext(HCContext);
     const { state: ustate } = useContext(UserContext);
@@ -49,14 +52,19 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
             bookId: bookingID,
             starCount: rating
         }).then(() => {
+            //remove the notification from statusbar
+            Notifications.dismissNotificationAsync(notificationId);
             console.log("evaluated:: " + rating);
             setModalVisible(false);
             setIsLoading(false);
+            if (origin === "selected")
+                navigate("Past");
+
         }).catch((error) => {
             console.log(error);
             setModalVisible(false);
             setIsLoading(false);
-            Toast.show(t('notevaluated'), Toast.LONG);
+            Toast.show(t('notevaluated') + error, Toast.LONG);
         });
     }
 
@@ -68,7 +76,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
                 animationInTiming={1200}
-                animationOutTiming={1200}
+                animationOutTiming={600}
                 avoidKeyboard={true}
                 backdropColor='transparent'
                 transparent={true}

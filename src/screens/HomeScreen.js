@@ -43,6 +43,8 @@ const HomeScreen = ({ navigation, t }) => {
   const [bookingID, setBookingID] = useState('');
   const [bookingRefCode, setBookingRefCode] = useState('');
   const [providerImageURL, setProviderImageURL] = useState('');
+  const [origin, setOrigin] = useState('');
+  const [notificationId, setNotificationId] = useState('');
   // const [expoToken, setExpoToken] = useState('');
 
   const registerForPushNotificationsAsync = async () => {
@@ -111,7 +113,17 @@ const HomeScreen = ({ navigation, t }) => {
       setProviderImageURL(notification.data.image);
       setBookingID(notification.data.bookId);
       setBookingRefCode(notification.data.refCode);
+      setOrigin(notification.origin);
+      setNotificationId(notification.notificationId);
     }
+    else
+      if (notification.origin === "selected") {
+        if (notification.data.status === "Canceled")
+          navigate("Past");
+        if (notification.data.status === "Confirmed" || notification.data.status === "Rescheduled")
+          navigate("Upcoming");
+      }
+
   };
 
   useEffect(() => {
@@ -258,6 +270,8 @@ const HomeScreen = ({ navigation, t }) => {
         providerImageURL={providerImageURL}
         bookingID={bookingID}
         bookingRefCode={bookingRefCode}
+        origin={origin}
+        notificationId={notificationId}
       />
       <Slider style={{ height: imageHeight, width: imageWidth }} />
       <Spacer>

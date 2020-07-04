@@ -12,10 +12,12 @@ import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
 import OfflineNotice from '../../components/OfflineNotice';
+import PastModalDetails from './PastModalDetails';
 
 const PastScreen = ({ navigation, t }) => {
-    const { state: hcstate, getPast, dispatch: hcdispatch } = useContext(HCContext);
+    const { state: hcstate, getPast, dispatch: hcdispatch, getSelectedUpcoming, } = useContext(HCContext);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedPastModalDetails, setSelectedPastModalDetails] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
 
@@ -51,7 +53,9 @@ const PastScreen = ({ navigation, t }) => {
     return (
         <View style={{ flex: 1 }}>
             <OfflineNotice />
-
+            <PastModalDetails
+                selectedPastModalDetails={selectedPastModalDetails}
+                setSelectedPastModalDetails={setSelectedPastModalDetails} />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.container}
@@ -74,8 +78,16 @@ const PastScreen = ({ navigation, t }) => {
                                 <TouchableOpacity
                                     key={booking.id}
                                     activeOpacity={0.5}
-                                    onPress={async () => {
-
+                                    onPress={() => {
+                                        hcdispatch({ type: 'resetset_selected_past' });
+                                        hcdispatch({ type: 'set_selected_past_provider_data', payload: booking.providerData });
+                                        getSelectedUpcoming({
+                                            id: booking.id,
+                                            // providerData: booking.providerData
+                                        }).then((response) => {
+                                            console.log("####SelectedPast####" + JSON.stringify(response));
+                                        });
+                                        setSelectedPastModalDetails(true);
                                     }}
                                     style={{
                                         backgroundColor: '#fff'

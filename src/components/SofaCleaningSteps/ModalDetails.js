@@ -31,7 +31,7 @@ const ModalDetails = ({ children, t }) => {
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
                 animationInTiming={1200}
-                animationOutTiming={1200}
+                animationOutTiming={600}
                 avoidKeyboard={true}
                 backdropColor='transparent'
                 transparent={true}
@@ -55,8 +55,14 @@ const ModalDetails = ({ children, t }) => {
                         <FontAwesome name="times" size={35} color="#7a7a7a" />
                     </TouchableOpacity>
                     <View style={{ marginHorizontal: 15, marginTop: 60 }}>
-                        <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('sofacleaning')}></FontBold>
+                        <View style={styles.row}>
+                            <View style={styles.item}>
+                                <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
+                            </View>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('sofacleaning')}></FontBold>
+                            </View>
+                        </View>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
                         <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
 

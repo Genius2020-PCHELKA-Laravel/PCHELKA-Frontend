@@ -7,19 +7,20 @@ import FontLight from '../../components/FontLight';
 import Spacer from '../../components/Spacer';
 import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
-import Loader from '../../components/Loader';
+// import Loader from '../../components/Loader';
 import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { set } from 'react-native-reanimated';
 import AlertDialog from '../../components/AlertDialog';
 import { BackHandler, RefreshControl } from 'react-native';
 import OfflineNotice from '../../components/OfflineNotice';
-
+import UpcomingModalDetails from './UpcomingModalDetails';
 const UpcomingScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, dispatch: hcdispatch } = useContext(HCContext);
 
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [changing, setChanging] = useState(false);
+    const [selectedUpcomingModalDetails, setSelectedUpcomingModalDetails] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
 
@@ -47,6 +48,9 @@ const UpcomingScreen = ({ navigation, t }) => {
     return (
         <View style={{ flex: 1 }}>
             <AlertDialog changing={changing} setChanging={setChanging} />
+            <UpcomingModalDetails
+                selectedUpcomingModalDetails={selectedUpcomingModalDetails}
+                setSelectedUpcomingModalDetails={setSelectedUpcomingModalDetails} />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={{ backgroundColor: '#fff' }}
@@ -57,7 +61,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                     />
                 }
             >
-                <Loader loading={isLoading} />
+                {/* <Loader loading={isLoading} /> */}
                 {/* <Text style={{ left: 30, fontSize: 35 }}>{JSON.stringify(hcstate.upcoming)}</Text> */}
                 {
                     hcstate.upcoming.length === 0 || hcstate.upcoming === undefined ?
@@ -69,21 +73,20 @@ const UpcomingScreen = ({ navigation, t }) => {
                                 <TouchableOpacity
                                     key={booking.id}
                                     activeOpacity={0.5}
-                                    onPress={async () => {
-                                        if (booking.status == 'Rescheduled') {
-                                            setChanging(true);
-                                            return;
-                                        }
-                                        setIsLoading(true);
-                                        await hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
-                                        await getSelectedUpcoming({
+                                    onPress={() => {
+                                        // if (booking.status == 'Rescheduled') {
+                                        //     setChanging(true);
+                                        //     return;
+                                        // }
+                                        hcdispatch({ type: 'resetset_selected_upcoming' });
+                                        hcdispatch({ type: 'set_selected_upcoming_provider_data', payload: booking.providerData });
+                                        getSelectedUpcoming({
                                             id: booking.id,
                                             // providerData: booking.providerData
                                         }).then((response) => {
                                             console.log("####SelectedUpcoming####" + JSON.stringify(response));
                                         });
-                                        setIsLoading(false);
-                                        navigate('HCUpcomingDetails')
+                                        setSelectedUpcomingModalDetails(true);
                                     }}
                                     style={{
                                         backgroundColor: '#fff'

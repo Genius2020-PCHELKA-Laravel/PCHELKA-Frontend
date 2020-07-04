@@ -10,7 +10,7 @@ import { Context as UserContext } from '../screens/context/UserContext';
 import { Context as HCContext } from '../screens/context/HCContext';
 import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
-import ConfirmationDialog from './ConfirmationDialog';
+// import ConfirmationDialog from './ConfirmationDialog';
 
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LoginButton = ({ t }) => {
@@ -64,7 +64,7 @@ const LoginButton = ({ t }) => {
     }, []);
     return (
         <View style={styles.container}>
-            <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} />
+            {/* <ConfirmationDialog lang={lang} setLang={setLang} changing={changing} setChanging={setChanging} /> */}
             {/* {
                 lang === 'en' ?
                     // <TouchableOpacity activeOpacity={.5} onPress={() => { setLang('ru'); setChanging(true) }}>

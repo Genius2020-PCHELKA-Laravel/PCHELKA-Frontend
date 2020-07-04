@@ -16,11 +16,13 @@ import FontLight from '../../components/FontLight';
 import FontRegular from '../../components/FontRegular';
 import { withNamespaces } from 'react-i18next';
 import Modal from 'react-native-modal';
-
+import { navigate } from "../../navigationRef";
+import PolicyModalDetails from './PolicyModalDetails';
 const ModalDetails = ({ children, t }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const { state: hcstate, getprice0, getprice1, getprice2 } = useContext(HCContext);
     const { state } = useContext(UserContext);
+    const [reschedulePolicyModalDetails, setReschedulePolicyModalDetails] = useState(false);
     let modalfrequency = '';
     if (hcstate.frequency == 1) modalfrequency = t('onetime');
     else if (hcstate.frequency == 2) modalfrequency = t('biweekly');
@@ -32,13 +34,17 @@ const ModalDetails = ({ children, t }) => {
     //     hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * materialprice * 2 :
     //         hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * materialprice * 4 : 0;
     return (
-        <View style={{ marginTop: 22 }}>
+        <View style={{ marginTop: 0 }}>
+            <PolicyModalDetails
+                reschedulePolicyModalDetails={reschedulePolicyModalDetails}
+                setReschedulePolicyModalDetails={setReschedulePolicyModalDetails}
+            />
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
                 animationInTiming={1200}
-                animationOutTiming={1200}
+                animationOutTiming={600}
                 avoidKeyboard={true}
                 backdropColor='transparent'
                 transparent={true}
@@ -239,7 +245,23 @@ const ModalDetails = ({ children, t }) => {
                 </ScrollView>
             </Modal>
 
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                <TouchableOpacity
+                    style={styles.ourpolicylink}
+                    activeOpacity={0.5}
+                    onPress={() => {
+                        setReschedulePolicyModalDetails(true);
+                    }}>
+                    <FontLight mystyle={{
+                        textDecorationLine: 'underline',
+                        textDecorationStyle: "solid",
+                        textDecorationColor: "blue",
+                        textAlign: "center",
+                        color: "blue",
+                        textAlignVertical: "center",
+                        textAlign: "center"
+                    }} value={t('viewourpolicy')} />
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         setModalVisible(true);
@@ -297,6 +319,7 @@ const styles = StyleSheet.create({
     modalButtonStyle: {
         flex: 0.5,
         bottom: 15,
+        left: 15,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
@@ -316,7 +339,20 @@ const styles = StyleSheet.create({
         textDecorationLine: 'line-through',
         textDecorationStyle: 'solid',
         fontSize: 14
-    }
+    },
+    ourpolicylink: {
+        flexDirection: "column",
+        justifyContent: "center",
+        bottom: 15,
+        left: 15,
+        backgroundColor: '#fff',
+        borderRadius: 4,
+        borderWidth: 0,
+        borderColor: '#7a7a7a',
+        // fontFamily: 'Comfortaa-Bold',
+        width: '25%',
+        height: 35,
+    },
 });
 export default withNamespaces()(ModalDetails);
 

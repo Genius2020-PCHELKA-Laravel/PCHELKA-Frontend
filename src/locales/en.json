@@ -182,7 +182,7 @@
   "cash": "Cash",
   "ourpolicy": "Our Policy",
   "ourpolicydoc": "You can reschedule the booking just one-time for free as long as you reschedule it within 10 minutes after you have placed your booking request.",
-  "viewourpolicy": "View our policy",
+  "viewourpolicy": "View policy",
   "cancel": "Cancel",
   "restart": "Restart",
   "changinglanguagerequirerestartingtheapp": "Changing language require restarting the App",
@@ -292,5 +292,6 @@
   "logoutapp": "Logout from App",
   "doyouwanttologout": "Do you want to logout?",
   "youcanseeyourupcomingappoitmentsunderappoitments": "Track your upcoming appoitments under appoitments",
-  "success": "Success"
+  "success": "Success",
+  "status": "Status"
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, Image, TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, Image, TextInput, StyleSheet, View, Switch, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
 import { Container, Footer, FooterTab, Button } from 'native-base';
 import Toast from 'react-native-simple-toast';
@@ -13,7 +13,7 @@ import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
-import Loader from '../Loader';
+// import Loader from '../Loader';
 import { getLang } from '../../api/userLanguage';
 
 const DateandTimeDetails = ({ children, t }) => {
@@ -23,7 +23,8 @@ const DateandTimeDetails = ({ children, t }) => {
     const [start, setStart] = useState(hcstate.start);
     const [providerid, setProviderid] = useState(hcstate.providerid);
     const [autoassign, setAutoassign] = useState(hcstate.autoassign);
-    const [isloading, setIsLoading] = useState(false);
+    // const [isloading, setIsLoading] = useState(false);
+    const [isloadingActivityIndicator, setIsLoadingActivityIndicator] = useState(false);
     const [days_names, set_days_names] = useState('');
 
     // const fetchLang
@@ -78,15 +79,17 @@ const DateandTimeDetails = ({ children, t }) => {
         });
     }, []);
     useEffect(() => {
+        if (providerid == "")
+            return;
         getSchedules({ id: providerid }).then((response) => {
             console.log("SofaCleaniningScreen::schedules");
-            setIsLoading(false);
+            setIsLoadingActivityIndicator(false);
             console.log(response);
             //console.log(response.filter((e) => e.serviceProviderId == 1 && e.availableDate == "2020-05-31"))
         }).catch((error) => {
             console.log("Error::SofaCleaniningScreen::schedules");
             console.log(error);
-            setIsLoading(false);
+            setIsLoadingActivityIndicator(false);
         });
     }, [providerid]);
     /////////////////////
@@ -199,9 +202,9 @@ const DateandTimeDetails = ({ children, t }) => {
     }
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            <Loader loading={isloading} />
+            {/* <Loader loading={isloading} /> */}
             <FontBold mystyle={styles.qText} value={t('dateq0')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 30 }}>
                 {/* redering Auto-Assign */}
                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
                     onPress={() => {
@@ -238,7 +241,7 @@ const DateandTimeDetails = ({ children, t }) => {
                         return (
                             <TouchableOpacity key={u.id} style={providerid == u.id ? styles.providerThumdown : styles.providerThumup}
                                 onPress={() => {
-                                    setIsLoading(true);
+                                    setIsLoadingActivityIndicator(true);
                                     setSelectedDay('');
                                     setStart('');
                                     dispatch({
@@ -266,8 +269,8 @@ const DateandTimeDetails = ({ children, t }) => {
                                     {
                                         <Badge
                                             status="success"
-                                            badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
-                                            containerStyle={{ position: 'absolute', top: 5, right: 22, }}
+                                            badgeStyle={{ width: 18, height: 18, borderRadius: 10, borderColor: '#fff', borderWidth: 2 }}
+                                            containerStyle={{ position: 'absolute', top: 58, right: 21, }}
                                         />
                                     }
                                     {/* {
@@ -293,10 +296,79 @@ const DateandTimeDetails = ({ children, t }) => {
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                     {
-                                        u.evaluation >= 4 ?
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                        u.evaluation == 0 ?
+                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{ top: 3 }} />
                                             :
-                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            u.evaluation == 1 ?
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                :
+                                                u.evaluation == 2 ?
+                                                    <>
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                    </>
+                                                    :
+                                                    u.evaluation == 3 ?
+                                                        <>
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        </>
+                                                        :
+                                                        u.evaluation == 4 ?
+                                                            <>
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                            </>
+                                                            :
+                                                            u.evaluation == 5 ?
+                                                                <>
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                </>
+                                                                :
+                                                                u.evaluation > 1 && u.evaluation < 2 ?
+                                                                    <>
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    </>
+                                                                    :
+                                                                    u.evaluation > 2 && u.evaluation < 3 ?
+                                                                        <>
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                        </>
+                                                                        :
+                                                                        u.evaluation > 3 && u.evaluation < 4 ?
+                                                                            <>
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            </>
+                                                                            :
+                                                                            u.evaluation > 4 && u.evaluation < 5 ?
+                                                                                <>
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                </>
+                                                                                :
+                                                                                <>
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                </>
                                     }
                                     <Text>{' '}</Text>
                                     {
@@ -323,15 +395,29 @@ const DateandTimeDetails = ({ children, t }) => {
             </ScrollView>
             <Spacer />
             <FontBold mystyle={styles.qText} value={t('dateq1')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                {days}
-            </ScrollView>
+            {
+                isloadingActivityIndicator ?
+                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={35} color='#ff9800' animating={isloadingActivityIndicator} />
+                    :
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 30 }}>
+                        {
+                            days
+                        }
+                    </ScrollView>
+            }
 
             <Spacer />
             <FontBold mystyle={styles.qText} value={t('dateq2')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                {starts}
-            </ScrollView>
+            {
+                isloadingActivityIndicator ?
+                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={35} color='#ff9800' animating={isloadingActivityIndicator} />
+                    :
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15, marginRight: 30 }}>
+                        {
+                            starts
+                        }
+                    </ScrollView>
+            }
 
 
 
@@ -450,41 +536,59 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: 120,
         height: 170,
-        borderColor: "#f5c500aa",
-        borderRadius: 4,
-        borderWidth: 2,
-        marginRight: 10,
+        borderRadius: 2,
+        borderWidth: 0,
+        marginRight: 5,
+        marginLeft: 5,
+        marginTop: 5,
+        marginBottom: 5,
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 10
+        },
+        elevation: 3,
+        shadowRadius: 10,
     },
     providerThumdown: {
-        backgroundColor: '#f5c500aa',
+        backgroundColor: '#f5c500',
         width: 120,
         height: 170,
-        borderColor: "#f5c500",
         borderRadius: 2,
-        borderWidth: 4,
-        marginRight: 10,
+        borderWidth: 0,
+        marginRight: 5,
+        marginLeft: 5,
+        marginTop: 5,
+        marginBottom: 5,
+        shadowColor: '#7a7a7a',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 10
+        },
+        elevation: 4,
+        shadowRadius: 10,
     },
     imageThumup: {
         width: 80,
         height: 80,
         borderRadius: 45,
+        marginTop: 2,
         marginLeft: 10,
         marginRight: 10,
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: "#fff",
-        opacity: 1,
-
     },
     imageThumdown: {
         width: 80,
         height: 80,
         borderRadius: 45,
+        marginTop: 2,
         marginLeft: 10,
         marginRight: 10,
-        borderWidth: 3,
-        borderColor: "#f5c500",
-        opacity: 1,
-
+        borderWidth: 2,
+        borderColor: "#fff",
     },
 
     diagonaline: {
