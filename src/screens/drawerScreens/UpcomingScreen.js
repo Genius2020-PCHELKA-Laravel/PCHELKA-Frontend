@@ -23,7 +23,7 @@ const UpcomingScreen = ({ navigation, t }) => {
     const [changing, setChanging] = useState(false);
     const [selectedUpcomingModalDetails, setSelectedUpcomingModalDetails] = useState(false);
     // const [refreshing, setRefreshing] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [isListEnd, setIsListEnd] = useState(false);
     const [serverData, setServerData] = useState([]);
     const [fetching_from_server, set_fetching_from_server] = useState(false);
@@ -47,6 +47,7 @@ const UpcomingScreen = ({ navigation, t }) => {
         setOffset(2);
         setServerData([]);
         getUpcoming({ page: 1 }).then((response) => {
+            psetLoading(false);
             if (response.length > 0) {
                 console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
                 console.log("######################1");
@@ -99,6 +100,7 @@ const UpcomingScreen = ({ navigation, t }) => {
         if (!fetching_from_server && !isListEnd) {
             set_fetching_from_server(true);
             getUpcoming({ page: offset }).then((response) => {
+                psetLoading(false);
                 if (response.length > 0) {
                     console.log("UpcomingScreen::loadMoreData::getUpcoming::response:: ");
                     console.log("######################" + offset);
@@ -125,7 +127,8 @@ const UpcomingScreen = ({ navigation, t }) => {
         return (
             <View style={styles.footer}>
                 {fetching_from_server ? (
-                    <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
+                    <Image source={require('../../../assets/spin.gif')} />
+                    // <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
                 ) : null}
             </View>
         );
@@ -145,7 +148,9 @@ const UpcomingScreen = ({ navigation, t }) => {
                 setSelectedUpcomingModalDetails={setSelectedUpcomingModalDetails} />
             <View style={styles.container}>
                 {loading ? (
-                    <ActivityIndicator size="large" color="#f5c500" />
+                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                        <Image source={require('../../../assets/spin.gif')} />
+                    </View>
                 ) : (
                         <FlatList
                             style={{ width: '100%', flex: 1 }}

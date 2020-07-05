@@ -1,7 +1,7 @@
 import React from 'react';
 
 //Import all required component
-import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Modal, ActivityIndicator, Image } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 const Loader = props => {
@@ -22,7 +22,8 @@ const Loader = props => {
             }}>
             <View style={styles.modalBackground}>
                 <View style={styles.activityIndicatorWrapper}>
-                    <ActivityIndicator color='#ff9800' animating={loading} />
+                    <Image source={require('../../assets/spin.gif')} />
+                    {/* <ActivityIndicator color='#ff9800' animating={loading} /> */}
                 </View>
             </View>
         </Modal>

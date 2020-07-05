@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation, t }) => {
   const [notificationId, setNotificationId] = useState('');
   // const [expoToken, setExpoToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [ploading, psetLoading] = useState(false);
+  const [ploading, psetLoading] = useState(true);
   const [pisListEnd, psetIsListEnd] = useState(false);
   const [pserverData, psetServerData] = useState([]);
   const [pfetching_from_server, pset_fetching_from_server] = useState(false);
@@ -245,29 +245,6 @@ const HomeScreen = ({ navigation, t }) => {
       BackHandler.removeEventListener('hardwareBackPress', () => { setChanging(false); return true; });
     };
   }, []);
-  useEffect(() => {
-    psetLoading(false);
-    psetIsListEnd(false);
-    pset_fetching_from_server(false);
-    psetOffset(2);
-    psetServerData([]);
-    getPast({ page: 1 }).then((response) => {
-      if (response.length > 0) {
-        console.log("HomeScreen::onrefresh::getUpcoming::response:: ");
-        console.log("######################1");
-        console.log("######################" + JSON.stringify(response[0].id));
-        psetServerData([...response]);
-        pset_fetching_from_server(false);
-      } else {
-        pset_fetching_from_server(false);
-        psetIsListEnd(true);
-      }
-    }).catch((error) => {
-      console.log("Error::UpcomingScree::Onrefresh " + error);
-      pset_fetching_from_server(false);
-      psetIsListEnd(true);
-    });
-  }, [hcstate.reloadAppointments]);
   // useEffect(() => {
   //   getUpcoming().then((response) => {
   //     console.log("Upcoming::useffect::getUpcoming::response:: ");
@@ -303,6 +280,7 @@ const HomeScreen = ({ navigation, t }) => {
     if (!pfetching_from_server && !pisListEnd) {
       pset_fetching_from_server(true);
       getPast({ page: poffset }).then((presponse) => {
+        psetLoading(false);
         if (presponse.length > 0) {
           console.log("HomeScreenn::loadMoreData::getPast::presponse:: ");
           console.log("######################" + poffset);
@@ -331,7 +309,8 @@ const HomeScreen = ({ navigation, t }) => {
     return (
       <View style={styles.footer}>
         {pfetching_from_server ? (
-          <ActivityIndicator color="#f5c500" size="large" />
+          <Image source={require('../../assets/spin.gif')} />
+          // <ActivityIndicator color="#f5c500" size="large" />
         ) : null}
       </View>
     );
@@ -432,7 +411,10 @@ const HomeScreen = ({ navigation, t }) => {
       {/* booking again */}
       <View style={styles.container}>
         {ploading ? (
-          <ActivityIndicator size="large" color="#f5c500" />
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Image source={require('../../assets/spin.gif')} />
+          </View>
+          // <ActivityIndicator size="large" color="#f5c500" />
         ) : (
             <FlatList
               style={{ flex: 1, marginLeft: 10 }}
@@ -455,8 +437,8 @@ const HomeScreen = ({ navigation, t }) => {
                   <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center" }}>
                     {
                       <View style={styles.providerThumup}>
-                        <View style={styles.trending}>
-                          <FontLight value={t(item.serviceType)} mystyle={{ fontSize: 6 }} />
+                        <View style={{ position: "absolute", right: 0, top: 0 }}>
+                          <FontLight value={t(item.serviceType)} mystyle={{ fontSize: 12 }} />
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                           <View style={{ flexDirection: "column", justifyContent: "center" }}>
@@ -805,21 +787,6 @@ const styles = StyleSheet.create({
   separator: {
     height: 0.5,
     backgroundColor: 'rgba(0,0,0,0.4)',
-  },
-  trending: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    // backgroundColor: 'blue',
-    borderRadius: 4,
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 9,
-    fontWeight: 'bold',
-    // fontFamily: 'Comfortaa-Bold',
-    paddingHorizontal: 5,
-    justifyContent: "center",
-    zIndex: 16
   },
 });
 

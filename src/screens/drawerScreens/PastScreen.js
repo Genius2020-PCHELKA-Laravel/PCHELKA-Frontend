@@ -20,7 +20,7 @@ const PastScreen = ({ navigation, t }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedPastModalDetails, setSelectedPastModalDetails] = useState(false);
     // const [prefreshing, psetRefreshing] = useState(false);
-    const [ploading, psetLoading] = useState(false);
+    const [ploading, psetLoading] = useState(true);
     const [pisListEnd, psetIsListEnd] = useState(false);
     const [pserverData, psetServerData] = useState([]);
     const [pfetching_from_server, pset_fetching_from_server] = useState(false);
@@ -94,6 +94,7 @@ const PastScreen = ({ navigation, t }) => {
         if (!pfetching_from_server && !pisListEnd) {
             pset_fetching_from_server(true);
             getPast({ page: poffset }).then((presponse) => {
+                psetLoading(false);
                 if (presponse.length > 0) {
                     console.log("PastScreen::loadMoreData::getPast::presponse:: ");
                     console.log("######################" + poffset);
@@ -121,7 +122,8 @@ const PastScreen = ({ navigation, t }) => {
         return (
             <View style={styles.footer}>
                 {pfetching_from_server ? (
-                    <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
+                    <Image source={require('../../../assets/spin.gif')} />
+                    // <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
                 ) : null}
             </View>
         );
@@ -141,7 +143,9 @@ const PastScreen = ({ navigation, t }) => {
 
             <View style={styles.container}>
                 {ploading ? (
-                    <ActivityIndicator size="large" color="#f5c500" />
+                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                        <Image source={require('../../../assets/spin.gif')} />
+                    </View>
                 ) : (
                         <FlatList
                             style={{ width: '100%', flex: 1 }}
