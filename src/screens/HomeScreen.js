@@ -95,19 +95,23 @@ const HomeScreen = ({ navigation, t }) => {
     // console.log(notification);
     // setNotification(notification);
 
+    if (notification.origin == "received" || notification.origin == "selected") {
+      let rand = Math.floor(1000 + Math.random() * 9000).toString();
+      hcdispatch({ type: 'set_reloadappoitments', payload: rand })
+    }
     // if (notification.origin == "received" || notification.origin == "selected") {
-    getUpcoming().then((response) => {
-      console.log("HomeScreen::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error);
-    });
-    getPast().then((response) => {
-      console.log("HomeScreen::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error);
-    });
+    // getUpcoming().then((response) => {
+    //   console.log("HomeScreen::useffect::getUpcoming::response:: ");
+    //   //console.log("######################" + JSON.stringify(response));
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+    // getPast().then((response) => {
+    //   console.log("HomeScreen::useffect::getUpcoming::response:: ");
+    //   //console.log("######################" + JSON.stringify(response));
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
     // }
     if (notification.data.status === "Completed") {
       setModalVisible(true);
@@ -232,20 +236,20 @@ const HomeScreen = ({ navigation, t }) => {
       BackHandler.removeEventListener('hardwareBackPress', () => { setChanging(false); return true; });
     };
   }, []);
-  useEffect(() => {
-    getUpcoming().then((response) => {
-      console.log("Upcoming::useffect::getUpcoming::response:: ");
-      console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error.response);
-    });
-    getPast().then((response) => {
-      //console.log("Upcoming::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error.response);
-    });
-  }, [hcstate.reloadAppointments]);
+  // useEffect(() => {
+  //   getUpcoming().then((response) => {
+  //     console.log("Upcoming::useffect::getUpcoming::response:: ");
+  //     console.log("######################" + JSON.stringify(response));
+  //   }).catch((error) => {
+  //     console.log(error.response);
+  //   });
+  //   getPast().then((response) => {
+  //     //console.log("Upcoming::useffect::getUpcoming::response:: ");
+  //     //console.log("######################" + JSON.stringify(response));
+  //   }).catch((error) => {
+  //     console.log(error.response);
+  //   });
+  // }, [hcstate.reloadAppointments]);
   // useEffect(() => {
   //   getUpcoming().then((response) => {
   //     console.log("HomeScreen::useffect::getUpcoming::response:: ");

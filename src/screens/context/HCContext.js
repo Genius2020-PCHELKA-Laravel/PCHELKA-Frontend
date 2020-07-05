@@ -394,11 +394,11 @@ const getUpcoming = (dispatch) => {
     };
 }
 const getPast = (dispatch) => {
-    return async () => {
+    return async ({ page }) => {
         try {
             const senttoken = await getToken();
             requestApi.defaults.headers.common['Authorization'] = 'Bearer ' + senttoken;
-            var result = await requestApi.get('/pastBooking');
+            var result = await requestApi.post('/pastBooking', { page });
             console.log("pastBooking::HCCContext" + result.data.data);
             if (result.data.status) {
                 dispatch({ type: 'set_past', payload: result.data.data });

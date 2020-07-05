@@ -15,13 +15,14 @@ import AlertDialog from '../../components/AlertDialog';
 import { BackHandler, RefreshControl } from 'react-native';
 import OfflineNotice from '../../components/OfflineNotice';
 import UpcomingModalDetails from './UpcomingModalDetails';
+
 const UpcomingScreen = ({ navigation, t }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, dispatch: hcdispatch } = useContext(HCContext);
 
     // const [isLoading, setIsLoading] = useState(false);
     const [changing, setChanging] = useState(false);
     const [selectedUpcomingModalDetails, setSelectedUpcomingModalDetails] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
+    // const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isListEnd, setIsListEnd] = useState(false);
     const [serverData, setServerData] = useState([]);
@@ -39,33 +40,69 @@ const UpcomingScreen = ({ navigation, t }) => {
             // navigation.removeListener('didFocus', () => { })
         };
     }, []);
+    useEffect(() => {
+        setLoading(false);
+        setIsListEnd(false);
+        set_fetching_from_server(false);
+        setOffset(2);
+        setServerData([]);
+        getUpcoming({ page: 1 }).then((response) => {
+            if (response.length > 0) {
+                console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
+                console.log("######################1");
+                console.log("######################" + JSON.stringify(response[0].id));
+                setServerData([...response]);
+                set_fetching_from_server(false);
+            } else {
+                set_fetching_from_server(false);
+                setIsListEnd(true);
+            }
+        }).catch((error) => {
+            console.log("Error::UpcomingScree::Onrefresh " + error);
+            set_fetching_from_server(false);
+            setIsListEnd(true);
+        });
+    }, [hcstate.reloadAppointments]);
     // useEffect(() => {
     //     // if (!selectedUpcomingModalDetails)
     //     //     alert()
     // }, [selectedUpcomingModalDetails])
     // const _onRefresh = () => {
+    //     set_fetching_from_server(false);
     //     setRefreshing(true);
-    //     setPage(1);
+    //     setOffset(2);
+    //     setServerData([]);
     //     getUpcoming({ page: 1 }).then((response) => {
-    //         console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
-    //         console.log("######################" + JSON.stringify(response[0].id));
-    //         setRefreshing(false);
+    //         if (response.length > 0) {
+    //             console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
+    //             console.log("######################1");
+    //             console.log("######################" + JSON.stringify(response[0].id));
+    //             setServerData([...response]);
+    //             set_fetching_from_server(false);
+    //             setRefreshing(false);
+    //         } else {
+    //             set_fetching_from_server(false);
+    //             setIsListEnd(true);
+    //         }
     //     }).catch((error) => {
     //         setRefreshing(false);
-    //         console.log(error);
+    //         console.log("Error::UpcomingScree::Onrefresh " + error);
+    //         set_fetching_from_server(false);
+    //         setIsListEnd(true);
     //     });
     // }
     useEffect(() => {
         loadMoreData();
     }, []);
 
-    loadMoreData = () => {
+    const loadMoreData = () => {
         if (!fetching_from_server && !isListEnd) {
             set_fetching_from_server(true);
             getUpcoming({ page: offset }).then((response) => {
-                console.log("UpcomingScreen::loadMoreData::getUpcoming::response:: ");
-                console.log("######################" + JSON.stringify(response[0].id));
                 if (response.length > 0) {
+                    console.log("UpcomingScreen::loadMoreData::getUpcoming::response:: ");
+                    console.log("######################" + offset);
+                    console.log("######################" + JSON.stringify(response[0].id));
                     let newoffset = offset + 1;
                     setOffset(newoffset);
                     //After the response increasing the offset for the next API call.
@@ -79,9 +116,9 @@ const UpcomingScreen = ({ navigation, t }) => {
                 }
             }).catch((error) => {
                 console.log("Error::UpcomingScree:: " + error);
+                set_fetching_from_server(false);
+                setIsListEnd(true);
             });
-
-
         }
     };
     const renderFooter = () => {
@@ -93,9 +130,16 @@ const UpcomingScreen = ({ navigation, t }) => {
             </View>
         );
     }
+    const emptyAppoitments = () => {
+        return (
+            <View style={{ flex: 1 }}>
+                <FontBold value={t('noupcomingappoitment')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
+            </View>);
+    }
     return (
         <View style={{ flex: 1 }}>
             <AlertDialog changing={changing} setChanging={setChanging} />
+            <OfflineNotice />
             <UpcomingModalDetails
                 selectedUpcomingModalDetails={selectedUpcomingModalDetails}
                 setSelectedUpcomingModalDetails={setSelectedUpcomingModalDetails} />
@@ -109,6 +153,13 @@ const UpcomingScreen = ({ navigation, t }) => {
                             data={serverData}
                             onEndReached={() => loadMoreData()}
                             onEndReachedThreshold={0.5}
+                            ListEmptyComponent={emptyAppoitments}
+                            // refreshControl={
+                            //     <RefreshControl
+                            //         refreshing={refreshing}
+                            //         onRefresh={_onRefresh}
+                            //     />
+                            // }
                             renderItem={({ item, index }) => (
                                 <TouchableOpacity
                                     key={item.id}
@@ -283,7 +334,6 @@ const UpcomingScreen = ({ navigation, t }) => {
 
                 }
             </ScrollView> */}
-            <OfflineNotice />
 
         </View>
     );

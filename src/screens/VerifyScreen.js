@@ -89,22 +89,22 @@ const VerifyScreen = ({ navigation, t }) => {
             console.log("HomeScreen::getUserDetails#1 " + error);
         });
     }
-    const fetchUpcoming = async () => {
-        getUpcoming().then((response) => {
-            //console.log("Upcoming::useffect::getUpcoming::response:: ");
-            //console.log("######################" + JSON.stringify(response));
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-    const fetchPast = async () => {
-        getPast().then((response) => {
-            //console.log("Upcoming::useffect::getUpcoming::response:: ");
-            //console.log("######################" + JSON.stringify(response));
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
+    // const fetchUpcoming = async () => {
+    //     getUpcoming().then((response) => {
+    //         //console.log("Upcoming::useffect::getUpcoming::response:: ");
+    //         //console.log("######################" + JSON.stringify(response));
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // }
+    // const fetchPast = async () => {
+    //     getPast().then((response) => {
+    //         //console.log("Upcoming::useffect::getUpcoming::response:: ");
+    //         //console.log("######################" + JSON.stringify(response));
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // }
     return (<>
         <View style={styles.container}>
             <Loader loading={isloading} />
@@ -125,8 +125,8 @@ const VerifyScreen = ({ navigation, t }) => {
                             await verifysms({ mobile: mobile, enteredotp: enteredotp, otp: resendotp });
                             await fetchServices();
                             await fetchAddresses();
-                            await fetchUpcoming();
-                            await fetchPast();
+                            // await fetchUpcoming();
+                            // await fetchPast();
                             await checkFullName(mobile, redirect);
                             setIsLoading(false);
                         } catch (err) {

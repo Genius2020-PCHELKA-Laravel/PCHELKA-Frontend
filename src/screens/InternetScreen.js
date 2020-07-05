@@ -86,22 +86,22 @@ const InternetScreen = ({ navigation, t }) => {
       console.log("InterneteScreen::getUserDetails#1 " + error);
     });
   }
-  const fetchUpcoming = async () => {
-    getUpcoming().then((response) => {
-      //console.log("Upcoming::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-  const fetchPast = async () => {
-    getPast().then((response) => {
-      //console.log("Upcoming::useffect::getUpcoming::response:: ");
-      //console.log("######################" + JSON.stringify(response));
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+  // const fetchUpcoming = async () => {
+  //   getUpcoming().then((response) => {
+  //     //console.log("Upcoming::useffect::getUpcoming::response:: ");
+  //     //console.log("######################" + JSON.stringify(response));
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   });
+  // }
+  // const fetchPast = async () => {
+  //   getPast().then((response) => {
+  //     //console.log("Upcoming::useffect::getUpcoming::response:: ");
+  //     //console.log("######################" + JSON.stringify(response));
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   });
+  // }
   const fetchLoginToken = async () => {
     try {
       setLoginToken(await getToken());
@@ -161,8 +161,8 @@ const InternetScreen = ({ navigation, t }) => {
         // if (!isCancelled2)
         // setIsLoading(false);
         await fetchServices();
-        await fetchUpcoming();
-        await fetchPast();
+        // await fetchUpcoming();
+        // await fetchPast();
         await fetchAddresses();
         // if (isVerified == 0)
         //   navigation.navigate('LoginFlow');

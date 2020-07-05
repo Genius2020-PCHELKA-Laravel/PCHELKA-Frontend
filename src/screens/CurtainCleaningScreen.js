@@ -276,7 +276,7 @@ const CurtainCleaningScreen = ({ navigation, t }) => {
       }).then(() => {
         setIsLoading(false);
         setShowBookedModal(true);
-        getUpcoming().then((response) => {
+        getUpcoming({ page: 1 }).then((response) => {
           // alert(JSON.stringify(response.reverse()[0].refCode));
           setRefCode(JSON.stringify(response.sort((a, b) => a.id < b.id ? 1 : -1)[0].refCode));
           console.log("CutrainCleaningScreen::afterBooking::getUpcoming::response:: ");
