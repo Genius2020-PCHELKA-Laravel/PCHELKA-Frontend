@@ -340,5 +340,11 @@ const styles = StyleSheet.create({
         width: "100%",
         marginTop: 0
     },
+    footer: {
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
 });
 export default withNamespaces()(PastScreen);

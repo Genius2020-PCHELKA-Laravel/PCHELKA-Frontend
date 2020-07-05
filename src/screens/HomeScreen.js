@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, StyleSheet, View, Button, ScrollView, SafeAreaView, Image, TouchableOpacity, Dimensions, Vibration, Platform } from 'react-native';
+import { Text, StyleSheet, View, Button, ScrollView, SafeAreaView, Image, TouchableOpacity, Dimensions, Vibration, Platform, FlatList, ActivityIndicator } from 'react-native';
 import { Header } from 'react-native-elements';
-import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import Servicesdetails from '../components/Servicesdetails';
 import i18n from '../locales/i18n';
 import { withNamespaces } from 'react-i18next';
@@ -29,10 +29,11 @@ import { initnotify, getToken, newChannel, notify } from 'expo-push-notification
 import OfflineNotice from '../components/OfflineNotice';
 import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken } from '../api/token';
 import { getLang, storeLang } from '../api/userLanguage';
+import Loader from '../components/Loader';
 
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification, userLanguage } = useContext(UserContext);
-  const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, dispatch: hcdispatch } = useContext(HCContext);
+  const { state: hcstate, setHC, setBS, setDI, setDE, setSF, setMA, setCA, setCU, getServices, getUpcoming, getPast, getSelectedPast, dispatch: hcdispatch } = useContext(HCContext);
   const { state, logout } = useContext(AuthContext);
   const dimensions = Dimensions.get('window');
   const imageHeight = Math.round(dimensions.width * 12 / 16);
@@ -47,6 +48,12 @@ const HomeScreen = ({ navigation, t }) => {
   const [origin, setOrigin] = useState('');
   const [notificationId, setNotificationId] = useState('');
   // const [expoToken, setExpoToken] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [ploading, psetLoading] = useState(false);
+  const [pisListEnd, psetIsListEnd] = useState(false);
+  const [pserverData, psetServerData] = useState([]);
+  const [pfetching_from_server, pset_fetching_from_server] = useState(false);
+  const [poffset, psetOffset] = useState(1);
 
   const registerForPushNotificationsAsync = async () => {
     if (Platform.OS === 'android') {
@@ -133,6 +140,8 @@ const HomeScreen = ({ navigation, t }) => {
   };
 
   useEffect(() => {
+    ploadMoreData();
+
     // setModalVisible(true);
     // setProviderImageURL('https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg');
     // setBookingID(63);
@@ -236,6 +245,29 @@ const HomeScreen = ({ navigation, t }) => {
       BackHandler.removeEventListener('hardwareBackPress', () => { setChanging(false); return true; });
     };
   }, []);
+  useEffect(() => {
+    psetLoading(false);
+    psetIsListEnd(false);
+    pset_fetching_from_server(false);
+    psetOffset(2);
+    psetServerData([]);
+    getPast({ page: 1 }).then((response) => {
+      if (response.length > 0) {
+        console.log("HomeScreen::onrefresh::getUpcoming::response:: ");
+        console.log("######################1");
+        console.log("######################" + JSON.stringify(response[0].id));
+        psetServerData([...response]);
+        pset_fetching_from_server(false);
+      } else {
+        pset_fetching_from_server(false);
+        psetIsListEnd(true);
+      }
+    }).catch((error) => {
+      console.log("Error::UpcomingScree::Onrefresh " + error);
+      pset_fetching_from_server(false);
+      psetIsListEnd(true);
+    });
+  }, [hcstate.reloadAppointments]);
   // useEffect(() => {
   //   getUpcoming().then((response) => {
   //     console.log("Upcoming::useffect::getUpcoming::response:: ");
@@ -267,8 +299,124 @@ const HomeScreen = ({ navigation, t }) => {
   //   });
   // }, [hcstate.reloadAppointments]);
   //const [dropdownContents, setDropdownContents] = useState('');
+  const ploadMoreData = () => {
+    if (!pfetching_from_server && !pisListEnd) {
+      pset_fetching_from_server(true);
+      getPast({ page: poffset }).then((presponse) => {
+        if (presponse.length > 0) {
+          console.log("HomeScreenn::loadMoreData::getPast::presponse:: ");
+          console.log("######################" + poffset);
+          console.log("######################" + JSON.stringify(presponse[0]));
+          if (typeof presponse[0].id != 'undefined')
+            console.log("######################" + JSON.stringify(presponse[0].id));
+          let pnewoffset = poffset + 1;
+          psetOffset(pnewoffset);
+          //After the response increasing the offset for the next API call.
+          psetServerData([...pserverData, ...presponse])
+          //adding the new data with old one available
+          pset_fetching_from_server(false);
+          //updating the loading state to false
+        } else {
+          pset_fetching_from_server(false);
+          psetIsListEnd(true);
+        }
+      }).catch((error) => {
+        console.log("Error::HomeScreenn:: " + error);
+        pset_fetching_from_server(false);
+        psetIsListEnd(true);
+      });
+    }
+  };
+  const prenderFooter = () => {
+    return (
+      <View style={styles.footer}>
+        {pfetching_from_server ? (
+          <ActivityIndicator color="#f5c500" size="large" />
+        ) : null}
+      </View>
+    );
+  }
+  const pemptyAppoitments = () => {
+    return (
+      <View style={{ flex: 1, dispatch: "none" }}>
+      </View>);
+  }
+  const bookagain = (item) => {
+    console.log(item);
+    setIsLoading(true);
+    getSelectedPast({
+      id: item.id,
+    }).then((response) => {
+      hcdispatch({ type: 'set_selected_past_provider_data', payload: item.providerData });
+      console.log("####SelectedPast####" + JSON.stringify(response));
+      setIsLoading(false);
+      if (response.serviceType === "HomeCleaning") {
+        hcdispatch({ type: 'set_frequency', payload: response.frequency });
+        hcdispatch({ type: 'set_hours', payload: response.hoursNeeded });
+        hcdispatch({ type: 'set_cleaners', payload: response.cleanerCount });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("HomeCleaningScreen");
+      }
+      else if (response.serviceType === "DisinfectionService") {
+        hcdispatch({ type: 'set_frequency', payload: response.frequency });
+        hcdispatch({ type: 'set_hours', payload: response.hoursNeeded });
+        hcdispatch({ type: 'set_cleaners', payload: response.cleanerCount });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("DisinfectionScreen");
+      }
+      else if (response.serviceType === "DeepCleaning") {
+        hcdispatch({ type: 'set_frequency', payload: response.frequency });
+        hcdispatch({ type: 'set_hours', payload: response.hoursNeeded });
+        hcdispatch({ type: 'set_cleaners', payload: response.cleanerCount });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("DeepCleaningScreen");
+      }
+      else if (response.serviceType === "BabysitterService") {
+        hcdispatch({ type: 'set_frequency', payload: response.frequency });
+        hcdispatch({ type: 'set_hours', payload: response.hoursNeeded });
+        hcdispatch({ type: 'set_cleaners', payload: response.cleanerCount });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("BabySitterScreen");
+      } else if (response.serviceType === "CarpetCleaning") {
+        hcdispatch({ type: 'set_quantity', payload: response.quantity, });
+        hcdispatch({ type: 'set_square_meters', payload: response.squareMeters });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("CarpetCleaningScreen");
+      } else if (response.serviceType === "CurtainCleaning") {
+        hcdispatch({ type: 'set_quantity', payload: response.quantity, });
+        hcdispatch({ type: 'set_square_meters', payload: response.squareMeters });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("CurtainCleaningScreen");
+      } else if (response.serviceType === "MattressCleaning") {
+        hcdispatch({ type: 'set_quantity', payload: response.quantity, });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("MattressCleaningScreen");
+      } else if (response.serviceType === "SofaCleaning") {
+        hcdispatch({ type: 'set_quantity', payload: response.quantity, });
+        hcdispatch({ type: 'set_materials', payload: response.requireMaterial });
+        udispatch({ type: 'set_selected_address', payload: response.addressDetails.locationId });
+        udispatch({ type: 'set_selected_address_name', payload: response.addressDetails.address });
+        navigate("SofaCleaningScreen");
+      }
+    });
+
+  }
   return (<>
     <ScrollView style={styles.container}>
+      <Loader loading={isLoading} />
       <ExitDialog changing={changing} setChanging={setChanging} />
       <EvaluationDialog
         modalVisible={modalVisible}
@@ -281,13 +429,164 @@ const HomeScreen = ({ navigation, t }) => {
         notificationId={notificationId}
       />
       <Slider style={{ height: imageHeight, width: imageWidth }} />
+      {/* booking again */}
+      <View style={styles.container}>
+        {ploading ? (
+          <ActivityIndicator size="large" color="#f5c500" />
+        ) : (
+            <FlatList
+              style={{ flex: 1, marginLeft: 10 }}
+              contentContainerStyle={{ justifyContent: "center", flexDirection: "row" }}
+              keyExtractor={(item, index) => index.toString()}
+              data={pserverData}
+              onEndReached={() => ploadMoreData()}
+              onEndReachedThreshold={0.5}
+              ListEmptyComponent={pemptyAppoitments}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              // refreshControl={
+              //     <RefreshControl
+              //         refreshing={prefreshing}
+              //         onRefresh={p_onRefresh}
+              //     />
+              // }
+              renderItem={({ item, index }) => (
+                item.status == "Completed" ?
+                  <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center" }}>
+                    {
+                      <View style={styles.providerThumup}>
+                        <View style={styles.trending}>
+                          <FontLight value={t(item.serviceType)} mystyle={{ fontSize: 6 }} />
+                        </View>
+                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                          <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                            <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
+                          </View>
+                          <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                            <View style={{ flexDirection: "row" }}>
+                              <FontBold value={item.providerData.name} />
+                            </View>
+                            <View style={{ flexDirection: "row", marginTop: 10 }}>
+
+                              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                {
+                                  item.providerData.evaluation == 0 ?
+                                    <FontAwesome name="star-o" size={18} color="#ff9800" style={{ top: 3 }} />
+                                    :
+                                    item.providerData.evaluation == 1 ?
+                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                      :
+                                      item.providerData.evaluation == 2 ?
+                                        <>
+                                          <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                          <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                        </>
+                                        :
+                                        item.providerData.evaluation == 3 ?
+                                          <>
+                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                          </>
+                                          :
+                                          item.providerData.evaluation == 4 ?
+                                            <>
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            </>
+                                            :
+                                            item.providerData.evaluation == 5 ?
+                                              <>
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                              </>
+                                              :
+                                              item.providerData.evaluation > 1 && item.providerData.evaluation < 2 ?
+                                                <>
+                                                  <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                  <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                </>
+                                                :
+                                                item.providerData.evaluation > 2 && item.providerData.evaluation < 3 ?
+                                                  <>
+                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                  </>
+                                                  :
+                                                  item.providerData.evaluation > 3 && item.providerData.evaluation < 4 ?
+                                                    <>
+                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                      <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                    </>
+                                                    :
+                                                    item.providerData.evaluation > 4 && item.providerData.evaluation < 5 ?
+                                                      <>
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                      </>
+                                                      :
+                                                      <>
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                      </>
+                                }
+                              </View>
+                              <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={item.providerData.evaluation} />
+                              </View>
+                              <TouchableOpacity
+                                style={{ flexDirection: "row" }}
+                                onPress={() => bookagain(item)}
+                              >
+                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                  <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
+                                </View>
+                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                  <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
+                                </View>
+                              </TouchableOpacity>
+                            </View>
+                            <View style={{ flexDirection: "row", marginTop: 10 }}>
+                              <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                              <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={item.providerData.lastServiceDate} />
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+
+                    }
+                  </View>
+                  :
+                  null
+              )}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+              ListFooterComponent={prenderFooter}
+            //Adding Load More button as footer component
+            />
+          )}
+      </View>
+      {/* end booking agin */}
+
       <Spacer>
         <View style={styles.middlecontainer1}>
           <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen', { redirect: "Dashboard" })}>
             <Image resizeMethod='auto' style={{ opacity: 0.5, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/services/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
-              <FontBold value={t('booknow')}>
-              </FontBold>{' '}
+              <FontBold value={t('booknow')} />
               <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
             </Text>
             <FontBold value={t('cleaningservicetext')} mystyle={styles.cleaningservicetext} />
@@ -458,8 +757,70 @@ const styles = StyleSheet.create({
     padding: 5,
     color: '#fff',
     lineHeight: 25
-  }
-
+  },
+  footer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    flex: 1
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 45,
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
+    borderWidth: 2,
+    borderColor: "#fff",
+  },
+  providerThumup: {
+    backgroundColor: '#fff',
+    height: 90,
+    borderRadius: 4,
+    borderWidth: 0,
+    marginRight: 5,
+    marginLeft: 5,
+    marginTop: 15,
+    marginBottom: 0,
+    shadowColor: '#7a7a7a',
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      height: 10,
+      width: 10
+    },
+    elevation: 3,
+    shadowRadius: 10,
+  },
+  bookagainbuttonStyle: {
+    alignItems: 'center',
+    textAlign: 'center',
+    textAlignVertical: "center",
+    justifyContent: 'center',
+    color: 'blue',
+    fontSize: 14,
+    marginLeft: 15,
+  },
+  separator: {
+    height: 0.5,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  trending: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    // backgroundColor: 'blue',
+    borderRadius: 4,
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 9,
+    fontWeight: 'bold',
+    // fontFamily: 'Comfortaa-Bold',
+    paddingHorizontal: 5,
+    justifyContent: "center",
+    zIndex: 16
+  },
 });
 
 
