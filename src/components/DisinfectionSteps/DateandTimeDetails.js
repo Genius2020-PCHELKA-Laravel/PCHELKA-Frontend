@@ -343,95 +343,106 @@ const DateandTimeDetails = ({ children, t }) => {
                                 <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                     {
                                         u.evaluation == 0 ?
-                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
                                             :
                                             u.evaluation == 1 ?
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                 :
                                                 u.evaluation == 2 ?
                                                     <>
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                     </>
                                                     :
                                                     u.evaluation == 3 ?
                                                         <>
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                         </>
                                                         :
                                                         u.evaluation == 4 ?
                                                             <>
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                             </>
                                                             :
                                                             u.evaluation == 5 ?
                                                                 <>
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                 </>
                                                                 :
                                                                 u.evaluation > 1 && u.evaluation < 2 ?
                                                                     <>
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                     </>
                                                                     :
                                                                     u.evaluation > 2 && u.evaluation < 3 ?
                                                                         <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                         </>
                                                                         :
                                                                         u.evaluation > 3 && u.evaluation < 4 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
                                                                             u.evaluation > 4 && u.evaluation < 5 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 </>
                                     }
                                     <Text>{' '}</Text>
                                     {
-                                        <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
+                                        u.evaluation == 0 ?
+                                            <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
+                                            :
+                                            <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
                                     }
                                 </View>
                                 {
                                     u.lastServiceDate != null ?
                                         <View>
                                             <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
-                                                <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
                                             </View>
                                             <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
-                                                <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={u.lastServiceDate} />
+                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={u.lastServiceDate} />
                                             </View>
                                         </View>
-                                        : null
+                                        :
+                                        <View>
+                                            {/* <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
+                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                            </View> */}
+                                            <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
+                                                <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
+                                            </View>
+                                        </View>
                                 }
                             </TouchableOpacity>
 

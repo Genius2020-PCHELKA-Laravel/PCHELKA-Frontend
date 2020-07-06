@@ -37,12 +37,13 @@ const PastScreen = ({ navigation, t }) => {
         };
     }, []);
     useEffect(() => {
-        psetLoading(false);
+        psetLoading(true);
         psetIsListEnd(false);
         pset_fetching_from_server(false);
         psetOffset(2);
         psetServerData([]);
         getPast({ page: 1 }).then((response) => {
+            psetLoading(false);
             if (response.length > 0) {
                 console.log("PastScreen::onrefresh::getUpcoming::response:: ");
                 console.log("######################1");
@@ -57,6 +58,7 @@ const PastScreen = ({ navigation, t }) => {
             console.log("Error::UpcomingScree::Onrefresh " + error);
             pset_fetching_from_server(false);
             psetIsListEnd(true);
+            psetLoading(false);
         });
     }, [hcstate.reloadAppointments]);
 
@@ -115,6 +117,7 @@ const PastScreen = ({ navigation, t }) => {
                 console.log("Error::PastScreen:: " + error);
                 pset_fetching_from_server(false);
                 psetIsListEnd(true);
+                psetLoading(false);
             });
         }
     };
@@ -122,7 +125,7 @@ const PastScreen = ({ navigation, t }) => {
         return (
             <View style={styles.footer}>
                 {pfetching_from_server ? (
-                    <Image source={require('../../../assets/spin.gif')} />
+                    <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
                     // <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
                 ) : null}
             </View>
@@ -144,7 +147,7 @@ const PastScreen = ({ navigation, t }) => {
             <View style={styles.container}>
                 {ploading ? (
                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                        <Image source={require('../../../assets/spin.gif')} />
+                        <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
                     </View>
                 ) : (
                         <FlatList

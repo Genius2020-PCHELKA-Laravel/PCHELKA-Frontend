@@ -134,7 +134,7 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
                     animationIn="slideInUp"
                     animationOut="slideOutDown"
                     animationInTiming={1200}
-                    animationOutTiming={1200}
+                    animationOutTiming={200}
                     avoidKeyboard={true}
                     backdropColor='transparent'
                     transparent={true}

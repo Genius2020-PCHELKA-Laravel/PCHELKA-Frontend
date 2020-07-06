@@ -36,7 +36,7 @@ const ModalDetails = ({ children, t }) => {
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
                 animationInTiming={1200}
-                animationOutTiming={600}
+                animationOutTiming={200}
                 avoidKeyboard={true}
                 backdropColor='transparent'
                 transparent={true}

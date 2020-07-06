@@ -245,6 +245,31 @@ const HomeScreen = ({ navigation, t }) => {
       BackHandler.removeEventListener('hardwareBackPress', () => { setChanging(false); return true; });
     };
   }, []);
+  useEffect(() => {
+    psetLoading(true);
+    psetIsListEnd(false);
+    pset_fetching_from_server(false);
+    psetOffset(2);
+    psetServerData([]);
+    getPast({ page: 1 }).then((response) => {
+      psetLoading(false);
+      if (response.length > 0) {
+        console.log("PastScreen::onrefresh::getUpcoming::response:: ");
+        console.log("######################1");
+        console.log("######################" + JSON.stringify(response[0].id));
+        psetServerData([...response]);
+        pset_fetching_from_server(false);
+      } else {
+        pset_fetching_from_server(false);
+        psetIsListEnd(true);
+      }
+    }).catch((error) => {
+      console.log("Error::UpcomingScree::Onrefresh " + error);
+      pset_fetching_from_server(false);
+      psetIsListEnd(true);
+      psetLoading(false);
+    });
+  }, [hcstate.reloadAppointments]);
   // useEffect(() => {
   //   getUpcoming().then((response) => {
   //     console.log("Upcoming::useffect::getUpcoming::response:: ");
@@ -309,7 +334,7 @@ const HomeScreen = ({ navigation, t }) => {
     return (
       <View style={styles.footer}>
         {pfetching_from_server ? (
-          <Image source={require('../../assets/spin.gif')} />
+          <Image style={{ width: 65, height: 65, top: 10 }} source={require('../../assets/spin.gif')} />
           // <ActivityIndicator color="#f5c500" size="large" />
         ) : null}
       </View>
@@ -412,12 +437,13 @@ const HomeScreen = ({ navigation, t }) => {
       <View style={styles.container}>
         {ploading ? (
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Image source={require('../../assets/spin.gif')} />
+            <Image style={{ width: 80, height: 80 }} source={require('../../assets/spin.gif')} />
           </View>
           // <ActivityIndicator size="large" color="#f5c500" />
         ) : (
+
             <FlatList
-              style={{ flex: 1, marginLeft: 10 }}
+              style={{ flex: 1, marginLeft: 10, marginRight: 10 }}
               contentContainerStyle={{ justifyContent: "center", flexDirection: "row" }}
               keyExtractor={(item, index) => index.toString()}
               data={pserverData}
@@ -437,8 +463,8 @@ const HomeScreen = ({ navigation, t }) => {
                   <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center" }}>
                     {
                       <View style={styles.providerThumup}>
-                        <View style={{ position: "absolute", right: 0, top: 0 }}>
-                          <FontLight value={t(item.serviceType)} mystyle={{ fontSize: 12 }} />
+                        <View style={{ position: "absolute", right: 2, top: 2 }}>
+                          <FontLight value={t(item.refCode)} mystyle={{ fontSize: 12 }} />
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                           <View style={{ flexDirection: "column", justifyContent: "center" }}>
@@ -453,99 +479,110 @@ const HomeScreen = ({ navigation, t }) => {
                               <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                 {
                                   item.providerData.evaluation == 0 ?
-                                    <FontAwesome name="star-o" size={18} color="#ff9800" style={{ top: 3 }} />
+                                    <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
                                     :
                                     item.providerData.evaluation == 1 ?
-                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                       :
                                       item.providerData.evaluation == 2 ?
                                         <>
-                                          <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                          <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                          <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                          <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                         </>
                                         :
                                         item.providerData.evaluation == 3 ?
                                           <>
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                           </>
                                           :
                                           item.providerData.evaluation == 4 ?
                                             <>
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                             </>
                                             :
                                             item.providerData.evaluation == 5 ?
                                               <>
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                               </>
                                               :
                                               item.providerData.evaluation > 1 && item.providerData.evaluation < 2 ?
                                                 <>
-                                                  <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                  <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                  <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                  <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                 </>
                                                 :
                                                 item.providerData.evaluation > 2 && item.providerData.evaluation < 3 ?
                                                   <>
-                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                   </>
                                                   :
                                                   item.providerData.evaluation > 3 && item.providerData.evaluation < 4 ?
                                                     <>
-                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                      <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                     </>
                                                     :
                                                     item.providerData.evaluation > 4 && item.providerData.evaluation < 5 ?
                                                       <>
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                       </>
                                                       :
                                                       <>
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                       </>
                                 }
-                              </View>
-                              <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                <FontBold mystyle={{ fontSize: 12, marginLeft: 5 }} value={item.providerData.evaluation} />
-                              </View>
-                              <TouchableOpacity
-                                style={{ flexDirection: "row" }}
-                                onPress={() => bookagain(item)}
-                              >
-                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                <Text>{' '}</Text>
+                                {
+                                  item.providerData.evaluation == 0 ?
+                                    <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
+                                    :
+                                    <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={item.providerData.evaluation} />
+                                }
+                                <TouchableOpacity
+                                  style={{ flexDirection: "row" }}
+                                  onPress={() => bookagain(item)}
+                                >
                                   <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
-                                </View>
-                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                  <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
-                                </View>
-                              </TouchableOpacity>
+                                  <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 2, marginLeft: 2, marginRight: 15 }} />
+                                </TouchableOpacity>
+                              </View>
+
+
+
                             </View>
-                            <View style={{ flexDirection: "row", marginTop: 10 }}>
-                              <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
-                              <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={item.providerData.lastServiceDate} />
-                            </View>
+                            {
+                              item.providerData.lastServiceDate != null ?
+                                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                  <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                  <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={item.providerData.lastServiceDate} />
+                                </View>
+                                :
+                                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                  {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
+                                  <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('notcompleted')} />
+                                </View>
+                            }
                           </View>
                         </View>
                       </View>
@@ -758,6 +795,7 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
   },
   providerThumup: {
+    paddingRight: 15,
     backgroundColor: '#fff',
     height: 90,
     borderRadius: 4,
@@ -776,13 +814,11 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   bookagainbuttonStyle: {
-    alignItems: 'center',
     textAlign: 'center',
-    textAlignVertical: "center",
-    justifyContent: 'center',
     color: 'blue',
     fontSize: 14,
     marginLeft: 15,
+    bottom: 5,
   },
   separator: {
     height: 0.5,

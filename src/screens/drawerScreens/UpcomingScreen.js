@@ -41,13 +41,13 @@ const UpcomingScreen = ({ navigation, t }) => {
         };
     }, []);
     useEffect(() => {
-        setLoading(false);
+        setLoading(true);
         setIsListEnd(false);
         set_fetching_from_server(false);
         setOffset(2);
         setServerData([]);
         getUpcoming({ page: 1 }).then((response) => {
-            psetLoading(false);
+            setLoading(false);
             if (response.length > 0) {
                 console.log("UpcomingScreen::onrefresh::getUpcoming::response:: ");
                 console.log("######################1");
@@ -62,6 +62,7 @@ const UpcomingScreen = ({ navigation, t }) => {
             console.log("Error::UpcomingScree::Onrefresh " + error);
             set_fetching_from_server(false);
             setIsListEnd(true);
+            setLoading(false);
         });
     }, [hcstate.reloadAppointments]);
     // useEffect(() => {
@@ -100,7 +101,7 @@ const UpcomingScreen = ({ navigation, t }) => {
         if (!fetching_from_server && !isListEnd) {
             set_fetching_from_server(true);
             getUpcoming({ page: offset }).then((response) => {
-                psetLoading(false);
+                setLoading(false);
                 if (response.length > 0) {
                     console.log("UpcomingScreen::loadMoreData::getUpcoming::response:: ");
                     console.log("######################" + offset);
@@ -120,6 +121,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                 console.log("Error::UpcomingScree:: " + error);
                 set_fetching_from_server(false);
                 setIsListEnd(true);
+                setLoading(false);
             });
         }
     };
@@ -127,7 +129,7 @@ const UpcomingScreen = ({ navigation, t }) => {
         return (
             <View style={styles.footer}>
                 {fetching_from_server ? (
-                    <Image source={require('../../../assets/spin.gif')} />
+                    <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
                     // <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
                 ) : null}
             </View>
@@ -149,7 +151,7 @@ const UpcomingScreen = ({ navigation, t }) => {
             <View style={styles.container}>
                 {loading ? (
                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                        <Image source={require('../../../assets/spin.gif')} />
+                        <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
                     </View>
                 ) : (
                         <FlatList

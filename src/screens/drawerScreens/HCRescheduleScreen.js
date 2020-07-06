@@ -277,7 +277,10 @@ const HCRescheduleScreen = ({ children, t }) => {
         <>
             <OfflineNotice />
             <Loader loading={isloading} />
-
+            <RescheduledScreen
+                refCode={hcstate.selectedupcoming.refCode}
+                showBookedModal={showBookedModal}
+                setShowBookedModal={setShowBookedModal} />
 
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 {/* <Loader loading={isloading} /> */}
@@ -438,95 +441,106 @@ const HCRescheduleScreen = ({ children, t }) => {
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                         {
                                             hcstate.selectedupcomingproviderdata.evaluation == 0 ?
-                                                <FontAwesome name="star-o" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
                                                 :
                                                 hcstate.selectedupcomingproviderdata.evaluation == 1 ?
-                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                     :
                                                     hcstate.selectedupcomingproviderdata.evaluation == 2 ?
                                                         <>
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                         </>
                                                         :
                                                         hcstate.selectedupcomingproviderdata.evaluation == 3 ?
                                                             <>
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                             </>
                                                             :
                                                             hcstate.selectedupcomingproviderdata.evaluation == 4 ?
                                                                 <>
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                 </>
                                                                 :
                                                                 hcstate.selectedupcomingproviderdata.evaluation == 5 ?
                                                                     <>
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                     </>
                                                                     :
                                                                     hcstate.selectedupcomingproviderdata.evaluation > 1 && hcstate.selectedupcomingproviderdata.evaluation < 2 ?
                                                                         <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                         </>
                                                                         :
                                                                         hcstate.selectedupcomingproviderdata.evaluation > 2 && hcstate.selectedupcomingproviderdata.evaluation < 3 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
                                                                             hcstate.selectedupcomingproviderdata.evaluation > 3 && hcstate.selectedupcomingproviderdata.evaluation < 4 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
                                                                                 hcstate.selectedupcomingproviderdata.evaluation > 4 && hcstate.selectedupcomingproviderdata.evaluation < 5 ?
                                                                                     <>
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                     </>
                                                                                     :
                                                                                     <>
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{ top: 3 }} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     </>
                                         }
                                         <Text>{' '}</Text>
                                         {
-                                            <FontRegular mustyle={{ fontSize: 11, padding: 0 }} value={hcstate.selectedupcomingproviderdata.evaluation} />
+                                            hcstate.selectedupcomingproviderdata.evaluation == 0 ?
+                                                <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
+                                                :
+                                                <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
                                         }
                                     </View>
                                     {
                                         hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
                                             <View>
                                                 <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
-                                                    <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                                    <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
                                                 </View>
                                                 <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
-                                                    <FontRegular mystyle={{ color: "#000", fontSize: 12 }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
+                                                    <FontLight mystyle={{ color: "#000", fontSize: 12, }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
                                                 </View>
                                             </View>
-                                            : null
+                                            :
+                                            <View>
+                                                {/* <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
+                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                            </View> */}
+                                                <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
+                                                    <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
+                                                </View>
+                                            </View>
                                     }
                                 </TouchableOpacity>
                             </ScrollView>
