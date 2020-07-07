@@ -13,7 +13,7 @@ import Modal from 'react-native-modal';
 import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import AlertDialog from '../../components/AlertDialog';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import EvaluationDialog from '../../components/EvaluationDialog'
+import EvaluationDialog from '../../components/EvaluationDialog';
 const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelectedPastModalDetails }) => {
     const { state: hcstate, getUpcoming, getSelectedPast, getProviders, dispatch: hcdispatch } = useContext(HCContext);
     const { state: ustate, dispatch: udispatch } = useContext(UserContext);
@@ -40,6 +40,9 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
     else
         modalAmount = hcstate.selectedpast.totalAmount;
     const bookagain = () => {
+
+        hcdispatch({ type: 'set_providerid', payload: hcstate.selectedpastproviderdata.id });
+
         if (hcstate.selectedpast.serviceType === "HomeCleaning") {
             hcdispatch({ type: 'set_frequency', payload: hcstate.selectedpast.frequency });
             hcdispatch({ type: 'set_hours', payload: hcstate.selectedpast.hoursNeeded });

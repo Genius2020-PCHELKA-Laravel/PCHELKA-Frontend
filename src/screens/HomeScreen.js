@@ -347,6 +347,7 @@ const HomeScreen = ({ navigation, t }) => {
   }
   const bookagain = (item) => {
     console.log(item);
+    hcdispatch({ type: 'set_providerid', payload: item.providerData.id });
     setIsLoading(true);
     getSelectedPast({
       id: item.id,

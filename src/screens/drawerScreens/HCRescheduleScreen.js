@@ -519,7 +519,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                                             hcstate.selectedupcomingproviderdata.evaluation == 0 ?
                                                 <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
                                                 :
-                                                <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
+                                                <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={hcstate.selectedupcomingproviderdata.evaluation} />
                                         }
                                     </View>
                                     {
