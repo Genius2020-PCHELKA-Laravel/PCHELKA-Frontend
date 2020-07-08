@@ -153,396 +153,409 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                 }}>
 
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.container} >
-                    <TouchableOpacity
-                        style={{ position: "absolute", right: 0, padding: 15 }}
-                        onPress={() => {
-                            setSelectedPastModalDetails(!selectedPastModalDetails);
-                        }}>
-                        <FontAwesome name="times" size={35} color="#7a7a7a" />
-                    </TouchableOpacity>
-                    <View style={{ marginHorizontal: 15, marginTop: 60 }}>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')} />
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t(hcstate.selectedpast.serviceType)} />
-                            </View>
-                        </View>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('refcode')} />
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.refCode} />
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('status')} />
-                            </View>
-                            <View style={styles.item}>
-                                {
-                                    hcstate.selectedpast.status == 'Completed' ?
-                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#228B22", backgroundColor: "#228B22" }}>
-                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
-                                        </View>
-                                        : hcstate.selectedpast.status == 'Confirmed' ?
-                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#f5b100", backgroundColor: "#f5b100" }}>
-                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 40, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
-                                            </View>
-                                            : hcstate.selectedpast.status == 'Rescheduled' ?
-                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#f58800", backgroundColor: "#f58800" }}>
-                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
-                                                </View> :
-                                                hcstate.selectedpast.status == 'Canceled' ?
-                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#b52424", backgroundColor: "#b52424" }}>
-                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
-                                                    </View>
-                                                    : null
-                                }
-                            </View>
-                        </View>
-                        {
-                            hcstate.selectedpast.status == 'Completed' ?
-                                <View>
+                    {
+                        hcstate.selectedpastproviderdata != null ?
+                            <View>
+                                <TouchableOpacity
+                                    style={{ position: "absolute", right: 0, padding: 15 }}
+                                    onPress={() => {
+                                        setSelectedPastModalDetails(!selectedPastModalDetails);
+                                    }}>
+                                    <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                </TouchableOpacity>
+                                <View style={{ marginHorizontal: 15, marginTop: 60 }}>
                                     <View style={styles.row}>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('completedat')} />
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')} />
                                         </View>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.updatedAt} />
+                                            <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t(hcstate.selectedpast.serviceType)} />
+                                        </View>
+                                    </View>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('refcode')} />
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.refCode} />
                                         </View>
                                     </View>
                                     <View style={styles.row}>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('evaluation')} />
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('status')} />
                                         </View>
                                         <View style={styles.item}>
-                                            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                                {
-                                                    hcstate.selectedpast.bookingEvaluation == 0 ?
+                                            {
+                                                hcstate.selectedpast.status == 'Completed' ?
+                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#228B22", backgroundColor: "#228B22" }}>
+                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
+                                                    </View>
+                                                    : hcstate.selectedpast.status == 'Confirmed' ?
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#f5b100", backgroundColor: "#f5b100" }}>
+                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 40, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
+                                                        </View>
+                                                        : hcstate.selectedpast.status == 'Rescheduled' ?
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#f58800", backgroundColor: "#f58800" }}>
+                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                            </View> :
+                                                            hcstate.selectedpast.status == 'Canceled' ?
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#b52424", backgroundColor: "#b52424" }}>
+                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                </View>
+                                                                : null
+                                            }
+                                        </View>
+                                    </View>
+                                    {
+                                        hcstate.selectedpast.status == 'Completed' ?
+                                            <View>
+                                                <View style={styles.row}>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('completedat')} />
+                                                    </View>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.updatedAt} />
+                                                    </View>
+                                                </View>
+                                                <View style={styles.row}>
+                                                    <View style={styles.item}>
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('evaluation')} />
+                                                    </View>
+                                                    <View style={styles.item}>
+                                                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                                            {
+                                                                hcstate.selectedpast.bookingEvaluation == 0 ?
 
-                                                        <TouchableOpacity
-                                                            style={{ flexDirection: "row" }}
-                                                            onPress={() => { setModalVisible(true); setSelectedPastModalDetails(false); }}
-                                                        >
-                                                            <View style={{ flexDirection: "column", justifyContent: "center", marginTop: 5 }}>
-                                                                <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
-                                                            </View>
-                                                            <View style={{ flexDirection: "column", justifyContent: "center", marginTop: 5 }}>
-                                                                <FontBold mystyle={styles.bookagainbuttonStyle} value={t('evaluate')} />
-                                                            </View>
-                                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                                <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 10, marginLeft: 2, marginRight: 15 }} />
-                                                            </View>
-                                                        </TouchableOpacity>
+                                                                    <TouchableOpacity
+                                                                        style={{ flexDirection: "row" }}
+                                                                        onPress={() => { setModalVisible(true); setSelectedPastModalDetails(false); }}
+                                                                    >
+                                                                        <View style={{ flexDirection: "column", justifyContent: "center", marginTop: 5 }}>
+                                                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
+                                                                        </View>
+                                                                        <View style={{ flexDirection: "column", justifyContent: "center", marginTop: 5 }}>
+                                                                            <FontBold mystyle={styles.bookagainbuttonStyle} value={t('evaluate')} />
+                                                                        </View>
+                                                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                                            <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 10, marginLeft: 2, marginRight: 15 }} />
+                                                                        </View>
+                                                                    </TouchableOpacity>
 
-                                                        :
-                                                        hcstate.selectedpast.bookingEvaluation == 1 ?
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                            :
-                                                            hcstate.selectedpast.bookingEvaluation == 2 ?
-                                                                <>
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                </>
-                                                                :
-                                                                hcstate.selectedpast.bookingEvaluation == 3 ?
-                                                                    <>
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    </>
                                                                     :
-                                                                    hcstate.selectedpast.bookingEvaluation == 4 ?
-                                                                        <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        </>
+                                                                    hcstate.selectedpast.bookingEvaluation == 1 ?
+                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                         :
-                                                                        hcstate.selectedpast.bookingEvaluation == 5 ?
+                                                                        hcstate.selectedpast.bookingEvaluation == 2 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
-                                                                            hcstate.selectedpast.bookingEvaluation > 1 && hcstate.selectedpast.bookingEvaluation < 2 ?
+                                                                            hcstate.selectedpast.bookingEvaluation == 3 ?
                                                                                 <>
                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
-                                                                                hcstate.selectedpast.bookingEvaluation > 2 && hcstate.selectedpast.bookingEvaluation < 3 ?
+                                                                                hcstate.selectedpast.bookingEvaluation == 4 ?
                                                                                     <>
                                                                                         <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                         <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     </>
                                                                                     :
-                                                                                    hcstate.selectedpast.bookingEvaluation > 3 && hcstate.selectedpast.bookingEvaluation < 4 ?
+                                                                                    hcstate.selectedpast.bookingEvaluation == 5 ?
                                                                                         <>
                                                                                             <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                             <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                             <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                         </>
                                                                                         :
-                                                                                        hcstate.selectedpast.bookingEvaluation > 4 && hcstate.selectedpast.bookingEvaluation < 5 ?
+                                                                                        hcstate.selectedpast.bookingEvaluation > 1 && hcstate.selectedpast.bookingEvaluation < 2 ?
                                                                                             <>
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                             </>
                                                                                             :
-                                                                                            <>
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                            </>
-                                                }
-                                                {
-                                                    hcstate.selectedpast.bookingEvaluation != 0 ?
-                                                        <FontLight mystyle={{ fontSize: 11, marginLeft: 5 }} value={hcstate.selectedpast.bookingEvaluation} />
-                                                        : null
-                                                }
+                                                                                            hcstate.selectedpast.bookingEvaluation > 2 && hcstate.selectedpast.bookingEvaluation < 3 ?
+                                                                                                <>
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                </>
+                                                                                                :
+                                                                                                hcstate.selectedpast.bookingEvaluation > 3 && hcstate.selectedpast.bookingEvaluation < 4 ?
+                                                                                                    <>
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                    </>
+                                                                                                    :
+                                                                                                    hcstate.selectedpast.bookingEvaluation > 4 && hcstate.selectedpast.bookingEvaluation < 5 ?
+                                                                                                        <>
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                        </>
+                                                                                                        :
+                                                                                                        <>
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        </>
+                                                            }
+                                                            {
+                                                                hcstate.selectedpast.bookingEvaluation != 0 ?
+                                                                    <FontLight mystyle={{ fontSize: 11, marginLeft: 5 }} value={hcstate.selectedpast.bookingEvaluation} />
+                                                                    : null
+                                                            }
+                                                        </View>
+                                                    </View>
+                                                </View>
                                             </View>
+                                            :
+                                            hcstate.selectedpast.status == 'Canceled' ?
+                                                <View>
+                                                    <View style={styles.row}>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('canceledat')} />
+                                                        </View>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.updatedAt} />
+                                                        </View>
+                                                    </View>
+                                                    {/* <View style={styles.row}>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('cancelreason')} />
+                                                        </View>
+                                                        <View style={styles.item}>
+                                                            <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.refCode} />
+                                                        </View>
+                                                    </View> */}
+                                                </View>
+                                                :
+                                                null
+                                    }
+                                    <Spacer />
+                                    <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <View flexDirection="column">
+                                        <FontBold mystyle={{ color: '#000', fontSize: 18 }}
+                                            value={
+                                                hcstate.selectedpast.serviceType == "HomeCleaning" || hcstate.selectedpast.serviceType == "DisinfectionService" || hcstate.selectedpast.serviceType == "DeepCleaning" || hcstate.selectedpast.serviceType == "BabysitterService'" ?
+                                                    hcstate.selectedpast.hoursNeeded + " " + t('hours') + ", " +
+                                                    hcstate.selectedpast.cleanerCount + " " + cleanersStr + ", " +
+                                                    materialsStr
+                                                    :
+                                                    hcstate.selectedpast.serviceType == "SofaCleaning" ?
+                                                        hcstate.selectedpast.quantity + " " + t('seaters') + ", " +
+                                                        materialsStr
+                                                        :
+                                                        hcstate.selectedpast.serviceType == "MattressCleaning" ?
+                                                            hcstate.selectedpast.quantity + " " + t('mattresses') + ", " +
+                                                            materialsStr
+                                                            :
+                                                            hcstate.selectedpast.serviceType == "CarpetCleaning" ?
+                                                                hcstate.selectedpast.quantity + " " + t('carpets') + ", " +
+                                                                hcstate.selectedpast.squareMeters + " " + t('squaremeters') + ", " +
+                                                                materialsStr
+                                                                :
+                                                                hcstate.selectedpast.serviceType == "CurtainCleaning" ?
+                                                                    hcstate.selectedpast.quantity + " " + t('curtains') + ", " +
+                                                                    hcstate.selectedpast.squareMeters + " " + t('squaremeters') + ", " +
+                                                                    materialsStr
+                                                                    : ""
+
+                                            }
+                                        />
+                                    </View>
+                                    <Spacer />
+                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('dateandtime')}></FontBold>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <View style={styles.row}>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedpast.duoDate}></FontBold>
+                                        </View>
+                                        <View style={styles.item}>
+                                            <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedpast.duoTime}></FontBold>
+                                        </View>
+                                    </View>
+
+                                    <Spacer />
+                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('address')}></FontBold>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedpast.addressDetails.address}></FontBold>
+                                    <Spacer />
+                                    {/* <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('price')}></FontBold>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} /> */}
+                                    <View flexDirection="row" style={{ justifyContent: "center" }}>
+                                        <FontBold mystyle={styles.totalAmount} value={
+                                            "UAH " + modalAmount + " (" +
+                                            paymentWaysStr
+                                            + ")"
+                                        } />
+                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                            {
+                                                paymentWaysStr === "Cash" ?
+                                                    <MaterialCommunityIcons name="cash" size={45} color="#228B22" />
+                                                    :
+                                                    <Image style={styles.liqpayimage} source={require('../../../assets/liqpay.png')} />
+                                            }
                                         </View>
                                     </View>
                                 </View>
-                                :
-                                hcstate.selectedpast.status == 'Canceled' ?
-                                    <View>
-                                        <View style={styles.row}>
-                                            <View style={styles.item}>
-                                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('canceledat')} />
-                                            </View>
-                                            <View style={styles.item}>
-                                                <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.updatedAt} />
-                                            </View>
-                                        </View>
-                                        <View style={styles.row}>
-                                            <View style={styles.item}>
-                                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('cancelreason')} />
-                                            </View>
-                                            <View style={styles.item}>
-                                                <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedpast.refCode} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                    :
-                                    null
-                        }
-                        <Spacer />
-                        <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-                        <View flexDirection="column">
-                            <FontBold mystyle={{ color: '#000', fontSize: 18 }}
-                                value={
-                                    hcstate.selectedpast.serviceType == "HomeCleaning" || hcstate.selectedpast.serviceType == "DisinfectionService" || hcstate.selectedpast.serviceType == "DeepCleaning" || hcstate.selectedpast.serviceType == "BabysitterService'" ?
-                                        hcstate.selectedpast.hoursNeeded + " " + t('hours') + ", " +
-                                        hcstate.selectedpast.cleanerCount + " " + cleanersStr + ", " +
-                                        materialsStr
-                                        :
-                                        hcstate.selectedpast.serviceType == "SofaCleaning" ?
-                                            hcstate.selectedpast.quantity + " " + t('seaters') + ", " +
-                                            materialsStr
-                                            :
-                                            hcstate.selectedpast.serviceType == "MattressCleaning" ?
-                                                hcstate.selectedpast.quantity + " " + t('mattresses') + ", " +
-                                                materialsStr
-                                                :
-                                                hcstate.selectedpast.serviceType == "CarpetCleaning" ?
-                                                    hcstate.selectedpast.quantity + " " + t('carpets') + ", " +
-                                                    hcstate.selectedpast.squareMeters + " " + t('squaremeters') + ", " +
-                                                    materialsStr
-                                                    :
-                                                    hcstate.selectedpast.serviceType == "CurtainCleaning" ?
-                                                        hcstate.selectedpast.quantity + " " + t('curtains') + ", " +
-                                                        hcstate.selectedpast.squareMeters + " " + t('squaremeters') + ", " +
-                                                        materialsStr
-                                                        : ""
+                                <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                                    {/* <View style={{ marginTop: 15, marginLeft: 15, width: 300, height: 200 }}> */}
 
-                                }
-                            />
-                        </View>
-                        <Spacer />
-                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('dateandtime')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedpast.duoDate}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedpast.duoTime}></FontBold>
-                            </View>
-                        </View>
-
-                        <Spacer />
-                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('address')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-                        <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedpast.addressDetails.address}></FontBold>
-                        <Spacer />
-                        {/* <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('price')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} /> */}
-                        <View flexDirection="row" style={{ justifyContent: "center" }}>
-                            <FontBold mystyle={styles.totalAmount} value={
-                                "UAH " + modalAmount + " (" +
-                                paymentWaysStr
-                                + ")"
-                            } />
-                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                {
-                                    paymentWaysStr === "Cash" ?
-                                        <MaterialCommunityIcons name="cash" size={45} color="#228B22" />
-                                        :
-                                        <Image style={styles.liqpayimage} source={require('../../../assets/liqpay.png')} />
-                                }
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                        {/* <View style={{ marginTop: 15, marginLeft: 15, width: 300, height: 200 }}> */}
-                        {
-                            hcstate.selectedpastproviderdata != null ?
-                                <View style={styles.providerThumup}>
-                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                            <Image style={styles.image} source={{ uri: hcstate.selectedpastproviderdata.imageUrl }} />
-                                        </View>
-                                        <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
-                                            <View style={{ flexDirection: "row" }}>
-                                                <FontBold value={hcstate.selectedpastproviderdata.name} />
+                                    <View style={styles.providerThumup}>
+                                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                <Image style={styles.image} source={{ uri: hcstate.selectedpastproviderdata.imageUrl }} />
                                             </View>
-                                            <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                                <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                                    {
-                                                        hcstate.selectedpast.providerEvaluation == 0 ?
-                                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
-                                                            :
-                                                            hcstate.selectedpast.providerEvaluation == 1 ?
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                            <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                                                <View style={{ flexDirection: "row" }}>
+                                                    <FontBold value={hcstate.selectedpastproviderdata.name} />
+                                                </View>
+                                                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                                        {
+                                                            hcstate.selectedpast.providerEvaluation == 0 ?
+                                                                <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
                                                                 :
-                                                                hcstate.selectedpast.providerEvaluation == 2 ?
-                                                                    <>
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    </>
+                                                                hcstate.selectedpast.providerEvaluation == 1 ?
+                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                     :
-                                                                    hcstate.selectedpast.providerEvaluation == 3 ?
+                                                                    hcstate.selectedpast.providerEvaluation == 2 ?
                                                                         <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                             <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                             <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                         </>
                                                                         :
-                                                                        hcstate.selectedpast.providerEvaluation == 4 ?
+                                                                        hcstate.selectedpast.providerEvaluation == 3 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
-                                                                            hcstate.selectedpast.providerEvaluation == 5 ?
+                                                                            hcstate.selectedpast.providerEvaluation == 4 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
-                                                                                hcstate.selectedpast.providerEvaluation > 1 && hcstate.selectedpast.providerEvaluation < 2 ?
+                                                                                hcstate.selectedpast.providerEvaluation == 5 ?
                                                                                     <>
                                                                                         <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                     </>
                                                                                     :
-                                                                                    hcstate.selectedpast.providerEvaluation > 2 && hcstate.selectedpast.providerEvaluation < 3 ?
+                                                                                    hcstate.selectedpast.providerEvaluation > 1 && hcstate.selectedpast.providerEvaluation < 2 ?
                                                                                         <>
-                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                             <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                             <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                         </>
                                                                                         :
-                                                                                        hcstate.selectedpast.providerEvaluation > 3 && hcstate.selectedpast.providerEvaluation < 4 ?
+                                                                                        hcstate.selectedpast.providerEvaluation > 2 && hcstate.selectedpast.providerEvaluation < 3 ?
                                                                                             <>
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                             </>
                                                                                             :
-                                                                                            hcstate.selectedpast.providerEvaluation > 4 && hcstate.selectedpast.providerEvaluation < 5 ?
+                                                                                            hcstate.selectedpast.providerEvaluation > 3 && hcstate.selectedpast.providerEvaluation < 4 ?
                                                                                                 <>
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
                                                                                                 </>
                                                                                                 :
-                                                                                                <>
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                </>
-                                                    }
-                                                    {
-                                                        hcstate.selectedpast.providerEvaluation != 0 ?
-                                                            <FontLight mystyle={{ fontSize: 12, marginLeft: 5, }} value={hcstate.selectedpast.providerEvaluation} />
-                                                            :
-                                                            <FontLight mystyle={{ fontSize: 12, marginLeft: 5 }} value={t('notevaluated')} />
-                                                    }
-                                                    <TouchableOpacity
-                                                        style={{ flexDirection: "row", bottom: 3 }}
-                                                        onPress={() => bookagain()}
-                                                    >
-                                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                            <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
-                                                        </View>
-                                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                            <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                </View>
+                                                                                                hcstate.selectedpast.providerEvaluation > 4 && hcstate.selectedpast.providerEvaluation < 5 ?
+                                                                                                    <>
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                    </>
+                                                                                                    :
+                                                                                                    <>
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                    </>
+                                                        }
+                                                        {
+                                                            hcstate.selectedpast.providerEvaluation != 0 ?
+                                                                <FontLight mystyle={{ fontSize: 12, marginLeft: 5, }} value={hcstate.selectedpast.providerEvaluation} />
+                                                                :
+                                                                <FontLight mystyle={{ fontSize: 12, marginLeft: 5 }} value={t('notevaluated')} />
+                                                        }
+                                                        <TouchableOpacity
+                                                            style={{ flexDirection: "row", bottom: 3 }}
+                                                            onPress={() => bookagain()}
+                                                        >
+                                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                                <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
+                                                            </View>
+                                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                                <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                    </View>
 
+                                                </View>
+                                                {
+                                                    hcstate.selectedpastproviderdata.lastServiceDate != null ?
+                                                        <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                                            <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                                            <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={hcstate.selectedpastproviderdata.lastServiceDate} />
+                                                        </View>
+                                                        :
+                                                        <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                                            {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
+                                                            <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
+                                                        </View>
+                                                }
                                             </View>
-                                            {
-                                                hcstate.selectedpastproviderdata.lastServiceDate != null ?
-                                                    <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                                        <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
-                                                        <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={hcstate.selectedpastproviderdata.lastServiceDate} />
-                                                    </View>
-                                                    :
-                                                    <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                                        {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
-                                                        <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
-                                                    </View>
-                                            }
                                         </View>
                                     </View>
                                 </View>
-                                :
-                                <View style={{ backgroundColor: "#fff", bottom: 0, flexDirection: 'row', justifyContent: "center" }}>
-                                    <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
-                                    {/* <ActivityIndicator size={35} color="#f5c500" animating={true} /> */}
+                            </View>
+                            :
+                            <View style={{ flex: 1, }}>
+                                <TouchableOpacity
+                                    style={{ position: "absolute", right: 0, padding: 15 }}
+                                    onPress={() => {
+                                        setSelectedUpcomingModalDetails(!selectedUpcomingModalDetails);
+                                    }}>
+                                    <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                </TouchableOpacity>
+                                <View style={{ marginHorizontal: 15, marginTop: 60 }}>
+                                    <View style={{ flexDirection: "row", justifyContent: "center", }}>
+                                        <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
+                                    </View>
                                 </View>
-                        }
-                    </View>
+                            </View>
+                    }
                 </ScrollView>
                 {/* {
                     modalAmount == 0 ?
