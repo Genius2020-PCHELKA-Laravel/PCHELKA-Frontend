@@ -10,6 +10,7 @@ import { withNamespaces } from 'react-i18next';
 import { navigate } from "../../navigationRef";
 import { BackHandler } from 'react-native';
 import OfflineNotice from '../../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 const FreeScreen = ({ navigation, t }) => {
   const { logout } = useContext(Authcontext2);
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   },
   Text: {
     color: "#161924",
-    fontSize: 20,
+    fontSize: fontNormalize(20),
     fontWeight: "500"
   }
 });

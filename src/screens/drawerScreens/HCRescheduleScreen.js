@@ -20,6 +20,8 @@ import ModalDetails from './ModalDetails';
 import OfflineNotice from '../../components/OfflineNotice';
 import { getLang } from '../../api/userLanguage';
 import RescheduledScreen from './RescheduledScreen';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
+
 const HCRescheduleScreen = ({ children, t }) => {
     const { dispatch: hcdispatch, state: hcstate, getSchedules, rescheduleBook } = useContext(HCContext);
     const { dispatch: udispatch, state: ustate } = useContext(UserContext);
@@ -260,7 +262,7 @@ const HCRescheduleScreen = ({ children, t }) => {
             }}
                 disabled={timecontrolstyles}>
                 <View>
-                    <Text style={previousstartstyle ? styles.timenotactiveprevious : timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
+                    <Text style={previousstartstyle ? styles.timenotactiveprevious : timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart.substring(0, 5)}</Text>
                     <View style={previousstartstyle ? styles.timediagonalineprevious : timecontrolstyles ? styles.timediagonaline : null}></View>
                 </View>
             </TouchableOpacity>
@@ -346,7 +348,7 @@ const HCRescheduleScreen = ({ children, t }) => {
 
                             }
 
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 30 }}>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
                                 {/* redering Auto-Assign */}
                                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
                                     onPress={() => {
@@ -372,10 +374,10 @@ const HCRescheduleScreen = ({ children, t }) => {
                                     </View>
 
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                                        <FontBold mystyle={{ fontSize: 10, marginLeft: 5 }} value={t('autoassign')} />
+                                        <FontBold mystyle={{ fontSize: fontNormalize(10), marginLeft: Normalize(5) }} value={t('autoassign')} />
 
                                     </View>
-                                    <FontRegular mystyle={{ color: "#000", fontSize: 12, marginLeft: 5 }} value={t('wewillassignthebestcleaner')} />
+                                    <FontRegular mystyle={{ color: "#000", fontSize: fontNormalize(12), marginLeft: Normalize(5) }} value={t('wewillassignthebestcleaner')} />
                                 </TouchableOpacity>
 
                                 {/* redering the providers */}
@@ -412,8 +414,8 @@ const HCRescheduleScreen = ({ children, t }) => {
                                         {
                                             <Badge
                                                 status="success"
-                                                badgeStyle={{ width: 18, height: 18, borderRadius: 10, borderColor: '#fff', borderWidth: 2 }}
-                                                containerStyle={{ position: 'absolute', top: 58, right: 21, }}
+                                                badgeStyle={{ width: Normalize(18), height: Normalize(18), borderRadius: 10, borderColor: '#fff', borderWidth: 2 }}
+                                                containerStyle={{ position: 'absolute', top: Normalize(58), right: Normalize(21), }}
                                             />
                                         }
 
@@ -436,100 +438,100 @@ const HCRescheduleScreen = ({ children, t }) => {
                                         }  */}
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                                        <FontBold mystyle={{ fontSize: 10 }} value={hcstate.selectedupcomingproviderdata.name} />
+                                        <FontBold mystyle={{ fontSize: fontNormalize(10) }} value={hcstate.selectedupcomingproviderdata.name} />
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                         {
                                             hcstate.selectedupcomingproviderdata.evaluation == 0 ?
-                                                <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star-o" size={Normalize(18)} color="#ff9800" style={{}} />
                                                 :
                                                 hcstate.selectedupcomingproviderdata.evaluation == 1 ?
-                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                     :
                                                     hcstate.selectedupcomingproviderdata.evaluation == 2 ?
                                                         <>
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                         </>
                                                         :
                                                         hcstate.selectedupcomingproviderdata.evaluation == 3 ?
                                                             <>
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                             </>
                                                             :
                                                             hcstate.selectedupcomingproviderdata.evaluation == 4 ?
                                                                 <>
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                 </>
                                                                 :
                                                                 hcstate.selectedupcomingproviderdata.evaluation == 5 ?
                                                                     <>
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                     </>
                                                                     :
                                                                     hcstate.selectedupcomingproviderdata.evaluation > 1 && hcstate.selectedupcomingproviderdata.evaluation < 2 ?
                                                                         <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                         </>
                                                                         :
                                                                         hcstate.selectedupcomingproviderdata.evaluation > 2 && hcstate.selectedupcomingproviderdata.evaluation < 3 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
                                                                             hcstate.selectedupcomingproviderdata.evaluation > 3 && hcstate.selectedupcomingproviderdata.evaluation < 4 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
                                                                                 hcstate.selectedupcomingproviderdata.evaluation > 4 && hcstate.selectedupcomingproviderdata.evaluation < 5 ?
                                                                                     <>
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     </>
                                                                                     :
                                                                                     <>
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     </>
                                         }
                                         <Text>{' '}</Text>
                                         {
                                             hcstate.selectedupcomingproviderdata.evaluation == 0 ?
-                                                <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
+                                                <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={t('notevaluated')} />
                                                 :
-                                                <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={hcstate.selectedupcomingproviderdata.evaluation} />
+                                                <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={hcstate.selectedupcomingproviderdata.evaluation} />
                                         }
                                     </View>
                                     {
                                         hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
                                             <View>
                                                 <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
-                                                    <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                                    <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
                                                 </View>
                                                 <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
-                                                    <FontLight mystyle={{ color: "#000", fontSize: 12, }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
+                                                    <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
                                                 </View>
                                             </View>
                                             :
@@ -538,7 +540,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                                                 <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
                                             </View> */}
                                                 <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
-                                                    <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
+                                                    <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
                                                 </View>
                                             </View>
                                     }
@@ -555,9 +557,9 @@ const HCRescheduleScreen = ({ children, t }) => {
                             {
 
                                 isloadingActivityIndicator ?
-                                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={35} color='#ff9800' animating={isloadingActivityIndicator} />
+                                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                                     :
-                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 30 }}>
+                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
                                         {
                                             days
                                         }
@@ -570,16 +572,19 @@ const HCRescheduleScreen = ({ children, t }) => {
                             {
 
                                 isloadingActivityIndicator ?
-                                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={35} color='#ff9800' animating={isloadingActivityIndicator} />
+                                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                                     :
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15, marginRight: 30 }}>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15), marginRight: Normalize(30) }}>
                                         {
                                             starts
                                         }
                                     </ScrollView>
 
                             }
-
+                            <Spacer />
+                            <Spacer />
+                            <Spacer />
+                            <Spacer />
                         </ScrollView >
                     </ProgressStep>
                     <ProgressStep
@@ -657,7 +662,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                             Toast.show(t('notrescheduled'), Toast.LONG);
                         });
                     }}>
-                    <FontBold mystyle={{ color: "#fff", fontSize: 12 }} value={t('reschedule')} />
+                    <FontBold mystyle={{ color: "#fff", fontSize: fontNormalize(12) }} value={t('reschedule')} />
                 </TouchableOpacity>
 
 
@@ -707,169 +712,174 @@ const styles = StyleSheet.create({
         height: '70%' // is 50% of container width
     },
     qText: {
-        fontSize: 20,
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 7
+        fontSize: fontNormalize(20),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        marginBottom: Normalize(7)
     },
     aText: {
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         textAlign: 'center',
     },
     thumb: {
-        width: 30,
-        height: 30,
-        borderRadius: 30 / 2,
+        width: Normalize(30),
+        height: Normalize(30),
+        borderRadius: Normalize(30) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
     },
     thumbup: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        padding: Normalize(7),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: "center",
+        marginRight: Normalize(4)
     },
     thumbdown: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        padding: Normalize(7),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: '#f5c500aa',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: "center",
+        marginRight: Normalize(4)
     },
     notactive: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        padding: Normalize(7),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: '#dcdcdc',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4,
+        textAlignVertical: "center",
+        marginRight: Normalize(4),
         color: "#7a7a7a"
-
     },
     timethumbup: {
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
+        fontSize: fontNormalize(18),
+        padding: Normalize(7),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: "center",
+        marginRight: Normalize(4)
     },
     timethumbdown: {
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
+        fontSize: fontNormalize(18),
+        padding: Normalize(7),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
         backgroundColor: '#f5c500aa',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: "center",
+        marginRight: Normalize(4)
     },
     timenotactive: {
         display: 'none',
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
+        fontSize: fontNormalize(18),
+        padding: Normalize(7),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
         backgroundColor: '#dcdcdc',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4,
+        textAlignVertical: "center",
+        marginRight: Normalize(4),
         color: "#7a7a7a"
     },
     timenotactiveprevious: {
         // display: 'none',
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
+        fontSize: fontNormalize(18),
+        padding: Normalize(7),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
         backgroundColor: '#ffcccb',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4,
+        textAlignVertical: "center",
+        marginRight: Normalize(4),
         color: "#7a7a7a"
-
     },
     providerThumup: {
         backgroundColor: '#fff',
-        width: 120,
-        height: 170,
+        width: Normalize(120),
+        height: Normalize(170),
         borderRadius: 2,
         borderWidth: 0,
-        marginRight: 5,
-        marginLeft: 5,
-        marginTop: 5,
-        marginBottom: 5,
+        marginRight: Normalize(5),
+        marginLeft: Normalize(5),
+        marginTop: Normalize(5),
+        marginBottom: Normalize(5),
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         elevation: 3,
-        shadowRadius: 10,
+        shadowRadius: Normalize(10),
     },
     providerThumdown: {
         backgroundColor: '#f5c500',
-        width: 120,
-        height: 170,
+        width: Normalize(120),
+        height: Normalize(170),
         borderRadius: 2,
         borderWidth: 0,
-        marginRight: 5,
-        marginLeft: 5,
-        marginTop: 5,
-        marginBottom: 5,
+        marginRight: Normalize(5),
+        marginLeft: Normalize(5),
+        marginTop: Normalize(5),
+        marginBottom: Normalize(5),
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         elevation: 4,
         shadowRadius: 10,
     },
     imageThumup: {
-        width: 80,
-        height: 80,
-        borderRadius: 45,
+        width: Normalize(80),
+        height: Normalize(80),
+        borderRadius: Normalize(45),
         marginTop: 2,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: Normalize(10),
+        marginRight: Normalize(10),
         borderWidth: 2,
         borderColor: "#fff",
     },
     imageThumdown: {
-        width: 80,
-        height: 80,
-        borderRadius: 45,
+        width: Normalize(80),
+        height: Normalize(80),
+        borderRadius: Normalize(45),
         marginTop: 2,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: Normalize(10),
+        marginRight: Normalize(10),
         borderWidth: 2,
         borderColor: "#fff",
     },
@@ -878,8 +888,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         transform: [{ rotate: '-45deg' }],
         right: 2,
-        top: 22,
-        width: 60,
+        top: Normalize(22),
+        width: Normalize(60),
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 2,
     },
@@ -887,8 +897,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         transform: [{ rotate: '-45deg' }],
         right: 2,
-        top: 22,
-        width: 80,
+        top: Normalize(22),
+        width: Normalize(80),
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 2,
     },
@@ -896,40 +906,40 @@ const styles = StyleSheet.create({
         position: 'absolute',
         transform: [{ rotate: '-45deg' }],
         right: 2,
-        top: 22,
-        width: 80,
+        top: Normalize(22),
+        width: Normalize(80),
         borderBottomColor: '#ffcccb',
         borderBottomWidth: 2,
     },
 
     buttonTextStyle: {
         color: '#7a7a7a',
-        paddingVertical: 10,
-        fontSize: 22,
+        paddingVertical: Normalize(10),
+        fontSize: fontNormalize(22),
     },
     rescheduleButtonStyle: {
         position: 'absolute',
-        bottom: 15,
-        right: 15,
+        bottom: Normalize(15),
+        right: Normalize(15),
         backgroundColor: '#f5c500',
         borderRadius: 4,
         // fontFamily: 'Comfortaa-Bold',
         width: '25%',
-        padding: 8,
+        padding: Normalize(8),
         alignItems: "center"
     },
     myButtonTextStyle: {
         color: '#fff',
-        fontSize: 20,
+        fontSize: fontNormalize(20),
         textAlign: "center",
         position: 'absolute',
-        bottom: 15,
-        right: 15
+        bottom: Normalize(15),
+        right: Normalize(15)
     },
     nextButtonStyle: {
         display: 'none',
         top: 0,
-        right: -50,
+        right: -Normalize(50),
         backgroundColor: '#fff',
         borderRadius: 7,
         borderWidth: 1,
@@ -940,7 +950,7 @@ const styles = StyleSheet.create({
     previousButtonStyle: {
         display: 'none',
         top: 0,
-        left: -50,
+        left: -Normalize(50),
         backgroundColor: '#fff',
         borderRadius: 7,
         borderWidth: 1,

@@ -22,6 +22,7 @@ import { getLang } from '../api/userLanguage';
 import Loader from '../components/Loader';
 import { Avatar } from 'react-native-elements';
 import { RadioButton } from 'react-native-paper';
+import { Normalize } from './actuatedNormalize';
 
 const LogoutDialog = ({ navigation, t, showModalVisibleLogout, setShowModalVisibleLogout, oklogout }) => {
 
@@ -36,7 +37,7 @@ const LogoutDialog = ({ navigation, t, showModalVisibleLogout, setShowModalVisib
 
 
     return (
-        <View style={{ marginTop: 22 }}>
+        <View style={{ marginTop: Normalize(22) }}>
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="zoomIn"

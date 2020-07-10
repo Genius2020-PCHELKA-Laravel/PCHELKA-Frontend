@@ -11,6 +11,7 @@ import Spacer from '../components/Spacer';
 import { withNamespaces } from 'react-i18next';
 import { BackHandler } from 'react-native';
 import OfflineNotice from '../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../components/actuatedNormalize';
 
 
 const LoginPhoneScreen = ({ navigation, t }) => {
@@ -111,12 +112,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
   },
-  mobileText: { marginLeft: 15, fontSize: 30 },
+  mobileText: { marginLeft: Normalize(15), fontSize: Normalize(30) },
   input: {
-    fontSize: 30,
-    paddingBottom: 20,
-    padding: 20,
-    paddingHorizontal: 10,
+    fontSize: fontNormalize(30),
+    paddingBottom: Normalize(20),
+    padding: Normalize(20),
+    paddingHorizontal: Normalize(10),
   },
   phoneParts: {
     flexDirection: 'row'

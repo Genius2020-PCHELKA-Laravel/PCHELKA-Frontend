@@ -23,6 +23,7 @@ import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../locales/i18n';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 export default class HomeScreenAddresses extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class HomeScreenAddresses extends React.Component {
                     animationIn="slideInUp"
                     animationOut="slideOutDown"
                     animationInTiming={1200}
-                    animationOutTiming={1200}
+                    animationOutTiming={200}
                     avoidKeyboard={true}
                     backdropColor='transparent'
                     transparent={true}
@@ -54,7 +55,7 @@ export default class HomeScreenAddresses extends React.Component {
                     {/* <TouchableOpacity style={styles.wrapper}> */}
 
                     <View style={styles.container}>
-                        <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
+                        <View style={{ justifyContent: 'flex-start', marginTop: Normalize(5), marginLeft: Normalize(15) }}>
                             <TouchableOpacity
                                 activeOpacity={0.5}
                                 onPress={() => {
@@ -64,20 +65,20 @@ export default class HomeScreenAddresses extends React.Component {
                                     position: "absolute",
                                     right: 0,
                                     backgroundColor: '#fff',
-                                    width: 35,
-                                    height: 35,
-                                    right: 15,
-                                    top: 5
+                                    width: Normalize(35),
+                                    height: Normalize(35),
+                                    right: Normalize(15),
+                                    top: Normalize(5)
                                 }}>
-                                <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                <FontAwesome name="times" size={Normalize(35)} color="#7a7a7a" />
                             </TouchableOpacity>
                         </View>
                         <View flexDirection='row'>
-                            <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: 20, left: 15, top: 15, }} />
+                            <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: fontNormalize(20), left: Normalize(15), top: Normalize(15), }} />
 
                         </View>
                         <Spacer />
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginLeft: 15, marginRight: 15 }} />
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginLeft: Normalize(15), marginRight: Normalize(15) }} />
                         <TouchableOpacity
                             activeOpacity={0.5}
                             onPress={async () => {
@@ -90,10 +91,10 @@ export default class HomeScreenAddresses extends React.Component {
                                 left: 15,
                                 marginBottom: 15
                             }}>
-                            <View style={{ flexDirection: "row", marginBottom: 10 }}>
+                            <View style={{ flexDirection: "row", marginBottom: Normalize(10) }}>
                                 <MaterialIcons name="my-location" size={30} color="#7a7a7a" />
                                 <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                    <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: 18 }} />
+                                    <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: fontNormalize(18) }} />
                                 </View>
                             </View>
 
@@ -105,7 +106,7 @@ export default class HomeScreenAddresses extends React.Component {
                             // this.props.addresses.length === 0 || this.props.addresses === undefined ?
                             typeof this.props.addresses === 'undefined' || this.props.addresses.length === 0 ?
                                 // <Image style={styles.noaddresses} source={require('../../../assets/noappoitments.png')} />
-                                <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
+                                <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: Normalize(15), marginLeft: Normalize(15), marginRight: Normalize(15), fontSize: fontNormalize(18) }} />
                                 :
                                 <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
                                     {
@@ -125,24 +126,24 @@ export default class HomeScreenAddresses extends React.Component {
                                                 }}>
                                                     <Spacer>
                                                         <View flexDirection='row'>
-                                                            <View flexDirection='column' style={{ width: '10%', left: 10 }}>
-                                                                <Entypo name="location" size={25} color="#d21404" />
+                                                            <View flexDirection='column' style={{ width: '10%', left: Normalize(10) }}>
+                                                                <Entypo name="location" size={Normalize(25)} color="#d21404" />
                                                             </View>
-                                                            <View flexDirection='column' style={{ width: '90%', left: 15, right: 15 }}>
+                                                            <View flexDirection='column' style={{ width: '90%', left: Normalize(15), right: Normalize(15) }}>
                                                                 <View flexDirection='row' >
-                                                                    <FontBold mystyle={{ fontSize: 18, }} value={u.address + ', '} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(18), }} value={u.address + ', '} />
                                                                 </View>
                                                                 <View flexDirection='row' >
-                                                                    <FontBold mystyle={{ fontSize: 18, }} value={u.details} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(18), }} value={u.details} />
                                                                 </View>
                                                                 <View flexDirection='row'>
-                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.street + ', '} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(14), color: "#888" }} value={u.street + ', '} />
                                                                 </View>
                                                                 <View flexDirection='row'>
-                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.buildingNumber + ', '} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(14), color: "#888" }} value={u.buildingNumber + ', '} />
                                                                 </View>
                                                                 <View flexDirection='row'>
-                                                                    <FontBold mystyle={{ fontSize: 14, color: "#888" }} value={u.apartment} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(14), color: "#888" }} value={u.apartment} />
                                                                 </View>
                                                             </View>
                                                         </View>
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 450,
+        height: Normalize(450),
         width: '100%',
         bottom: 0,
         borderTopLeftRadius: 14,
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     },
     noaddresses: {
         width: "100%",
-        marginTop: -100,
+        marginTop: -Normalize(100),
         zIndex: -1
     },
 });

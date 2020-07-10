@@ -116,6 +116,7 @@ import FontBold from '../components/FontBold';
 import i18n from '../locales/i18n';
 const { width } = Dimensions.get('window');
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 
 export default class OfflineNotice extends Component {
@@ -158,8 +159,8 @@ export default class OfflineNotice extends Component {
                     style={{ flex: 1, margin: 0 }}
                     animationIn="slideInUp"
                     animationOut="slideOutDown"
-                    animationInTiming={1000}
-                    animationOutTiming={1000}
+                    animationInTiming={1200}
+                    animationOutTiming={200}
                     avoidKeyboard={true}
                     backdropColor='transparent'
                     transparent={true}
@@ -189,8 +190,8 @@ export default class OfflineNotice extends Component {
                     style={{ flex: 1, margin: 0 }}
                     animationIn="slideInUp"
                     animationOut="slideOutDown"
-                    animationInTiming={1000}
-                    animationOutTiming={1000}
+                    animationInTiming={1200}
+                    animationOutTiming={200}
                     avoidKeyboard={true}
                     backdropColor='transparent'
                     transparent={true}
@@ -228,7 +229,7 @@ export default class OfflineNotice extends Component {
 const styles = StyleSheet.create({
     offlineContainer: {
         backgroundColor: '#b52424',
-        height: 30,
+        height: Normalize(30),
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     },
     onlineContainer: {
         backgroundColor: 'green',
-        height: 30,
+        height: Normalize(30),
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',

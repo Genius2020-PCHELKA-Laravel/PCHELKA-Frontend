@@ -3,7 +3,7 @@ import React from 'react';
 //Import all required component
 import { StyleSheet, View, Modal, ActivityIndicator, Image } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-
+import { fontNormalize, Normalize } from './actuatedNormalize';
 const Loader = props => {
     const { loading, ...attributes } = props;
     componentDidMount = () => {
@@ -21,10 +21,8 @@ const Loader = props => {
                 console.log('close modal');
             }}>
             <View style={styles.modalBackground}>
-                <View style={styles.activityIndicatorWrapper}>
-                    <Image source={require('../../assets/spin.gif')} />
-                    {/* <ActivityIndicator color='#ff9800' animating={loading} /> */}
-                </View>
+                <Image style={styles.activityIndicatorWrapper} source={require('../../assets/spin.gif')} />
+                {/* <ActivityIndicator color='#ff9800' animating={loading} /> */}
             </View>
         </Modal>
     );
@@ -41,8 +39,8 @@ const styles = StyleSheet.create({
     },
     activityIndicatorWrapper: {
         backgroundColor: '#FFFFFF',
-        height: 100,
-        width: 100,
+        height: Normalize(100),
+        width: Normalize(100),
         borderRadius: 10,
         display: 'flex',
         alignItems: 'center',

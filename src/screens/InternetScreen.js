@@ -16,6 +16,7 @@ import { withNamespaces } from 'react-i18next';
 import registerForPushNotifications from '../api/registerForPushNotifications';
 import { Notifications } from 'expo';
 import i18n from '../locales/i18n';
+import { Normalize, fontNormalize } from '../components/actuatedNormalize';
 
 const InternetScreen = ({ navigation, t }) => {
   const { state: ustate, getUserDetails, getUserAddresses, dispatch: udispatch } = useContext(UserContext);
@@ -200,10 +201,10 @@ const InternetScreen = ({ navigation, t }) => {
             <Image resizeMode="contain" style={{ width: width * 0.8, height: (width * 0.8) / 1.8 }} source={require('../../assets/nonet.png')} />
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <FontBold mystyle={{ color: "#fff", fontSize: 22 }} value={t('noconnection')} />
+            <FontBold mystyle={{ color: "#fff", fontSize: fontNormalize(22) }} value={t('noconnection')} />
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <FontLight mystyle={{ width: "75%", color: "#fff", fontSize: 14, left: 5, textAlign: "center" }} value={t('pleasecheckyourinternetconnectionandtryagain')} />
+            <FontLight mystyle={{ width: "75%", color: "#fff", fontSize: fontNormalize(14), left: Normalize(5), textAlign: "center" }} value={t('pleasecheckyourinternetconnectionandtryagain')} />
           </View>
         </View>
       // <View>
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: 'absolute',
-    bottom: 100,
+    bottom: Normalize(100),
     left: 0,
     right: 0
   }

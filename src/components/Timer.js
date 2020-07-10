@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, TouchableOpacity, View, Text } from 'react-native';
 import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 export default class Timer extends React.Component {
     constructor() {
@@ -78,7 +79,7 @@ export default class Timer extends React.Component {
                             <FontAwesome5 name="sync-alt" size={25} color="#161924" />
                         </TouchableOpacity> : null
                 }
-                <Text style={{ marginTop: 10, textAlign: 'center', fontSize: 14, fontFamily: 'Comfortaa-Bold', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ marginTop: Normalize(10), textAlign: 'center', fontSize: fontNormalize(14), fontFamily: 'Comfortaa-Bold', alignItems: 'center', justifyContent: 'center' }}>
                     {this.state.time.s} seconds
                 </Text>
             </View>

@@ -23,6 +23,7 @@ import { Avatar } from 'react-native-elements';
 import { Notifications } from 'expo';
 import Toast from 'react-native-simple-toast';
 import { navigate } from "../navigationRef";
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, providerImageURL, providerName, bookingID, bookingRefCode, origin, notificationId }) => {
     // const [modalVisible, setModalVisible] = useState(false);
@@ -60,7 +61,6 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
             setIsLoading(false);
             if (origin === "selected")
                 navigate("Past");
-
         }).catch((error) => {
             console.log(error);
             setModalVisible(false);
@@ -77,7 +77,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
                 animationInTiming={1200}
-                animationOutTiming={600}
+                animationOutTiming={200}
                 avoidKeyboard={true}
                 backdropColor='transparent'
                 transparent={true}
@@ -94,11 +94,11 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
 
                 <View>
                     <TouchableOpacity
-                        style={{ position: "absolute", right: 0, padding: 15, zIndex: 20 }}
+                        style={{ position: "absolute", right: 0, padding: Normalize(15), zIndex: 20 }}
                         onPress={() => {
                             setModalVisible(!modalVisible);
                         }}>
-                        <FontBold value={t('skip')} mystyle={{ fontSize: 24, color: "#fff" }} />
+                        <FontBold value={t('skip')} mystyle={{ fontSize: fontNormalize(24), color: "#fff" }} />
                     </TouchableOpacity>
                 </View>
 
@@ -107,7 +107,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                         <Spacer>
                             <FontRegular
                                 value={t('yourorder') + " \"" + bookingRefCode + "\" " + t('completed')}
-                                mystyle={{ fontSize: 20, color: "#fff", textAlign: "center" }}
+                                mystyle={{ fontSize: fontNormalize(20), color: "#fff", textAlign: "center" }}
                             />
                         </Spacer>
 
@@ -116,7 +116,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                         <Spacer>
                             <FontRegular
                                 value={t('experience') + " \"" + providerName + "\"?"}
-                                mystyle={{ fontSize: 20, color: "#fff", textAlign: "center" }}
+                                mystyle={{ fontSize: fontNormalize(20), color: "#fff", textAlign: "center" }}
                             />
                         </Spacer>
                     </View>
@@ -140,7 +140,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                             reviews={reviews_names}
                             onFinishRating={ratingCompleted}
                             defaultRating={3}
-                            size={45}
+                            size={Normalize(45)}
                         />
                     </View>
                 </View>
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
     modalText: {
         color: '#000',
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         padding: 0,
     },
     modalButtonStyle: {
         flex: 0.4,
-        bottom: 12,
+        bottom: Normalize(12),
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: '#7a7a7a',
         color: '#7a7a7a',
-        height: 35,
+        height: Normalize(35),
         // fontFamily: 'Comfortaa-Bold',
     },
 

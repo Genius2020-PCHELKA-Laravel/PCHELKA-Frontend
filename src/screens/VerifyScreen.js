@@ -17,6 +17,7 @@ import { BackHandler } from 'react-native';
 import Loader from '../components/Loader';
 import { navigate } from '../navigationRef';
 import OfflineNotice from '../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../components/actuatedNormalize';
 
 const VerifyScreen = ({ navigation, t }) => {
     const { mobile, otp, redirect } = navigation.state.params;
@@ -145,9 +146,9 @@ const VerifyScreen = ({ navigation, t }) => {
             <Timer onclick={resend}></Timer>
         </View>
         <View>
-            <FontBold mystyle={{ fontSize: 12 }} value={"if you in ukraine you will receive message"}></FontBold>
-            <FontBold mystyle={{ fontSize: 12 }} value={"OTP: " + otp}></FontBold>
-            <FontBold mystyle={{ fontSize: 12 }} value={"Resend OTP:" + resendotp}></FontBold>
+            <FontBold mystyle={{ fontSize: fontNormalize(12) }} value={"if you in ukraine you will receive message"}></FontBold>
+            <FontBold mystyle={{ fontSize: fontNormalize(12) }} value={"OTP: " + otp}></FontBold>
+            <FontBold mystyle={{ fontSize: fontNormalize(12) }} value={"Resend OTP:" + resendotp}></FontBold>
         </View>
         <OfflineNotice />
     </>
@@ -160,16 +161,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     inputsection: { flexDirection: 'row', justifyContent: 'center' },
-    mobileText: { marginTop: 10, marginLeft: 10, fontSize: 24 },
-    resendText: { justifyContent: 'center', marginTop: 10, marginLeft: 10, fontSize: 14 },
+    mobileText: { marginTop: Normalize(10), marginLeft: Normalize(10), fontSize: fontNormalize(24) },
+    resendText: { justifyContent: 'center', marginTop: Normalize(10), marginLeft: Normalize(10), fontSize: fontNormalize(14) },
     input: {
-        marginLeft: 10,
-        height: 60,
-        width: 60,
+        marginLeft: Normalize(10),
+        height: Normalize(60),
+        width: Normalize(60),
         borderColor: '#f5c500',
         borderRadius: 15,
         borderWidth: 1,
-        fontSize: 26,
+        fontSize: fontNormalize(26),
         // backgroundColor: '#DAA520',
         textAlign: 'center',
     },

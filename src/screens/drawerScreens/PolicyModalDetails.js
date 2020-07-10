@@ -8,6 +8,7 @@ import { withNamespaces } from 'react-i18next';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 const PolicyModalDetails = ({ navigation, t, reschedulePolicyModalDetails, setReschedulePolicyModalDetails }) => {
 
@@ -34,27 +35,27 @@ const PolicyModalDetails = ({ navigation, t, reschedulePolicyModalDetails, setRe
                 }}>
                 <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                     <TouchableOpacity
-                        style={{ position: "absolute", right: 0, padding: 15 }}
+                        style={{ position: "absolute", right: 0, padding: Normalize(15) }}
                         onPress={() => {
                             setReschedulePolicyModalDetails(!reschedulePolicyModalDetails);
                         }}>
-                        <FontAwesome name="times" size={35} color="#7a7a7a" />
+                        <FontAwesome name="times" size={Normalize(35)} color="#7a7a7a" />
                     </TouchableOpacity>
-                    <View style={{ marginHorizontal: 0, marginTop: 60 }}>
+                    <View style={{ marginHorizontal: 0, marginTop: Normalize(60) }}>
                         <Spacer>
-                            <FontBold value={t('reschedulepolicy')} mystyle={{ fontSize: 24, textAlign: "left", }} />
+                            <FontBold value={t('reschedulepolicy')} mystyle={{ fontSize: fontNormalize(22), textAlign: "left", }} />
                         </Spacer>
                         <View style={styles.ourpolicycontainer}>
-                            <AntDesign style={{ marginBottom: 5 }} name="warning" size={30} color="#d21404" />
-                            <FontLight mystyle={{ fontSize: 16 }} value={t('ourpolicydoc')} />
+                            <AntDesign style={{ marginBottom: Normalize(5) }} name="warning" size={30} color="#d21404" />
+                            <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('ourpolicydoc')} />
 
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('type')} mystyle={{ color: "blue", fontSize: 18, textAlign: "left", }} />
+                                <FontBold value={t('type')} mystyle={{ color: "blue", fontSize: fontNormalize(16), textAlign: "left", }} />
                             </View>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('reschedulefee')} mystyle={{ color: "blue", fontSize: 18, textAlign: "left", }} />
+                                <FontBold value={t('reschedulefee')} mystyle={{ color: "blue", fontSize: fontNormalize(16), textAlign: "left", }} />
                             </View>
                         </View>
                         <Spacer>
@@ -62,22 +63,10 @@ const PolicyModalDetails = ({ navigation, t, reschedulePolicyModalDetails, setRe
                         </Spacer>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('tenminafterplacing')} mystyle={{ fontSize: 16, textAlign: "left", }} />
+                                <FontBold value={t('tenminafterplacing')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
                             </View>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('freeofcharge')} mystyle={{ fontSize: 16, textAlign: "left", }} />
-                            </View>
-                        </View>
-
-                        <Spacer>
-                            <View style={{ borderBottomColor: "#f5c500", borderBottomWidth: 1 }} />
-                        </Spacer>
-                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                            <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('12beforeappoitment')} mystyle={{ fontSize: 16, textAlign: "left", }} />
-                            </View>
-                            <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('freeofcharge')} mystyle={{ fontSize: 16, textAlign: "left", }} />
+                                <FontBold value={t('freeofcharge')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
                             </View>
                         </View>
 
@@ -86,22 +75,10 @@ const PolicyModalDetails = ({ navigation, t, reschedulePolicyModalDetails, setRe
                         </Spacer>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('122beforeappoitment')} mystyle={{ fontSize: 16, textAlign: "left", }} />
+                                <FontBold value={t('12beforeappoitment')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
                             </View>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('freeofcharge')} mystyle={{ fontSize: 16, textAlign: "left", }} />
-                            </View>
-                        </View>
-
-                        <Spacer>
-                            <View style={{ borderBottomColor: "#f5c500", borderBottomWidth: 1 }} />
-                        </Spacer>
-                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                            <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('2hbeforeappoitment')} mystyle={{ fontSize: 16, textAlign: "left", }} />
-                            </View>
-                            <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('twentyfivepercent')} mystyle={{ fontSize: 16, textAlign: "left", }} />
+                                <FontBold value={t('freeofcharge')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
                             </View>
                         </View>
 
@@ -110,10 +87,34 @@ const PolicyModalDetails = ({ navigation, t, reschedulePolicyModalDetails, setRe
                         </Spacer>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('missedappoitment')} mystyle={{ fontSize: 16, textAlign: "left", }} />
+                                <FontBold value={t('122beforeappoitment')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
                             </View>
                             <View style={{ flexDirection: "column", width: "40%" }}>
-                                <FontBold value={t('onehandredpercent')} mystyle={{ fontSize: 16, textAlign: "left", }} />
+                                <FontBold value={t('freeofcharge')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
+                            </View>
+                        </View>
+
+                        <Spacer>
+                            <View style={{ borderBottomColor: "#f5c500", borderBottomWidth: 1 }} />
+                        </Spacer>
+                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                            <View style={{ flexDirection: "column", width: "40%" }}>
+                                <FontBold value={t('2hbeforeappoitment')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
+                            </View>
+                            <View style={{ flexDirection: "column", width: "40%" }}>
+                                <FontBold value={t('twentyfivepercent')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
+                            </View>
+                        </View>
+
+                        <Spacer>
+                            <View style={{ borderBottomColor: "#f5c500", borderBottomWidth: 1 }} />
+                        </Spacer>
+                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                            <View style={{ flexDirection: "column", width: "40%" }}>
+                                <FontBold value={t('missedappoitment')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
+                            </View>
+                            <View style={{ flexDirection: "column", width: "40%" }}>
+                                <FontBold value={t('onehandredpercent')} mystyle={{ fontSize: fontNormalize(14), textAlign: "left", }} />
                             </View>
                         </View>
                         <Spacer />
@@ -130,15 +131,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     ourpolicycontainer: {
-        marginHorizontal: 18,
-        marginBottom: 18,
-        padding: 15,
+        marginHorizontal: Normalize(18),
+        marginBottom: Normalize(18),
+        padding: Normalize(15),
         borderColor: '#7a7a7a',
         borderWidth: 0,
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
+            height: Normalize(10),
             width: 0
         },
         elevation: 2,

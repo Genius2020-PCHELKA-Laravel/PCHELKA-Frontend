@@ -18,6 +18,8 @@ import OfflineNotice from '../../components/OfflineNotice';
 import LanguageDialog from '../../components/LanguageDialog';
 import i18n from '../../locales/i18n';
 import { getLang, storeLang } from '../../api/userLanguage';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
+
 const SettingScreen = ({ navigation, t }) => {
   //After Update Get the updatetd info
   const { state, userLanguage } = useContext(UserContext);
@@ -43,7 +45,8 @@ const SettingScreen = ({ navigation, t }) => {
 
   const [showModalVisibleLanguage, setShowModalVisibleLanguage] = useState(false);
   const dimensions = Dimensions.get('window');
-  const imageHeight = Math.round(dimensions.width * 9 / 16);
+  // const imageHeight = Math.round(dimensions.width * 12 / 16);
+  const imageHeight = 125;
   const imageWidth = dimensions.width;
   // const unsubscribe = navigation.addListener('didFocus', () => {
   //   console.log("Settings focussed#");
@@ -82,18 +85,12 @@ const SettingScreen = ({ navigation, t }) => {
   }, []);
   return (
     <View style={styles.container}>
-      <OfflineNotice />
-      <LanguageDialog
-        lang={lang}
-        setLang={setLang}
-        changeLanguage={changeLanguage}
-        showModalVisibleLanguage={showModalVisibleLanguage}
-        setShowModalVisibleLanguage={setShowModalVisibleLanguage} />
+
       <View >
-        <Image resizeMethod='auto' style={{ borderRadius: 5, height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
+        <Image resizeMethod='auto' style={{ height: imageHeight, width: imageWidth, }} source={require('../../../assets/lightbackground.png')} />
         <FontBold value={fullName} mystyle={styles.name} />
         <FontLight value={"+ " + mobile} mystyle={styles.mobile} />
-        <View style={{ flex: 1, alignItems: 'center', top: -230 }}>
+        <View style={{ flex: 1, justifyContent: 'center', flexDirection: "row", top: -230 }}>
           <Avatar
             size="small"
             rounded
@@ -111,14 +108,14 @@ const SettingScreen = ({ navigation, t }) => {
         <TouchableOpacity onPress={() => { navigate('EditPersonalDetailsScreen') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('editpersonaldetails')}></FontBold>
-            <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
+            <FontAwesome5 style={styles.item2} name="chevron-right" size={Normalize(15)} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
         <Spacer />
         <TouchableOpacity onPress={() => { navigate('ManageAddresses') }}>
           <View style={styles.row}>
             <FontBold mystyle={styles.item1} value={t('manageaddresses')} ></FontBold>
-            <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
+            <FontAwesome5 style={styles.item2} name="chevron-right" size={Normalize(15)} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
         <Spacer />
@@ -155,7 +152,7 @@ const SettingScreen = ({ navigation, t }) => {
                     containerStyle={styles.flag}
                   />
             }
-            <FontAwesome5 style={styles.item2} name="chevron-right" size={15} color="#7a7a7a" />
+            <FontAwesome5 style={styles.item2} name="chevron-right" size={Normalize(15)} color="#7a7a7a" />
           </View>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={() => { navigate('ManageCreditCards') }}>
@@ -196,6 +193,13 @@ const SettingScreen = ({ navigation, t }) => {
           />
         </View>
       </Spacer> */}
+      <OfflineNotice />
+      <LanguageDialog
+        lang={lang}
+        setLang={setLang}
+        changeLanguage={changeLanguage}
+        showModalVisibleLanguage={showModalVisibleLanguage}
+        setShowModalVisibleLanguage={setShowModalVisibleLanguage} />
     </View>);
 };
 
@@ -206,7 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollstyle: {
-    marginTop: 20,
+    marginTop: 0,
   },
   row: {
     flex: 1,
@@ -215,21 +219,21 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     borderBottomColor: '#aaa',
     borderBottomWidth: 1,
-    paddingBottom: 20,
+    paddingBottom: Normalize(20),
   },
   item1: {
-    fontSize: 16,
-    marginLeft: 15,
+    fontSize: fontNormalize(16),
+    marginLeft: Normalize(15),
     width: '70%' // is 50% of container width
   },
   item2: {
     position: "absolute",
-    top: 15,
-    right: 15
+    top: Normalize(15),
+    right: Normalize(15)
   },
   item3: {
-    fontSize: 16,
-    marginLeft: 15,
+    fontSize: fontNormalize(16),
+    marginLeft: Normalize(15),
     width: '30%' // is 50% of container width
   },
   // avatar: {
@@ -242,13 +246,13 @@ const styles = StyleSheet.create({
   avatar: {
     position: 'absolute',
     backgroundColor: '#ddd',
-    top: 50,
+    top: 115,
 
   },
   name: {
     position: 'absolute',
-    fontSize: 22,
-    top: 80,
+    fontSize: fontNormalize(22),
+    top: Normalize(50),
     left: 0,
     right: 0,
     textAlign: 'center',
@@ -256,8 +260,8 @@ const styles = StyleSheet.create({
   },
   mobile: {
     position: 'absolute',
-    fontSize: 20,
-    top: 120,
+    fontSize: fontNormalize(20),
+    top: Normalize(90),
     left: 0,
     right: 0,
     textAlign: 'center',
@@ -265,15 +269,15 @@ const styles = StyleSheet.create({
   },
   listtitle: {
     color: '#aaa',
-    fontSize: 14,
-    marginLeft: 15
+    fontSize: fontNormalize(14),
+    marginLeft: Normalize(15)
   },
   flag: {
     borderColor: '#000',
     borderWidth: 0,
     backgroundColor: '#fff',
-    width: 30,
-    height: 30,
+    width: Normalize(30),
+    height: Normalize(30),
   },
 });
 

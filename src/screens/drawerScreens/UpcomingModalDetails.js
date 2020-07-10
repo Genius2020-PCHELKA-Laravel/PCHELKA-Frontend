@@ -13,6 +13,7 @@ import Modal from 'react-native-modal';
 import { AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import AlertDialog from '../../components/AlertDialog';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, setSelectedUpcomingModalDetails }) => {
     const { state: hcstate, getUpcoming, getSelectedUpcoming, getProviders, dispatch: hcdispatch } = useContext(HCContext);
@@ -41,7 +42,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
 
     return (
         <View style={{ marginTop: 0 }}>
-            <AlertDialog changing={changing} setChanging={setChanging} />
+            <AlertDialog changing={changing} setChanging={setChanging} message={'notpermittedyourescheduledbefore'} />
             <OfflineNotice />
             <Modal
                 style={{ flex: 1, margin: 0 }}
@@ -68,51 +69,51 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                         hcstate.selectedupcomingproviderdata != null ?
                             <View>
                                 <TouchableOpacity
-                                    style={{ position: "absolute", right: 0, padding: 15 }}
+                                    style={{ position: "absolute", right: 0, padding: Normalize(15) }}
                                     onPress={() => {
                                         setSelectedUpcomingModalDetails(!selectedUpcomingModalDetails);
                                     }}>
-                                    <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                    <FontAwesome name="times" size={Normalize(35)} color="#7a7a7a" />
                                 </TouchableOpacity>
-                                <View style={{ marginHorizontal: 15, marginTop: 60 }}>
+                                <View style={{ marginHorizontal: Normalize(15), marginTop: Normalize(60) }}>
                                     <View style={styles.row}>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')} />
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('servicetype')} />
                                         </View>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t(hcstate.selectedupcoming.serviceType)} />
+                                            <FontBold mystyle={{ color: 'black', fontSize: fontNormalize(18) }} value={t(hcstate.selectedupcoming.serviceType)} />
                                         </View>
                                     </View>
-                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5), marginBottom: Normalize(5) }} />
                                     <View style={styles.row}>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('refcode')} />
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('refcode')} />
                                         </View>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.refCode} />
+                                            <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18), textAlign: "center" }} value={hcstate.selectedupcoming.refCode} />
                                         </View>
                                     </View>
                                     <View style={styles.row}>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('status')} />
+                                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('status')} />
                                         </View>
                                         <View style={styles.item}>
                                             {
                                                 hcstate.selectedupcoming.status == 'Completed' ?
                                                     <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#228B22", backgroundColor: "#228B22" }}>
-                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
+                                                        <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
                                                     </View>
                                                     : hcstate.selectedupcoming.status == 'Confirmed' ?
                                                         <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#f5b100", backgroundColor: "#f5b100" }}>
-                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 40, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
+                                                            <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(40), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
                                                         </View>
                                                         : hcstate.selectedupcoming.status == 'Rescheduled' ?
-                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#f58800", backgroundColor: "#f58800" }}>
-                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: Normalize(5), borderColor: "#f58800", backgroundColor: "#f58800" }}>
+                                                                <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
                                                             </View> :
                                                             hcstate.selectedupcoming.status == 'Canceled' ?
-                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 5, borderColor: "#b52424", backgroundColor: "#b52424" }}>
-                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: Normalize(5), borderColor: "#b52424", backgroundColor: "#b52424" }}>
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
                                                                 </View>
                                                                 : null
                                             }
@@ -122,30 +123,30 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                         hcstate.selectedupcoming.status == 'Confirmed' ?
                                             <View style={styles.row}>
                                                 <View style={styles.item}>
-                                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('confirmedat')} />
+                                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('confirmedat')} />
                                                 </View>
                                                 <View style={styles.item}>
-                                                    <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.updatedAt} />
+                                                    <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18), textAlign: "center" }} value={hcstate.selectedupcoming.updatedAt} />
                                                 </View>
                                             </View>
                                             :
                                             hcstate.selectedupcoming.status == 'Rescheduled' ?
                                                 <View style={styles.row}>
                                                     <View style={styles.item}>
-                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('rescheduledat')} />
+                                                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('rescheduledat')} />
                                                     </View>
                                                     <View style={styles.item}>
-                                                        <FontBold mystyle={{ color: '#000', fontSize: 18, textAlign: "center" }} value={hcstate.selectedupcoming.updatedAt} />
+                                                        <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18), textAlign: "center" }} value={hcstate.selectedupcoming.updatedAt} />
                                                     </View>
                                                 </View>
                                                 :
                                                 null
                                     }
                                     <Spacer />
-                                    <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
-                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <FontRegular mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('details')}></FontRegular>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5), marginBottom: Normalize(5) }} />
                                     <View flexDirection="column">
-                                        <FontBold mystyle={{ color: '#000', fontSize: 18 }}
+                                        <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }}
                                             value={
                                                 hcstate.selectedupcoming.serviceType == "HomeCleaning" || hcstate.selectedupcoming.serviceType == "DisinfectionService" || hcstate.selectedupcoming.serviceType == "DeepCleaning" || hcstate.selectedupcoming.serviceType == "BabysitterService" ?
                                                     hcstate.selectedupcoming.hoursNeeded + " " + t('hours') + ", " +
@@ -288,20 +289,20 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
 
                         <Spacer /> */}
                                     <Spacer />
-                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('dateandtime')}></FontBold>
-                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
+                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('dateandtime')}></FontBold>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5), marginBottom: Normalize(5) }} />
                                     <View style={styles.row}>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedupcoming.duoDate}></FontBold>
+                                            <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.selectedupcoming.duoDate}></FontBold>
                                         </View>
                                         <View style={styles.item}>
-                                            <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedupcoming.duoTime}></FontBold>
+                                            <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.selectedupcoming.duoTime}></FontBold>
                                         </View>
                                     </View>
                                     <Spacer />
-                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('address')}></FontBold>
-                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} />
-                                    <FontBold mystyle={{ color: '#000', fontSize: 18 }} value={hcstate.selectedupcoming.addressDetails.address}></FontBold>
+                                    <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('address')}></FontBold>
+                                    <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5), marginBottom: Normalize(5) }} />
+                                    <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.selectedupcoming.addressDetails.address}></FontBold>
                                     <Spacer />
                                     {/* <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('price')}></FontBold>
                         <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5, marginBottom: 5 }} /> */}
@@ -314,7 +315,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                         <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                             {
                                                 paymentWaysStr === "Cash" ?
-                                                    <MaterialCommunityIcons name="cash" size={45} color="#228B22" />
+                                                    <MaterialCommunityIcons name="cash" size={Normalize(45)} color="#228B22" />
                                                     :
                                                     <Image style={styles.liqpayimage} source={require('../../../assets/liqpay.png')} />
 
@@ -334,90 +335,90 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                                 <View style={{ flexDirection: "row" }}>
                                                     <FontBold value={hcstate.selectedupcomingproviderdata.name} />
                                                 </View>
-                                                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                                <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
                                                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                                         {
                                                             hcstate.selectedupcoming.providerEvaluation == 0 ?
-                                                                <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star-o" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                 :
                                                                 hcstate.selectedupcoming.providerEvaluation == 1 ?
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                     :
                                                                     hcstate.selectedupcoming.providerEvaluation == 2 ?
                                                                         <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                         </>
                                                                         :
                                                                         hcstate.selectedupcoming.providerEvaluation == 3 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
                                                                             hcstate.selectedupcoming.providerEvaluation == 4 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
                                                                                 hcstate.selectedupcoming.providerEvaluation == 5 ?
                                                                                     <>
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     </>
                                                                                     :
                                                                                     hcstate.selectedupcoming.providerEvaluation > 1 && hcstate.selectedupcoming.providerEvaluation < 2 ?
                                                                                         <>
-                                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                         </>
                                                                                         :
                                                                                         hcstate.selectedupcoming.providerEvaluation > 2 && hcstate.selectedupcoming.providerEvaluation < 3 ?
                                                                                             <>
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                             </>
                                                                                             :
                                                                                             hcstate.selectedupcoming.providerEvaluation > 3 && hcstate.selectedupcoming.providerEvaluation < 4 ?
                                                                                                 <>
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                    <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                 </>
                                                                                                 :
                                                                                                 hcstate.selectedupcoming.providerEvaluation > 4 && hcstate.selectedupcoming.providerEvaluation < 5 ?
                                                                                                     <>
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                     </>
                                                                                                     :
                                                                                                     <>
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                     </>
                                                         }
                                                     </View>
                                                     <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                                         {
                                                             hcstate.selectedupcoming.providerEvaluation != 0 ?
-                                                                <FontLight mystyle={{ fontSize: 12, marginLeft: 5 }} value={hcstate.selectedupcoming.providerEvaluation} />
+                                                                <FontLight mystyle={{ fontSize: fontNormalize(12), marginLeft: Normalize(5) }} value={hcstate.selectedupcoming.providerEvaluation} />
                                                                 :
-                                                                <FontLight mystyle={{ fontSize: 12, marginLeft: 5 }} value={t('notevaluated')} />
+                                                                <FontLight mystyle={{ fontSize: fontNormalize(12), marginLeft: Normalize(5) }} value={t('notevaluated')} />
                                                         }
                                                     </View>
 
@@ -432,14 +433,14 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                                 </View>
                                                 {
                                                     hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
-                                                        <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                                            <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
-                                                            <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
+                                                        <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
+                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
+                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
                                                         </View>
                                                         :
-                                                        <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                                        <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
                                                             {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
-                                                            <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
+                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
                                                         </View>
                                                 }
                                             </View>
@@ -451,15 +452,15 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                             :
                             <View style={{ flex: 1, }}>
                                 <TouchableOpacity
-                                    style={{ position: "absolute", right: 0, padding: 15 }}
+                                    style={{ position: "absolute", right: 0, padding: Normalize(15) }}
                                     onPress={() => {
                                         setSelectedUpcomingModalDetails(!selectedUpcomingModalDetails);
                                     }}>
-                                    <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                    <FontAwesome name="times" size={Normalize(35)} color="#7a7a7a" />
                                 </TouchableOpacity>
-                                <View style={{ marginHorizontal: 15, marginTop: 60 }}>
+                                <View style={{ marginHorizontal: Normalize(15), marginTop: Normalize(60) }}>
                                     <View style={{ flexDirection: "row", justifyContent: "center", }}>
-                                        <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
+                                        <Image style={{ width: Normalize(65), height: Normalize(65) }} source={require('../../../assets/spin.gif')} />
                                     </View>
                                 </View>
                             </View>
@@ -561,9 +562,9 @@ const styles = StyleSheet.create({
         width: '50%' // is 50% of container width
     },
 
-    title: { marginLeft: 15, marginTop: 15, marginRight: 10, fontSize: 18 },
-    subtitle: { marginLeft: 15, marginTop: 0, fontSize: 20, marginBottom: 5, marginRight: 10 },
-    totalAmount: { color: '#000', marginTop: 0, fontSize: 24 },
+    title: { marginLeft: Normalize(15), marginTop: Normalize(15), marginRight: Normalize(10), fontSize: fontNormalize(18) },
+    subtitle: { marginLeft: Normalize(15), marginTop: 0, fontSize: fontNormalize(20), marginBottom: Normalize(5), marginRight: Normalize(10) },
+    totalAmount: { color: '#000', marginTop: 0, fontSize: fontNormalize(24) },
     // reschedulebuttonStyle: {
     //     position: 'absolute',
     //     bottom: 15,
@@ -607,62 +608,62 @@ const styles = StyleSheet.create({
     // },
     reschedulebuttonStyle: {
         position: 'absolute',
-        bottom: 15,
-        left: 10,
-        right: 10,
+        bottom: Normalize(15),
+        left: Normalize(10),
+        right: Normalize(10),
         backgroundColor: '#f5c500',
         borderWidth: 1,
         borderColor: '#f5c500',
         alignItems: 'center',
         borderRadius: 7,
-        height: 50,
+        height: Normalize(50),
         textAlign: 'center',
         justifyContent: 'center'
     },
     buttonTextStyle: {
         color: '#fff',
-        paddingVertical: 10,
-        fontSize: 22,
+        paddingVertical: Normalize(10),
+        fontSize: fontNormalize(22),
     },
     liqpayimage: {
-        marginLeft: 15,
-        marginTop: 5,
-        width: 75,
-        height: 40,
+        marginLeft: Normalize(15),
+        marginTop: Normalize(5),
+        width: Normalize(75),
+        height: Normalize(40),
         opacity: 1,
         flexDirection: "column",
         justifyContent: "center"
     },
     image: {
-        width: 80,
-        height: 80,
+        width: Normalize(80),
+        height: Normalize(80),
         borderRadius: 45,
-        marginTop: 5,
-        marginBottom: 5,
-        marginLeft: 10,
-        marginRight: 10,
+        marginTop: Normalize(5),
+        marginBottom: Normalize(5),
+        marginLeft: Normalize(10),
+        marginRight: Normalize(10),
         borderWidth: 2,
         borderColor: "#fff",
 
     },
     providerThumup: {
-        paddingRight: 15,
+        paddingRight: Normalize(15),
         backgroundColor: '#fff',
-        height: 90,
+        height: Normalize(90),
         borderRadius: 2,
         borderWidth: 0,
-        marginRight: 5,
-        marginLeft: 5,
-        marginTop: 5,
-        marginBottom: 5,
+        marginRight: Normalize(5),
+        marginLeft: Normalize(5),
+        marginTop: Normalize(5),
+        marginBottom: Normalize(5),
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         elevation: 3,
-        shadowRadius: 10,
+        shadowRadius: Normalize(10),
     },
 });
 export default withNamespaces()(UpcomingModalDetails);

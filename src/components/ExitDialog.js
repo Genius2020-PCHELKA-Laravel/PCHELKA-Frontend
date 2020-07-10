@@ -13,6 +13,7 @@ import FontLight from '../components/FontLight';
 import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
 import { BackHandler } from 'react-native';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 const ExitDialog = props => {
     const { changing, setChanging, ...attributes } = props;
@@ -68,7 +69,7 @@ const ExitDialog = props => {
                             flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
                         }}>
                             <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
-                                <FontBold value={i18n.t('exitapp')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                <FontBold value={i18n.t('exitapp')} mystyle={{ fontSize: fontNormalize(20), color: "#fff" }}></FontBold>
                             </View>
                         </View>
                         <Spacer />
@@ -77,9 +78,9 @@ const ExitDialog = props => {
                         {/* <AntDesign style={{ position: "absolute", right: 15, top: 0 }} name="warning" size={45} color="#d21404" /> */}
                         {/* </View> */}
                         <Spacer>
-                            <FontRegular mystyle={{ fontSize: 16 }} value={i18n.t('doyouwanttoexit')} />
+                            <FontRegular mystyle={{ fontSize: fontNormalize(16) }} value={i18n.t('doyouwanttoexit')} />
                         </Spacer>
-                        <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: 20 }}>
+                        <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: Normalize(20) }}>
                             <TouchableOpacity style={styles.btn} onPress={handleCancel} >
                                 <FontBold value={i18n.t('cancel')} />
                             </TouchableOpacity>
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 210,
+        height: Normalize(210),
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -109,11 +110,11 @@ const styles = StyleSheet.create({
         shadowColor: '#7a7a7a',
         shadowOpacity: 1.0,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         shadowRadius: 10,
-        elevation: 10
+        elevation: Normalize(10)
     },
     wrapper: {
         flex: 1,
@@ -131,10 +132,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
-        marginHorizontal: 10,
+        marginHorizontal: Normalize(10),
         backgroundColor: "#fff",
-        paddingHorizontal: 15,
-        paddingVertical: 5
+        paddingHorizontal: Normalize(15),
+        paddingVertical: Normalize(5)
 
     },
 

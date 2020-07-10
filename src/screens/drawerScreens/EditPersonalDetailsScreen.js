@@ -8,6 +8,7 @@ import FontRegular from '../../components/FontRegular';
 import FontLight from '../../components/FontLight';
 // import CDate from '../../components/CDate';
 import Toast from 'react-native-simple-toast';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 //Import all required component
 import {
@@ -49,7 +50,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     // let [dob, setDob] = useState(new Date());
     let [dob, setDob] = useState(new Date());
     let [gender, setGender] = useState('');
-    let [lang, setLang] = useState('');
+    let [lang, setLang] = useState('en');
     let [loading, setLoading] = useState(false);
     let [errortext, setErrortext] = useState('');
     let [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
@@ -60,11 +61,17 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
     useEffect(() => {
         getLang().then(async (response) => {
             console.log("EditPersonalDetailsScreen:: selected Lang in Use Effect:  " + response);
-            let lng = await getLang();
-            setLang(lng);
+            if (typeof response == 'undefined') {
+                setLang('en');
+            }
+            else {
+                let lng = await getLang();
+                setLang(lng);
+            }
         }).catch(async (err) => {
             console.log("EditPersonalDetailsScreen::Can not get lang");
             storeLang('en');
+            setLang('en');
             // var dlng = await getLang();
             // console.log("InternetScreen::StoreLang::DefualtLang::" + dlng);
         });
@@ -80,7 +87,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
         setGender(state.userDetails.gender);
     }, [state.userDetails]);
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+        const currentDate = selectedDate || dob;
         setShow(Platform.OS === 'ios');
         setDob(currentDate);
     };
@@ -274,9 +281,9 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
             <View style={styles.container}>
                 <Loader loading={loading} />
                 <ScrollView keyboardShouldPersistTaps="handled">
-                    <View style={{ marginTop: 15 }}>
+                    <View style={{ marginTop: Normalize(15) }}>
                         <KeyboardAvoidingView enabled>
-                            <FontLight value={t('mobileno')} mystyle={{ left: 15, marginBottom: -5 }} />
+                            <FontLight value={t('mobileno')} mystyle={{ left: Normalize(15), marginBottom: -Normalize(5) }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={mobileStyle}
@@ -294,7 +301,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                     blurOnSubmit={false}
                                 />
                             </View>
-                            <FontLight value={t('name')} mystyle={{ left: 15, marginBottom: -5 }} />
+                            <FontLight value={t('name')} mystyle={{ left: Normalize(15), marginBottom: -Normalize(5) }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={fullNameStyle}
@@ -312,7 +319,7 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                     blurOnSubmit={false}
                                 />
                             </View>
-                            <FontLight value={t('email')} mystyle={{ left: 15, marginBottom: -5 }} />
+                            <FontLight value={t('email')} mystyle={{ left: Normalize(15), marginBottom: -Normalize(5) }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={emailStyle}
@@ -349,12 +356,16 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                 />
                             </View> */}
                             <View>
-                                <FontLight value={t('dob')} mystyle={{ left: 15, marginBottom: -5 }} />
+                                <FontLight value={t('dob')} mystyle={{ left: Normalize(15) }} />
                                 <View style={styles.SectionStyle}>
                                     <TouchableOpacity onPress={showDatepicker} style={styles.inputStyle}>
-                                        <View style={{ flexDirection: "row", }}>
-                                            <FontBold mystyle={{ fontSize: 20 }} value={Moment(dob).format('YYYY-MM-DD')} />
-                                            <Fontisto name="date" size={24} color="#aaa" style={{ position: "absolute", right: 0, top: 5 }} />
+                                        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                <FontBold mystyle={{ fontSize: fontNormalize(20) }} value={Moment(dob).format('YYYY-MM-DD')} />
+                                            </View>
+                                            <View style={{ flexDirection: "column", justifyContent: "center", position: "absolute", right: 0, top: Normalize(5) }}>
+                                                <Fontisto name="date" size={24} color="#aaa" />
+                                            </View>
                                         </View>
                                     </TouchableOpacity>
                                 </View>
@@ -368,20 +379,21 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                         is24Hour={true}
                                         display="spinner"
                                         onChange={onChange}
-                                        androidMode={"default"}
+                                        androidMode={"spinner"}
                                         datePickerBg={{ backgroundColor: 'white' }}
-
                                     />
                                 )}
                             </View>
-                            <FontLight value={t('gender')} mystyle={{ left: 15, marginBottom: -15 }} />
+                            <FontLight value={t('gender')} mystyle={{ left: Normalize(15), marginBottom: -Normalize(15) }} />
                             <View style={styles.SectionStyle}>
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                     <TouchableOpacity onPress={() => { setGender('Male') }}>
-                                        <View style={{ flexDirection: 'column' }}>
-                                            <View style={{ flexDirection: 'row' }}>
-                                                <RadioButton value='Male' status={gender == 'Male' ? 'checked' : 'unchecked'} />
-                                                <FontBold value={t('male')} mystyle={{ fontSize: 18 }}></FontBold>
+                                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                                <RadioButton onPress={() => { setGender('Male') }} value='Male' status={gender == 'Male' ? 'checked' : 'unchecked'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                                <FontBold value={t('male')} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
                                             </View>
                                         </View>
                                     </TouchableOpacity>
@@ -389,10 +401,12 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
                                         {'        '}
                                     </Text>
                                     <TouchableOpacity onPress={() => { setGender('Female') }}>
-                                        <View style={{ flexDirection: 'column' }}>
-                                            <View style={{ flexDirection: 'row' }}>
-                                                <RadioButton value='Female' status={gender == 'Female' ? 'checked' : 'unchecked'} />
-                                                <FontBold value={t('female')} mystyle={{ fontSize: 18 }}></FontBold>
+                                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                                <RadioButton onPress={() => { setGender('Female') }} value='Female' status={gender == 'Female' ? 'checked' : 'unchecked'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                                <FontBold value={t('female')} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
                                             </View>
                                         </View>
                                     </TouchableOpacity>
@@ -405,14 +419,16 @@ const EditPersonalDetailsScreen = ({ navigation, t }) => {
 
                         </KeyboardAvoidingView>
                     </View>
+
                 </ScrollView>
+                <TouchableOpacity
+                    style={styles.buttonStyle}
+                    activeOpacity={0.5}
+                    onPress={handleSubmitButton}>
+                    <FontBold mystyle={styles.buttonTextStyle} value={t('save')} />
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={handleSubmitButton}>
-                <FontBold mystyle={styles.buttonTextStyle} value={t('save')} />
-            </TouchableOpacity>
+
         </>
     );
 };
@@ -425,46 +441,49 @@ const styles = StyleSheet.create({
     },
     SectionStyle: {
         flexDirection: 'row',
-        height: 40,
-        marginTop: 15,
-        marginLeft: 15,
-        marginRight: 15,
-        margin: 10,
+        height: Normalize(45),
+        marginTop: Normalize(15),
+        marginBottom: Normalize(15),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
     },
     buttonStyle: {
         backgroundColor: '#f5c500',
+        flexDirection: "row",
+        justifyContent: "center",
         borderRadius: 4,
         alignItems: 'center',
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 30,
-        height: 45,
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        marginBottom: Normalize(30),
+        height: Normalize(45),
     },
     buttonTextStyle: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: fontNormalize(22),
+        textAlignVertical: "center"
     },
     inputStyle: {
         flex: 1,
         color: 'black',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: Normalize(15),
+        paddingRight: Normalize(15),
         borderWidth: 1,
         borderRadius: 7,
         borderColor: '#aaa',
-        fontSize: 20,
-        height: 40
+        fontSize: fontNormalize(20),
+        height: Normalize(45)
     },
     inputStyleError: {
         flex: 1,
         color: '#aaa',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: Normalize(15),
+        paddingRight: Normalize(15),
         borderWidth: 1,
         borderRadius: 7,
         borderColor: '#aaa',
-        fontSize: 20,
-        height: 40,
+        fontSize: fontNormalize(20),
+        height: Normalize(45),
 
     }
 });

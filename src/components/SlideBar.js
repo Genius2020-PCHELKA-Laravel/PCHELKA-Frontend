@@ -9,6 +9,8 @@ import { Avatar } from 'react-native-elements';
 import FontBold from '../components/FontBold';
 import FontRegular from '../components/FontRegular';
 import FontLight from '../components/FontLight';
+import { fontNormalize, Normalize } from '../components/actuatedNormalize';
+
 export default SlideBar = props => {
     const { state } = useContext(UserContext);
     const [fullName, setFullName] = useState('');
@@ -24,7 +26,7 @@ export default SlideBar = props => {
                 <Spacer />
                 <View style={styles.profileHeader}>
                     <View style={styles.profileHeaderPicCircle}>
-                        <FontBold mystyle={{ fontSize: 25, color: '#6b695a', fontWeight: "bold" }} value={fullName != null ? fullName.charAt(0) : ""} />
+                        <FontBold mystyle={{ fontSize: fontNormalize(25), color: '#6b695a', fontWeight: "bold" }} value={fullName != null ? fullName.charAt(0) : ""} />
                     </View>
                 </View>
                 <FontLight mystyle={styles.profileHeaderText} value={fullName} />
@@ -75,13 +77,13 @@ const styles = StyleSheet.create({
     profileHeader: {
         flexDirection: 'row',
         backgroundColor: '#6b695a',
-        padding: 15,
+        padding: Normalize(15),
         textAlign: 'center',
     },
     profileHeaderPicCircle: {
-        width: 60,
-        height: 60,
-        borderRadius: 60 / 2,
+        width: Normalize(60),
+        height: Normalize(60),
+        borderRadius: Normalize(60) / 2,
         color: 'white',
         backgroundColor: '#ffffff',
         textAlign: 'center',
@@ -92,17 +94,17 @@ const styles = StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         color: '#ffffff',
-        marginLeft: 20,
+        marginLeft: Normalize(20),
         fontWeight: 'bold',
-        fontSize: 24
+        fontSize: fontNormalize(24)
     },
     profileHeaderLine: {
-        height: 3,
-        marginHorizontal: 20,
+        height: Normalize(3),
+        marginHorizontal: Normalize(20),
         backgroundColor: '#6b695a',
-        marginTop: 15,
-        marginBottom: 30,
-        marginLeft: 15,
+        marginTop: Normalize(15),
+        marginBottom: Normalize(30),
+        marginLeft: Normalize(15),
     },
 
 });

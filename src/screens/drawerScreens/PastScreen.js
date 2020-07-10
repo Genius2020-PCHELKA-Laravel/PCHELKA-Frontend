@@ -5,7 +5,7 @@ import FontBold from '../../components/FontBold';
 import FontRegular from '../../components/FontRegular';
 import FontLight from '../../components/FontLight';
 import Spacer from '../../components/Spacer';
-import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
+import { Card, ListItem, CheckBox, Icon, Badge, withBadge, normalize } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 // import Loader from '../../components/Loader';
 import { withNamespaces } from 'react-i18next';
@@ -14,6 +14,7 @@ import { set } from 'react-native-reanimated';
 import { BackHandler, RefreshControl } from 'react-native';
 import OfflineNotice from '../../components/OfflineNotice';
 import PastModalDetails from './PastModalDetails';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 const PastScreen = ({ navigation, t }) => {
     const { state: hcstate, getPast, dispatch: hcdispatch, getSelectedPast, } = useContext(HCContext);
@@ -125,7 +126,7 @@ const PastScreen = ({ navigation, t }) => {
         return (
             <View style={styles.footer}>
                 {pfetching_from_server ? (
-                    <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
+                    <Image style={{ width: Normalize(65), height: Normalize(65) }} source={require('../../../assets/spin.gif')} />
                     // <ActivityIndicator color="#f5c500" style={{ margin: 15 }} />
                 ) : null}
             </View>
@@ -134,7 +135,7 @@ const PastScreen = ({ navigation, t }) => {
     const pemptyAppoitments = () => {
         return (
             <View style={{ flex: 1 }}>
-                <FontBold value={t('nopastappoitments')} mystyle={{ marginTop: 15, marginLeft: 15, marginRight: 15, fontSize: 18 }} />
+                <FontBold value={t('nopastappoitments')} mystyle={{ marginTop: Normalize(15), marginLeft: Normalize(15), marginRight: Normalize(15), fontSize: fontNormalize(18) }} />
             </View>);
     }
     return (
@@ -147,7 +148,7 @@ const PastScreen = ({ navigation, t }) => {
             <View style={styles.container}>
                 {ploading ? (
                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                        <Image style={{ width: 65, height: 65 }} source={require('../../../assets/spin.gif')} />
+                        <Image style={{ width: Normalize(65), height: Normalize(65) }} source={require('../../../assets/spin.gif')} />
                     </View>
                 ) : (
                         <FlatList
@@ -183,48 +184,52 @@ const PastScreen = ({ navigation, t }) => {
                                     }}>
                                     <Spacer >
                                         <View style={{ flexDirection: 'row' }}>
-                                            <View style={{ flexDirection: 'column' }}>
-                                                <FontBold value={t(item.serviceType)} />
-                                                <FontLight value={item.duoDate + ' ' + item.duoTime} />
-                                                <View style={{ marginTop: 15, width: 200 }}>
-                                                    {
-                                                        item.providerData != null ?
-                                                            <View style={{ borderWidth: 1, borderRadius: 14 }}>
-                                                                <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
-                                                                <FontBold mystyle={{ position: 'absolute', marginLeft: 25 }} value={item.providerData.name} />
-                                                            </View>
-                                                            : <View style={{ borderWidth: 1, borderRadius: 14 }}>
-                                                                <Image style={styles.image} source={require('../../../assets/Splash/SplashScreen1.png')} />
-                                                                <FontBold mystyle={{ position: 'absolute', marginLeft: 25 }} value={'Auto-Assign'} />
-                                                            </View>
-                                                    }
-                                                </View>
+                                            <FontBold mystyle={{ fontSize: fontNormalize(14), }} value={t(item.serviceType)} />
+                                            <FontLight mystyle={{ fontSize: fontNormalize(14), position: "absolute", right: Normalize(10) }} value={t('refcode') + ': ' + item.refCode} />
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <FontLight value={item.duoDate + ' ' + item.duoTime} />
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+
+                                            <View style={{ marginTop: Normalize(15), width: Normalize(200) }}>
+                                                {
+                                                    item.providerData != null ?
+                                                        <View style={{ borderWidth: 1, borderRadius: 20 }}>
+                                                            <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
+                                                            <FontBold mystyle={{ fontSize: fontNormalize(12), position: 'absolute', marginLeft: Normalize(35) }} value={item.providerData.name} />
+                                                        </View>
+                                                        : <View style={{ borderWidth: 1, borderRadius: 20 }}>
+                                                            <Image style={styles.image} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                                            <FontBold mystyle={{ fontSize: fontNormalize(12), position: 'absolute', marginLeft: Normalize(25) }} value={'Auto-Assign'} />
+                                                        </View>
+                                                }
                                             </View>
-                                            <View style={{ flexDirection: 'column', position: 'absolute', right: 0 }}>
-                                                <FontLight mystyle={{ top: 10, right: 10 }} value={t('refcode') + ': ' + item.refCode} />
+                                            <View style={{ flexDirection: 'column', marginRight: Normalize(15), marginTop: Normalize(15), marginLeft: Normalize(15), }}>
                                                 {
                                                     item.status == 'Completed' ?
-                                                        <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#228B22", backgroundColor: "#228B22" }}>
-                                                            <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
+                                                        <View style={{ borderWidth: 1, borderRadius: 14, borderColor: "#228B22", backgroundColor: "#228B22" }}>
+                                                            <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('Completed')} />
                                                         </View>
                                                         : item.status == 'Confirmed' ?
-                                                            <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
-                                                                <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
+                                                            <View style={{ borderWidth: 1, borderRadius: 14, borderColor: "#f5c500", backgroundColor: "#f5c500" }}>
+                                                                <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('confirmed')} />
                                                             </View>
                                                             : item.status == 'Rescheduled' ?
-                                                                <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#ff9800", backgroundColor: "#ff9800" }}>
-                                                                    <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
+                                                                <View style={{ borderWidth: 1, borderRadius: 14, borderColor: "#ff9800", backgroundColor: "#ff9800" }}>
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('rescheduled')} />
                                                                 </View> :
                                                                 item.status == 'Canceled' ?
-                                                                    <View style={{ borderWidth: 1, borderRadius: 14, marginTop: 38, borderColor: "#b52424", backgroundColor: "#b52424" }}>
-                                                                        <FontBold mystyle={{ fontSize: 12, paddingVertical: 2, paddingHorizontal: 30, textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
+                                                                    <View style={{ borderWidth: 1, borderRadius: 14, borderColor: "#b52424", backgroundColor: "#b52424" }}>
+                                                                        <FontBold mystyle={{ fontSize: fontNormalize(12), paddingVertical: 2, paddingHorizontal: Normalize(30), textAlign: "center", textAlignVertical: 'center', color: "#fff" }} value={t('canceled')} />
                                                                     </View>
                                                                     : null
                                                 }
                                             </View>
 
+
                                         </View>
-                                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 10 }} />
+                                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(10) }} />
                                     </Spacer>
                                 </TouchableOpacity>
                             )}
@@ -329,15 +334,15 @@ const styles = StyleSheet.create({
     },
     Text: {
         color: "#161924",
-        fontSize: 20,
+        fontSize: fontNormalize(20),
         fontWeight: "500"
     },
     image: {
-        width: 25,
-        height: 25,
+        width: Normalize(25),
+        height: Normalize(25),
         borderRadius: 35,
         marginLeft: 0,
-        marginRight: 10,
+        marginRight: Normalize(10),
         borderWidth: 3,
         borderColor: "#fff",
         opacity: 1,
@@ -348,7 +353,7 @@ const styles = StyleSheet.create({
         marginTop: 0
     },
     footer: {
-        padding: 10,
+        padding: Normalize(10),
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',

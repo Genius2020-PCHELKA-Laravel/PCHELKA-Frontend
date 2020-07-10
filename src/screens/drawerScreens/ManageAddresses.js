@@ -16,6 +16,7 @@ import { navigate } from '../../navigationRef';
 import { getRedirect, setRedirect, removeRedirect } from '../../api/redirect';
 import i18n from '../../locales/i18n';
 import OfflineNotice from '../../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 const ManageAddresses = ({ children, t }) => {
     const { state, getUserAddresses, dispatch } = useContext(UserContext);
@@ -63,7 +64,7 @@ const ManageAddresses = ({ children, t }) => {
                 <Spacer>
                     <View style={styles.containerrow}>
                         <View style={styles.containeritem1}>
-                            <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('addressq1')}></FontBold>
+                            <FontBold mystyle={{ color: 'gray', fontSize: fontNormalize(18) }} value={t('addressq1')}></FontBold>
                         </View>
                         <TouchableOpacity style={styles.containeritem2} activeOpacity={0.5} onPress={() => {
                             setRedirect('ManageAddresses');
@@ -85,7 +86,7 @@ const ManageAddresses = ({ children, t }) => {
                                             dispatch({ type: 'set_selected_address', payload: u.id, });
                                             dispatch({ type: 'set_selected_address_name', payload: u.address, });
                                         }}>
-                                        <View flexDirection='row' style={{ marginBottom: 5 }}>
+                                        <View flexDirection='row' style={{ marginBottom: Normalize(5) }}>
                                             <View flexDirection='column'>
                                                 <RadioButton
                                                     onPress={() => {
@@ -96,25 +97,25 @@ const ManageAddresses = ({ children, t }) => {
                                                     }}
                                                     value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
                                             </View>
-                                            <View flexDirection='column' style={{ paddingRight: 50, flexWrap: "wrap" }}>
+                                            <View flexDirection='column' style={{ paddingRight: Normalize(50), flexWrap: "wrap" }}>
                                                 {/* <Text>{u.id}</Text> */}
                                                 <View style={{ flexDirection: "row" }}>
-                                                    <FontBold value={u.address} mystyle={{ fontSize: 18 }}></FontBold>
+                                                    <FontBold value={u.address} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
                                                 </View>
                                                 <View style={{ flexDirection: "row" }}>
-                                                    <FontLight value={u.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                    <FontLight value={u.details} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
                                                 </View>
                                                 <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('street') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
-                                                    <FontLight value={u.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                    <FontBold value={i18n.t('street') + ': '} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }} />
+                                                    <FontLight value={u.street} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
                                                 </View>
                                                 <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
-                                                    <FontLight value={u.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                    <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }} />
+                                                    <FontLight value={u.buildingNumber} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
                                                 </View>
                                                 <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
-                                                    <FontLight value={u.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
+                                                    <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }} />
+                                                    <FontLight value={u.apartment} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
                                                 </View>
 
                                             </View>
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start' // if you want to fill rows left to right
     },
     containeritem1: {
-        left: 10,
+        left: Normalize(10),
         width: '60%' // is 50% of container width
     },
     containeritem2: {
@@ -187,10 +188,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     text: {
-        fontSize: 30
+        fontSize: fontNormalize(30)
     },
     btnAddressStyle: {
-        marginTop: 5,
+        marginTop: Normalize(5),
         backgroundColor: '#fff',
         color: "#000",
         borderColor: "#7a7a7a",
@@ -198,15 +199,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
-        paddingHorizontal: 5,
-        paddingVertical: 3,
+        fontSize: fontNormalize(12),
+        paddingHorizontal: Normalize(5),
+        paddingVertical: Normalize(3),
         textAlignVertical: "center",
         zIndex: 17,
-        paddingHorizontal: 10
+        paddingHorizontal: Normalize(10)
     },
     editButton: {
-        marginTop: 5,
+        marginTop: Normalize(5),
         backgroundColor: '#fff',
         color: "#000",
         borderColor: "#7a7a7a",
@@ -214,12 +215,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
-        paddingHorizontal: 5,
-        paddingVertical: 3,
+        fontSize: fontNormalize(12),
+        paddingHorizontal: Normalize(5),
+        paddingVertical: Normalize(3),
         textAlignVertical: "center",
         zIndex: 17,
-        paddingHorizontal: 10
+        paddingHorizontal: Normalize(10)
     },
 });
 

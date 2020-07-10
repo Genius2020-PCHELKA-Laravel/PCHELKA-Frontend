@@ -22,6 +22,7 @@ import { getLang } from '../api/userLanguage';
 import Loader from '../components/Loader';
 import { Avatar } from 'react-native-elements';
 import { RadioButton } from 'react-native-paper';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 
 const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalVisibleLanguage, lang, setLang, changeLanguage }) => {
@@ -37,7 +38,7 @@ const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalV
 
 
     return (
-        <View style={{ marginTop: 22 }}>
+        <View style={{ marginTop: Normalize(22) }}>
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="zoomIn"
@@ -65,14 +66,14 @@ const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalV
                             <View style={{
                                 flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
                             }}>
-                                <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
-                                    <FontBold value={t('applanguage')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                <View style={{ flexDirection: 'column', height: Normalize(75), justifyContent: "center" }}>
+                                    <FontBold value={t('applanguage')} mystyle={{ fontSize: fontNormalize(20), color: "#fff" }}></FontBold>
                                 </View>
                             </View>
                             <Spacer />
                             <TouchableOpacity onPress={() => { changeLanguage('en'); setShowModalVisibleLanguage(false); }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ flex: 0.3 }}>
+                                    <View style={{ flex: 0.4 }}>
                                         <Avatar
                                             size="small"
                                             rounded
@@ -83,9 +84,9 @@ const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalV
                                         />
                                     </View>
                                     <View style={{ flex: 1 }}>
-                                        <FontBold value={t('english')} mystyle={{ fontSize: 20, }}></FontBold>
+                                        <FontBold value={t('english')} mystyle={{ fontSize: fontNormalize(20), }}></FontBold>
                                     </View>
-                                    <View style={{ flex: 0.2 }}>
+                                    <View style={{ flex: 0.4 }}>
                                         <RadioButton onPress={() => { changeLanguage('en'); setShowModalVisibleLanguage(false); }} value='en' status={lang == 'en' || typeof lang == 'undefined' ? 'checked' : 'unchecked'} />
                                     </View>
                                 </View>
@@ -93,7 +94,7 @@ const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalV
                             <Spacer />
                             <TouchableOpacity onPress={() => { changeLanguage('ru'); setShowModalVisibleLanguage(false); }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ flex: 0.3 }}>
+                                    <View style={{ flex: 0.4 }}>
                                         <Avatar
                                             size="small"
                                             rounded
@@ -104,9 +105,9 @@ const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalV
                                         />
                                     </View>
                                     <View style={{ flex: 1 }}>
-                                        <FontBold value={t('russian')} mystyle={{ fontSize: 20 }}></FontBold>
+                                        <FontBold value={t('russian')} mystyle={{ fontSize: fontNormalize(20) }}></FontBold>
                                     </View>
-                                    <View style={{ flex: 0.2 }}>
+                                    <View style={{ flex: 0.4 }}>
                                         <RadioButton onPress={() => { changeLanguage('ru'); setShowModalVisibleLanguage(false); }} value='ru' status={lang == 'ru' ? 'checked' : 'unchecked'} />
                                     </View>
                                 </View>
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 210,
+        height: Normalize(210),
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -134,11 +135,11 @@ const styles = StyleSheet.create({
         shadowColor: '#7a7a7a',
         shadowOpacity: 1.0,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         shadowRadius: 10,
-        elevation: 10
+        elevation: Normalize(10)
     },
     wrapper: {
         flex: 1,
@@ -151,9 +152,9 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         borderWidth: 0,
         backgroundColor: '#fff',
-        left: 20,
-        width: 40,
-        height: 40,
+        left: Normalize(20),
+        width: Normalize(40),
+        height: Normalize(40),
     },
 
 });

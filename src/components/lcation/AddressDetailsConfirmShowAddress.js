@@ -37,7 +37,7 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
         };
     }
     handleStreetChange(text) {
-        this.setState({ street: text.trim() });
+        this.setState({ street: text.trimStart() });
         if (text.trim() != '') {
             this.setState({ streetStyle: styles.inputStyle });
             if (this.state.buildingnumber.trim() == '' || this.state.apartment.trim() == '') {
@@ -56,7 +56,7 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
         }
     }
     handleBuildingnumberChange(text) {
-        this.setState({ buildingnumber: text.trim() });
+        this.setState({ buildingnumber: text.trimStart() });
         if (text.trim() != '') {
             this.setState({ buildingnumberStyle: styles.inputStyle });
             if (this.state.street.trim() == '' || this.state.apartment.trim() == '') {
@@ -75,7 +75,7 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
         }
     }
     handleapartmentChange(text) {
-        this.setState({ apartment: text.trim() });
+        this.setState({ apartment: text.trimStart() });
         if (text.trim() != '') {
             this.setState({ apartmentStyle: styles.inputStyle });
             if (this.state.street.trim() == '' || this.state.buildingnumber.trim() == '') {

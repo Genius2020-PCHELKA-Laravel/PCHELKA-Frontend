@@ -11,6 +11,7 @@ import { Context as HCContext } from '../screens/context/HCContext';
 import { getLang, storeLang } from '../api/userLanguage';
 import { Avatar } from 'react-native-elements';
 // import ConfirmationDialog from './ConfirmationDialog';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const LoginButton = ({ t }) => {
@@ -94,7 +95,7 @@ const LoginButton = ({ t }) => {
             <Avatar
                 size="small"
                 rounded
-                icon={{ size: 25, name: 'login', type: 'antdesign', color: '#000' }}
+                icon={{ size: Normalize(25), name: 'login', type: 'antdesign', color: '#000' }}
                 onPress={async () => { await hcdispatch({ type: 'RESET' }); await udispatch({ type: 'RESET' }); login(); }}
                 activeOpacity={0.7}
                 containerStyle={styles.avatar}
@@ -109,8 +110,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     loginButtonStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingVertical: Normalize(10),
+        paddingHorizontal: Normalize(10),
         backgroundColor: '#fff',
         borderRadius: 7,
         borderWidth: 1,
@@ -118,48 +119,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         fontWeight: "bold",
-        right: 15,
+        right: Normalize(15),
         color: '#7a7a7a'
-    },
-    languageButtonStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#fff',
-        borderRadius: 7,
-        borderWidth: 1,
-        borderColor: '#7a7a7a',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 12,
-        fontWeight: "900",
-        right: 30,
-        color: '#7a7a7a',
-        fontWeight: "bold",
-
     },
     avatar: {
         borderColor: '#aaa',
         borderWidth: 0,
         backgroundColor: '#fff',
         flex: 1,
-        right: 20,
-        top: 7,
-        width: 35,
-        height: 35,
+        right: Normalize(20),
+        top: Normalize(7),
+        width: Normalize(35),
+        height: Normalize(35),
     },
-    flag: {
-        borderColor: '#000',
-        borderWidth: 0,
-        backgroundColor: '#fff',
-        flex: 1,
-        left: 20,
-        top: 7,
-        width: 25,
-        height: 25,
-    },
+
 });
 
 export default withNamespaces()(LoginButton);

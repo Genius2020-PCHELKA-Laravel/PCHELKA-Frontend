@@ -304,5 +304,7 @@
   "cancelreason": "причина",
   "experience": "Как прошел ваш опыт с",
   "evaluate": "оценивать",
-  "notcompleted": "Not Served before"
+  "notcompleted": "Not Served before",
+  "WhatsAppisnotinstalled": "WhatsApp не установлен",
+  "Viberisnotinstalled": "Viber не установлен"
 }

@@ -17,6 +17,7 @@ import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken, getTo
 import { navigate } from '../navigationRef';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import LogoutDialog from '../components/LogoutDialog';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 const LogoutButton = ({ t }) => {
     const { state: astate, logout } = useContext(AuthContext);
@@ -109,7 +110,7 @@ const LogoutButton = ({ t }) => {
                     <Avatar
                         size="small"
                         rounded
-                        icon={{ size: 25, name: 'logout', type: 'antdesign', color: '#b52424' }}
+                        icon={{ size: Normalize(25), name: 'logout', type: 'antdesign', color: '#b52424' }}
                         activeOpacity={0.7}
                         containerStyle={styles.avatar}
                     />
@@ -130,8 +131,8 @@ const styles = StyleSheet.create({
 
     },
     logoutButtonStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingVertical: Normalize(10),
+        paddingHorizontal: Normalize(10),
         backgroundColor: '#fff',
         borderRadius: 7,
         borderWidth: 1,
@@ -139,14 +140,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         fontWeight: "500",
-        right: 15,
+        right: Normalize(15),
         color: '#7a7a7a'
     },
     languageButtonStyle: {
-        paddingVertical: 8,
-        paddingHorizontal: 10,
+        paddingVertical: Normalize(8),
+        paddingHorizontal: Normalize(10),
         backgroundColor: '#fff',
         borderRadius: 7,
         borderWidth: 1,
@@ -154,9 +155,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         fontWeight: "900",
-        right: 30,
+        right: Normalize(30),
         color: '#7a7a7a'
     },
     flag: {
@@ -164,16 +165,16 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         backgroundColor: '#fff',
         left: 0,
-        width: 35,
-        height: 35,
+        width: Normalize(35),
+        height: Normalize(35),
     },
     avatar: {
         borderColor: '#aaa',
         borderWidth: 0,
         backgroundColor: '#fff',
-        left: 20,
-        width: 35,
-        height: 35,
+        left: Normalize(20),
+        width: Normalize(35),
+        height: Normalize(35),
     },
 });
 

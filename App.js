@@ -28,7 +28,7 @@ import UpcomingScreen from './src/screens/drawerScreens/UpcomingScreen';
 import PastScreen from './src/screens/drawerScreens/PastScreen';
 // import UpcomingDetailsScreen from './src/screens/drawerScreens/UpcomingDetailsScreen';
 import HCRescheduleScreen from './src/screens/drawerScreens/HCRescheduleScreen';
-import HCRescheduleReducedScreen from './src/screens/drawerScreens/HCRescheduleReducedScreen';
+// import HCRescheduleReducedScreen from './src/screens/drawerScreens/HCRescheduleReducedScreen';
 // import ReschedulePolicyScreen from './src/screens/drawerScreens/ReschedulePolicyScreen';
 import RescheduledScreen from './src/screens/drawerScreens/RescheduledScreen';
 import FreeScreen from './src/screens/drawerScreens/FreeScreen';
@@ -49,7 +49,7 @@ import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons, Fontisto, Ion
 import EditPersonalDetailsScreen from './src/screens/drawerScreens/EditPersonalDetailsScreen';
 import ChangeMobileVerifyScreen from './src/screens/drawerScreens/ChangeMobileVerifyScreen';
 import ManageAddresses from './src/screens/drawerScreens/ManageAddresses';
-import ManageCreditCards from './src/screens/drawerScreens/ManageCreditCards';
+// import ManageCreditCards from './src/screens/drawerScreens/ManageCreditCards';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 import { navigate } from './src/navigationRef';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -58,6 +58,7 @@ import i18n from './src/locales/i18n';
 import MapScreen from './src/screens/MapScreen';
 import MapScreenShowAddress from './src/screens/MapScreenShowAddress';
 import MapInput from './src/components/lcation/MapInput'
+import { Normalize, fontNormalize } from './src/components/actuatedNormalize';
 
 const theme = {
   ...DefaultTheme,
@@ -105,13 +106,13 @@ const VerifyStack = createStackNavigator(
     LoginPhoneScreen: {
       screen: LoginPhoneScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('login')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('login')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: Normalize(15), color: '#f5c500' }}
             onPress={() => navigate('HomeScreenLogIn')}
             name="md-arrow-back"
-            size={35}
+            size={Normalize(35)}
           />
         ),
       })
@@ -119,13 +120,13 @@ const VerifyStack = createStackNavigator(
     VerifyScreen: {
       screen: VerifyScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('verify')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('verify')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: Normalize(15), color: '#f5c500' }}
             onPress={() => navigate('LoginPhoneScreen')}
             name="md-arrow-back"
-            size={35}
+            size={Normalize(35)}
           />
         ),
       })
@@ -133,13 +134,13 @@ const VerifyStack = createStackNavigator(
     RegisterUserScreen: {
       screen: RegisterUserScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('register')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('register')} />,
         headerLeft: ({ navigation }) => (
           <Icon
-            style={{ left: 15, color: '#f5c500' }}
+            style={{ left: Normalize(15), color: '#f5c500' }}
             onPress={() => navigate('VerifyScreen')}
             name="md-arrow-back"
-            size={35}
+            size={Normalize(35)}
           />
         ),
       })
@@ -204,9 +205,9 @@ const HomeStackNavigator = createStackNavigator(
           title: '',
           headerLeft: () =>
             <Ionicons
-              style={{ left: 15, color: '#f5c500', }}
+              style={{ left: Normalize(15), color: '#f5c500', }}
               onPress={() => navigation.openDrawer()}
-              name="ios-menu" size={35} />
+              name="ios-menu" size={Normalize(35)} />
           ,
           headerRight: () => (
             <SettingsButton />
@@ -222,13 +223,13 @@ const HomeStackNavigator = createStackNavigator(
     HomeCleaningScreen: {
       screen: HomeCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('homecleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('homecleaning')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -236,13 +237,13 @@ const HomeStackNavigator = createStackNavigator(
     BabySitterScreen: {
       screen: BabySitterScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('babysitter')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('babysitter')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -250,13 +251,13 @@ const HomeStackNavigator = createStackNavigator(
     DisinfectionScreen: {
       screen: DisinfectionScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('disinfection')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('disinfection')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -264,13 +265,13 @@ const HomeStackNavigator = createStackNavigator(
     DeepCleaningScreen: {
       screen: DeepCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('deepcleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('deepcleaning')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -278,13 +279,13 @@ const HomeStackNavigator = createStackNavigator(
     SofaCleaningScreen: {
       screen: SofaCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('sofacleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('sofacleaning')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -292,13 +293,13 @@ const HomeStackNavigator = createStackNavigator(
     MattressCleaningScreen: {
       screen: MattressCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mattresscleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('mattresscleaning')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -306,13 +307,13 @@ const HomeStackNavigator = createStackNavigator(
     CarpetCleaningScreen: {
       screen: CarpetCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('carpetcleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('carpetcleaning')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -320,13 +321,13 @@ const HomeStackNavigator = createStackNavigator(
     CurtainCleaningScreen: {
       screen: CurtainCleaningScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('curtaincleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('curtaincleaning')} />,
         headerLeft: ({ navigation }) => (
           <FontAwesome5
-            style={{ left: 15, top: 3, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
             onPress={() => navigate('HomeNavigator')}
             name="home"
-            size={25}
+            size={Normalize(25)}
           />
         ),
       })
@@ -334,14 +335,14 @@ const HomeStackNavigator = createStackNavigator(
     MapScreen: {
       screen: MapScreen,
       navigationOptions: () => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mapScreen')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('mapScreen')} />,
         headerShown: false,
       })
     },
     MapScreenShowAddress: {
       screen: MapScreenShowAddress,
       navigationOptions: ({ navigation }) => ({
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('mapScreen')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('mapScreen')} />,
         headerShown: false,
       })
     },
@@ -353,13 +354,13 @@ const HomeStackNavigator = createStackNavigator(
       // },
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('booked')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('booked')} />,
           headerLeft: () =>
             <FontAwesome5
-              style={{ left: 15, top: 3, color: '#f5c500' }}
+              style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
               onPress={() => navigate('HomeNavigator')}
               name="home"
-              size={25}
+              size={Normalize(25)}
             />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -384,19 +385,19 @@ const SettingStackNavigator = createStackNavigator(
       screen: SettingScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('settings')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('settings')} />,
           headerLeft: () =>
             <Ionicons
-              style={{ left: 15, top: 5, color: '#f5c500' }}
+              style={{ left: Normalize(15), top: Normalize(5), color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
               name="ios-menu"
-              size={35}
+              size={Normalize(35)}
             />,
           // <FontAwesome5
-          //   style={{ left: 15, top: 3, color: '#f5c500' }}
+          //   style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
           //   onPress={() => navigate('HomeNavigator')}
           //   name="home"
-          //   size={25}
+          //   size={Normalize(25)}
           // />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -410,13 +411,13 @@ const SettingStackNavigator = createStackNavigator(
       screen: EditPersonalDetailsScreen,
       navigationOptions: ({ navigation }) => ({
         // title: i18n.t('editpersonaldetails'),
-        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('editpersonaldetails')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: fontNormalize(20) }} value={i18n.t('editpersonaldetails')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
         },
         headerLeftContainerStyle: {
-          top: 5
+          top: Normalize(5)
         },
         headerTintColor: '#fff',
       }),
@@ -425,7 +426,7 @@ const SettingStackNavigator = createStackNavigator(
       screen: ChangeMobileVerifyScreen,
       navigationOptions: ({ navigation }) => ({
         // title: i18n.t('editpersonaldetails'),
-        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('verify')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: fontNormalize(20) }} value={i18n.t('verify')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
@@ -437,32 +438,32 @@ const SettingStackNavigator = createStackNavigator(
       screen: ManageAddresses,
       navigationOptions: ({ navigation }) => ({
         // title: 'Manage Addresses',
-        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('manageaddresses')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: fontNormalize(20) }} value={i18n.t('manageaddresses')} />,
         // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
         headerStyle: {
           backgroundColor: '#f5c500',
         },
         headerLeftContainerStyle: {
-          top: 5
+          top: Normalize(5)
         },
         headerTintColor: '#fff',
       }),
     },
-    ManageCreditCards: {
-      screen: ManageCreditCards,
-      navigationOptions: ({ navigation }) => ({
-        // title: i18n.t('managecreditcards'),
-        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('managecreditcards')} />,
-        // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
-        headerStyle: {
-          backgroundColor: '#f5c500',
-        },
-        headerLeftContainerStyle: {
-          top: 5
-        },
-        headerTintColor: '#fff',
-      }),
-    },
+    // ManageCreditCards: {
+    //   screen: ManageCreditCards,
+    //   navigationOptions: ({ navigation }) => ({
+    //     // title: i18n.t('managecreditcards'),
+    //     title: <FontBold mystyle={{ color: '#fff', fontSize: fontNormalize(20) }} value={i18n.t('managecreditcards')} />,
+    //     // headerLeft: () => <NavigationDrawerHeader navigationProps={navigation} />,
+    //     headerStyle: {
+    //       backgroundColor: '#f5c500',
+    //     },
+    //     headerLeftContainerStyle: {
+    //       top: Normalize(5)
+    //     },
+    //     headerTintColor: '#fff',
+    //   }),
+    // },
   },
   {
     defaultNavigationOptions: {
@@ -480,7 +481,7 @@ const TabNavigator = createMaterialTopTabNavigator({
     navigationOptions: () => ({
       tabBarLabel: i18n.t('upcoming'),
       tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons name='update' color={tintColor} size={24} />
+        <MaterialCommunityIcons name='update' color={tintColor} size={Normalize(24)} />
       )
     })
   },
@@ -489,7 +490,7 @@ const TabNavigator = createMaterialTopTabNavigator({
     navigationOptions: () => ({
       tabBarLabel: i18n.t('past'),
       tabBarIcon: ({ tintColor }) => (
-        <FontAwesome5 name='history' color={tintColor} size={18} />
+        <FontAwesome5 name='history' color={tintColor} size={Normalize(18)} />
       )
     })
   }
@@ -507,6 +508,11 @@ const TabNavigator = createMaterialTopTabNavigator({
         height: 2,
         backgroundColor: '#000',
       },
+      labelStyle: {
+        fontSize: fontNormalize(14),
+        margin: 0,
+        padding: 0
+      },
       showIcon: true
     },
   }
@@ -519,19 +525,19 @@ const AppoitmentStackNavigator = createStackNavigator(
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('appoitments')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('appoitments')} />,
           headerLeft: () =>
             <Ionicons
-              style={{ left: 15, top: 5, color: '#f5c500' }}
+              style={{ left: Normalize(15), top: Normalize(5), color: '#f5c500' }}
               onPress={() => navigation.openDrawer()}
               name="ios-menu"
-              size={35}
+              size={Normalize(35)}
             />,
           // <FontAwesome5
-          //   style={{ left: 15, top: 3, color: '#f5c500' }}
+          //   style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
           //   onPress={() => navigate('HomeNavigator')}
           //   name="home"
-          //   size={25}
+          //   size={Normalize(25)}
           // />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -548,7 +554,7 @@ const AppoitmentStackNavigator = createStackNavigator(
     //       backgroundColor: '#f5c500',
     //     },
     //     headerLeftContainerStyle: {
-    //       top: 5
+    //       top: Normalize(5)
     //     },
     //     headerTintColor: '#fff',
     //   }),
@@ -556,12 +562,12 @@ const AppoitmentStackNavigator = createStackNavigator(
     HCReschedule: {
       screen: HCRescheduleScreen,
       navigationOptions: ({ navigation }) => ({
-        title: <FontBold mystyle={{ color: '#fff', fontSize: 20 }} value={i18n.t('dateandtime')} />,
+        title: <FontBold mystyle={{ color: '#fff', fontSize: fontNormalize(20) }} value={i18n.t('dateandtime')} />,
         headerStyle: {
           backgroundColor: '#f5c500',
         },
         headerLeftContainerStyle: {
-          top: 5
+          top: Normalize(5)
         },
         headerTintColor: '#fff',
       }),
@@ -574,7 +580,7 @@ const AppoitmentStackNavigator = createStackNavigator(
     //       backgroundColor: '#f5c500',
     //     },
     //     headerLeftContainerStyle: {
-    //       top: 5
+    //       top: Normalize(5)
     //     },
     //     headerTintColor: '#fff',
     //   }),
@@ -587,7 +593,7 @@ const AppoitmentStackNavigator = createStackNavigator(
     //       backgroundColor: '#f5c500',
     //     },
     //     headerLeftContainerStyle: {
-    //       top: 5
+    //       top: Normalize(5)
     //     },
     //     headerTintColor: '#fff',
     //   }),
@@ -596,13 +602,13 @@ const AppoitmentStackNavigator = createStackNavigator(
       screen: RescheduledScreen,
       navigationOptions: ({ navigation }) => {
         return {
-          title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('rescheduled')} />,
+          title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('rescheduled')} />,
           headerLeft: () =>
             <FontAwesome5
-              style={{ left: 15, top: 3, color: '#f5c500' }}
+              style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
               onPress={() => navigate('Upcoming')}
               name="home"
-              size={25}
+              size={Normalize(25)}
             />,
           headerStyle: {
             // backgroundColor: '#f5c500',
@@ -627,20 +633,20 @@ const FreeStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('freecleaning')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('freecleaning')} />,
 
         headerLeft: () =>
           <Ionicons
-            style={{ left: 15, top: 5, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(5), color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
             name="ios-menu"
-            size={35}
+            size={Normalize(35)}
           />,
         // <FontAwesome5
-        //   style={{ left: 15, top: 3, color: '#f5c500' }}
+        //   style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
         //   onPress={() => navigate('HomeNavigator')}
         //   name="home"
-        //   size={25}
+        //   size={Normalize(25)}
         // />,
 
         headerStyle: {
@@ -658,19 +664,19 @@ const SupportStackNavigator = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: <FontBold mystyle={{ color: '#000', fontSize: 20 }} value={i18n.t('support')} />,
+        title: <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(20) }} value={i18n.t('support')} />,
         headerLeft: () =>
           <Ionicons
-            style={{ left: 15, top: 5, color: '#f5c500' }}
+            style={{ left: Normalize(15), top: Normalize(5), color: '#f5c500' }}
             onPress={() => navigation.openDrawer()}
             name="ios-menu"
-            size={35}
+            size={Normalize(35)}
           />,
         // <FontAwesome5
-        //   style={{ left: 15, top: 3, color: '#f5c500' }}
+        //   style={{ left: Normalize(15), top: Normalize(3), color: '#f5c500' }}
         //   onPress={() => navigate('HomeNavigator')}
         //   name="home"
-        //   size={25}
+        //   size={Normalize(25)}
         // />,
 
         headerStyle: {
@@ -702,22 +708,22 @@ const AppDrawerNavigator = createDrawerNavigator({
   HomeDrawerNavigator: {
     screen: HomeStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('home')} />,
-      drawerIcon: <FontAwesome5 name="home" size={20} color="#fff" />
+      drawerLabel: <FontBold mystyle={{ left: Normalize(5), padding: Normalize(20), color: '#fff', fontSize: fontNormalize(16) }} value={i18n.t('home')} />,
+      drawerIcon: <FontAwesome5 name="home" size={Normalize(20)} color="#fff" />
     }),
   },
   SettingDrawerNavigator: {
     screen: SettingStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16, }} value={i18n.t('draweraccountsettings')} />,
-      drawerIcon: <MaterialCommunityIcons name="account-settings" size={25} color="#fff" />
+      drawerLabel: <FontBold mystyle={{ left: Normalize(5), padding: Normalize(20), color: '#fff', fontSize: fontNormalize(16), }} value={i18n.t('draweraccountsettings')} />,
+      drawerIcon: <MaterialCommunityIcons name="account-settings" size={Normalize(25)} color="#fff" />
     }),
   },
   AppointmentDrawerNavigator: {
     screen: AppoitmentStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16 }} value={i18n.t('appoitments')} />,
-      drawerIcon: <Fontisto name="date" size={20} color="#fff" />
+      drawerLabel: <FontBold mystyle={{ left: Normalize(5), padding: Normalize(20), color: '#fff', fontSize: fontNormalize(16) }} value={i18n.t('appoitments')} />,
+      drawerIcon: <Fontisto name="date" size={Normalize(20)} color="#fff" />
     }),
   },
   // FreeDrawerNavigator: {
@@ -730,8 +736,8 @@ const AppDrawerNavigator = createDrawerNavigator({
   SupportDrawerNavigator: {
     screen: SupportStackNavigator,
     navigationOptions: () => ({
-      drawerLabel: <FontBold mystyle={{ left: 5, padding: 20, color: '#fff', fontSize: 16, }} value={i18n.t('support')} />,
-      drawerIcon: <AntDesign name="message1" size={20} color="#fff" />
+      drawerLabel: <FontBold mystyle={{ left: Normalize(5), padding: Normalize(20), color: '#fff', fontSize: fontNormalize(16), }} value={i18n.t('support')} />,
+      drawerIcon: <AntDesign name="message1" size={Normalize(20)} color="#fff" />
     }),
   },
 },
@@ -749,7 +755,7 @@ const AppDrawerNavigator = createDrawerNavigator({
     drawerWidth: SCREEN_WIDTH * 0.70,
     drawerPosition: 'left',
     drawerType: 'slide',
-    edgeWidth: 25,
+    edgeWidth: Normalize(25),
     overlayColor: '00FFFFF',
 
     contentComponent: props => <Slidebar {...props} />

@@ -22,6 +22,7 @@ import Loader from '../components/Loader';
 import i18n from '../locales/i18n';
 import { BackHandler } from 'react-native';
 import OfflineNotice from '../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../components/actuatedNormalize';
 
 const BabySitterScreen = ({ navigation, t }) => {
   // static navigationOptions = {
@@ -396,7 +397,7 @@ const BabySitterScreen = ({ navigation, t }) => {
           borderColor: '#eee',
           borderBottomWidth: 0,
           shadowColor: '#eee',
-          shadowOffset: { width: 0, height: 10 },
+          shadowOffset: { width: 0, height: Normalize(10) },
           shadowOpacity: 0.5,
           shadowRadius: 2,
           elevation: 1,
@@ -428,7 +429,7 @@ const styles = StyleSheet.create({
   },
   ButtonTextStyle: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: fontNormalize(14),
   },
 });
 export default withNamespaces()(BabySitterScreen);

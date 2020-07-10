@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import { SliderBox } from "react-native-image-slider-box";
 // You can import from local files
-
+import { sliderNormalizeHeight, sliderNormalizeWidth, Normalize } from './actuatedNormalize';
 
 // or any pure javascript modules available in npm
 import { Card } from 'react-native-paper';
@@ -25,13 +25,13 @@ export default class App extends React.Component {
           autoplay={true}
           images={this.state.images}
           circleLoop={true}
-          sliderBoxHeight={200}
+          sliderBoxHeight={sliderNormalizeHeight(200)}
           dotColor="#f5c500"
           inactiveDotColor="#b4b4b4"
-          paginationBoxVerticalPadding={20}
+          paginationBoxVerticalPadding={Normalize(20)}
           resizeMethod={'resize'}
           resizeMode={'contain'}
-          ImageComponentStyle={{ backgroundColor: "#fff", height: 175 }}
+          ImageComponentStyle={{ backgroundColor: "#fff", height: sliderNormalizeHeight(), width: sliderNormalizeWidth() }}
           paginationBoxStyle={{
             position: "absolute",
             bottom: 0,
@@ -39,12 +39,12 @@ export default class App extends React.Component {
             alignItems: "center",
             alignSelf: "center",
             justifyContent: "center",
-            paddingVertical: 10
+            paddingVertical: Normalize(10)
           }}
           dotStyle={{
-            width: 13,
-            height: 13,
-            borderRadius: 13,
+            width: Normalize(13),
+            height: Normalize(13),
+            borderRadius: Normalize(13),
             marginHorizontal: 0,
             padding: 0,
             margin: 0

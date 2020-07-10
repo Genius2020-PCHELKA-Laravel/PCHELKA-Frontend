@@ -244,7 +244,7 @@ const DateandTimeDetails = ({ children, t }) => {
             }}
                 disabled={timecontrolstyles}>
                 <View>
-                    <Text style={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
+                    <Text style={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart.substring(0, 5)}</Text>
                     <View style={timecontrolstyles ? styles.timediagonaline : null}></View>
                 </View>
             </TouchableOpacity>

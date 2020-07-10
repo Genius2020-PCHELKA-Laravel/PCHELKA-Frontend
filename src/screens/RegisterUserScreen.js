@@ -29,6 +29,7 @@ import MapContainer from '../components/lcation/MapContainer';
 import { BackHandler } from 'react-native';
 import { getLang, storeLang } from '../api/userLanguage';
 import OfflineNotice from '../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../components/actuatedNormalize';
 
 const RegisterUserScreen = ({ navigation, t }) => {
     const { redirect } = navigation.state.params;
@@ -204,7 +205,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                     </View> */}
                     <View >
                         <KeyboardAvoidingView enabled>
-                            <FontLight value={t('name')} mystyle={{ left: 15, marginBottom: -10 }} />
+                            <FontLight value={t('name')} mystyle={{ left: Normalize(15), marginBottom: -Normalize(10) }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={fullNameStyle}
@@ -223,7 +224,7 @@ const RegisterUserScreen = ({ navigation, t }) => {
                                 />
                             </View>
                             <Spacer />
-                            <FontLight value={t('email')} mystyle={{ left: 15, marginBottom: -10 }} />
+                            <FontLight value={t('email')} mystyle={{ left: Normalize(15), marginBottom: -Normalize(10) }} />
                             <View style={styles.SectionStyle}>
                                 <TextInput
                                     style={emailStyle}
@@ -302,53 +303,53 @@ const styles = StyleSheet.create({
     },
     SectionStyle: {
         flexDirection: 'row',
-        height: 50,
-        marginTop: 15,
-        marginLeft: 15,
-        marginRight: 15,
+        height: Normalize(50),
+        marginTop: Normalize(15),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
     },
     addressSectionStyle: {
         flexDirection: 'row',
-        height: 50,
-        marginTop: 15,
-        marginLeft: 15,
-        marginRight: 15,
+        height: Normalize(50),
+        marginTop: Normalize(15),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
     },
     buttonStyle: {
         backgroundColor: '#f5c500',
         borderRadius: 4,
         alignItems: 'center',
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 15,
-        height: 45,
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        marginBottom: Normalize(15),
+        height: Normalize(45),
     },
     buttonTextStyle: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: fontNormalize(22),
     },
     inputStyle: {
         flex: 1,
         color: 'black',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: Normalize(15),
+        paddingRight: Normalize(15),
         borderWidth: 1,
         borderRadius: 7,
         borderColor: '#aaa',
-        fontSize: 20,
-        padding: 10,
-        height: 50
+        fontSize: fontNormalize(20),
+        padding: Normalize(10),
+        height: Normalize(50)
     },
     inputStyleError: {
         flex: 1,
         color: '#aaa',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: Normalize(15),
+        paddingRight: Normalize(15),
         borderWidth: 1,
         borderRadius: 7,
         borderColor: '#aaa',
-        fontSize: 20,
-        height: 50,
+        fontSize: fontNormalize(20),
+        height: Normalize(50),
 
     }
 

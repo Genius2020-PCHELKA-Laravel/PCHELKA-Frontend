@@ -30,6 +30,7 @@ import OfflineNotice from '../components/OfflineNotice';
 import { getStorageExpoToken, setStorageExpoToken, removeStorageExpoToken } from '../api/token';
 import { getLang, storeLang } from '../api/userLanguage';
 import Loader from '../components/Loader';
+import { fontNormalize, Normalize } from '../components/actuatedNormalize';
 
 const HomeScreen = ({ navigation, t }) => {
   const { getUserDetails, getUserAddresses, dispatch: udispatch, getNotificationFromServer, subscribeToNotification, unsubscribeToNotification, userLanguage } = useContext(UserContext);
@@ -334,7 +335,7 @@ const HomeScreen = ({ navigation, t }) => {
     return (
       <View style={styles.footer}>
         {pfetching_from_server ? (
-          <Image style={{ width: 65, height: 65, top: 10 }} source={require('../../assets/spin.gif')} />
+          <Image style={{ width: Normalize(65), height: Normalize(65), top: Normalize(10) }} source={require('../../assets/spin.gif')} />
           // <ActivityIndicator color="#f5c500" size="large" />
         ) : null}
       </View>
@@ -420,7 +421,7 @@ const HomeScreen = ({ navigation, t }) => {
 
   }
   return (<>
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Loader loading={isLoading} />
       <ExitDialog changing={changing} setChanging={setChanging} />
       <EvaluationDialog
@@ -433,18 +434,22 @@ const HomeScreen = ({ navigation, t }) => {
         origin={origin}
         notificationId={notificationId}
       />
-      <Slider style={{ height: imageHeight, width: imageWidth }} />
+      <Slider />
       {/* booking again */}
       <View style={styles.container}>
         {ploading ? (
-          <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Image style={{ width: 80, height: 80 }} source={require('../../assets/spin.gif')} />
+          <View>
+            {/* <FontLight value={t('yourfavorites')} />
+            <FontBold value={t('bookagain')} /> */}
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <Image style={{ width: Normalize(80), height: Normalize(80) }} source={require('../../assets/spin.gif')} />
+            </View>
           </View>
           // <ActivityIndicator size="large" color="#f5c500" />
         ) : (
 
             <FlatList
-              style={{ flex: 1, marginLeft: 10, marginRight: 10 }}
+              style={{ flex: 1, marginLeft: Normalize(10), marginRight: Normalize(10) }}
               contentContainerStyle={{ justifyContent: "center", flexDirection: "row" }}
               keyExtractor={(item, index) => index.toString()}
               data={pserverData}
@@ -465,7 +470,7 @@ const HomeScreen = ({ navigation, t }) => {
                     {
                       <View style={styles.providerThumup}>
                         <View style={{ position: "absolute", right: 2, top: 2 }}>
-                          <FontLight value={t(item.refCode)} mystyle={{ fontSize: 12 }} />
+                          <FontLight value={t(item.refCode)} mystyle={{ fontSize: fontNormalize(12) }} />
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                           <View style={{ flexDirection: "column", justifyContent: "center" }}>
@@ -475,97 +480,97 @@ const HomeScreen = ({ navigation, t }) => {
                             <View style={{ flexDirection: "row" }}>
                               <FontBold value={item.providerData.name} />
                             </View>
-                            <View style={{ flexDirection: "row", marginTop: 10 }}>
+                            <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
 
                               <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                 {
                                   item.providerData.evaluation == 0 ?
-                                    <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
+                                    <FontAwesome name="star-o" size={Normalize(18)} color="#ff9800" style={{}} />
                                     :
                                     item.providerData.evaluation == 1 ?
-                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                      <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                       :
                                       item.providerData.evaluation == 2 ?
                                         <>
-                                          <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                          <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                          <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                          <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                         </>
                                         :
                                         item.providerData.evaluation == 3 ?
                                           <>
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                           </>
                                           :
                                           item.providerData.evaluation == 4 ?
                                             <>
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                              <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                              <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                             </>
                                             :
                                             item.providerData.evaluation == 5 ?
                                               <>
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                               </>
                                               :
                                               item.providerData.evaluation > 1 && item.providerData.evaluation < 2 ?
                                                 <>
-                                                  <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                  <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                  <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                  <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                 </>
                                                 :
                                                 item.providerData.evaluation > 2 && item.providerData.evaluation < 3 ?
                                                   <>
-                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                    <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                   </>
                                                   :
                                                   item.providerData.evaluation > 3 && item.providerData.evaluation < 4 ?
                                                     <>
-                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                      <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                      <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                      <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                     </>
                                                     :
                                                     item.providerData.evaluation > 4 && item.providerData.evaluation < 5 ?
                                                       <>
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                       </>
                                                       :
                                                       <>
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                       </>
                                 }
                                 <Text>{' '}</Text>
                                 {
                                   item.providerData.evaluation == 0 ?
-                                    <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
+                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={t('notevaluated')} />
                                     :
-                                    <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={item.providerData.evaluation} />
+                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={item.providerData.evaluation} />
                                 }
                                 <TouchableOpacity
                                   style={{ flexDirection: "row" }}
                                   onPress={() => bookagain(item)}
                                 >
                                   <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
-                                  <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 2, marginLeft: 2, marginRight: 15 }} />
+                                  <FontAwesome name="chevron-right" size={Normalize(12)} color="blue" style={{ marginTop: 2, marginLeft: 2, marginRight: Normalize(15) }} />
                                 </TouchableOpacity>
                               </View>
 
@@ -574,14 +579,14 @@ const HomeScreen = ({ navigation, t }) => {
                             </View>
                             {
                               item.providerData.lastServiceDate != null ?
-                                <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                  <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
-                                  <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={item.providerData.lastServiceDate} />
+                                <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
+                                  <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
+                                  <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={item.providerData.lastServiceDate} />
                                 </View>
                                 :
-                                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
                                   {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
-                                  <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('notcompleted')} />
+                                  <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('notcompleted')} />
                                 </View>
                             }
                           </View>
@@ -604,7 +609,7 @@ const HomeScreen = ({ navigation, t }) => {
       <Spacer>
         <View style={styles.middlecontainer1}>
           <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen', { redirect: "Dashboard" })}>
-            <Image resizeMethod='auto' style={{ opacity: 0.5, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - 20, marginLeft: 5, marginRight: 5 }} source={require('../../assets/services/homecleaning.jpg')} />
+            <Image resizeMethod='auto' style={{ opacity: 0.5, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - Normalize(20), marginLeft: Normalize(5), marginRight: Normalize(5) }} source={require('../../assets/services/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
               <FontBold value={t('booknow')} />
               <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
@@ -655,7 +660,7 @@ const HomeScreen = ({ navigation, t }) => {
       <Spacer>
         <View style={styles.bottomcontainer}>
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start', paddingHorizontal: Normalize(10) }}>
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DisinfectionScreen"} trending="no" biosafe="yes" comming="no" title={t('disinfectionservices')} imagesource={require('../../assets/services/disinfection.jpg')} />
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"CarpetCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('carpetcleaning')} imagesource={require('../../assets/services/carpetcleaning.jpg')} />
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"CurtainCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('curtaincleaning')} imagesource={require('../../assets/services/curtaincleaning.jpg')} />
@@ -663,7 +668,7 @@ const HomeScreen = ({ navigation, t }) => {
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} trending="no" biosafe="no" comming="yes" title={t('carwash')} imagesource={require('../../assets/services/carwash.jpg')} />
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={""} trending="no" biosafe="no" comming="yes" title={t('accleaning')} imagesource={require('../../assets/services/accleaning.jpg')} />
             </View>
-            <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
+            <View style={{ flexDirection: 'column', justifyContent: 'flex-start', paddingHorizontal: Normalize(10) }}>
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"BabySitterScreen"} trending="yes" biosafe="no" comming="no" title={t('babysitter')} imagesource={require('../../assets/services/babysitter.jpg')} />
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"DeepCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('deepcleaning')} imagesource={require('../../assets/services/deepcleaning.jpg')} />
               <Servicesdetails contentContainerStyle={{ alignItems: "center" }} nav={"MattressCleaningScreen"} trending="no" biosafe="no" comming="no" title={t('mattresscleaning')} imagesource={require('../../assets/services/matresscleaning.jpg')} />
@@ -684,17 +689,17 @@ const HomeScreen = ({ navigation, t }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   everthingtext: {
-    fontSize: 15,
+    fontSize: fontNormalize(15),
     color: '#b4b4b4',
   },
   homescreentext: {
-    fontSize: 24,
+    fontSize: fontNormalize(24),
   },
   servicetext: {
-    fontSize: 14,
+    fontSize: fontNormalize(14),
     fontWeight: "500",
     // fontFamily: 'Comfortaa-Light'
   },
@@ -709,74 +714,76 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   middlecontainer2: {
-    margin: 5,
+    margin: Normalize(5),
   },
   middlecontainer3: {
-    margin: 5,
+    margin: Normalize(5),
   },
   bottomcontainer: {
     margin: 0
   },
   topButtonStyle: {
-    padding: 5,
+    padding: Normalize(5),
     //backgroundColor:'#DAA520',
-    borderRadius: 10,
+    borderRadius: Normalize(10),
     borderWidth: 1,
     borderColor: '#DAA520',
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: fontNormalize(12),
     fontWeight: "500",
     // fontFamily: 'Comfortaa-Bold'
   },
   booknowButtonStyle: {
     position: "absolute",
-    bottom: 40,
-    left: 10,
-    height: 35,
+    bottom: Normalize(25),
+    left: Normalize(10),
+    height: Normalize(35),
     backgroundColor: '#f5c500',
-    padding: 5,
-    borderRadius: 4,
+    padding: Normalize(5),
+    borderRadius: Normalize(4),
     borderWidth: 0,
     borderColor: '#7a7a7a',
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontSize: 16,
+    fontSize: fontNormalize(16),
     fontWeight: "500",
-    paddingHorizontal: 25,
-    color: '#7a7a7a'
+    paddingHorizontal: Normalize(25),
+    color: '#7a7a7a',
+    flexDirection: "row",
+    justifyContent: "center"
   },
   cleaningservicetext: {
-    marginTop: 20,
+    marginTop: Normalize(20),
     position: "absolute",
-    top: 45,
-    left: 10,
+    top: Normalize(45),
+    left: Normalize(10),
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    fontSize: 34,
+    fontSize: fontNormalize(34),
     fontWeight: "900",
     // fontFamily: 'Comfortaa-Bold',
-    padding: 5,
+    padding: Normalize(5),
     color: '#fff',
     fontWeight: "bold"
   },
   cleaningservicedetailtext: {
-    marginTop: 40,
+    marginTop: Normalize(40),
     position: "absolute",
-    top: 85,
-    left: 10,
+    top: Normalize(85),
+    left: Normalize(10),
     alignItems: 'center',
     alignContent: 'center',
     textAlign: 'left',
-    fontSize: 15,
+    fontSize: fontNormalize(15),
     // fontFamily: 'Comfortaa-Regular',
-    padding: 5,
+    padding: Normalize(5),
     color: '#fff',
-    lineHeight: 25
+    lineHeight: Normalize(25)
   },
   footer: {
     justifyContent: 'center',
@@ -785,41 +792,41 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    width: 80,
-    height: 80,
-    borderRadius: 45,
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 10,
-    marginRight: 10,
+    width: Normalize(80),
+    height: Normalize(80),
+    borderRadius: Normalize(45),
+    marginTop: Normalize(5),
+    marginBottom: Normalize(5),
+    marginLeft: Normalize(10),
+    marginRight: Normalize(10),
     borderWidth: 2,
     borderColor: "#fff",
   },
   providerThumup: {
-    paddingRight: 15,
+    paddingRight: Normalize(15),
     backgroundColor: '#fff',
-    height: 90,
-    borderRadius: 4,
+    height: Normalize(90),
+    borderRadius: Normalize(4),
     borderWidth: 0,
-    marginRight: 5,
-    marginLeft: 5,
-    marginTop: 15,
+    marginRight: Normalize(5),
+    marginLeft: Normalize(5),
+    marginTop: Normalize(15),
     marginBottom: 0,
     shadowColor: '#7a7a7a',
     shadowOpacity: 0.5,
     shadowOffset: {
-      height: 10,
-      width: 10
+      height: Normalize(10),
+      width: Normalize(10)
     },
     elevation: 3,
-    shadowRadius: 10,
+    shadowRadius: Normalize(10),
   },
   bookagainbuttonStyle: {
     textAlign: 'center',
     color: 'blue',
-    fontSize: 14,
-    marginLeft: 15,
-    bottom: 5,
+    fontSize: fontNormalize(14),
+    marginLeft: Normalize(15),
+    bottom: Normalize(5),
   },
   separator: {
     height: 0.5,

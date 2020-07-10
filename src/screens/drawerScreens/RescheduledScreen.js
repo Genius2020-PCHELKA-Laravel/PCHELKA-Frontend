@@ -91,6 +91,7 @@ import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../locales/i18n';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 export default class RescheduledScreen extends React.Component {
     constructor(props) {
@@ -126,14 +127,14 @@ export default class RescheduledScreen extends React.Component {
                                 <View style={{
                                     flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
                                 }}>
-                                    <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
-                                        <FontBold value={"\"" + this.props.refCode + "\" " + i18n.t('rescheduled')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                    <View style={{ flexDirection: 'column', height: Normalize(75), justifyContent: "center" }}>
+                                        <FontBold value={"\"" + this.props.refCode + "\" " + i18n.t('rescheduled')} mystyle={{ fontSize: fontNormalize(18), color: "#fff" }}></FontBold>
                                     </View>
                                 </View>
                                 <Spacer>
                                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                        <FontAwesome name="calendar-check-o" size={30} color="#228B22" />
-                                        <FontBold value={i18n.t('thankyou')} mystyle={{ textAlign: "center", fontSize: 20, marginLeft: 10 }} />
+                                        <FontAwesome name="calendar-check-o" size={Normalize(30)} color="#228B22" />
+                                        <FontBold value={i18n.t('thankyou')} mystyle={{ textAlign: "center", fontSize: fontNormalize(18), marginLeft: Normalize(10) }} />
                                     </View>
                                 </Spacer>
 
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 200,
+        height: Normalize(200),
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -172,8 +173,8 @@ const styles = StyleSheet.create({
         shadowColor: '#7a7a7a',
         shadowOpacity: 1.0,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         shadowRadius: 10,
         elevation: 10
@@ -192,10 +193,10 @@ const styles = StyleSheet.create({
         color: '#7a7a7a',
         display: 'flex',
         justifyContent: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: Normalize(10),
         backgroundColor: "#fff",
-        paddingHorizontal: 15,
-        paddingVertical: 5,
+        paddingHorizontal: Normalize(15),
+        paddingVertical: Normalize(5),
         textAlign: "center",
     }
 });

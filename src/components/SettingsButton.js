@@ -12,7 +12,7 @@ import { getLang, storeLang } from '../api/userLanguage';
 import HomeScreenAddresses from './lcation/HomeScreenAddresses';
 import { getToken } from '../api/token';
 // import ConfirmationDialog from '../components/ConfirmationDialog';
-
+import { fontNormalize, Normalize } from '../components/actuatedNormalize';
 const SettingsButton = ({ t }) => {
     const { state: ustate } = useContext(UserContext);
     const [address, setAddress] = useState('');
@@ -59,18 +59,26 @@ const SettingsButton = ({ t }) => {
     return (
         <View style={styles.container}>
 
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
                 <TouchableOpacity
-                    style={{ marginRight: 25 }}
+                    style={{ marginRight: Normalize(35), }}
                     activeOpacity={.5}
                     onPress={() => { showAddressesModal == false ? setShowAddressesModal(true) : setShowAddressesModal(false); }}>
                     <Text style={styles.locationButtonStyle} numberOfLines={1} ellipsizeMode='middle' >
                         {
                             address == '' ? t('addresses') : address
                         }
-                        {' '}<Entypo name="chevron-down" size={14} color="#f5c500" />
+                        {' '}<Entypo name="chevron-down" size={Normalize(15)} color="#f5c500" />
                     </Text>
                 </TouchableOpacity >
+                <Avatar
+                    size="small"
+                    rounded
+                    icon={{ size: Normalize(15), name: 'user', type: 'font-awesome', color: '#fff' }}
+                    onPress={() => navigate('SettingNavigator')}
+                    activeOpacity={0.7}
+                    containerStyle={styles.avatar}
+                />
             </View>
             <HomeScreenAddresses
                 addresses={ustate.addresses}
@@ -92,14 +100,7 @@ const SettingsButton = ({ t }) => {
                 </TouchableOpacity>
             }
              */}
-            <Avatar
-                size="small"
-                rounded
-                icon={{ size: 15, name: 'user', type: 'font-awesome', color: '#fff' }}
-                onPress={() => navigate('SettingNavigator')}
-                activeOpacity={0.7}
-                containerStyle={styles.avatar}
-            />
+
         </View >
     )
 };
@@ -108,50 +109,35 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
 
     },
     locationButtonStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingVertical: Normalize(10),
+        paddingHorizontal: 0,
         backgroundColor: '#fff',
         // borderRadius: 25,
         // borderWidth: 1,
         // borderColor: '#000',
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: fontNormalize(16),
         // fontWeight: "500",
         color: '#000',
         top: 10,
-        marginRight: 40,
-        width: 200,
-        fontWeight: "bold"
-    },
-    languageButtonStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#f5c500',
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: '#000',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 12,
-        fontWeight: "500",
-        right: 30,
-        color: '#000',
-        top: 10
+        marginRight: Normalize(35),
+        marginLeft: Normalize(35),
+        width: Normalize(200),
+        fontWeight: "bold",
     },
     avatar: {
         borderColor: '#7a7a7a',
         borderWidth: 1,
         backgroundColor: '#7a7a7a',
         flex: 1,
-        right: 20,
+        right: Normalize(20),
         top: 20,
-        width: 25,
-        height: 25,
+        width: Normalize(25),
+        height: Normalize(25),
     },
 });
 

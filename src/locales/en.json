@@ -303,5 +303,7 @@
   "cancelreason": "Reason",
   "experience": "How was your experience with",
   "evaluate": "Evauate",
-  "notcompleted": "Not Served before"
+  "notcompleted": "Not Served before",
+  "WhatsAppisnotinstalled": "WhatsApp is not installed",
+  "Viberisnotinstalled": "Viber is not installed"
 }

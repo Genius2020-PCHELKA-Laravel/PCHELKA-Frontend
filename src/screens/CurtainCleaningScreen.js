@@ -21,6 +21,7 @@ import Loader from '../components/Loader';
 import i18n from '../locales/i18n';
 import { BackHandler } from 'react-native';
 import OfflineNotice from '../components/OfflineNotice';
+import { Normalize, fontNormalize } from '../components/actuatedNormalize';
 
 const CurtainCleaningScreen = ({ navigation, t }) => {
   // static navigationOptions = {
@@ -413,7 +414,7 @@ const styles = StyleSheet.create({
   },
   ButtonTextStyle: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: fontNormalize(14),
   },
 });
 export default withNamespaces()(CurtainCleaningScreen);

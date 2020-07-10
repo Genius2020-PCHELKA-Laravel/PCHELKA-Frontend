@@ -32,7 +32,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.genius.pchelka",
       "buildNumber": "1.0.0",
-      "icon": "./assets/Splash/biglogo_1024_ios.jpg"
+      "icon": "./assets/Splash/biglogo_1024_ios.png"
     },
     "android": {
       "package": "com.genius.pchelka",

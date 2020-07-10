@@ -8,6 +8,7 @@ import { Avatar } from 'react-native-elements';
 // import ConfirmationDialog from './ConfirmationDialog';
 import { Context as UserContext } from '../screens/context/UserContext';
 import LanguageDialog from '../components/LanguageDialog';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 const LanguageButton = ({ t }) => {
     const { userLanguage } = useContext(UserContext);
@@ -96,10 +97,10 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         backgroundColor: '#fff',
         flex: 1,
-        left: 20,
-        top: 7,
-        width: 30,
-        height: 30,
+        left: Normalize(20),
+        top: Normalize(7),
+        width: Normalize(30),
+        height: Normalize(30),
     },
 });
 
