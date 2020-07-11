@@ -63,9 +63,7 @@ const HomeScreenLogIn = ({ navigation, t }) => {
           </Text>
         </View>
         <View style={styles.middlecontainer3}>
-          <Text style={styles.homescreentext}>
-            <FontBold value={t('homescreentext')} />
-          </Text>
+          <FontBold value={t('homescreentext')} mystyle={styles.homescreentext} />
         </View>
       </Spacer>
       <Spacer>
@@ -106,11 +104,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   everthingtext: {
-    fontSize: fontNormalize(15),
+    fontSize: fontNormalize(12),
     color: '#b4b4b4',
   },
   homescreentext: {
-    fontSize: fontNormalize(24),
+    fontSize: fontNormalize(18),
   },
   servicetext: {
     fontSize: fontNormalize(14),

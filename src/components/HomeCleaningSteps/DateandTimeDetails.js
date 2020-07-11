@@ -181,7 +181,7 @@ const DateandTimeDetails = ({ children, t }) => {
                         <FontRegular mystyle={{}} value={days_names[(newDate.getDay()) % 7]} />
                     </View>
                     <View style={styles.item2}>
-                        <Text style={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup}>{newDate.getDate()}</Text>
+                        <FontBold mystyle={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup} value={newDate.getDate()} />
                         <View style={controlstyles ? styles.diagonaline : null}></View>
                     </View>
                 </View>
@@ -479,9 +479,9 @@ const DateandTimeDetails = ({ children, t }) => {
                         }
                     </ScrollView>
             }
-
-
-
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </ScrollView >
     );
 };

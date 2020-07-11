@@ -11,6 +11,7 @@ import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 import { FontAwesome5, FontAwesome, Octicons } from '@expo/vector-icons';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const CarpetCleaningDetails = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
@@ -103,55 +104,35 @@ const CarpetCleaningDetails = ({ children, t }) => {
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <View style={styles.servicedesccontainer}>
                 <View style={{ flexDirection: "row" }}>
-                    <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ marginRight: 15 }} />
-                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                    <FontAwesome5 name="info-circle" size={Normalize(30)} color="#f5c500" style={{ marginRight: Normalize(15) }} />
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: fontNormalize(18) }} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('carpetdesc1')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(8) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('carpetdesc1')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('carpetdesc2')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(8) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('carpetdesc2')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('carpetdesc3')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(8) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('carpetdesc3')} />
                 </View>
-                {/* <View style={styles.container}>
-                    <TouchableOpacity
-                        style={styles.policybuttonStyle}
-                        activeOpacity={0.5}
-                        onPress={() => {
-                            // navigate('whatsincluded');
-                        }}>
-                        <Spacer />
-                        <FontLight mystyle={{
-                            textDecorationLine: 'underline',
-                            textDecorationStyle: "solid",
-                            textDecorationColor: "blue",
-                            textAlign: "center",
-                            color: "blue"
-                        }}
-                            value={t('viewmore')}
-                        />
-                    </TouchableOpacity>
-                </View> */}
             </View>
             <FontBold mystyle={styles.qText} value={t('carpetcleaningq1')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15 }}>
-                <TouchableOpacity onPress={() => setQuantity(2)}><Text style={quantity == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(3)}><Text style={quantity == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(4)}><Text style={quantity == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(5)}><Text style={quantity == 5 ? styles.thumbdown : styles.thumbup}>5</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(6)}><Text style={quantity == 6 ? styles.thumbdown : styles.thumbup}>6</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(7)}><Text style={quantity == 7 ? styles.thumbdown : styles.thumbup}>7</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(8)}><Text style={quantity == 8 ? styles.thumbdown : styles.thumbup}>8</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(9)}><Text style={quantity == 9 ? styles.thumbdown : styles.thumbup}>9</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(10)}><Text style={quantity == 10 ? styles.thumbdown : styles.thumbup}>10</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(11)}><Text style={quantity == 11 ? styles.thumbdown : styles.thumbup}>11</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setQuantity(12)}><Text style={quantity == 12 ? styles.thumbdown : styles.thumbup}>12</Text></TouchableOpacity>
-                {/* <TouchableOpacity onPress={() => setHours(8)}><Text style={quantity == 8 ? styles.thumbdown : styles.thumbup}>8</Text></TouchableOpacity> */}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15) }}>
+                <TouchableOpacity onPress={() => setQuantity(2)}><FontBold mystyle={quantity == 2 ? styles.thumbdown : styles.thumbup} value={2} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(3)}><FontBold mystyle={quantity == 3 ? styles.thumbdown : styles.thumbup} value={3} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(4)}><FontBold mystyle={quantity == 4 ? styles.thumbdown : styles.thumbup} value={4} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(5)}><FontBold mystyle={quantity == 5 ? styles.thumbdown : styles.thumbup} value={5} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(6)}><FontBold mystyle={quantity == 6 ? styles.thumbdown : styles.thumbup} value={6} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(7)}><FontBold mystyle={quantity == 7 ? styles.thumbdown : styles.thumbup} value={7} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(8)}><FontBold mystyle={quantity == 8 ? styles.thumbdown : styles.thumbup} value={8} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(9)}><FontBold mystyle={quantity == 9 ? styles.thumbdown : styles.thumbup} value={9} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(10)}><FontBold mystyle={quantity == 10 ? styles.thumbdown : styles.thumbup} value={10} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(11)}><FontBold mystyle={quantity == 11 ? styles.thumbdown : styles.thumbup} value={11} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setQuantity(12)}><FontBold mystyle={quantity == 12 ? styles.thumbdown : styles.thumbup} value={12} /></TouchableOpacity>
             </ScrollView>
             <Spacer />
             <FontBold mystyle={styles.qText} value={t('carpetcleaningq2')} />
@@ -196,14 +177,16 @@ const CarpetCleaningDetails = ({ children, t }) => {
                 multiline={true}
                 numberOfLines={4}
             />
-
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </ScrollView>);
 };
 
 const styles = StyleSheet.create({
     row: {
         flex: 1,
-        marginLeft: 50,
+        marginLeft: Normalize(50),
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start' // if you want to fill rows left to right
@@ -212,85 +195,86 @@ const styles = StyleSheet.create({
         width: '25%' // is 50% of container width
     },
     qText: {
-        fontSize: 20,
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 7,
+        fontSize: fontNormalize(18),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        marginBottom: Normalize(7),
     },
     aText: {
-        fontSize: 14,
+        fontSize: fontNormalize(12),
     },
     switch: {
-        width: 30,
-        height: 30,
+        width: Normalize(30),
+        height: Normalize(30),
         transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }]
     },
     input: {
-        marginLeft: 15,
-        marginRight: 15,
-        height: 100,
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        height: Normalize(100),
         borderColor: '#aaa',
         borderRadius: 7,
         borderWidth: 1,
-        fontSize: 18,
+        fontSize: fontNormalize(16),
         textAlign: 'left',
         textAlignVertical: 'top',
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 10
+        paddingLeft: Normalize(10),
+        paddingRight: Normalize(10),
+        paddingTop: Normalize(10)
     },
-    squareinput: {
-        marginLeft: 15,
-        height: 40,
-        width: 150,
-        borderColor: '#aaa',
-        borderRadius: 0,
-        borderWidth: 1,
-        fontSize: 18,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 2
-    },
+
     thumbup: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     thumbdown: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: '#f5c500',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     servicedesccontainer: {
-        marginHorizontal: 15,
-        marginBottom: 15,
-        padding: 15,
+        marginHorizontal: Normalize(15),
+        marginBottom: Normalize(15),
+        padding: Normalize(15),
         borderColor: '#7a7a7a',
         borderWidth: 0,
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
+            height: Normalize(10),
             width: 0
         },
         elevation: 2,
-        shadowRadius: 10,
+        shadowRadius: Normalize(10),
+    },
+    squareinput: {
+        marginLeft: Normalize(15),
+        height: Normalize(40),
+        width: Normalize(150),
+        borderColor: '#aaa',
+        borderRadius: 0,
+        borderWidth: 1,
+        fontSize: fontNormalize(18),
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        paddingLeft: Normalize(10),
+        paddingRight: Normalize(10),
+        paddingTop: Normalize(2)
     },
 });
 

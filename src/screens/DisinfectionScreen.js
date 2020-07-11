@@ -428,9 +428,6 @@ const DisinfectionScreen = ({ navigation, t }) => {
         }} />
         <ModalDetails style={styles.modalText} total={hcstate.total}></ModalDetails>
       </View>
-
-      {/* <Text style={styles.modalText}>Modal{'  '}<FontAwesome5 name="chevron-up" size={15} color="#161924" /></Text> */}
-
     </>
   );
 };

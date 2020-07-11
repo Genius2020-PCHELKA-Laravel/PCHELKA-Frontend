@@ -11,6 +11,7 @@ import { Context as HCContext } from '../../screens/context/HCContext';
 import { withNamespaces } from 'react-i18next';
 import { FontAwesome5, FontAwesome, Octicons } from '@expo/vector-icons';
 import ModalDisinfectionDesc from './ModalDisinfectionDesc';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const Frequency = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
@@ -64,11 +65,11 @@ const Frequency = ({ children, t }) => {
             <ModalDisinfectionDesc showDisinfectionModal={showDisinfectionModal} setShowDisinfectionModal={setShowDisinfectionModal} />
             <View style={styles.servicedesccontainer}>
                 <View style={{ flexDirection: "row" }}>
-                    <FontAwesome5 name="info-circle" size={30} color="#f5c500" style={{ marginRight: 15 }} />
-                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: 18 }} />
+                    <FontAwesome5 name="info-circle" size={Normalize(30)} color="#f5c500" style={{ marginRight: Normalize(15) }} />
+                    <FontBold value={t('whatincluded')} mystyle={{ fontSize: fontNormalize(16) }} />
                 </View>
 
-                <View style={{ width: "30%", position: "absolute", right: 0, top: 15 }}>
+                <View style={{ width: "30%", position: "absolute", right: 0, top: Normalize(15) }}>
                     <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => {
@@ -91,74 +92,79 @@ const Frequency = ({ children, t }) => {
                 </View>
 
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc1')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('disinfectiondesc1')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc2')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('disinfectiondesc2')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc3')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('disinfectiondesc3')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={20} color="#000" style={{ right: 5, top: 5 }} />
-                    <FontLight mystyle={{ fontSize: 16 }} value={t('disinfectiondesc4')} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('disinfectiondesc4')} />
                 </View>
             </View>
-            {/* <Text>{frequency}</Text>
-            <Text>Frequency:{hcstate.frequency}</Text>
-            <Text>Price:{hcstate.price}</Text>
-            <Text>Total::{hcstate.total}</Text> */}
-            {/* <RadioButton.Group
-                onValueChange={setFrequency}
-                value={hcstate.frequency}
-            > */}
             <TouchableOpacity onPress={() => { setFrequency(1) }}>
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row' }}>
-                            <RadioButton onPress={() => { setFrequency(1) }} value="1" status={hcstate.frequency == 1 ? 'checked' : 'unchecked'} />
-                            <FontBold value={t('onetime')} mystyle={{ fontSize: 20 }}></FontBold>
+                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                <RadioButton onPress={() => { setFrequency(1) }} value="1" status={hcstate.frequency == 1 ? 'checked' : 'unchecked'} />
+                            </View>
+                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                <FontBold value={t('onetime')} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
+                            </View>
                         </View>
-                        <FontLight value={t('ontimedetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
+                        <FontLight value={t('ontimedetails')} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14), marginLeft: Normalize(35) }}></FontLight>
                     </View>
                 </Spacer>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { setFrequency(2) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton onPress={() => { setFrequency(2) }} value='2' status={hcstate.frequency == 2 ? 'checked' : 'unchecked'} />
-                        <FontBold value={t('biweekly')} mystyle={{ fontSize: 20 }}></FontBold>
+                        <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                            <RadioButton onPress={() => { setFrequency(2) }} value='2' status={hcstate.frequency == 2 ? 'checked' : 'unchecked'} />
+                        </View>
+                        <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                            <FontBold value={t('biweekly')} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
+                        </View>
                     </View>
-                    <FontLight value={t('biweeklydetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('biweeklydetails')} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14), marginLeft: Normalize(35) }}></FontLight>
                     <FontLight mystyle={styles.DiscountStyle} value={t('5off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { setFrequency(3) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton onPress={() => { setFrequency(3) }} value='3' status={hcstate.frequency == 3 ? 'checked' : 'unchecked'} />
-                        <FontBold value={t('weekly')} mystyle={{ fontSize: 20 }}></FontBold>
-
+                        <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                            <RadioButton onPress={() => { setFrequency(3) }} value='3' status={hcstate.frequency == 3 ? 'checked' : 'unchecked'} />
+                        </View>
+                        <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                            <FontBold value={t('weekly')} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
+                        </View>
                     </View>
-                    <FontLight value={t('weeklydetails')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('weeklydetails')} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14), marginLeft: Normalize(35) }}></FontLight>
                     <FontLight mystyle={styles.DiscountStyle} value={t('10off')}></FontLight>
                 </Spacer>
             </TouchableOpacity>
-
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </ScrollView>);
 };
 
 const styles = StyleSheet.create({
     DiscountStyle: {
-        margin: 5,
+        margin: Normalize(5),
         position: "absolute",
         top: 0,
-        left: 265,
-        height: 30,
-        width: 75,
+        left: Normalize(265),
+        height: Normalize(30),
+        width: Normalize(75),
         backgroundColor: '#f5c500',
         borderRadius: 14,
         borderWidth: 0,
@@ -169,32 +175,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 11,
+        fontSize: fontNormalize(11),
         // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
+        padding: Normalize(5),
         shadowColor: '#2AC062',
         fontWeight: 'bold',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
+            height: Normalize(10),
             width: 0
         },
+        elevation: 3,
         shadowRadius: 25,
     },
     servicedesccontainer: {
-        marginHorizontal: 15,
-        marginBottom: 15,
-        padding: 15,
+        marginHorizontal: Normalize(15),
+        marginBottom: Normalize(15),
+        padding: Normalize(15),
         borderColor: '#7a7a7a',
         borderWidth: 0,
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
+            height: Normalize(10),
             width: 0
         },
         elevation: 2,
-        shadowRadius: 10,
+        shadowRadius: Normalize(10),
     },
 
 });

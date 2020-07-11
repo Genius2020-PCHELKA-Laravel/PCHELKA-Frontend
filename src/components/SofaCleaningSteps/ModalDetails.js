@@ -16,6 +16,7 @@ import FontLight from '../FontLight';
 import FontRegular from '../FontRegular';
 import { withNamespaces } from 'react-i18next';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const ModalDetails = ({ children, t }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -25,7 +26,7 @@ const ModalDetails = ({ children, t }) => {
     // let modalmaterials = hcstate.hours * hcstate.materials * hcstate.HC.materialPrice;
     let modalmaterials = hcstate.quantity * hcstate.materials * hcstate.SF.materialPrice;
     return (
-        <View style={{ marginTop: 22 }}>
+        <View style={{ marginTop: Normalize(22) }}>
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="slideInUp"
@@ -48,98 +49,98 @@ const ModalDetails = ({ children, t }) => {
 
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.container} >
                     <TouchableOpacity
-                        style={{ position: "absolute", right: 0, padding: 15 }}
+                        style={{ position: "absolute", right: 0, padding: Normalize(15) }}
                         onPress={() => {
                             setModalVisible(!modalVisible);
                         }}>
-                        <FontAwesome name="times" size={35} color="#7a7a7a" />
+                        <FontAwesome name="times" size={Normalize(35)} color="#7a7a7a" />
                     </TouchableOpacity>
-                    <View style={{ marginHorizontal: 15, marginTop: 60 }}>
+                    <View style={{ marginHorizontal: Normalize(15), marginTop: Normalize(60) }}>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('servicetype')}></FontRegular>
+                                <FontRegular mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('servicetype')}></FontRegular>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('sofacleaning')}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={t('sofacleaning')}></FontBold>
                             </View>
                         </View>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
-                        <FontRegular mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('details')}></FontRegular>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5) }} />
+                        <FontRegular mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('details')}></FontRegular>
 
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('quantity')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('quantity')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.quantity + ' ' + t('seaters')}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.quantity + ' ' + t('seaters')}></FontBold>
                             </View>
                         </View>
 
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('materials')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('materials')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={modalmaterials + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={modalmaterials + ' UAH'}></FontBold>
                             </View>
                         </View>
 
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('dateandtime')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
+                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('dateandtime')}></FontBold>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5) }} />
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('date')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('date')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.selectedday}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.selectedday}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('time')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('time')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.start}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.start}></FontBold>
                             </View>
                         </View>
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('address')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
-                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={state.selected_address_name}></FontBold>
+                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('address')}></FontBold>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5) }} />
+                        <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={state.selected_address_name}></FontBold>
                         <Spacer />
-                        <FontBold mystyle={{ color: 'black', fontSize: 18 }} value={t('price')}></FontBold>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 5 }} />
+                        <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('price')}></FontBold>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(5) }} />
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('subtotals')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('subtotals')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.subtotal + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.subtotal + ' UAH'}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('vat')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('vat')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.VAT + ' UAH'}></FontBold>
-                            </View>
-                        </View>
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('discount')}></FontBold>
-                            </View>
-                            <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.discount + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.VAT + ' UAH'}></FontBold>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={t('total')}></FontBold>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('discount')}></FontBold>
                             </View>
                             <View style={styles.item}>
-                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: 18 }} value={hcstate.total + ' UAH'}></FontBold>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.discount + ' UAH'}></FontBold>
+                            </View>
+                        </View>
+                        <View style={styles.row}>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(18) }} value={t('total')}></FontBold>
+                            </View>
+                            <View style={styles.item}>
+                                <FontBold mystyle={{ color: '#000', fontSize: fontNormalize(18) }} value={hcstate.total + ' UAH'}></FontBold>
                             </View>
                         </View>
                     </View>
@@ -168,7 +169,7 @@ const ModalDetails = ({ children, t }) => {
 
                         {/* </Text> */}
                         <View flexDirection='column' style={{ justifyContent: 'center' }}>
-                            <FontAwesome5 name="chevron-up" size={15} color="#f5c500" />
+                            <FontAwesome5 name="chevron-up" size={Normalize(15)} color="#f5c500" />
                         </View>
                     </View>
 
@@ -197,12 +198,12 @@ const styles = StyleSheet.create({
     modalText: {
         color: '#000',
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         padding: 0,
     },
     modalButtonStyle: {
         flex: 0.4,
-        bottom: 12,
+        bottom: Normalize(12),
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: '#7a7a7a',
         color: '#7a7a7a',
-        height: 35,
+        height: Normalize(35),
         // fontFamily: 'Comfortaa-Bold',
     },
     total: {
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         textDecorationLine: 'line-through',
         textDecorationStyle: 'solid',
-        fontSize: 12
+        fontSize: fontNormalize(12)
     }
 });
 export default withNamespaces()(ModalDetails);

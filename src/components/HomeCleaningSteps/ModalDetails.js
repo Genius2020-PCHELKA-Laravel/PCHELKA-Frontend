@@ -185,16 +185,12 @@ const ModalDetails = ({ children, t }) => {
                                 </View>
                             </View>
                         </View>
-
-                        {/* </Text> */}
                         <View flexDirection='column' style={{ justifyContent: 'center' }}>
                             <FontAwesome5 name="chevron-up" size={Normalize(15)} color="#f5c500" />
                         </View>
                     </View>
-
                 </TouchableOpacity>
             </View>
-
         </View >
     );
 

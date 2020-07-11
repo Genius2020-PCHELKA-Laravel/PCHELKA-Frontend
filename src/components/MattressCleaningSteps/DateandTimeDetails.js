@@ -4,7 +4,7 @@ import { AntDesign, Feather, FontAwesome5, FontAwesome, MaterialCommunityIcons, 
 import { Container, Footer, FooterTab, Button } from 'native-base';
 import Toast from 'react-native-simple-toast';
 
-import { Card, ListItem, CheckBox, Icon, Badge, withBadge } from 'react-native-elements'
+import { Card, ListItem, CheckBox, Icon, Badge, withBadge, normalize } from 'react-native-elements'
 import { RadioButton, Avatar } from 'react-native-paper';
 import Spacer from '../Spacer';
 import FontBold from '../FontBold';
@@ -15,6 +15,7 @@ import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
 // import Loader from '../Loader';
 import { getLang } from '../../api/userLanguage';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const DateandTimeDetails = ({ children, t }) => {
     const { dispatch, state: hcstate, getSchedules } = useContext(HCContext);
@@ -132,7 +133,7 @@ const DateandTimeDetails = ({ children, t }) => {
                         <FontRegular mystyle={{}} value={days_names[(newDate.getDay()) % 7]} />
                     </View>
                     <View style={styles.item2}>
-                        <Text style={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup}>{newDate.getDate()}</Text>
+                        <FontBold mystyle={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup} value={newDate.getDate()} />
                         <View style={controlstyles ? styles.diagonaline : null}></View>
                     </View>
                 </View>
@@ -194,7 +195,7 @@ const DateandTimeDetails = ({ children, t }) => {
             }}
                 disabled={timecontrolstyles}>
                 <View>
-                    <Text style={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart}</Text>
+                    <FontBold mystyle={timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup} value={fstart.substring(0, 5)} />
                     <View style={timecontrolstyles ? styles.timediagonaline : null}></View>
                 </View>
             </TouchableOpacity>
@@ -204,7 +205,7 @@ const DateandTimeDetails = ({ children, t }) => {
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             {/* <Loader loading={isloading} /> */}
             <FontBold mystyle={styles.qText} value={t('dateq0')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 30 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
                 {/* redering Auto-Assign */}
                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
                     onPress={() => {
@@ -229,9 +230,9 @@ const DateandTimeDetails = ({ children, t }) => {
                         <Image style={providerid != '' ? styles.imageThumdown : styles.imageThumup} source={require('../../../assets/Splash/SplashScreen1.png')} />
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                        <FontBold mystyle={{ fontSize: 10 }} value={t('autoassign')} />
+                        <FontBold mystyle={{ fontSize: fontNormalize(10) }} value={t('autoassign')} />
                     </View>
-                    <FontRegular mystyle={{ color: "#000", fontSize: 12, marginLeft: 5 }} value={t('wewillassignthebestcleaner')} />
+                    <FontRegular mystyle={{ color: "#000", fontSize: fontNormalize(12), marginLeft: Normalize(5) }} value={t('wewillassignthebestcleaner')} />
                 </TouchableOpacity>
 
                 {/* redering the providers */}
@@ -269,137 +270,116 @@ const DateandTimeDetails = ({ children, t }) => {
                                     {
                                         <Badge
                                             status="success"
-                                            badgeStyle={{ width: 18, height: 18, borderRadius: 10, borderColor: '#fff', borderWidth: 2 }}
-                                            containerStyle={{ position: 'absolute', top: 58, right: 21, }}
+                                            badgeStyle={{ width: Normalize(18), height: Normalize(18), borderRadius: 10, borderColor: '#fff', borderWidth: 2 }}
+                                            containerStyle={{ position: 'absolute', top: Normalize(58), right: Normalize(21), }}
                                         />
                                     }
-                                    {/* {
-                                        u.count < 0 ?
-                                            null :
-                                            u.count > 0 ?
-                                                <Badge
-                                                    status="success"
-                                                    badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
-                                                    containerStyle={{ position: 'absolute', top: 5, right: 22, }}
-                                                />
-                                                : u.count == 0 ?
-                                                    <Badge
-                                                        status="error"
-                                                        badgeStyle={{ width: 15, height: 15, borderRadius: 10, borderColor: '#fff', borderWidth: 1 }}
-                                                        containerStyle={{ position: 'absolute', top: 5, right: 22 }}
-                                                    />
-                                                    : null
-                                    } */}
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                                    <FontBold mystyle={{ fontSize: 10, marginLeft: 5 }} value={u.name} />
+                                    <FontBold mystyle={{ fontSize: fontNormalize(10), marginLeft: Normalize(5) }} value={u.name} />
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                     {
                                         u.evaluation == 0 ?
-                                            <FontAwesome name="star-o" size={18} color="#ff9800" style={{}} />
+                                            <FontAwesome name="star-o" size={Normalize(18)} color="#ff9800" style={{}} />
                                             :
                                             u.evaluation == 1 ?
-                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                 :
                                                 u.evaluation == 2 ?
                                                     <>
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                     </>
                                                     :
                                                     u.evaluation == 3 ?
                                                         <>
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                         </>
                                                         :
                                                         u.evaluation == 4 ?
                                                             <>
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                             </>
                                                             :
                                                             u.evaluation == 5 ?
                                                                 <>
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                 </>
                                                                 :
                                                                 u.evaluation > 1 && u.evaluation < 2 ?
                                                                     <>
-                                                                        <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                        <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                        <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                     </>
                                                                     :
                                                                     u.evaluation > 2 && u.evaluation < 3 ?
                                                                         <>
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                            <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                         </>
                                                                         :
                                                                         u.evaluation > 3 && u.evaluation < 4 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
                                                                             u.evaluation > 4 && u.evaluation < 5 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star-half-empty" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
-                                                                                    <FontAwesome name="star" size={18} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 </>
                                     }
                                     <Text>{' '}</Text>
                                     {
                                         u.evaluation == 0 ?
-                                            <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={t('notevaluated')} />
+                                            <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={t('notevaluated')} />
                                             :
-                                            <FontLight mystyle={{ fontSize: 11, padding: 0 }} value={u.evaluation} />
+                                            <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={u.evaluation} />
                                     }
                                 </View>
                                 {
                                     u.lastServiceDate != null ?
                                         <View>
-                                            <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
-                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
+                                            <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: normalize(5), marginRight: Normalize(5) }}>
+                                                <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
                                             </View>
-                                            <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
-                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={u.lastServiceDate} />
+                                            <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: normalize(5), marginRight: Normalize(5) }}>
+                                                <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={u.lastServiceDate} />
                                             </View>
                                         </View>
                                         :
                                         <View>
-                                            {/* <View style={{ flexDirection: "row", justifyContent: "flex-start", marginLeft: 5, marginRight: 5 }}>
-                                                <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} />
-                                            </View> */}
-                                            <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: 5, marginRight: 5 }}>
-                                                <FontLight mystyle={{ color: "#000", fontSize: 12, textAlign: "center" }} value={t('notcompleted')} />
+                                            <View style={{ flexDirection: "row", justifyContent: "center", marginLeft: normalize(5), marginRight: Normalize(5) }}>
+                                                <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
                                             </View>
                                         </View>
                                 }
                             </TouchableOpacity>
-
                         );
                     })
                 }
@@ -408,31 +388,29 @@ const DateandTimeDetails = ({ children, t }) => {
             <FontBold mystyle={styles.qText} value={t('dateq1')} />
             {
                 isloadingActivityIndicator ?
-                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={35} color='#ff9800' animating={isloadingActivityIndicator} />
+                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                     :
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 30 }}>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
                         {
                             days
                         }
                     </ScrollView>
-
             }
-
             <Spacer />
             <FontBold mystyle={styles.qText} value={t('dateq2')} />
             {
                 isloadingActivityIndicator ?
-                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={35} color='#ff9800' animating={isloadingActivityIndicator} />
+                    <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                     :
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: 15, marginRight: 15, marginRight: 30 }}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15), marginRight: Normalize(30) }}>
                         {
                             starts
                         }
                     </ScrollView>
             }
-
-
-
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </ScrollView >
     );
 };
@@ -450,155 +428,146 @@ const styles = StyleSheet.create({
         height: '70%' // is 50% of container width
     },
     qText: {
-        fontSize: 20,
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 7
+        fontSize: fontNormalize(18),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        marginBottom: Normalize(7)
     },
     aText: {
-        fontSize: 12,
+        fontSize: fontNormalize(12),
         textAlign: 'center',
-    },
-    thumb: {
-        width: 30,
-        height: 30,
-        borderRadius: 30 / 2,
-        backgroundColor: 'white',
-        borderColor: '#f5c500',
-        borderWidth: 2,
     },
     thumbup: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     thumbdown: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
-        backgroundColor: '#f5c500aa',
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
+        backgroundColor: '#f5c500',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     notactive: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: '#dcdcdc',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4,
+        textAlignVertical: 'center',
+        marginRight: Normalize(5),
         color: "#7a7a7a"
-
     },
     timethumbup: {
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
+        fontSize: fontNormalize(16),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     timethumbdown: {
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
-        backgroundColor: '#f5c500aa',
+        fontSize: fontNormalize(16),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
+        backgroundColor: '#f5c500',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     timenotactive: {
         display: 'none',
-        fontSize: 20,
-        padding: 7,
-        width: 65,
-        height: 40,
-        borderRadius: 65 / 2,
+        fontSize: fontNormalize(16),
+        width: Normalize(65),
+        height: Normalize(40),
+        borderRadius: Normalize(65) / 2,
         backgroundColor: '#dcdcdc',
         borderColor: '#aaa',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4,
+        textAlignVertical: 'center',
+        marginRight: Normalize(5),
         color: "#7a7a7a"
 
     },
     providerThumup: {
         backgroundColor: '#fff',
-        width: 120,
-        height: 170,
+        width: Normalize(120),
+        height: Normalize(170),
         borderRadius: 2,
         borderWidth: 0,
-        marginRight: 5,
-        marginLeft: 5,
-        marginTop: 5,
-        marginBottom: 5,
+        marginRight: Normalize(5),
+        marginLeft: Normalize(5),
+        marginTop: Normalize(5),
+        marginBottom: Normalize(5),
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         elevation: 3,
-        shadowRadius: 10,
+        shadowRadius: Normalize(10),
     },
     providerThumdown: {
         backgroundColor: '#f5c500',
-        width: 120,
-        height: 170,
+        width: Normalize(120),
+        height: Normalize(170),
         borderRadius: 2,
         borderWidth: 0,
-        marginRight: 5,
-        marginLeft: 5,
-        marginTop: 5,
-        marginBottom: 5,
+        marginRight: Normalize(5),
+        marginLeft: Normalize(5),
+        marginTop: Normalize(5),
+        marginBottom: Normalize(5),
         shadowColor: '#7a7a7a',
         shadowOpacity: 0.5,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         elevation: 4,
-        shadowRadius: 10,
+        shadowRadius: Normalize(10),
     },
     imageThumup: {
-        width: 80,
-        height: 80,
-        borderRadius: 45,
-        marginTop: 2,
-        marginLeft: 10,
-        marginRight: 10,
+        width: Normalize(80),
+        height: Normalize(80),
+        borderRadius: Normalize(45),
+        marginTop: Normalize(2),
+        marginLeft: Normalize(10),
+        marginRight: Normalize(10),
         borderWidth: 2,
         borderColor: "#fff",
     },
     imageThumdown: {
-        width: 80,
-        height: 80,
-        borderRadius: 45,
-        marginTop: 2,
-        marginLeft: 10,
-        marginRight: 10,
+        width: Normalize(80),
+        height: Normalize(80),
+        borderRadius: Normalize(45),
+        marginTop: Normalize(2),
+        marginLeft: Normalize(10),
+        marginRight: Normalize(10),
         borderWidth: 2,
         borderColor: "#fff",
     },
@@ -606,18 +575,18 @@ const styles = StyleSheet.create({
     diagonaline: {
         position: 'absolute',
         transform: [{ rotate: '-45deg' }],
-        right: 2,
-        top: 22,
-        width: 60,
+        right: Normalize(2),
+        top: Normalize(22),
+        width: Normalize(60),
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 2,
     },
     timediagonaline: {
         position: 'absolute',
         transform: [{ rotate: '-45deg' }],
-        right: 2,
-        top: 22,
-        width: 80,
+        right: Normalize(2),
+        top: Normalize(22),
+        width: Normalize(80),
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 2,
     },

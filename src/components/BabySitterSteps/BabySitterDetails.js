@@ -10,6 +10,7 @@ import FontRegular from '../../components/FontRegular';
 import { Context as HCContext } from '../../screens/context/HCContext';
 import { Slider, Input } from "react-native-elements";
 import { withNamespaces } from 'react-i18next';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const HomeCleaningDetails = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
@@ -95,22 +96,22 @@ const HomeCleaningDetails = ({ children, t }) => {
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             <FontBold mystyle={styles.qText} value={t('babycleaningq1')} />
-            <View style={{ flexDirection: 'row', left: 15 }}>
-                <TouchableOpacity onPress={() => setHours(2)}><Text style={hours == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setHours(3)}><Text style={hours == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setHours(4)}><Text style={hours == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setHours(5)}><Text style={hours == 5 ? styles.thumbdown : styles.thumbup}>5</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setHours(6)}><Text style={hours == 6 ? styles.thumbdown : styles.thumbup}>6</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setHours(7)}><Text style={hours == 7 ? styles.thumbdown : styles.thumbup}>7</Text></TouchableOpacity>
+            <View style={{ flexDirection: 'row', left: Normalize(15) }}>
+                <TouchableOpacity onPress={() => setHours(2)}><FontBold mystyle={hours == 2 ? styles.thumbdown : styles.thumbup} value={2} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(3)}><FontBold mystyle={hours == 3 ? styles.thumbdown : styles.thumbup} value={3} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(4)}><FontBold mystyle={hours == 4 ? styles.thumbdown : styles.thumbup} value={4} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(5)}><FontBold mystyle={hours == 5 ? styles.thumbdown : styles.thumbup} value={5} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(6)}><FontBold mystyle={hours == 6 ? styles.thumbdown : styles.thumbup} value={6} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setHours(7)}><FontBold mystyle={hours == 7 ? styles.thumbdown : styles.thumbup} value={7} /></TouchableOpacity>
                 {/* <TouchableOpacity onPress={() => setHours(8)}><Text style={hours == 8 ? styles.thumbdown : styles.thumbup}>8</Text></TouchableOpacity> */}
             </View>
             <Spacer />
             <FontBold mystyle={styles.qText} value={t('babycleaningq2')} />
             <View style={{ flexDirection: 'row', left: 15 }}>
-                <TouchableOpacity onPress={() => setCleaners(1)}><Text style={cleaners == 1 ? styles.thumbdown : styles.thumbup}>1</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setCleaners(2)}><Text style={cleaners == 2 ? styles.thumbdown : styles.thumbup}>2</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setCleaners(3)}><Text style={cleaners == 3 ? styles.thumbdown : styles.thumbup}>3</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setCleaners(4)}><Text style={cleaners == 4 ? styles.thumbdown : styles.thumbup}>4</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(1)}><FontBold mystyle={cleaners == 1 ? styles.thumbdown : styles.thumbup} value={1} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(2)}><FontBold mystyle={cleaners == 2 ? styles.thumbdown : styles.thumbup} value={2} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(3)}><FontBold mystyle={cleaners == 3 ? styles.thumbdown : styles.thumbup} value={3} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCleaners(4)}><FontBold mystyle={cleaners == 4 ? styles.thumbdown : styles.thumbup} value={4} /></TouchableOpacity>
             </View>
 
             <Spacer />
@@ -123,13 +124,16 @@ const HomeCleaningDetails = ({ children, t }) => {
                 multiline={true}
                 numberOfLines={4}
             />
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </ScrollView>);
 };
 
 const styles = StyleSheet.create({
     row: {
         flex: 1,
-        marginLeft: 50,
+        marginLeft: Normalize(50),
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start' // if you want to fill rows left to right
@@ -138,57 +142,57 @@ const styles = StyleSheet.create({
         width: '25%' // is 50% of container width
     },
     qText: {
-        fontSize: 20,
-        marginLeft: 15,
-        marginRight: 15,
-        marginBottom: 7,
+        fontSize: fontNormalize(18),
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        marginBottom: Normalize(7),
     },
     aText: {
-        fontSize: 14,
+        fontSize: fontNormalize(12),
     },
     switch: {
-        width: 30,
-        height: 30,
+        width: Normalize(30),
+        height: Normalize(30),
         transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }]
     },
     input: {
-        marginLeft: 15,
-        marginRight: 15,
-        height: 100,
+        marginLeft: Normalize(15),
+        marginRight: Normalize(15),
+        height: Normalize(100),
         borderColor: '#aaa',
         borderRadius: 7,
         borderWidth: 1,
-        fontSize: 18,
+        fontSize: fontNormalize(16),
         textAlign: 'left',
         textAlignVertical: 'top',
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 10
+        paddingLeft: Normalize(10),
+        paddingRight: Normalize(10),
+        paddingTop: Normalize(10)
     },
 
     thumbup: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: 'white',
         borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     },
     thumbdown: {
-        fontSize: 24,
-        padding: 7,
-        width: 48,
-        height: 48,
-        borderRadius: 48 / 2,
+        fontSize: fontNormalize(20),
+        width: Normalize(48),
+        height: Normalize(48),
+        borderRadius: Normalize(48) / 2,
         backgroundColor: '#f5c500',
-        borderColor: 'white',
+        borderColor: '#f5c500',
         borderWidth: 2,
         textAlign: 'center',
-        marginRight: 4
+        textAlignVertical: 'center',
+        marginRight: Normalize(5)
     }
 });
 

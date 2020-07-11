@@ -186,6 +186,9 @@ const HomeCleaningDetails = ({ children, t }) => {
                 multiline={true}
                 numberOfLines={4}
             />
+            <Spacer />
+            <Spacer />
+            <Spacer />
         </ScrollView>);
 };
 
