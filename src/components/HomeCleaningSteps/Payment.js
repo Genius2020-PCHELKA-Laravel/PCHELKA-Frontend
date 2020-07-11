@@ -12,6 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 // import Liqpay from '../Liqpay';
 import { withNamespaces } from 'react-i18next';
 import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const Payment = ({ children, t }) => {
     const { dispatch, state: hcstate } = useContext(HCContext);
@@ -117,10 +118,14 @@ const Payment = ({ children, t }) => {
                 <Spacer>
                     <View>
                         <View style={{ flexDirection: 'row' }}>
-                            <RadioButton onPress={() => { setShowCard(true); setMethod(0) }} value="0" status={hcstate.method == '0' ? 'checked' : 'unchecked'} />
-                            <FontBold value={t('paymentq1')} mystyle={{ fontSize: 20 }}></FontBold>
+                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                <RadioButton onPress={() => { setShowCard(true); setMethod(0) }} value="0" status={hcstate.method == '0' ? 'checked' : 'unchecked'} />
+                            </View>
+                            <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                                <FontBold value={t('paymentq1')} mystyle={{ fontSize: fontNormalize(20) }}></FontBold>
+                            </View>
                         </View>
-                        <FontLight value={t('paymentq1details')} mystyle={{ color: '#228B22', fontSize: 14, marginLeft: 35 }}></FontLight>
+                        <FontLight value={t('paymentq1details')} mystyle={{ color: '#228B22', fontSize: fontNormalize(14), marginLeft: Normalize(35) }}></FontLight>
                     </View>
                 </Spacer>
             </TouchableOpacity>
@@ -133,10 +138,14 @@ const Payment = ({ children, t }) => {
             <TouchableOpacity onPress={() => { setShowCard(false); setMethod(1) }}>
                 <Spacer>
                     <View style={{ flexDirection: 'row' }}>
-                        <RadioButton onPress={() => { setShowCard(false); setMethod(1) }} value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
-                        <FontBold value={t('paymentq2')} mystyle={{ fontSize: 20 }}></FontBold>
+                        <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                            <RadioButton onPress={() => { setShowCard(false); setMethod(1) }} value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
+                        </View>
+                        <View style={{ flexDirection: 'column', justifyContent: "center" }}>
+                            <FontBold value={t('paymentq2')} mystyle={{ fontSize: fontNormalize(20) }}></FontBold>
+                        </View>
                     </View>
-                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
+                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: fontNormalize(14), marginLeft: Normalize(35) }}></FontLight>
                 </Spacer>
             </TouchableOpacity>
         </ScrollView>);
@@ -153,56 +162,11 @@ const styles = StyleSheet.create({
         width: '70%' // is 50% of container width
     },
     item2: {
-        paddingHorizontal: 10,
+        paddingHorizontal: Normalize(10),
         width: '30%' // is 50% of container width
     },
     text: {
-        fontSize: 30
-    },
-    textAddressStyle: {
-        margin: 5,
-        position: "absolute",
-        backgroundColor: '#ddd',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#000',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 11,
-        fontWeight: "500",
-        // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            height: 10,
-            width: 0
-        },
-        shadowRadius: 25,
-    },
-    btnAddressStyle: {
-        margin: 5,
-        position: "absolute",
-        height: 30,
-        backgroundColor: '#ff9800',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#DAA520',
-        alignItems: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: 14,
-        fontWeight: "500",
-        // fontFamily: 'Comfortaa-Bold',
-        padding: 5,
-        shadowColor: '#2AC062',
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            height: 10,
-            width: 0
-        },
-        shadowRadius: 25,
+        fontSize: fontNormalize(30)
     },
 });
 

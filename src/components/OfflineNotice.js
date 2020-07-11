@@ -137,10 +137,10 @@ export default class OfflineNotice extends Component {
             this.setState({ isConnected: state.isInternetReachable });
             if (!state.isInternetReachable) {
                 this.setState({ countChanges: true });
-                this.setState({ showOfflineModal: true, showOnlineModal: false });
+                this.setState({ showOfflineModal: false, showOnlineModal: false });
             }
             if (state.isInternetReachable) {
-                this.setState({ showOfflineModal: false, showOnlineModal: true });
+                this.setState({ showOfflineModal: false, showOnlineModal: false });
                 setTimeout(() => {
                     this.setState({
                         showOnlineModal: false

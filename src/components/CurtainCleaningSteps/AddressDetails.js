@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity, RefreshControl } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Container, Footer, FooterTab, Button, } from 'native-base';
 import { CheckBox, Icon } from 'react-native-elements'
 import { RadioButton, Text } from 'react-native-paper';
@@ -15,13 +15,13 @@ import { withNamespaces } from 'react-i18next';
 import { navigate } from '../../navigationRef';
 import { getRedirect, setRedirect, removeRedirect } from '../../api/redirect';
 import i18n from '../../locales/i18n';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 const AddressDetails = ({ children, t }) => {
     const { state, getUserAddresses, dispatch } = useContext(UserContext);
     const { state: hcstate } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
-    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         dispatch({
@@ -29,38 +29,18 @@ const AddressDetails = ({ children, t }) => {
             payload: selectedAddress,
         });
     }, [selectedAddress]);
-    const _onRefresh = () => {
-        setRefreshing(true);
-        getUserAddresses().then((res) => {
-            console.log("ManageAddresses::onrefresh::getUserAddresses::response:: ");
-            console.log(res);
-            dispatch({ type: 'set_user_addresses_loaded', payload: true });
-            dispatch({ type: 'set_user_addresses', payload: res });
-            setRefreshing(false);
-        }).catch((error) => {
-            console.log("HomeScreen::onrefresh::getUserAddresses::error:: ");
-            setRefreshing(false);
-        });
-    }
+
 
     return (
         <View style={styles.container}>
             {/* <Text>{state.selected_address}</Text>
             <Text>{state.selected_address_name}</Text> */}
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={_onRefresh}
-                    />
-                }
-            >
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {/* <Loader loading={state.loading} /> */}
                 <Spacer>
                     <View style={styles.containerrow}>
                         <View style={styles.containeritem1}>
-                            <FontBold mystyle={{ color: 'gray', fontSize: 18 }} value={t('addressq1')}></FontBold>
+                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(16) }} value={t('addressq1')}></FontBold>
                         </View>
                         <TouchableOpacity style={styles.containeritem2} activeOpacity={0.5} onPress={() => {
                             setRedirect('CurtainCleaningScreen');
@@ -82,39 +62,38 @@ const AddressDetails = ({ children, t }) => {
                                             dispatch({ type: 'set_selected_address', payload: u.id, });
                                             dispatch({ type: 'set_selected_address_name', payload: u.address, });
                                         }}>
-                                        <View flexDirection='row' style={{ marginBottom: 5 }}>
-                                            <View flexDirection='column'>
-                                                <RadioButton
-                                                    onPress={() => {
-                                                        setSelectedAddress(u.id);
-                                                        setSelectedAddressName(u.address);
-                                                        dispatch({ type: 'set_selected_address', payload: u.id, });
-                                                        dispatch({ type: 'set_selected_address_name', payload: u.address, });
-                                                    }}
-                                                    value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                        <View flexDirection='column' style={{ marginBottom: Normalize(5) }}>
+                                            <View style={{ flexDirection: "row" }}>
+                                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                    <RadioButton
+                                                        onPress={() => {
+                                                            setSelectedAddress(u.id);
+                                                            setSelectedAddressName(u.address);
+                                                            dispatch({ type: 'set_selected_address', payload: u.id, });
+                                                            dispatch({ type: 'set_selected_address_name', payload: u.address, });
+                                                        }}
+                                                        value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                                </View>
+                                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                    <FontBold value={u.address} mystyle={{ fontSize: fontNormalize(16) }}></FontBold>
+                                                </View>
                                             </View>
-                                            <View flexDirection='column' style={{ paddingRight: 50, flexWrap: "wrap" }}>
-                                                {/* <Text>{u.id}</Text> */}
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <FontBold value={u.address} mystyle={{ fontSize: 18 }}></FontBold>
-                                                </View>
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <FontLight value={u.details} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                                </View>
-                                                <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('street') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
-                                                    <FontLight value={u.street} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                                </View>
-                                                <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
-                                                    <FontLight value={u.buildingNumber} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                                </View>
-                                                <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: 'gray', fontSize: 16 }} />
-                                                    <FontLight value={u.apartment} mystyle={{ color: 'gray', fontSize: 16 }}></FontLight>
-                                                </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }}>
+                                                <FontLight value={u.details} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }} >
+                                                <FontBold value={i18n.t('street') + ': '} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }} />
+                                                <FontLight value={u.street} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }} >
+                                                <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }} />
+                                                <FontLight value={u.buildingNumber} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }} >
+                                                <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }} />
+                                                <FontLight value={u.apartment} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
 
-                                            </View>
                                         </View>
                                     </TouchableOpacity>
                                     <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
@@ -132,7 +111,7 @@ const AddressDetails = ({ children, t }) => {
                                                     ulongitude: u.lon
                                                 });
                                             }}>
-                                            <FontBold value={t('edit')} />
+                                            <FontBold value={t('edit')} mystyle={{ fontSize: Normalize(12) }} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -157,7 +136,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start' // if you want to fill rows left to right
     },
     containeritem1: {
-        left: 10,
+        left: Normalize(10),
         width: '60%' // is 50% of container width
     },
     containeritem2: {
@@ -184,10 +163,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     text: {
-        fontSize: 30
+        fontSize: fontNormalize(28)
     },
     btnAddressStyle: {
-        marginTop: 5,
+        marginTop: Normalize(5),
         backgroundColor: '#fff',
         color: "#000",
         borderColor: "#7a7a7a",
@@ -195,15 +174,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
-        paddingHorizontal: 5,
-        paddingVertical: 3,
+        fontSize: fontNormalize(12),
+        paddingHorizontal: Normalize(5),
+        paddingVertical: Normalize(3),
         textAlignVertical: "center",
         zIndex: 17,
-        paddingHorizontal: 10
+        paddingHorizontal: Normalize(10)
     },
     editButton: {
-        marginTop: 5,
+        marginTop: Normalize(5),
         backgroundColor: '#fff',
         color: "#000",
         borderColor: "#7a7a7a",
@@ -211,12 +190,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         textAlign: 'center',
-        fontSize: 12,
-        paddingHorizontal: 5,
-        paddingVertical: 3,
+        fontSize: fontNormalize(12),
+        paddingHorizontal: Normalize(5),
+        paddingVertical: Normalize(3),
         textAlignVertical: "center",
         zIndex: 17,
-        paddingHorizontal: 10
+        paddingHorizontal: Normalize(10)
     },
 });
 

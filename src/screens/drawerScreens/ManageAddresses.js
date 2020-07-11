@@ -23,7 +23,6 @@ const ManageAddresses = ({ children, t }) => {
     const { state: hcstate } = useContext(HCContext);
     const [selectedAddress, setSelectedAddress] = useState(state.selected_address);
     const [selectedAddressName, setSelectedAddressName] = useState(state.selected_address_name);
-    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         dispatch({
@@ -32,39 +31,17 @@ const ManageAddresses = ({ children, t }) => {
         });
     }, [selectedAddress]);
 
-    const _onRefresh = () => {
-        setRefreshing(true);
-        getUserAddresses().then((res) => {
-            console.log("ManageAddresses::onrefresh::getUserAddresses::response:: ");
-            console.log(res);
-            dispatch({ type: 'set_user_addresses_loaded', payload: true });
-            dispatch({ type: 'set_user_addresses', payload: res });
-            setRefreshing(false);
-        }).catch((error) => {
-            console.log("HomeScreen::onrefresh::getUserAddresses::error:: ");
-            setRefreshing(false);
-        });
-    }
+
     return (
         <View style={styles.container}>
-            <OfflineNotice />
-
             {/* <Text>{state.selected_address}</Text>
-            <Text>{state.selected_address_name}</Text> */}
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={_onRefresh}
-                    />
-                }
-            >
+                <Text>{state.selected_address_name}</Text> */}
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {/* <Loader loading={state.loading} /> */}
                 <Spacer>
                     <View style={styles.containerrow}>
                         <View style={styles.containeritem1}>
-                            <FontBold mystyle={{ color: 'gray', fontSize: fontNormalize(18) }} value={t('addressq1')}></FontBold>
+                            <FontBold mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(16) }} value={t('addressq1')}></FontBold>
                         </View>
                         <TouchableOpacity style={styles.containeritem2} activeOpacity={0.5} onPress={() => {
                             setRedirect('ManageAddresses');
@@ -86,39 +63,38 @@ const ManageAddresses = ({ children, t }) => {
                                             dispatch({ type: 'set_selected_address', payload: u.id, });
                                             dispatch({ type: 'set_selected_address_name', payload: u.address, });
                                         }}>
-                                        <View flexDirection='row' style={{ marginBottom: Normalize(5) }}>
-                                            <View flexDirection='column'>
-                                                <RadioButton
-                                                    onPress={() => {
-                                                        setSelectedAddress(u.id);
-                                                        setSelectedAddressName(u.address);
-                                                        dispatch({ type: 'set_selected_address', payload: u.id, });
-                                                        dispatch({ type: 'set_selected_address_name', payload: u.address, });
-                                                    }}
-                                                    value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                        <View flexDirection='column' style={{ marginBottom: Normalize(5) }}>
+                                            <View style={{ flexDirection: "row" }}>
+                                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                    <RadioButton
+                                                        onPress={() => {
+                                                            setSelectedAddress(u.id);
+                                                            setSelectedAddressName(u.address);
+                                                            dispatch({ type: 'set_selected_address', payload: u.id, });
+                                                            dispatch({ type: 'set_selected_address_name', payload: u.address, });
+                                                        }}
+                                                        value={u.id} name={u.address} status={selectedAddress == u.id ? 'checked' : 'unchecked'} />
+                                                </View>
+                                                <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                    <FontBold value={u.address} mystyle={{ fontSize: fontNormalize(16) }}></FontBold>
+                                                </View>
                                             </View>
-                                            <View flexDirection='column' style={{ paddingRight: Normalize(50), flexWrap: "wrap" }}>
-                                                {/* <Text>{u.id}</Text> */}
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <FontBold value={u.address} mystyle={{ fontSize: fontNormalize(18) }}></FontBold>
-                                                </View>
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <FontLight value={u.details} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
-                                                </View>
-                                                <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('street') + ': '} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }} />
-                                                    <FontLight value={u.street} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
-                                                </View>
-                                                <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }} />
-                                                    <FontLight value={u.buildingNumber} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
-                                                </View>
-                                                <View flexDirection='row' >
-                                                    <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }} />
-                                                    <FontLight value={u.apartment} mystyle={{ color: 'gray', fontSize: fontNormalize(16) }}></FontLight>
-                                                </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }}>
+                                                <FontLight value={u.details} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }} >
+                                                <FontBold value={i18n.t('street') + ': '} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }} />
+                                                <FontLight value={u.street} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }} >
+                                                <FontBold value={i18n.t('buildingnumber') + ': '} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }} />
+                                                <FontLight value={u.buildingNumber} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
+                                            <View style={{ flexDirection: "row", marginLeft: Normalize(25) }} >
+                                                <FontBold value={i18n.t('apartment') + ': '} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }} />
+                                                <FontLight value={u.apartment} mystyle={{ color: '#7a7a7a', fontSize: fontNormalize(14) }}></FontLight>
+                                            </View>
 
-                                            </View>
                                         </View>
                                     </TouchableOpacity>
                                     <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
@@ -136,7 +112,7 @@ const ManageAddresses = ({ children, t }) => {
                                                     ulongitude: u.lon
                                                 });
                                             }}>
-                                            <FontBold value={t('edit')} />
+                                            <FontBold value={t('edit')} mystyle={{ fontSize: Normalize(12) }} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -188,7 +164,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     text: {
-        fontSize: fontNormalize(30)
+        fontSize: fontNormalize(28)
     },
     btnAddressStyle: {
         marginTop: Normalize(5),

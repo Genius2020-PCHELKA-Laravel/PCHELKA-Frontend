@@ -24,6 +24,7 @@ import { navigate } from '../../navigationRef';
 import { withNamespaces } from 'react-i18next';
 import i18n from '../../locales/i18n';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 export default class BookedScreen extends React.Component {
     constructor(props) {
@@ -59,26 +60,32 @@ export default class BookedScreen extends React.Component {
                                 <View style={{
                                     flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
                                 }}>
-                                    <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
+                                    <View style={{ flexDirection: 'column', height: Normalize(75), justifyContent: "center" }}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                                             {
                                                 this.props.refCode === '' ?
                                                     <ActivityIndicator color='#fff' animating={true} />
                                                     :
-                                                    <FontBold value={this.props.refCode + " "} mystyle={{ fontSize: 18, color: "#fff" }}></FontBold>
+                                                    <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                                                        <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                                                            <FontBold value={this.props.refCode} mystyle={{ fontSize: fontNormalize(18), color: "#fff" }}></FontBold>
+                                                        </View>
+                                                        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                            <FontBold value={i18n.t('booked')} mystyle={{ marginLeft: Normalize(10), fontSize: fontNormalize(18), color: "#fff" }} />
+                                                        </View>
+                                                    </View>
                                             }
-                                            <FontBold value={i18n.t('booked')} mystyle={{ fontSize: 18, color: "#fff" }} />
                                         </View>
 
                                     </View>
                                 </View>
                                 <Spacer>
                                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                        <FontAwesome name="calendar-check-o" size={30} color="#228B22" />
-                                        <FontBold value={i18n.t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: 20, marginLeft: 10 }} />
+                                        <FontAwesome name="calendar-check-o" size={Normalize(30)} color="#228B22" style={{ top: Normalize(7), left: Normalize(7) }} />
+                                        <FontBold value={i18n.t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: fontNormalize(20), marginLeft: Normalize(10) }} />
                                     </View>
                                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                        <FontLight value={i18n.t('youcanseeyourupcomingappoitmentsunderappoitments')} mystyle={{ textAlign: "center", fontSize: 16, marginLeft: 10 }} />
+                                        <FontLight value={i18n.t('youcanseeyourupcomingappoitmentsunderappoitments')} mystyle={{ textAlign: "center", fontSize: fontNormalize(16), marginLeft: Normalize(10) }} />
                                     </View>
                                 </Spacer>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 250,
+        height: Normalize(250),
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -116,8 +123,8 @@ const styles = StyleSheet.create({
         shadowColor: '#7a7a7a',
         shadowOpacity: 1.0,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         shadowRadius: 10,
         elevation: 10
@@ -137,10 +144,10 @@ const styles = StyleSheet.create({
         color: '#7a7a7a',
         display: 'flex',
         justifyContent: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: Normalize(10),
         backgroundColor: "#fff",
-        paddingHorizontal: 15,
-        paddingVertical: 5,
+        paddingHorizontal: Normalize(15),
+        paddingVertical: Normalize(5),
         textAlign: "center",
     }
 });
