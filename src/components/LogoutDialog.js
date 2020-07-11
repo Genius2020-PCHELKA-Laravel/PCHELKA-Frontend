@@ -56,6 +56,7 @@ const LogoutDialog = ({ navigation, t, showModalVisibleLogout, setShowModalVisib
                 //swipeThreshold={200}
                 //swipeDirection="down"
                 onRequestClose={() => {
+                    setShowModalVisibleLogout(false);
                     // alert('Modal has been closed.');
                 }}>
 

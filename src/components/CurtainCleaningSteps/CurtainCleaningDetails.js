@@ -108,15 +108,15 @@ const CurtainCleaningDetails = ({ children, t }) => {
                     <FontBold value={t('whatincluded')} mystyle={{ fontSize: fontNormalize(18) }} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(7) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('curtaindesc1')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(7) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('curtaindesc2')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(7) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('curtaindesc3')} />
                 </View>
             </View>

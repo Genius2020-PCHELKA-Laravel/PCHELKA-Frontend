@@ -57,6 +57,7 @@ const LanguageDialog = ({ navigation, t, showModalVisibleLanguage, setShowModalV
                 swipeThreshold={200}
                 swipeDirection="down"
                 onRequestClose={() => {
+                    setShowModalVisibleLanguage(false);
                     // alert('Modal has been closed.');
                 }}>
 

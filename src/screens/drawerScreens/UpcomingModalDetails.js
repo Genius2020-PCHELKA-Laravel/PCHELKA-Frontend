@@ -61,6 +61,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                 swipeThreshold={200}
                 swipeDirection="down"
                 onRequestClose={() => {
+                    setSelectedUpcomingModalDetails(false);
                     // alert('Modal has been closed.');
                 }}>
 

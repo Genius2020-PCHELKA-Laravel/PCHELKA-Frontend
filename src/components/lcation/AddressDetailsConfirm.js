@@ -147,6 +147,7 @@ export default class AddressDetailsConfirm extends React.Component {
                     swipeThreshold={200}
                     swipeDirection="down"
                     onRequestClose={() => {
+                        this.setState({ modalVisible: false });
                         // alert('Modal has been closed.');
                     }}>
 

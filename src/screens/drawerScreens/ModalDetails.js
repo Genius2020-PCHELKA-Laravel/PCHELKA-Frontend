@@ -58,6 +58,7 @@ const ModalDetails = ({ children, t }) => {
                 swipeThreshold={200}
                 swipeDirection="down"
                 onRequestClose={() => {
+                    setModalVisible(false);
                     // alert('Modal has been closed.');
                 }}>
 

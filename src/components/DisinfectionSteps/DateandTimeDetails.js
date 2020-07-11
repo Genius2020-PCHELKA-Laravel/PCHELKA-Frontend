@@ -208,7 +208,7 @@ const DateandTimeDetails = ({ children, t }) => {
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             {/* <Loader loading={isloading} /> */}
             <FontBold mystyle={styles.qText} value={t('dateq0')} />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15) }}>
                 {/* redering Auto-Assign */}
                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
                     onPress={() => {
@@ -394,7 +394,7 @@ const DateandTimeDetails = ({ children, t }) => {
                 isloadingActivityIndicator ?
                     <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                     :
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15) }}>
                         {
                             days
                         }
@@ -409,7 +409,7 @@ const DateandTimeDetails = ({ children, t }) => {
                 isloadingActivityIndicator ?
                     <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                     :
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15), marginRight: Normalize(30) }}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15), marginRight: Normalize(15) }}>
                         {
                             starts
                         }

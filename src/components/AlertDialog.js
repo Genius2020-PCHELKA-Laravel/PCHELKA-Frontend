@@ -49,6 +49,7 @@ const AlertDialog = props => {
             // swipeDirection="down"
             onRequestClose={() => {
                 // alert('Modal has been closed.');
+                setChanging(false);
             }}>
             <TouchableOpacity onPress={() => setChanging(false)} style={styles.wrapper}>
 

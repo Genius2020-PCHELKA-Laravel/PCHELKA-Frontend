@@ -151,6 +151,7 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                 swipeThreshold={200}
                 swipeDirection="down"
                 onRequestClose={() => {
+                    setSelectedPastModalDetails(false);
                     // alert('Modal has been closed.');
                 }}>
 

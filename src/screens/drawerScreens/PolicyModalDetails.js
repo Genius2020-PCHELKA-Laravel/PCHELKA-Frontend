@@ -31,6 +31,7 @@ const PolicyModalDetails = ({ navigation, t, reschedulePolicyModalDetails, setRe
                 swipeThreshold={200}
                 swipeDirection="down"
                 onRequestClose={() => {
+                    setReschedulePolicyModalDetails(false);
                     // alert('Modal has been closed.');
                 }}>
                 <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

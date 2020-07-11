@@ -296,7 +296,13 @@ const SofaCleaningScreen = ({ navigation, t }) => {
           completedProgressBarColor='#f5c500'
           completedStepIconColor='#f5c500'
           labelFontFamily=''
-          backgroundColor='#fff'>
+          backgroundColor='#fff'
+          borderWidth={1}
+          topOffset={Normalize(15)}
+          marginBottom={Normalize(25)}
+          marginLeft={Normalize(15)}
+          marginRight={Normalize(15)}
+        >
           <ProgressStep
             label={t('cleaning')}
             onNext={onCleaningDetailsComplete}

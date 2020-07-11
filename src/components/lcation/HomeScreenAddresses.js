@@ -50,6 +50,7 @@ export default class HomeScreenAddresses extends React.Component {
                     swipeThreshold={200}
                     swipeDirection="down"
                     onRequestClose={() => {
+                        this.props.setShowAddressesModal(false);
                         // alert('Modal has been closed.');
                     }}>
                     {/* <TouchableOpacity style={styles.wrapper}> */}

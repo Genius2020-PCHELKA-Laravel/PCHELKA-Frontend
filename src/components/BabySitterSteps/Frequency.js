@@ -64,19 +64,19 @@ const Frequency = ({ children, t }) => {
                     <FontBold value={t('whatincluded')} mystyle={{ fontSize: fontNormalize(16) }} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(6) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('babydesc1')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(6) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('babydesc2')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(6) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('babydesc3')} />
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(5) }} />
+                    <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(6) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('babydesc4')} />
                 </View>
             </View>

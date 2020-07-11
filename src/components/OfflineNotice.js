@@ -173,6 +173,7 @@ export default class OfflineNotice extends Component {
                     // swipeThreshold={200}
                     // swipeDirection="down"
                     onRequestClose={() => {
+                        this.setState({ showOnlineModal: false });
                         // alert('Modal has been closed.');
                     }}>
                     <View style={styles.offlineContainer}>
@@ -204,6 +205,7 @@ export default class OfflineNotice extends Component {
                     // swipeThreshold={200}
                     // swipeDirection="down"
                     onRequestClose={() => {
+                        this.setState({ showOnlineModal: false });
                         // alert('Modal has been closed.');
                     }}>
                     <View style={styles.onlineContainer}>

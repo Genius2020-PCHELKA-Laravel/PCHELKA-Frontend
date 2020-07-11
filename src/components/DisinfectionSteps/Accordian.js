@@ -4,6 +4,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import FontBold from '../FontBold';
 import FontRegular from '../FontRegular';
 import FontLight from '../FontLight';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
+
 export default class Accordian extends Component {
 
     constructor(props) {
@@ -23,8 +25,12 @@ export default class Accordian extends Component {
         return (
             <View>
                 <TouchableOpacity ref={this.accordian} style={styles.row} onPress={() => this.toggleExpand()}>
-                    <FontBold value={this.props.title} mystyle={styles.title} />
-                    <Icon name={this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={30} color='darkgray' />
+                    <View style={{ flexDirection: "column", flex: 0.9 }}>
+                        <FontBold value={this.props.title} mystyle={styles.title} />
+                    </View>
+                    <View style={{ flexDirection: "column", flex: 0.1 }}>
+                        <Icon name={this.state.expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={Normalize(30)} color='darkgray' />
+                    </View>
                 </TouchableOpacity>
                 <View style={styles.parentHr} />
                 {
@@ -47,15 +53,16 @@ export default class Accordian extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 14,
+        fontSize: fontNormalize(14),
         color: '#000',
+        flexWrap: "wrap"
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        height: 56,
-        paddingLeft: 25,
-        paddingRight: 18,
+        height: Normalize(56),
+        paddingLeft: Normalize(25),
+        paddingRight: Normalize(18),
         alignItems: 'center',
         backgroundColor: 'lightgray',
     },
@@ -66,7 +73,7 @@ const styles = StyleSheet.create({
     },
     child: {
         backgroundColor: '#fff',
-        padding: 16,
+        padding: Normalize(16),
     }
 
 });

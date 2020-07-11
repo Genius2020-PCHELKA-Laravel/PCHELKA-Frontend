@@ -58,6 +58,7 @@ const ExitDialog = props => {
             // swipeThreshold={200}
             // swipeDirection="down"
             onRequestClose={() => {
+                setChanging(false);
                 // alert('Modal has been closed.');
             }}>
             <TouchableOpacity onPress={() => setChanging(false)} style={styles.wrapper}>

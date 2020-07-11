@@ -89,6 +89,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                 swipeThreshold={200}
                 swipeDirection="down"
                 onRequestClose={() => {
+                    setModalVisible(false);
                     // alert('Modal has been closed.');
                 }}>
 
