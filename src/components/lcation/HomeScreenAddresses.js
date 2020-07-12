@@ -93,7 +93,7 @@ export default class HomeScreenAddresses extends React.Component {
                                 marginBottom: 15
                             }}>
                             <View style={{ flexDirection: "row", marginBottom: Normalize(10) }}>
-                                <MaterialIcons name="my-location" size={30} color="#7a7a7a" />
+                                <MaterialIcons name="my-location" size={Normalize(30)} color="#7a7a7a" />
                                 <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                     <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: fontNormalize(16) }} />
                                 </View>
