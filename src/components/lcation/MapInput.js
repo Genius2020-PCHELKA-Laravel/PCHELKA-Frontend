@@ -1,26 +1,24 @@
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import i18n from '../../locales/i18n';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 class MapInput extends React.Component {
 
     render() {
         return (
-
             <GooglePlacesAutocomplete
                 styles={{
                     container: {
                         borderWidth: 1,
                         borderColor: '#aaa',
-                        top: 15,
-                        right: 10,
-
+                        top: Normalize(15),
+                        right: Normalize(10),
                     },
                     textInputContainer: {
                         width: '100%',
                         backgroundColor: "#fff",
-                        paddingLeft: 30,
-
+                        paddingLeft: Normalize(30),
                     },
                     description: {
                         fontWeight: 'bold',

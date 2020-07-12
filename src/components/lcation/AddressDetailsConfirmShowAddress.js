@@ -19,6 +19,7 @@ import { withNamespaces } from 'react-i18next';
 import Toast from 'react-native-simple-toast';
 import i18n from '../../locales/i18n';
 import Modal from 'react-native-modal';
+import { Normalize, fontNormalize } from '../actuatedNormalize';
 
 export default class AddressDetailsConfirmShowAddress extends React.Component {
 
@@ -152,7 +153,7 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
                     }}>
 
                     <View style={styles.container}>
-                        <View style={{ justifyContent: 'flex-start', marginTop: 5, marginLeft: 15 }}>
+                        <View style={{ justifyContent: 'flex-start', marginTop: Normalize(5), marginLeft: Normalize(15) }}>
                             <TouchableOpacity
                                 activeOpacity={0.5}
                                 onPress={() => {
@@ -160,20 +161,20 @@ export default class AddressDetailsConfirmShowAddress extends React.Component {
                                 }}
                                 style={{
                                     backgroundColor: '#fff',
-                                    width: 35,
-                                    height: 35,
+                                    width: Normalize(35),
+                                    height: Normalize(35),
                                     position: "absolute",
-                                    right: 15,
+                                    right: Normalize(15),
+                                    top: Normalize(5),
                                     zIndex: 18
                                 }}>
-                                <FontAwesome name="times" size={35} color="#7a7a7a" />
+                                <FontAwesome name="times" size={Normalize(35)} color="#7a7a7a" />
                             </TouchableOpacity>
                         </View>
-                        <FontRegular mystyle={{ color: '#000', fontSize: 21, left: 15, top: 15 }} value={i18n.t('newaddress')}></FontRegular>
-                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: 20, marginLeft: 15, marginRight: 15 }} />
+                        <FontRegular mystyle={{ color: '#000', fontSize: Normalize(18), left: Normalize(15), top: Normalize(15) }} value={i18n.t('newaddress')}></FontRegular>
+                        <View style={{ borderBottomColor: '#f5c500', borderBottomWidth: 1, marginTop: Normalize(20), marginLeft: Normalize(15), marginRight: Normalize(15) }} />
                         <Spacer />
                         <View style={styles.SectionStyle}>
-
                             <TextInput
                                 style={this.state.streetStyle}
                                 onChangeText={(text) => this.handleStreetChange(text)}
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 360,
+        height: Normalize(330),
         width: '100%',
         bottom: 0,
         borderTopLeftRadius: 14,
@@ -293,72 +294,72 @@ const styles = StyleSheet.create({
     },
     confirmbuttonStyle: {
         position: 'absolute',
-        bottom: 15,
-        left: 10,
-        right: 10,
+        bottom: Normalize(15),
+        left: Normalize(10),
+        right: Normalize(10),
         backgroundColor: '#f5c500',
         borderWidth: 1,
         borderColor: '#f5c500',
         alignItems: 'center',
         borderRadius: 7,
-        marginTop: 20,
-        marginBottom: 20,
-        height: 50,
+        marginTop: Normalize(20),
+        marginBottom: Normalize(20),
+        height: Normalize(50),
         textAlign: 'center',
         justifyContent: 'center',
     },
     saveButtonStyle: {
         position: 'absolute',
-        bottom: 15,
-        left: 10,
-        right: 10,
+        bottom: Normalize(15),
+        left: Normalize(10),
+        right: Normalize(10),
         backgroundColor: '#f5c500',
         borderWidth: 1,
         borderColor: '#f5c500',
         alignItems: 'center',
         borderRadius: 7,
-        marginTop: 20,
-        marginBottom: 20,
-        height: 50,
+        marginTop: Normalize(20),
+        marginBottom: Normalize(20),
+        height: Normalize(50),
         justifyContent: 'center',
     },
     saveButtonStyleError: {
         position: 'absolute',
-        bottom: 15,
-        left: 10,
-        right: 10,
+        bottom: Normalize(15),
+        left: Normalize(10),
+        right: Normalize(10),
         backgroundColor: '#fff',
         borderWidth: 1,
         borderColor: '#7a7a7a',
         alignItems: 'center',
         borderRadius: 7,
-        marginTop: 20,
-        marginBottom: 20,
-        height: 50,
+        marginTop: Normalize(20),
+        marginBottom: Normalize(20),
+        height: Normalize(50),
         textAlign: 'center',
         justifyContent: 'center'
     },
     SectionStyle: {
         flexDirection: 'row',
-        height: 50,
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        height: Normalize(50),
+        marginBottom: Normalize(10),
+        marginLeft: Normalize(10),
+        marginRight: Normalize(10),
         alignItems: 'center',
     },
     saveButtonTextStyle: {
         color: '#fff',
-        paddingVertical: 10,
-        fontSize: 22,
+        paddingVertical: Normalize(10),
+        fontSize: Normalize(20),
     },
     saveButtonTextStyleError: {
         color: '#7a7a7a',
-        paddingVertical: 10,
-        fontSize: 22,
+        paddingVertical: Normalize(10),
+        fontSize: Normalize(20),
     },
     confirmButtonTextStyle: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: Normalize(20),
         textAlign: 'center',
         textAlignVertical: "center"
     },
@@ -368,8 +369,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 7,
         borderColor: '#000',
-        fontSize: 20,
-        padding: 15,
+        fontSize: Normalize(18),
+        padding: Normalize(15),
     },
     inputStyleError: {
         flex: 1,
@@ -377,8 +378,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 7,
         borderColor: '#aaa',
-        fontSize: 20,
-        padding: 15,
+        fontSize: Normalize(18),
+        padding: Normalize(15),
     },
 });
 

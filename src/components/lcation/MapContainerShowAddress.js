@@ -13,6 +13,7 @@ import Loader from '../Loader';
 import i18n from '../../locales/i18n';
 import { Dimensions } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { Normalize, fontNormalize } from '../../components/actuatedNormalize';
 
 const MapContainerShowAddress = ({ navigation, ulatitude, ulongitude, uid, ustreet, ubuildingnumber, uapartment }) => {
     const [country, setCountry] = useState('');
@@ -145,17 +146,18 @@ const MapContainerShowAddress = ({ navigation, ulatitude, ulongitude, uid, ustre
             <Loader loading={isloading} />
             <View style={styles.mapinputstyle}>
                 <View style={styles.item2}>
-                    <Icon
-                        style={{ position: "absolute", zIndex: 17, top: 20, color: '#aaa' }}
-                        onPress={async () => {
-                            var redirect = await getRedirect();
-                            // alert(redirect)
-                            removeRedirect();
-                            navigate(redirect);
-                        }}
-                        name="md-arrow-back"
-                        size={35}
-                    />
+                    <View style={{ zIndex: 17, top: Normalize(15), left: Normalize(25), color: '#aaa', flexDirection: "column", justifyContent: "center" }}>
+                        <Icon
+                            onPress={async () => {
+                                var redirect = await getRedirect();
+                                // alert(redirect)
+                                removeRedirect();
+                                navigate(redirect);
+                            }}
+                            name="md-arrow-back"
+                            size={Normalize(35)}
+                        />
+                    </View>
                     <MapInput notifyChange={(loc) => {
                         getCoordsFromName(loc);
                     }} />
@@ -183,17 +185,17 @@ const MapContainerShowAddress = ({ navigation, ulatitude, ulongitude, uid, ustre
                         <TouchableOpacity
                             activeOpacity={0.5}
                             style={{
-                                right: 25,
-                                bottom: 100,
-                                marginLeft: -24,
-                                marginTop: -48,
+                                right: Normalize(25),
+                                bottom: Normalize(100),
+                                marginLeft: -Normalize(24),
+                                marginTop: -Normalize(48),
                                 position: 'absolute',
                                 zIndex: 16
                             }}
                             onPress={() => {
                                 getInitialState();
                             }}>
-                            <FontAwesome style={styles.locationArrow} name="location-arrow" size={30} color="#999" />
+                            <FontAwesome style={styles.locationArrow} name="location-arrow" size={Normalize(30)} color="#999" />
                         </TouchableOpacity>
                         <MapView
                             style={styles.mapStyle}
@@ -226,23 +228,23 @@ const styles = StyleSheet.create({
     },
     mapinputstyle: {
         position: 'absolute',
-        top: 5,
+        top: Normalize(5),
         zIndex: 16,
         flexDirection: 'row',
     },
     item2: {
-        left: 20,
-        width: '97%' // is 50% of container width
+        flexDirection: 'row',
+        width: '100%' // is 50% of container width
     },
     mapStyle: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
     locationArrow: {
-        borderRadius: 50,
+        borderRadius: Normalize(50),
         borderWidth: 0,
-        width: 50,
-        height: 50,
+        width: Normalize(50),
+        height: Normalize(50),
         textAlign: 'center',
         textAlignVertical: 'center',
         backgroundColor: '#e7e7e7',

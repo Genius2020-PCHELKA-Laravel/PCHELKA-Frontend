@@ -75,7 +75,7 @@ export default class HomeScreenAddresses extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <View flexDirection='row'>
-                            <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: fontNormalize(20), left: Normalize(15), top: Normalize(15), }} />
+                            <FontBold value={i18n.t('youraddresses')} mystyle={{ fontSize: fontNormalize(18), left: Normalize(15), top: Normalize(15), }} />
 
                         </View>
                         <Spacer />
@@ -95,7 +95,7 @@ export default class HomeScreenAddresses extends React.Component {
                             <View style={{ flexDirection: "row", marginBottom: Normalize(10) }}>
                                 <MaterialIcons name="my-location" size={30} color="#7a7a7a" />
                                 <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                    <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: fontNormalize(18) }} />
+                                    <FontBold value={"  " + i18n.t('addnewaddress')} mystyle={{ fontSize: fontNormalize(16) }} />
                                 </View>
                             </View>
 
@@ -107,7 +107,7 @@ export default class HomeScreenAddresses extends React.Component {
                             // this.props.addresses.length === 0 || this.props.addresses === undefined ?
                             typeof this.props.addresses === 'undefined' || this.props.addresses.length === 0 ?
                                 // <Image style={styles.noaddresses} source={require('../../../assets/noappoitments.png')} />
-                                <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: Normalize(15), marginLeft: Normalize(15), marginRight: Normalize(15), fontSize: fontNormalize(18) }} />
+                                <FontBold value={i18n.t('noaddresses')} mystyle={{ marginTop: Normalize(15), marginLeft: Normalize(15), marginRight: Normalize(15), fontSize: fontNormalize(16) }} />
                                 :
                                 <ScrollView vertical showsVerticalScrollIndicator={false} style={{ flexDirection: 'column', }}>
                                     {
@@ -132,19 +132,22 @@ export default class HomeScreenAddresses extends React.Component {
                                                             </View>
                                                             <View flexDirection='column' style={{ width: '90%', left: Normalize(15), right: Normalize(15) }}>
                                                                 <View flexDirection='row' >
-                                                                    <FontBold mystyle={{ fontSize: fontNormalize(18), }} value={u.address + ', '} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(16), }} value={u.address + ', '} />
                                                                 </View>
                                                                 <View flexDirection='row' >
-                                                                    <FontBold mystyle={{ fontSize: fontNormalize(18), }} value={u.details} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(16), }} value={u.details} />
                                                                 </View>
                                                                 <View flexDirection='row'>
-                                                                    <FontBold mystyle={{ fontSize: fontNormalize(14), color: "#888" }} value={u.street + ', '} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), color: "#000" }} value={i18n.t('street') + ": "} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), color: "#7a7a7a" }} value={u.street + ', '} />
                                                                 </View>
                                                                 <View flexDirection='row'>
-                                                                    <FontBold mystyle={{ fontSize: fontNormalize(14), color: "#888" }} value={u.buildingNumber + ', '} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), color: "#000" }} value={i18n.t('buildingnumber') + ": "} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), color: "#7a7a7a" }} value={u.buildingNumber + ', '} />
                                                                 </View>
                                                                 <View flexDirection='row'>
-                                                                    <FontBold mystyle={{ fontSize: fontNormalize(14), color: "#888" }} value={u.apartment} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), color: "#000" }} value={i18n.t('apartment') + ": "} />
+                                                                    <FontBold mystyle={{ fontSize: fontNormalize(12), color: "#7a7a7a" }} value={u.apartment} />
                                                                 </View>
                                                             </View>
                                                         </View>
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: Normalize(450),
+        height: Normalize(400),
         width: '100%',
         bottom: 0,
         borderTopLeftRadius: 14,

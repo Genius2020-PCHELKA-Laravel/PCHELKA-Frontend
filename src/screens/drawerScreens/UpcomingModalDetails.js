@@ -337,100 +337,93 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                                     <FontBold value={hcstate.selectedupcomingproviderdata.name} />
                                                 </View>
                                                 <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
-                                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                                        {
-                                                            hcstate.selectedupcoming.providerEvaluation == 0 ?
-                                                                <FontAwesome name="star-o" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                :
-                                                                hcstate.selectedupcoming.providerEvaluation == 1 ?
-                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                                            {
+                                                                hcstate.selectedupcoming.providerEvaluation == 0 ?
+                                                                    <FontAwesome name="star-o" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                     :
-                                                                    hcstate.selectedupcoming.providerEvaluation == 2 ?
-                                                                        <>
-                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                        </>
+                                                                    hcstate.selectedupcoming.providerEvaluation == 1 ?
+                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                         :
-                                                                        hcstate.selectedupcoming.providerEvaluation == 3 ?
+                                                                        hcstate.selectedupcoming.providerEvaluation == 2 ?
                                                                             <>
-                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                             </>
                                                                             :
-                                                                            hcstate.selectedupcoming.providerEvaluation == 4 ?
+                                                                            hcstate.selectedupcoming.providerEvaluation == 3 ?
                                                                                 <>
-                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                 </>
                                                                                 :
-                                                                                hcstate.selectedupcoming.providerEvaluation == 5 ?
+                                                                                hcstate.selectedupcoming.providerEvaluation == 4 ?
                                                                                     <>
-                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                     </>
                                                                                     :
-                                                                                    hcstate.selectedupcoming.providerEvaluation > 1 && hcstate.selectedupcoming.providerEvaluation < 2 ?
+                                                                                    hcstate.selectedupcoming.providerEvaluation == 5 ?
                                                                                         <>
                                                                                             <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                                            <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                         </>
                                                                                         :
-                                                                                        hcstate.selectedupcoming.providerEvaluation > 2 && hcstate.selectedupcoming.providerEvaluation < 3 ?
+                                                                                        hcstate.selectedupcoming.providerEvaluation > 1 && hcstate.selectedupcoming.providerEvaluation < 2 ?
                                                                                             <>
-                                                                                                <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                 <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                             </>
                                                                                             :
-                                                                                            hcstate.selectedupcoming.providerEvaluation > 3 && hcstate.selectedupcoming.providerEvaluation < 4 ?
+                                                                                            hcstate.selectedupcoming.providerEvaluation > 2 && hcstate.selectedupcoming.providerEvaluation < 3 ?
                                                                                                 <>
-                                                                                                    <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                     <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                 </>
                                                                                                 :
-                                                                                                hcstate.selectedupcoming.providerEvaluation > 4 && hcstate.selectedupcoming.providerEvaluation < 5 ?
+                                                                                                hcstate.selectedupcoming.providerEvaluation > 3 && hcstate.selectedupcoming.providerEvaluation < 4 ?
                                                                                                     <>
-                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                         <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
                                                                                                     </>
                                                                                                     :
-                                                                                                    <>
-                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                                                        <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
-                                                                                                    </>
-                                                        }
+                                                                                                    hcstate.selectedupcoming.providerEvaluation > 4 && hcstate.selectedupcoming.providerEvaluation < 5 ?
+                                                                                                        <>
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star-half-empty" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        </>
+                                                                                                        :
+                                                                                                        <>
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                            <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
+                                                                                                        </>
+                                                            }
+                                                        </View>
                                                     </View>
                                                     <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                                         {
                                                             hcstate.selectedupcoming.providerEvaluation != 0 ?
-                                                                <FontLight mystyle={{ fontSize: fontNormalize(12), marginLeft: Normalize(5) }} value={hcstate.selectedupcoming.providerEvaluation} />
+                                                                <FontLight mystyle={{ fontSize: fontNormalize(11), marginLeft: Normalize(5) }} value={hcstate.selectedupcoming.providerEvaluation} />
                                                                 :
                                                                 <FontLight mystyle={{ fontSize: fontNormalize(12), marginLeft: Normalize(5) }} value={t('notevaluated')} />
                                                         }
                                                     </View>
-
-                                                    {/* <TouchableOpacity style={{ flexDirection: "row" }}>
-                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                        <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
-                                                    </View>
-                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                        <FontAwesome name="chevron-right" size={12} color="blue" style={{ marginTop: 5, marginLeft: 2, marginRight: 15 }} />
-                                                    </View>
-                                                </TouchableOpacity> */}
                                                 </View>
                                                 {
                                                     hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
@@ -565,7 +558,7 @@ const styles = StyleSheet.create({
 
     title: { marginLeft: Normalize(15), marginTop: Normalize(15), marginRight: Normalize(10), fontSize: fontNormalize(18) },
     subtitle: { marginLeft: Normalize(15), marginTop: 0, fontSize: fontNormalize(20), marginBottom: Normalize(5), marginRight: Normalize(10) },
-    totalAmount: { color: '#000', marginTop: 0, fontSize: fontNormalize(24) },
+    totalAmount: { color: '#000', marginTop: 0, fontSize: fontNormalize(20) },
     // reschedulebuttonStyle: {
     //     position: 'absolute',
     //     bottom: 15,
@@ -636,8 +629,8 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     image: {
-        width: Normalize(80),
-        height: Normalize(80),
+        width: Normalize(70),
+        height: Normalize(70),
         borderRadius: 45,
         marginTop: Normalize(5),
         marginBottom: Normalize(5),

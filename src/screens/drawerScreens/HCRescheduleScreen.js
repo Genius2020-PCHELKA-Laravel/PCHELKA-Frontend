@@ -199,7 +199,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                         <FontRegular mystyle={{}} value={days_names[(newDate.getDay()) % 7]} />
                     </View>
                     <View style={styles.item2}>
-                        <Text style={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup}>{newDate.getDate()}</Text>
+                        <FontBold mystyle={controlstyles ? styles.notactive : selectedDay == fdate ? styles.thumbdown : styles.thumbup} value={newDate.getDate()} />
                         <View style={controlstyles ? styles.diagonaline : null}></View>
                     </View>
                 </View>
@@ -262,7 +262,7 @@ const HCRescheduleScreen = ({ children, t }) => {
             }}
                 disabled={timecontrolstyles}>
                 <View>
-                    <Text style={previousstartstyle ? styles.timenotactiveprevious : timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup}>{fstart.substring(0, 5)}</Text>
+                    <FontBold mystyle={previousstartstyle ? styles.timenotactiveprevious : timecontrolstyles ? styles.timenotactive : start == fstart ? styles.timethumbdown : styles.timethumbup} value={fstart.substring(0, 5)} />
                     <View style={previousstartstyle ? styles.timediagonalineprevious : timecontrolstyles ? styles.timediagonaline : null}></View>
                 </View>
             </TouchableOpacity>
@@ -293,7 +293,13 @@ const HCRescheduleScreen = ({ children, t }) => {
                     completedStepIconColor='#f5c500'
                     labelFontFamily=''
                     backgroundColor='#fff'
-                    activeStep={2}>
+                    activeStep={2}
+                    borderWidth={1}
+                    topOffset={Normalize(15)}
+                    marginBottom={Normalize(25)}
+                    marginLeft={Normalize(15)}
+                    marginRight={Normalize(15)}
+                >
                     <ProgressStep
                         label={'    ' + t('frequency')}
                         // onNext={onFrequencyStepComplete}
@@ -348,7 +354,7 @@ const HCRescheduleScreen = ({ children, t }) => {
 
                             }
 
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15) }}>
                                 {/* redering Auto-Assign */}
                                 <TouchableOpacity style={providerid == '' ? styles.providerThumdown : styles.providerThumup}
                                     onPress={() => {
@@ -559,7 +565,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                                 isloadingActivityIndicator ?
                                     <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                                     :
-                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(30) }}>
+                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15) }}>
                                         {
                                             days
                                         }
@@ -574,7 +580,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                                 isloadingActivityIndicator ?
                                     <ActivityIndicator style={{ flexDirection: "row", justifyContent: "center" }} size={Normalize(35)} color='#ff9800' animating={isloadingActivityIndicator} />
                                     :
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15), marginRight: Normalize(30) }}>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15), marginRight: Normalize(15) }}>
                                         {
                                             starts
                                         }
@@ -712,7 +718,7 @@ const styles = StyleSheet.create({
         height: '70%' // is 50% of container width
     },
     qText: {
-        fontSize: fontNormalize(20),
+        fontSize: fontNormalize(18),
         marginLeft: Normalize(15),
         marginRight: Normalize(15),
         marginBottom: Normalize(7)
@@ -770,7 +776,7 @@ const styles = StyleSheet.create({
         color: "#7a7a7a"
     },
     timethumbup: {
-        fontSize: fontNormalize(18),
+        fontSize: fontNormalize(16),
         padding: Normalize(7),
         width: Normalize(65),
         height: Normalize(40),
@@ -783,7 +789,7 @@ const styles = StyleSheet.create({
         marginRight: Normalize(4)
     },
     timethumbdown: {
-        fontSize: fontNormalize(18),
+        fontSize: fontNormalize(16),
         padding: Normalize(7),
         width: Normalize(65),
         height: Normalize(40),
@@ -797,7 +803,7 @@ const styles = StyleSheet.create({
     },
     timenotactive: {
         display: 'none',
-        fontSize: fontNormalize(18),
+        fontSize: fontNormalize(16),
         padding: Normalize(7),
         width: Normalize(65),
         height: Normalize(40),
@@ -812,7 +818,7 @@ const styles = StyleSheet.create({
     },
     timenotactiveprevious: {
         // display: 'none',
-        fontSize: fontNormalize(18),
+        fontSize: fontNormalize(16),
         padding: Normalize(7),
         width: Normalize(65),
         height: Normalize(40),
