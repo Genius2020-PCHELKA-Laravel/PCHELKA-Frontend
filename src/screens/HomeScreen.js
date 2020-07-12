@@ -18,7 +18,7 @@ import { Context as AuthContext } from './context/AuthContext';
 import { Context as UserContext } from './context/UserContext';
 import { Context as HCContext } from './context/HCContext';
 import { navigate } from '../navigationRef';
-import NotificationsComponent from '../components/NotificationsComponent';
+// import NotificationsComponent from '../components/NotificationsComponent';
 import { BackHandler } from 'react-native';
 import ExitDialog from '../components/ExitDialog';
 import EvaluationDialog from '../components/EvaluationDialog';

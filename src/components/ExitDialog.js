@@ -69,7 +69,7 @@ const ExitDialog = props => {
                         <View style={{
                             flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
                         }}>
-                            <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
+                            <View style={{ flexDirection: 'column', height: Normalize(75), justifyContent: "center" }}>
                                 <FontBold value={i18n.t('exitapp')} mystyle={{ fontSize: fontNormalize(20), color: "#fff" }}></FontBold>
                             </View>
                         </View>
@@ -83,10 +83,10 @@ const ExitDialog = props => {
                         </Spacer>
                         <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: Normalize(20) }}>
                             <TouchableOpacity style={styles.btn} onPress={handleCancel} >
-                                <FontBold value={i18n.t('cancel')} />
+                                <FontBold value={i18n.t('cancel')} mystyle={{ fontSize: fontNormalize(14) }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.btn} onPress={handleChange} >
-                                <FontBold mystyle={{ color: "#b52424" }} value={i18n.t('ok')} />
+                                <FontBold mystyle={{ color: "#b52424", fontSize: fontNormalize(14) }} value={i18n.t('ok')} />
                             </TouchableOpacity>
                         </View>
                     </View>

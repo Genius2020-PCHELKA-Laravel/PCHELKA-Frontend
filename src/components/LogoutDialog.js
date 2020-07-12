@@ -22,7 +22,7 @@ import { getLang } from '../api/userLanguage';
 import Loader from '../components/Loader';
 import { Avatar } from 'react-native-elements';
 import { RadioButton } from 'react-native-paper';
-import { Normalize } from './actuatedNormalize';
+import { Normalize, fontNormalize } from './actuatedNormalize';
 
 const LogoutDialog = ({ navigation, t, showModalVisibleLogout, setShowModalVisibleLogout, oklogout }) => {
 
@@ -66,20 +66,20 @@ const LogoutDialog = ({ navigation, t, showModalVisibleLogout, setShowModalVisib
                             <View style={{
                                 flexDirection: 'row', backgroundColor: "#f5c500", justifyContent: "center", borderTopLeftRadius: 14, borderTopRightRadius: 14,
                             }}>
-                                <View style={{ flexDirection: 'column', height: 75, justifyContent: "center" }}>
-                                    <FontBold value={t('logoutapp')} mystyle={{ fontSize: 20, color: "#fff" }}></FontBold>
+                                <View style={{ flexDirection: 'column', height: Normalize(75), justifyContent: "center" }}>
+                                    <FontBold value={t('logoutapp')} mystyle={{ fontSize: fontNormalize(20), color: "#fff" }}></FontBold>
                                 </View>
                             </View>
                             <Spacer />
                             <Spacer>
-                                <FontRegular mystyle={{ fontSize: 16 }} value={t('doyouwanttologout')} />
+                                <FontRegular mystyle={{ fontSize: fontNormalize(16) }} value={t('doyouwanttologout')} />
                             </Spacer>
                             <View flexDirection="row" style={{ justifyContent: "flex-end", marginTop: 20 }}>
                                 <TouchableOpacity style={styles.btn} onPress={() => setShowModalVisibleLogout(false)}>
-                                    <FontBold value={t('cancel')} />
+                                    <FontBold value={t('cancel')} mystyle={{ fontSize: fontNormalize(14) }} />
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.btn} onPress={oklogout} >
-                                    <FontBold mystyle={{ color: "#b52424" }} value={t('ok')} />
+                                    <FontBold mystyle={{ color: "#b52424", fontSize: fontNormalize(14) }} value={t('ok')} />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         backgroundColor: '#fff',
-        height: 210,
+        height: Normalize(210),
         width: '90%',
         bottom: "40%",
         borderTopLeftRadius: 14,
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
         shadowColor: '#7a7a7a',
         shadowOpacity: 1.0,
         shadowOffset: {
-            height: 10,
-            width: 10
+            height: Normalize(10),
+            width: Normalize(10)
         },
         shadowRadius: 10,
         elevation: 10
@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
-        marginHorizontal: 10,
+        marginHorizontal: Normalize(10),
         backgroundColor: "#fff",
-        paddingHorizontal: 15,
-        paddingVertical: 5
+        paddingHorizontal: Normalize(15),
+        paddingVertical: Normalize(5)
 
     },
 

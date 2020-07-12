@@ -99,7 +99,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                         onPress={() => {
                             setModalVisible(!modalVisible);
                         }}>
-                        <FontBold value={t('skip')} mystyle={{ fontSize: fontNormalize(24), color: "#fff" }} />
+                        <FontBold value={t('skip')} mystyle={{ fontSize: fontNormalize(20), color: "#fff" }} />
                     </TouchableOpacity>
                 </View>
 
@@ -108,7 +108,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                         <Spacer>
                             <FontRegular
                                 value={t('yourorder') + " \"" + bookingRefCode + "\" " + t('completed')}
-                                mystyle={{ fontSize: fontNormalize(20), color: "#fff", textAlign: "center" }}
+                                mystyle={{ fontSize: fontNormalize(18), color: "#fff", textAlign: "center" }}
                             />
                         </Spacer>
 
@@ -117,7 +117,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                         <Spacer>
                             <FontRegular
                                 value={t('experience') + " \"" + providerName + "\"?"}
-                                mystyle={{ fontSize: fontNormalize(20), color: "#fff", textAlign: "center" }}
+                                mystyle={{ fontSize: fontNormalize(18), color: "#fff", textAlign: "center" }}
                             />
                         </Spacer>
                     </View>
@@ -126,7 +126,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                         <Avatar
                             rounded
-                            size="large"
+                            size="medium"
                             title={bookingRefCode}
                             source={{
                                 uri:
@@ -146,21 +146,6 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                     </View>
                 </View>
             </Modal>
-            {/* <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <TouchableOpacity
-                    onPress={() => {
-                        setModalVisible(true);
-                    }} style={styles.modalButtonStyle}>
-                    <View flexDirection='row'>
-
-                        <View flexDirection='column' style={{ justifyContent: 'center' }}>
-                            <FontBold value="Evaluate" />
-                        </View>
-                    </View>
-
-                </TouchableOpacity>
-            </View> */}
-
         </View >
     );
 };
