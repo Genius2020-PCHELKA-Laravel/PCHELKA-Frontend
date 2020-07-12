@@ -141,7 +141,7 @@ const InternetScreen = ({ navigation, t }) => {
     // setTimeout(() => {
     NetInfo.fetch().then(async (connection) => {
       console.log(connection)
-      if (connection.isConnected) {
+      if (connection.isInternetReachable) {
         console.log("Connected");
         setConnected(true);
       }

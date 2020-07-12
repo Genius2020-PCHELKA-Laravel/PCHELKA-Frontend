@@ -558,19 +558,19 @@ const HomeScreen = ({ navigation, t }) => {
                                                         <FontAwesome name="star" size={Normalize(18)} color="#ff9800" style={{}} />
                                                       </>
                                 }
-                                <Text>{' '}</Text>
+                                {/* <Text>{' '}</Text> */}
                                 {
                                   item.providerData.evaluation == 0 ?
-                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={t('notevaluated')} />
+                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0, marginLeft: Normalize(5) }} value={t('notevaluated')} />
                                     :
-                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0 }} value={item.providerData.evaluation} />
+                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0, marginLeft: Normalize(5), textAlignVertical: "top" }} value={item.providerData.evaluation} />
                                 }
                                 <TouchableOpacity
                                   style={{ flexDirection: "row" }}
                                   onPress={() => bookagain(item)}
                                 >
                                   <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
-                                  <FontAwesome name="chevron-right" size={Normalize(12)} color="blue" style={{ marginTop: 2, marginLeft: 2, marginRight: Normalize(15) }} />
+                                  <FontAwesome name="chevron-right" size={Normalize(12)} color="blue" style={{ marginTop: Normalize(7), marginLeft: Normalize(4), marginRight: Normalize(15) }} />
                                 </TouchableOpacity>
                               </View>
 
@@ -611,8 +611,8 @@ const HomeScreen = ({ navigation, t }) => {
           <TouchableOpacity onPress={() => navigation.navigate('HomeCleaningScreen', { redirect: "Dashboard" })}>
             <Image resizeMethod='auto' style={{ opacity: 0.5, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - Normalize(20), marginLeft: Normalize(5), marginRight: Normalize(5) }} source={require('../../assets/services/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
-              <FontBold value={t('booknow')} />
-              <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
+              <FontBold value={t('booknow') + " "} mystyle={{ textAlignVertical: "center", }} />
+              <FontAwesome5 name="chevron-right" size={Normalize(15)} color="#7a7a7a" />
             </Text>
             <FontBold value={t('cleaningservicetext')} mystyle={styles.cleaningservicetext} />
             <FontRegular value={t('cleaningservicedetailtext')} mystyle={styles.cleaningservicedetailtext} />
@@ -751,7 +751,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     paddingHorizontal: Normalize(25),
     color: '#7a7a7a',
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center"
   },
   cleaningservicetext: {
@@ -790,8 +790,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    width: Normalize(80),
-    height: Normalize(80),
+    width: Normalize(70),
+    height: Normalize(70),
     borderRadius: Normalize(45),
     marginTop: Normalize(5),
     marginBottom: Normalize(5),
@@ -806,10 +806,10 @@ const styles = StyleSheet.create({
     height: Normalize(90),
     borderRadius: Normalize(4),
     borderWidth: 0,
-    marginRight: Normalize(5),
-    marginLeft: Normalize(5),
-    marginTop: Normalize(15),
-    marginBottom: 0,
+    marginRight: Normalize(10),
+    marginLeft: Normalize(10),
+    marginTop: Normalize(10),
+    marginBottom: Normalize(10),
     shadowColor: '#7a7a7a',
     shadowOpacity: 0.5,
     shadowOffset: {
@@ -824,7 +824,7 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: fontNormalize(14),
     marginLeft: Normalize(15),
-    bottom: Normalize(5),
+    bottom: Normalize(7),
   },
   separator: {
     height: 0.5,

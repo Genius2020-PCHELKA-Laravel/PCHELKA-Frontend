@@ -47,9 +47,9 @@ const HomeScreenLogIn = ({ navigation, t }) => {
           <TouchableOpacity onPress={() => navigation.navigate('LoginPhoneScreen', { redirect: "HomeCleaningScreen" })}>
             <Image resizeMethod='auto' style={{ opacity: 0.8, backgroundColor: 'black', borderRadius: 7, height: imageHeight, width: imageWidth - Normalize(20), marginLeft: Normalize(5), marginRight: Normalize(5) }} source={require('../../assets/services/homecleaning.jpg')} />
             <Text style={styles.booknowButtonStyle}>
-              <FontBold value={t('booknow')}>
+              <FontBold value={t('booknow') + " "} mystyle={{ textAlignVertical: "center" }}>
               </FontBold>{' '}
-              <FontAwesome5 name="chevron-right" size={15} color="#7a7a7a" />
+              <FontAwesome5 name="chevron-right" size={Normalize(15)} color="#7a7a7a" />
             </Text>
             <FontBold value={t('cleaningservicetext')} mystyle={styles.cleaningservicetext} />
             <FontRegular value={t('cleaningservicedetailtext')} mystyle={styles.cleaningservicedetailtext} />

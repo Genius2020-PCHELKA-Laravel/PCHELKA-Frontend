@@ -31,7 +31,7 @@ const ModalDetails = ({ children, t }) => {
         hcstate.frequency == 2 ? hcstate.hours * hcstate.materials * hcstate.DE.materialPrice * 2 :
             hcstate.frequency == 3 ? hcstate.hours * hcstate.materials * hcstate.DE.materialPrice * 4 : 0;
     return (
-        <View style={{ marginTop: Normalize(22) }}>
+        <View style={{ marginTop: 22 }}>
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="slideInUp"

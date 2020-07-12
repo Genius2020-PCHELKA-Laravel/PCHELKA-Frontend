@@ -27,7 +27,7 @@ const ModalDetails = ({ children, t }) => {
     else if (hcstate.frequency == 2) modalfrequency = t('biweekly');
     else if (hcstate.frequency == 3) modalfrequency = t('weekly');
     return (
-        <View style={{ marginTop: Normalize(22) }}>
+        <View style={{ marginTop: 22 }}>
             <Modal
                 style={{ flex: 1, margin: 0 }}
                 animationIn="slideInUp"
