@@ -204,7 +204,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                             <FontBold mystyle={{ fontSize: fontNormalize(12), position: 'absolute', marginLeft: Normalize(35) }} value={item.providerData.name} />
                                                         </View>
                                                         : <View style={{ borderWidth: 1, borderRadius: 20 }}>
-                                                            <Image style={styles.image} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                                            <Image style={styles.image} source={require('../../../assets/Splash/FinalSplash.png')} />
                                                             <FontBold mystyle={{ fontSize: fontNormalize(12), position: 'absolute', marginLeft: Normalize(25) }} value={'Auto-Assign'} />
                                                         </View>
                                                 }
@@ -307,7 +307,7 @@ const UpcomingScreen = ({ navigation, t }) => {
                                                                 <FontBold mystyle={{ position: 'absolute', marginLeft: 25 }} value={booking.providerData.name} />
                                                             </View>
                                                             : <View style={{ borderWidth: 1, borderRadius: 14 }}>
-                                                                <Image style={styles.image} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                                                <Image style={styles.image} source={require('../../../assets/Splash/FinalSplash.png')} />
                                                                 <FontBold mystyle={{ position: 'absolute', marginLeft: 25 }} value={'Auto-Assign'} />
                                                             </View>
                                                     }

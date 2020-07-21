@@ -376,7 +376,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                                         setProviderid('');
                                     }}>
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                                        <Image style={providerid == "" ? styles.imageThumdown : styles.imageThumup} source={require('../../../assets/Splash/SplashScreen1.png')} />
+                                        <Image style={providerid == "" ? styles.imageThumdown : styles.imageThumup} source={require('../../../assets/Splash/FinalSplash.png')} />
                                     </View>
 
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>

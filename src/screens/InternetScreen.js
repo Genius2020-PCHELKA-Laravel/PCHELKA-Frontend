@@ -187,7 +187,7 @@ const InternetScreen = ({ navigation, t }) => {
     {
       connected ?
         <ImageBackground
-          source={require('../../assets/Splash/newSplash.png')}
+          source={require('../../assets/Splash/FinalSplash.png')}
           style={{ width: '100%', height: '100%' }}
           resizeMode="cover"
         >
