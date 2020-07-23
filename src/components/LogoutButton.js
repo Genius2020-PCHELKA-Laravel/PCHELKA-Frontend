@@ -29,6 +29,7 @@ const LogoutButton = ({ t }) => {
     // const [changing, setChanging] = useState(false);
 
     const oklogout = async () => {
+        setShowModalVisibleLogout(false);
         setIsLoading(true);
         var expoToken = await getStorageExpoToken();
         await unsubscribeToNotification({ expo_token: expoToken });

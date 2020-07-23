@@ -146,7 +146,7 @@ const MapContainerShowAddress = ({ navigation, ulatitude, ulongitude, uid, ustre
             <Loader loading={isloading} />
             <View style={styles.mapinputstyle}>
                 <View style={styles.item2}>
-                    <View style={{ zIndex: 17, top: Normalize(15), left: Normalize(25), color: '#aaa', flexDirection: "column", justifyContent: "center" }}>
+                    <View style={{ zIndex: 17, top: Normalize(20), left: Normalize(25), color: '#aaa', }}>
                         <Icon
                             onPress={async () => {
                                 var redirect = await getRedirect();
