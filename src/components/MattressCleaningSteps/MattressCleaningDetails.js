@@ -87,7 +87,7 @@ const MattressCleaningDetails = ({ children, t }) => {
     }, [desc]);
     return (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            <View style={styles.servicedesccontainer}>
+            {/* <View style={styles.servicedesccontainer}>
                 <View style={{ flexDirection: "row" }}>
                     <FontAwesome5 name="info-circle" size={Normalize(30)} color="#f5c500" style={{ marginRight: Normalize(15) }} />
                     <FontBold value={t('whatincluded')} mystyle={{ fontSize: fontNormalize(18) }} />
@@ -104,7 +104,7 @@ const MattressCleaningDetails = ({ children, t }) => {
                     <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(8) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(16) }} value={t('mattressdesc3')} />
                 </View>
-            </View>
+            </View> */}
             <FontBold mystyle={styles.qText} value={t('mattresscleaningq1')} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', left: Normalize(15), marginRight: Normalize(15) }}>
                 <TouchableOpacity onPress={() => setQuantity(2)}><FontBold mystyle={quantity == 2 ? styles.thumbdown : styles.thumbup} value={2} /></TouchableOpacity>

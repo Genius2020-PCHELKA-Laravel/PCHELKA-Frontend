@@ -58,7 +58,7 @@ const Frequency = ({ children, t }) => {
     }, [frequency]);
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
-            <View style={styles.servicedesccontainer}>
+            {/* <View style={styles.servicedesccontainer}>
                 <View style={{ flexDirection: "row" }}>
                     <FontAwesome5 name="info-circle" size={Normalize(30)} color="#f5c500" style={{ marginRight: Normalize(15) }} />
                     <FontBold value={t('whatincluded')} mystyle={{ fontSize: fontNormalize(16) }} />
@@ -79,7 +79,7 @@ const Frequency = ({ children, t }) => {
                     <Octicons name="primitive-dot" size={Normalize(20)} color="#000" style={{ right: Normalize(5), top: Normalize(6) }} />
                     <FontLight mystyle={{ fontSize: fontNormalize(14) }} value={t('babydesc4')} />
                 </View>
-            </View>
+            </View> */}
             <TouchableOpacity onPress={() => { setFrequency(1) }}>
                 <Spacer>
                     <View>

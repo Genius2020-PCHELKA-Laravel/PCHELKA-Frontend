@@ -69,8 +69,8 @@ const Payment = ({ children, t }) => {
         let isCanceled = false;
         if (!isCanceled)
             dispatch({ type: 'set_method', payload: method, });
-        var subtotal = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners);
-        var total = (hcstate.HC.hourPrice * hcstate.hours * hcstate.cleaners);
+        var subtotal = (hcstate.BS.hourPrice * hcstate.hours * hcstate.cleaners);
+        var total = (hcstate.BS.hourPrice * hcstate.hours * hcstate.cleaners);
         var discount = hcstate.discount;
         if (hcstate.frequency == 2) {
             total = parseFloat(total * 2).toFixed(2);
@@ -99,8 +99,8 @@ const Payment = ({ children, t }) => {
         if (method == 1) {
             if (!isCanceled)
                 setCashPressed(true);
-            subtotal = (parseFloat(subtotal) + 5.0).toFixed(2);
-            total = (parseFloat(total) + 5.0).toFixed(2);
+            subtotal = (parseFloat(subtotal) + 0.0).toFixed(2);
+            total = (parseFloat(total) + 0.0).toFixed(2);
             discount = (parseFloat(discount)).toFixed(2);
             if (!isCanceled)
                 dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
@@ -143,7 +143,7 @@ const Payment = ({ children, t }) => {
                             <FontBold value={t('paymentq2')} mystyle={{ fontSize: 20 }}></FontBold>
                         </View>
                     </View>
-                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
+                    {/* <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight> */}
                 </Spacer>
             </TouchableOpacity>
         </ScrollView>);

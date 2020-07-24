@@ -88,8 +88,8 @@ const Payment = ({ children, t }) => {
         if (method == 1) {
             if (!isCanceled)
                 setCashPressed(true);
-            subtotal = (parseFloat(subtotal) + 5.0).toFixed(2);
-            total = (parseFloat(total) + 5.0).toFixed(2);
+            subtotal = (parseFloat(subtotal) + 0.0).toFixed(2);
+            total = (parseFloat(total) + 0.0).toFixed(2);
             discount = (parseFloat(discount)).toFixed(2);
             if (!isCanceled)
                 dispatch({ type: 'update_totals', payload: { subtotal, total, discount }, });
@@ -128,7 +128,7 @@ const Payment = ({ children, t }) => {
                         <RadioButton onPress={() => { setShowCard(false); setMethod(1) }} value="1" status={hcstate.method == '1' ? 'checked' : 'unchecked'} />
                         <FontBold value={t('paymentq2')} mystyle={{ fontSize: 20 }}></FontBold>
                     </View>
-                    <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight>
+                    {/* <FontLight value={t('paymentq2details')} mystyle={{ color: 'gray', fontSize: 14, marginLeft: 35 }}></FontLight> */}
                 </Spacer>
             </TouchableOpacity>
         </ScrollView>);

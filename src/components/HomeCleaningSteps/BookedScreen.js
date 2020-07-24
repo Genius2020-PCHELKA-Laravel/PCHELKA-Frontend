@@ -82,10 +82,10 @@ export default class BookedScreen extends React.Component {
                                 <Spacer>
                                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                         <FontAwesome name="calendar-check-o" size={Normalize(30)} color="#228B22" style={{ top: Normalize(7), left: Normalize(7) }} />
-                                        <FontBold value={i18n.t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: fontNormalize(20), marginLeft: Normalize(10) }} />
+                                        <FontBold value={i18n.t('thankyouforyourorder')} mystyle={{ textAlign: "center", fontSize: fontNormalize(14), marginLeft: Normalize(10) }} />
                                     </View>
                                     <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                        <FontLight value={i18n.t('youcanseeyourupcomingappoitmentsunderappoitments')} mystyle={{ textAlign: "center", fontSize: fontNormalize(16), marginLeft: Normalize(10) }} />
+                                        <FontLight value={i18n.t('youcanseeyourupcomingappoitmentsunderappoitments')} mystyle={{ textAlign: "center", fontSize: fontNormalize(14), marginLeft: Normalize(10) }} />
                                     </View>
                                 </Spacer>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
