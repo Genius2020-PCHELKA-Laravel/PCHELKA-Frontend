@@ -32,7 +32,8 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
     const [lang, setLang] = useState('en');
     const [reviews_names, set_reviews_names] = useState('');
     const [isloading, setIsLoading] = useState(false);
-
+    if (typeof providerImageURL != 'undefined')
+        providerImageURL = "http://pchelka.org/storage/app/public/" + providerImageURL.split('/')[2];
     // const fetchLang
     useEffect(() => {
         let en_reviews_names = ['Terrible', 'Bad', 'Okay', 'Good', 'Great'];
@@ -126,7 +127,7 @@ const EvaluationDialog = ({ navigation, t, modalVisible, setModalVisible, provid
                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                         <Avatar
                             rounded
-                            size="medium"
+                            size="large"
                             title={bookingRefCode}
                             source={{
                                 uri:

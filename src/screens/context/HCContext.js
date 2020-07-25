@@ -159,7 +159,7 @@ const getProviders = (dispatch) => {
             //console.log(response)
             return response.data.data;
         } catch (err) {
-            console.log("Error::HCContex::getProviders" + err);
+            console.log("Error::HCContex::getProviders" + JSON.stringify(err.response));
             dispatch({ type: 'add_error', payload: err })
         }
     };

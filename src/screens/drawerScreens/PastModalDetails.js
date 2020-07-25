@@ -423,7 +423,12 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                                     <View style={styles.providerThumup}>
                                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                             <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                <Image style={styles.image} source={{ uri: hcstate.selectedpastproviderdata.imageUrl }} />
+                                                {
+                                                    typeof hcstate.selectedpastproviderdata.imageUrl != 'undefined' ?
+                                                        <Image style={styles.image} source={{ uri: "http://pchelka.org/storage/app/public/" + hcstate.selectedpastproviderdata.imageUrl.split('/')[2] }} />
+                                                        :
+                                                        null
+                                                }
                                             </View>
                                             <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
                                                 <View style={{ flexDirection: "row" }}>

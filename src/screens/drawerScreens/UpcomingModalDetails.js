@@ -331,10 +331,10 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                         <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
                                             <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                                 {
-                                                    hcstate.selectedupcomingproviderdata.name != "Auto Assign" ?
-                                                        <Image style={styles.image} source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }} />
+                                                    typeof hcstate.selectedupcomingproviderdata.imageUrl != 'undefined' ?
+                                                        <Image style={styles.image} source={{ uri: "http://pchelka.org/storage/app/public/" + hcstate.selectedupcomingproviderdata.imageUrl.split('/')[2] }} />
                                                         :
-                                                        <Image style={styles.image} source={require('../../../assets/Splash/FinalSplash.png')} />
+                                                        null
                                                 }
                                             </View>
                                             <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>

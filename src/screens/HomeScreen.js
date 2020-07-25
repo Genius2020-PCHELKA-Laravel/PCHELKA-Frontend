@@ -474,7 +474,7 @@ const HomeScreen = ({ navigation, t }) => {
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                           <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                            <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
+                            <Image style={styles.image} source={{ uri: "http://pchelka.org/storage/app/public/" + item.providerData.imageUrl.split('/')[2] }} />
                           </View>
                           <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
                             <View style={{ flexDirection: "row" }}>

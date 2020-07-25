@@ -264,7 +264,7 @@ const DateandTimeDetails = ({ children, t }) => {
                                 <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                                     {
                                         <Image
-                                            source={{ uri: u.imageUrl }}
+                                            source={{ uri: "http://pchelka.org/storage/app/public/" + u.imageUrl.split('/')[2] }}
                                             style={providerid == i ? styles.imageThumdown : styles.imageThumup}
                                         />
                                     }

@@ -196,7 +196,7 @@ const PastScreen = ({ navigation, t }) => {
                                                 {
                                                     item.providerData != null ?
                                                         <View style={{ borderWidth: 1, borderRadius: 20 }}>
-                                                            <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
+                                                            <Image style={styles.image} source={{ uri: "http://pchelka.org/storage/app/public/" + item.providerData.imageUrl.split('/')[2] }} />
                                                             <FontBold mystyle={{ fontSize: fontNormalize(12), position: 'absolute', marginLeft: Normalize(35) }} value={item.providerData.name} />
                                                         </View>
                                                         : <View style={{ borderWidth: 1, borderRadius: 20 }}>
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         marginLeft: 0,
         marginRight: Normalize(10),
-        borderWidth: 3,
+        borderWidth: 1,
         borderColor: "#fff",
         opacity: 1,
 

@@ -414,7 +414,7 @@ const HCRescheduleScreen = ({ children, t }) => {
                                     <View style={{ flexDirection: 'row', justifyContent: "center" }}>
 
                                         <Image
-                                            source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }}
+                                            source={{ uri: "http://pchelka.org/storage/app/public/" + hcstate.selectedupcomingproviderdata.imageUrl.split('/')[2] }}
                                             style={providerid == hcstate.selectedupcomingproviderdata.id ? styles.imageThumdown : styles.imageThumup}
                                         />
                                         {
