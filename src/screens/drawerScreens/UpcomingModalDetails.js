@@ -330,7 +330,12 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                     <View style={styles.providerThumup}>
                                         <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
                                             <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                <Image style={styles.image} source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }} />
+                                                {
+                                                    hcstate.selectedupcomingproviderdata.name != "Auto Assign" ?
+                                                        <Image style={styles.image} source={{ uri: hcstate.selectedupcomingproviderdata.imageUrl }} />
+                                                        :
+                                                        <Image style={styles.image} source={require('../../../assets/Splash/FinalSplash.png')} />
+                                                }
                                             </View>
                                             <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
                                                 <View style={{ flexDirection: "row" }}>

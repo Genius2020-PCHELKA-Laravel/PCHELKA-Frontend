@@ -90,17 +90,16 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 1,
     elevation: 2,
-    marginBottom: Normalize(20)
-
+    marginBottom: Normalize(20),
   },
   ruButtonStyle: {
-    paddingHorizontal: Normalize(30),
+    paddingHorizontal: Normalize(10),
     paddingVertical: Normalize(10),
-    marginLeft: Normalize(30),
-    marginRight: Normalize(30),
+    marginLeft: Normalize(10),
+    marginRight: Normalize(10),
     borderWidth: 1,
     borderColor: '#fff',
-    fontSize: fontNormalize(16),
+    fontSize: fontNormalize(14),
     fontWeight: "500",
     color: '#7a7a7a',
   },

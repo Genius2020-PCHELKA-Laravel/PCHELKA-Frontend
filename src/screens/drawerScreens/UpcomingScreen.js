@@ -198,7 +198,8 @@ const UpcomingScreen = ({ navigation, t }) => {
 
                                             <View style={{ marginTop: Normalize(15), width: Normalize(200) }}>
                                                 {
-                                                    item.providerData != null ?
+                                                    // item.providerData != null ?
+                                                    item.providerData != null && item.providerData.name != "Auto Assign" ?
                                                         <View style={{ borderWidth: 1, borderRadius: 20 }}>
                                                             <Image style={styles.image} source={{ uri: item.providerData.imageUrl }} />
                                                             <FontBold mystyle={{ fontSize: fontNormalize(12), position: 'absolute', marginLeft: Normalize(35) }} value={item.providerData.name} />

@@ -363,7 +363,7 @@ const HCBooking = dispatch => {
                 else
                     console.log(response.data.error);
             }).catch((error) => {
-                console.log("Error::NotBooked::HCBooking: " + error)
+                console.log("Error::NotBooked::HCBooking: " + JSON.stringify(error.response))
             });
         } catch (err) {
             console.log("Error: HC Booking          " + err)
