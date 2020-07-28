@@ -104,6 +104,7 @@ const HCreducer = (state, action) => {
         case "RESET":
             return {
                 ...state,
+                providers: [],
                 providerid: '',
                 autoassign: 1,
                 subtotal: 0,

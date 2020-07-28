@@ -176,6 +176,7 @@ const PastScreen = ({ navigation, t }) => {
                                         }).then((response) => {
                                             hcdispatch({ type: 'set_selected_past_provider_data', payload: item.providerData });
                                             console.log("####SelectedPast####" + JSON.stringify(response));
+                                            console.log("####ProviderData####" + JSON.stringify(item.providerData));
                                         });
                                         setSelectedPastModalDetails(true);
                                     }}

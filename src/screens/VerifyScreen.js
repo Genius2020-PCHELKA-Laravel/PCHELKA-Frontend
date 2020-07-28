@@ -145,11 +145,11 @@ const VerifyScreen = ({ navigation, t }) => {
             <FontBold mystyle={styles.resendText} value={t('resendcodein')}></FontBold>
             <Timer onclick={resend}></Timer>
         </View>
-        <View>
+        {/* <View>
             <FontBold mystyle={{ fontSize: fontNormalize(12) }} value={"if you in ukraine you will receive message"}></FontBold>
             <FontBold mystyle={{ fontSize: fontNormalize(12) }} value={"OTP: " + otp}></FontBold>
             <FontBold mystyle={{ fontSize: fontNormalize(12) }} value={"Resend OTP:" + resendotp}></FontBold>
-        </View>
+        </View> */}
         <OfflineNotice />
     </>
     );

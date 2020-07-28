@@ -239,7 +239,7 @@ const BabySitterScreen = ({ navigation, t }) => {
         totalAmount: hcstate.total,
         locationId: state.selected_address,
         // providerId: hcstate.providerid,
-        providerId: "2",
+        providerId: hcstate.providerid,
         autoassign: hcstate.autoassign,
         scheduleId: "1",
         paymentWays: paymentWays,

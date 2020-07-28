@@ -578,10 +578,10 @@ const HomeScreen = ({ navigation, t }) => {
 
                             </View>
                             {
-                              item.providerData.lastServiceDate != null ?
+                              item.duoDate != null ?
                                 <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
                                   <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
-                                  <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={item.providerData.lastServiceDate} />
+                                  <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={item.duoDate} />
                                 </View>
                                 :
                                 <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>

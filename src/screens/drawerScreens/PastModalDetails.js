@@ -517,31 +517,35 @@ const PastModalDetails = ({ navigation, t, selectedPastModalDetails, setSelected
                                                                 :
                                                                 <FontLight mystyle={{ fontSize: fontNormalize(11), marginLeft: Normalize(5) }} value={t('notevaluated')} />
                                                         }
-                                                        <TouchableOpacity
-                                                            style={{ flexDirection: "row", bottom: Normalize(6) }}
-                                                            onPress={() => bookagain()}
-                                                        >
-                                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                                <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
-                                                            </View>
-                                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                                                                <FontAwesome name="chevron-right" size={Normalize(12)} color="blue" style={{ marginTop: Normalize(8), marginLeft: 2, marginRight: Normalize(15) }} />
-                                                            </View>
-                                                        </TouchableOpacity>
+                                                        {
+                                                            hcstate.selectedpast.status == "Completed" ?
+                                                                <TouchableOpacity
+                                                                    style={{ flexDirection: "row", bottom: Normalize(6) }}
+                                                                    onPress={() => bookagain()}
+                                                                >
+                                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                                        <FontBold mystyle={styles.bookagainbuttonStyle} value={t('bookagain')} />
+                                                                    </View>
+                                                                    <View style={{ flexDirection: "column", justifyContent: "center" }}>
+                                                                        <FontAwesome name="chevron-right" size={Normalize(12)} color="blue" style={{ marginTop: Normalize(8), marginLeft: 2, marginRight: Normalize(15) }} />
+                                                                    </View>
+                                                                </TouchableOpacity>
+                                                                : null
+                                                        }
                                                     </View>
 
                                                 </View>
                                                 {
-                                                    hcstate.selectedpastproviderdata.lastServiceDate != null ?
+                                                    hcstate.selectedpast != null && hcstate.selectedpast.status == "Completed" ?
                                                         <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
                                                             <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
-                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={hcstate.selectedpastproviderdata.lastServiceDate} />
+                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={hcstate.selectedpast.duoDate} />
                                                         </View>
                                                         :
-                                                        <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
-                                                            {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
-                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
-                                                        </View>
+                                                        null
+                                                    // <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
+                                                    //     <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
+                                                    // </View>
                                                 }
                                             </View>
                                         </View>

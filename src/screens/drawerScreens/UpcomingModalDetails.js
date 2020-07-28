@@ -328,7 +328,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                     {/* <View style={{ marginTop: 15, marginLeft: 15, width: 300, height: 200 }}> */}
 
                                     <View style={styles.providerThumup}>
-                                        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+                                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                             <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                                 {
                                                     typeof hcstate.selectedupcomingproviderdata.imageUrl != 'undefined' ?
@@ -337,7 +337,7 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                                         null
                                                 }
                                             </View>
-                                            <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+                                            <View style={{ flexDirection: "column", justifyContent: "center" }}>
                                                 <View style={{ flexDirection: "row" }}>
                                                     <FontBold value={hcstate.selectedupcomingproviderdata.name} />
                                                 </View>
@@ -431,16 +431,16 @@ const UpcomingModalDetails = ({ navigation, t, selectedUpcomingModalDetails, set
                                                     </View>
                                                 </View>
                                                 {
-                                                    hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
-                                                        <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
-                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
-                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
-                                                        </View>
-                                                        :
-                                                        <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
-                                                            {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
-                                                            <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
-                                                        </View>
+                                                    // hcstate.selectedupcomingproviderdata.lastServiceDate != null ?
+                                                    //     <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
+                                                    //         <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={t('lastservedat')} />
+                                                    //         <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12) }} value={hcstate.selectedupcomingproviderdata.lastServiceDate} />
+                                                    //     </View>
+                                                    //     :
+                                                    //     <View style={{ flexDirection: "row", marginTop: Normalize(10) }}>
+                                                    //         {/* <FontLight mystyle={{ color: "#000", fontSize: 12 }} value={t('lastservedat')} /> */}
+                                                    //         <FontLight mystyle={{ color: "#000", fontSize: fontNormalize(12), textAlign: "center" }} value={t('notcompleted')} />
+                                                    //     </View>
                                                 }
                                             </View>
                                         </View>

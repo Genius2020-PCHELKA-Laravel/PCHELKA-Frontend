@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     modalButtonStyle: {
-        flex: 0.4,
-        bottom: Normalize(12),
+        flex: 0.35,
+        bottom: Normalize(14),
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
