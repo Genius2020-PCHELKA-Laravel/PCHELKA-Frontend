@@ -469,8 +469,9 @@ const HomeScreen = ({ navigation, t }) => {
                   <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center" }}>
                     {
                       <View style={styles.providerThumup}>
-                        <View style={{ position: "absolute", right: 2, top: 2 }}>
-                          <FontLight value={t(item.refCode)} mystyle={{ fontSize: fontNormalize(12) }} />
+                        <View style={{ position: "absolute", right: 2, top: 0 }}>
+                          <FontLight value={t(item.serviceType)} mystyle={{ fontSize: fontNormalize(10) }} />
+                          <FontLight value={item.refCode} mystyle={{ fontSize: fontNormalize(10) }} />
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
                           <View style={{ flexDirection: "column", justifyContent: "center" }}>
@@ -563,7 +564,8 @@ const HomeScreen = ({ navigation, t }) => {
                                   item.providerData.evaluation == 0 ?
                                     <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0, marginLeft: Normalize(5) }} value={t('notevaluated')} />
                                     :
-                                    <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0, marginLeft: Normalize(5), textAlignVertical: "top" }} value={item.providerData.evaluation} />
+                                    null
+                                  // <FontLight mystyle={{ fontSize: fontNormalize(11), padding: 0, marginLeft: Normalize(5), textAlignVertical: "top" }} value={item.providerData.evaluation} />
                                 }
                                 <TouchableOpacity
                                   style={{ flexDirection: "row" }}
